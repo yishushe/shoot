@@ -1,0 +1,37 @@
+server:
+  port: 8088
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shoot?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+  http:
+    encoding:
+      charset: UTF-8
+      force-request: true
+      force-response: true
+      force: true
+      enabled: true
+  mvc:
+    view:
+      prefix: classpath:/templates
+      suffix: .html
+  thymeleaf:
+    cache: false
+    mode: HTML5
+  resources:
+    static-locations: classpath:/static/,classpath:/view/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
+mybatis-plus:
+  type-aliases-package: cn.bdqn.photography.shootUser.entity,cn.bdqn.photography.common.entity
+  mapper-locations: mapper/*/*.xml
+  configuration:
+    auto-mapping-behavior: full  #reslutMap列属性的自动映射
+# Tomcat specifics
+tomcat:
+  uri-encoding: UTF-8
+#配置文件 访问路劲 与 虚拟路径
+file:
+  resourceHandler: /images/**
+  commonPath: D:/static/common/
+  userPath: D:/static/user/

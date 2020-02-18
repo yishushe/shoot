@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.photography.shootUser.mapper.ShootAddressMapper">
+
+    <insert id="insertAddress" parameterType="ShootAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into shoot_address (prow_id,city_id,country_id)
+        values (#{prowId},#{cityId},#{countryId})
+    </insert>
+
+
+</mapper>

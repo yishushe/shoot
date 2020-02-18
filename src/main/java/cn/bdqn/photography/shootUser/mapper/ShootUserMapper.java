@@ -1,0 +1,23 @@
+package cn.bdqn.photography.shootUser.mapper;
+
+import cn.bdqn.photography.shootUser.entity.ShootUser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author jobob
+ * @since 2020-01-15
+ */
+public interface ShootUserMapper extends BaseMapper<ShootUser> {
+
+    int insertUser(ShootUser user);  //注册账户
+
+    List<ShootUser> loginByUserCode(@Param("userCode") String userCode);  //登录
+
+}

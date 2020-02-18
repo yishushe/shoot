@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">-->
+    <title>发布作品相册 - 艺术摄</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet" />
+   <!-- <script type="text/javascript">
+        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
+    </script>-->
+
+</head>
+<body class="body_default">
+
+
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="/content/custom/logo.png" class="fy-navbar-logo" />
+                    <span>摄会社</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="" href="#">关注</a>
+                </li>
+                <li>
+                    <a class="" href="#">自拍</a>
+                </li>
+                <li>
+                    <a class="" href="#">主题</a>
+                </li>
+                <!--   <li>
+                       <a class="" href="#">地点</a>
+                   </li>-->
+                <li>
+                    <a class="" href="#" title="少年">
+                        <img class="img-circle data_avatar_xs" src="http://qzapp.qlogo.cn/qzapp/101219184/29FCB207DDB74B5E047DB0AD96E10AE0/30" />
+                        <span>我的</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="notification_menu" class="fy-navItem-notification" href="javascript:void(0);">通知</a>
+                </li>
+                <li>
+                    <a class="" href="#">加入会员</a>
+                </li>
+                <!-- <li>
+                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
+                 </li>-->
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding" ng-app="wx_create_app" ng-controller="wx_create_controller">
+    <div class="row" style="margin-left:0px;margin-right:0px;">
+        <div class="col-sm-9" style="padding-left:0px;padding-right:0px;">
+            <form id="submit_form" method="post" action="/Gallery/Save">
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8N5cY4r00glLgFjYCU2NQn5noukW1GvQjT8MJBRaz3hPX40ZLIpjuM3x67VzpIdmVuN7S8TRA9MHg-DN8UXLwQb6_i_pYBMG1OarmhtGA64q1vmdheFiQezXl4YPXpPDFLBna6KnohNtdTp7Ia0wxAU" />
+                <div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+                </ul></div>
+                <input data-val="true" data-val-required="The ID field is required." id="ID" name="ID" type="hidden" value="0" />
+                <input data-val="true" data-val-required="The TopicID field is required." id="TopicID" name="TopicID" type="hidden" value="0" />
+                <input id="TopicTitle" name="TopicTitle" type="hidden" value="" />
+                <input id="ActionToken" name="ActionToken" type="hidden" value="gallery153494063714367376173313742" />
+                <div class="data_posts">
+                    <div class="data_post_cell" style="text-align:center;">
+                        <span class="data_group_title_bold">发布作品相册</span>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <label class="label_blue">作品名称：</label>
+                        <span class="label_required">[必填]</span>
+                        <div class="v10_margin">
+                            <input type="text" class="form-control input_gray" id="Title" name="Title" placeholder="" style="height:30px;" />
+                        </div>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <label class="label_blue">作品描述：</label>
+                        <span class="label_required"></span>
+                        <div class="v10_margin">
+                            <textarea class="auto_textarea_editor input_gray" id="Description" name="Description" placeholder="" style="height:100px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <label class="label_blue">拍摄地点：</label>
+                        <span class="label_required"></span>
+                        <div class="v10_margin">
+                            <textarea class="auto_textarea_editor input_gray" id="Address" name="Address" placeholder="" style="height:30px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <label class="label_blue">拍摄时间：</label>
+                        <span class="label_required"></span>
+                        <div class="v10_margin">
+                            <input type="text" class="form-control input_gray" id="TimeComment" name="TimeComment" placeholder="" style="height:30px;" />
+                        </div>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <label class="label_blue">使用设备：</label>
+                        <span class="label_required"></span>
+                        <div class="v10_margin">
+                            <textarea class="auto_textarea_editor input_gray" id="Device" name="Device" placeholder="" style="height:30px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="data_post_cell">
+                        <label class="label_blue" style="margin-bottom:0px;">
+                            <input type="checkbox"  id="YuepaiResult" name="YuepaiResult">
+                            这是约拍返片
+                        </label>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <label class="label_blue">拍摄标签：</label>
+                        <span class="data_meta_info">请选择拍摄主题标签</span>
+                        <div id="tag_list" class="v10_margin">
+                            <span class="select_item">情侣</span>
+                            <span class="select_item">商务</span>
+                            <span class="select_item">民国</span>
+                            <span class="select_item">汉服</span>
+                            <span class="select_item">孕照</span>
+                            <span class="select_item">儿童摄影</span>
+                            <span class="select_item">暗黑</span>
+                            <span class="select_item">情绪</span>
+                            <span class="select_item">夜景</span>
+                            <span class="select_item">校园</span>
+                            <span class="select_item">妆容</span>
+                            <span class="select_item">古风</span>
+                            <span class="select_item">淘宝</span>
+                            <span class="select_item">时尚</span>
+                            <span class="select_item">和服</span>
+                            <span class="select_item">旗袍</span>
+                            <span class="select_item">韩系</span>
+                            <span class="select_item">欧美</span>
+                            <span class="select_item">森系</span>
+                            <span class="select_item">少女</span>
+                            <span class="select_item">宝丽来</span>
+                            <span class="select_item">清新</span>
+                            <span class="select_item">婚礼</span>
+                            <span class="select_item">cosplay</span>
+                            <span class="select_item">胶片</span>
+                            <span class="select_item">黑白</span>
+                            <span class="select_item">纪实</span>
+                            <span class="select_item">日系</span>
+                        </div>
+                        <input id="Tags" name="Tags" type="hidden" value="" />
+                    </div>
+                    <div class="v15_margin" style="text-align:center;">
+                        <button id="submit_button" type="button" class="btn btn-success btn-sm form_large_button">保存然后上传照片</button>
+                        <a role="button" class="btn btn-default btn-sm btn_cancel form_medium_button" data-url="/u/space">取消</a>
+                    </div>
+                </div>
+            </form>
+            <div class="v20_margin">&nbsp;</div>
+        </div>
+        <div class="col-sm-3 fy-rside-panel fy-hidden-xs" style="padding-left:20px;">
+            <div class="data_posts">
+                <div class="data_post_cell">
+                    <span class="data_group_title">注意事项</span>
+                </div>
+                <div class="data_post_cell">
+                    <div class="data_meta_info">
+                        1 我们默认所有摄影、模特、化妆师等发布的图片/相册/作品均为个人原创作品，尊重他人劳动成果和作品。
+                        <br />
+                        <br />
+                        注：注意个人作品保护，该打水印还是打水印；
+                        我们会采用若干技术措施以确保您的作品不被轻易盗用；
+                        不允许在作品页发布非自己个人作品。
+                    </div>
+                    <div class="data_meta_info v15_margin">
+                        2 作品发布请遵循相关法律法规、道德伦理和摄会社社区发布原则。
+                        <br />
+                        <br />
+                        注：引用他人作品务必注明来源和出处，明确表明非个人作品，如被原摄影投诉侵删。
+                    </div>
+                    <div class="data_meta_info v15_margin">
+                        3 所有对个人作品相册的处理遵循第1、2条。
+                    </div>
+                    <div class="data_meta_info v15_margin">
+                        4 我们可能在部分情况下引用您发布的作品，遵循非商用原则且会注明您昵称并附上您的摄会社个人主页。
+                        <br />
+                        <br />
+                        注：如果可能我们会尽力让您先行知晓。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="toast_message" style="display: none;">
+    <div class="weui_toast">
+        <p id="toast_message_text" class="weui_toast_content" style="margin-top:30px;margin-left:10px;margin-right:10px;">
+        </p>
+    </div>
+</div>
+
+
+
+
+
+<!--<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>-->
+
+<!--<script src="/content/resources/jquery.min.js"></script>
+<script src="/content/resources/core36.min.js"></script>-->
+
+
+<link rel="stylesheet" href="/content/resources/weui.min.css">
+<script type="text/javascript">
+    function updateFormHiddenValues() { var b, a = []; $(".select_item").each(function () { b = $(this), "y" == b.attr("data-selected") && a.push(b.text()) }), $("#Tags").val(a.join(",")) } function showToastMessage(a) { $("#toast_message_text").html(a), $("#toast_message").show(), setTimeout(function () { $("#toast_message").hide() }, 1e3) } function isNumeric(a) { return !jQuery.isArray(a) && a - parseFloat(a) + 1 >= 0 } function checkValid() { return "" != $("#Title").val() || (showToastMessage("请填写<br />作品名称"), !1) } var autoTextarea = function (a, b, c) { if (void 0 != typeof a && null != a) { b = b || 0; var d = !!document.getBoxObjectFor || "mozInnerScreenX" in window, e = !!window.opera && !!window.opera.toString().indexOf("Opera"), f = function (b, c) { a.addEventListener ? a.addEventListener(b, c, !1) : a.attachEvent("on" + b, c) }, g = a.currentStyle ? function (b) { var c = a.currentStyle[b]; if ("height" === b && 1 !== c.search(/px/i)) { var d = a.getBoundingClientRect(); return d.bottom - d.top - parseFloat(g("paddingTop")) - parseFloat(g("paddingBottom")) + "px" } return c } : function (b) { return getComputedStyle(a, null)[b] }, h = parseFloat(g("height")); a.style.resize = "none"; var i = function () { var f, i, j = 0, k = a.style; a._length !== a.value.length && (a._length = a.value.length, d || e || (j = parseInt(g("paddingTop")) + parseInt(g("paddingBottom"))), f = document.body.scrollTop || document.documentElement.scrollTop, a.style.height = h + "px", a.scrollHeight > h && (c && a.scrollHeight > c ? (i = c - j, k.overflowY = "auto") : (i = a.scrollHeight - j, k.overflowY = "hidden"), k.height = i + b + "px", f += parseInt(k.height) - a.currHeight, document.body.scrollTop = f, document.documentElement.scrollTop = f, a.currHeight = parseInt(k.height))) }; f("propertychange", i), f("input", i), f("focus", i), i() } }; $(function () { autoTextarea(document.getElementById("Description")), autoTextarea(document.getElementById("Address")), autoTextarea(document.getElementById("Device")), $("#tag_list").on("click", ".select_item", function () { var a = $(this), b = a.attr("data-selected"); "y" == b ? (a.attr("data-selected", "n"), a.removeClass("select_item_selected")) : (a.attr("data-selected", "y"), a.addClass("select_item_selected")) }), $("#submit_button").click(function (a) { return updateFormHiddenValues(), checkValid() ? void $("#submit_form").submit() : (a.stopPropagation(), a.preventDefault(), !1) }) });
+</script>
+
+
+<div id="notification_panel" style="position:fixed;">
+    <div class="data_posts">
+        <div class="data_post_cell" style="text-align:center;">
+            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
+        </div>
+    </div>
+</div>
+
+
+
+<!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
+</body>
+</html>
