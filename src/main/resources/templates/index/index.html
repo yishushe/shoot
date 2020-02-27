@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,6 +16,10 @@
     <link href="../css/core73.min.css" rel="stylesheet">
 </head>
 <body class="body_default">
+
+<shiro:hasPermission name="query">
+    <p>你好 欢迎您的到来</p>
+</shiro:hasPermission>
 
 <p th:if="${info==true}">
    <script type="text/javascript">

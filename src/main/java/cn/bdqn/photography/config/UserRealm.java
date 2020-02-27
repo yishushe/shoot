@@ -57,27 +57,29 @@ public class UserRealm extends AuthorizingRealm {
         Object principal = list.get(0).getUserCode();
         Object pwd=list.get(0).getUserPassword();
 
-        ByteSource salt = ByteSource.Util.bytes(userCode); //对用户编码进行加盐
+        ByteSource salt = ByteSource.Util.bytes(userCode); //对用户编码转换byte数组
 
-        String md5Pwd = new Md5Hash(credentials,salt).toHex();
+        //获取当前类的父类 类名
         String realName = this.getName();
 
         System.out.println("userPassword:"+pwd);
 
         //用户密码shiro会自己进行验证 验证不正确将会出现相应的错误
 
+        ShootUser user=list.get(0);
+
         return new SimpleAuthenticationInfo(
-                list.get(0),     //用户编码
+                list,     //用户数据
                 pwd,   //密码
-                salt,         //对用编码进行加盐
+                salt,         //加盐后的编码
                 realName
         );
 
     }
 
-
+    //再 授权
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) throws AuthenticationException {
         System.out.println("gggggggggggggggggggggggggggggggggggggggggggggggggg");
         //授权对象
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

@@ -10,8 +10,10 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,11 +27,10 @@ public class ShiroConfig {
 
     //Filter工厂，设置对应的过滤条件和跳转条件 ShiroFilterFactoryBean
     @Bean
-    public ShiroFilterFactoryBean getShirFilterFactoryBean(@Qualifier("getDefaultWebSecurityManager")
-                                                            DefaultWebSecurityManager defaultWebSecurityManager){
+    public ShiroFilterFactoryBean getShirFilterFactoryBean(SecurityManager securityManager){
         ShiroFilterFactoryBean filterFactoryBean=new ShiroFilterFactoryBean();
         //设置安全管理器
-        filterFactoryBean.setSecurityManager(defaultWebSecurityManager);
+        filterFactoryBean.setSecurityManager(securityManager);
         //shiro内置过滤器
         /*
         anon: 无需认证可以访问
@@ -64,53 +65,15 @@ public class ShiroConfig {
         return filterFactoryBean;
     }
 
-    /**
-     * 密码匹配凭证管理器
-     *
-     * @return
-     */
-    @Bean(name = "hashedCredentialsMatcher")
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        // 采用MD5方式加密
-        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
-        // 设置加密次数
-        hashedCredentialsMatcher.setHashIterations(1024);
-        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
-        System.out.println("密码匹配凭证管理器");
-        return hashedCredentialsMatcher;
-    }
-
-
-    //将自己的验证方式加入容器
-    @Bean(name = "userRealm")
-    public UserRealm userRealm(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher) {
-        UserRealm authRealm = new UserRealm();
-        authRealm.setAuthorizationCachingEnabled(false);
-        authRealm.setCredentialsMatcher(matcher);
-        return authRealm;
-    }
-
     //DefaultWebSecurityManager 创建管理对象  并注入userRealm
-    @Bean
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher){
+    @Bean("securityManager")
+    public SecurityManager securityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher){
         DefaultWebSecurityManager securityManager=new DefaultWebSecurityManager();
-        //关联userRealm
+        //关联记住我
         securityManager.setRememberMeManager(rememberMeManager());
+        //关联userRealm
         securityManager.setRealm(userRealm(matcher));
         return securityManager;
-    }
-
-    /**
-     * 配置shiro跟spring的关联
-     * @param securityManager
-     * @return
-     */
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("getDefaultWebSecurityManager") SecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
-        return advisor;
     }
 
     /**
@@ -138,20 +101,69 @@ public class ShiroConfig {
         return cookieRememberMeManager;
     }
 
-   /* @Bean
-    public SecurityManager securityManager(){
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        //将自定义的realm交给SecurityManager管理
-        //securityManager.setRealm(userRealm());
-        // 自定义缓存实现 使用redis
-        //securityManager.setCacheManager(cacheManager());
-        // 自定义session管理 使用redis
-        //securityManager.setSessionManager(SessionManager());
-        // 使用记住我
-        securityManager.setRememberMeManager(rememberMeManager());
-        return securityManager;
+
+    //将自己的验证方式加入容器
+    @Bean(name = "userRealm")
+    public UserRealm userRealm(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher) {
+        UserRealm authRealm = new UserRealm();
+        //开启认证缓存
+        authRealm.setAuthenticationCachingEnabled(true);
+        //开启权限缓存
+        authRealm.setAuthorizationCachingEnabled(true);
+
+        //加入密码加密验证 比较器
+        authRealm.setCredentialsMatcher(matcher);
+
+        return authRealm;
+    }
+
+    /**
+     * 密码匹配凭证管理器
+     *
+     * @return
+     */
+    @Bean(name = "hashedCredentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        // 采用MD5方式加密
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        // 设置加密次数
+        hashedCredentialsMatcher.setHashIterations(1024);
+        //开启密码加密 true 开启  false 关闭
+        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
+        System.out.println("密码匹配凭证管理器");
+        return hashedCredentialsMatcher;
+    }
+
+
+    /**
+     * 配置shiro跟spring的关联  类似切面
+     * @param 
+     * @return
+     */
+    /*@Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("getDefaultWebSecurityManager") SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
     }*/
 
+
+
+    //如果没有这两个配置，可能会授权失败，所以依赖中还需要配置aop的依赖
+    /*@Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(HashedCredentialsMatcher matcher) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(getDefaultWebSecurityManager(matcher));
+        return authorizationAttributeSourceAdvisor;
+    }
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator=new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }*/
 
     //整合shiroDialect 用来整合shiro thymeleaf
     @Bean

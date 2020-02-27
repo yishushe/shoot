@@ -76,7 +76,6 @@ public class ShootUserController {
         //主体提交登录请求到SecurityManager
         token.setRememberMe(rememberMe);
         try{
-
             //成功则会发放令牌
             subject.login(token);
             System.out.println("token:"+token.getPassword());
