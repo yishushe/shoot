@@ -1,12 +1,9 @@
 package cn.bdqn.photography.config;
 
-import cn.bdqn.photography.shootUser.entity.ShootPermission;
-import cn.bdqn.photography.shootUser.entity.ShootRole;
-import cn.bdqn.photography.shootUser.entity.ShootUser;
-import cn.bdqn.photography.shootUser.mapper.ShootUserMapper;
-import cn.bdqn.photography.shootUser.service.IShootUserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import jdk.nashorn.internal.ir.RuntimeNode;
+import cn.bdqn.photography.shootuser.entity.ShootPermission;
+import cn.bdqn.photography.shootuser.entity.ShootRole;
+import cn.bdqn.photography.shootuser.entity.ShootUser;
+import cn.bdqn.photography.shootuser.service.IShootUserService;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -21,15 +18,11 @@ import org.apache.shiro.subject.Subject;
 
 
 import org.apache.shiro.authc.*;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import sun.security.krb5.internal.ccache.CredentialsCache;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 public class UserRealm extends AuthorizingRealm {
 

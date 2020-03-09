@@ -30,7 +30,7 @@ mybatis-plus:
 # Tomcat specifics
 tomcat:
   uri-encoding: UTF-8
-#配置文件 访问路劲 与 虚拟路径
+#配置文件 访问路劲 与 虚拟路径 绑定
 file:
   resourceHandler: /images/**
   commonPath: D:/static/common/
