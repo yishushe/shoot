@@ -73,7 +73,6 @@ public class UserRealm extends AuthorizingRealm {
     //再 授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) throws AuthenticationException {
-        System.out.println("gggggggggggggggggggggggggggggggggggggggggggggggggg");
         //授权对象
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //info.addStringPermission("add");
