@@ -66,25 +66,26 @@ public class ShootUserController {
 
         //获得当前用户 Subject当前用户
         Subject subject = SecurityUtils.getSubject();
+        subject.logout();   //退出登录
         //主体提交登录请求到SecurityManager
         token.setRememberMe(rememberMe);
         try{
-            //成功则会发放令牌
+            //成功则会发放令牌  执行登录认证操作
             subject.login(token);
             System.out.println("token:"+token.getPassword());
         }catch (IncorrectCredentialsException ice){
-            System.out.println( "对用户【" + user.getUserName() +"】进行登录验证，验证未通过，密码不正确！");
+            System.out.println( "对用户【" + user.getUserCode() +"】进行登录验证，验证未通过，密码不正确！");
             ice.printStackTrace();
         }catch (UnknownAccountException uae){
-            System.out.println("对用户【" + user.getUserName() +"】进行登录验证，验证未通过，未知账户！");
+            System.out.println("对用户【" + user.getUserCode() +"】进行登录验证，验证未通过，未知账户！");
         }catch (LockedAccountException lae){
-            System.out.println("对用户【" + user.getUserName() +"】进行登录验证，验证未通过，账户锁定！");
+            System.out.println("对用户【" + user.getUserCode() +"】进行登录验证，验证未通过，账户锁定！");
             lae.printStackTrace();
         }catch (ExcessiveAttemptsException eae){
-            System.out.println("对用户【" + user.getUserName() +"】进行登录验证，验证未通过，错误次数太多！");
+            System.out.println("对用户【" + user.getUserCode() +"】进行登录验证，验证未通过，错误次数太多！");
             eae.printStackTrace();
         }catch (AuthenticationException ae){
-            System.out.println("对用户【" + user.getUserName() +"】进行登录验证，验证未通过，用户名,未知错误!");
+            System.out.println("对用户【" + user.getUserCode() +"】进行登录验证，验证未通过，用户名,未知错误!");
             ae.printStackTrace();
         }
         if(subject.isAuthenticated()){

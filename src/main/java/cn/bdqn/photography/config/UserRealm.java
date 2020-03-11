@@ -30,16 +30,15 @@ public class UserRealm extends AuthorizingRealm {
     @Qualifier("shootUserService")
     private IShootUserService iShootUserService;
 
-
     //先 认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken toke) throws AuthenticationException {
 
         String userCode = (String)toke.getPrincipal();  //编码
-        String credentials = new String((char[]) toke.getCredentials());   //密码
+
         List<ShootUser> list=iShootUserService.findUserByUserCode(userCode);
-        System.out.println("list:"+list.size());
-        if(list.size()==0){
+
+        if(list.size()==0){  //未知账号
             throw new UnknownAccountException("没找到帐号！");    //没找到帐号
         }
 
@@ -47,10 +46,10 @@ public class UserRealm extends AuthorizingRealm {
         Subject subject = SecurityUtils.getSubject();
         subject.getSession().setAttribute("user",list.get(0));   //登录成功把user放入shiro用户sesssion中
 
-        Object principal = list.get(0).getUserCode();
-        Object pwd=list.get(0).getUserPassword();
+        String pwd=list.get(0).getUserPassword();
 
-        ByteSource salt = ByteSource.Util.bytes(userCode); //对用户编码转换byte数组
+        //对用户编码转换byte数组
+        ByteSource salt = ByteSource.Util.bytes(userCode);
 
         //获取当前类的父类 类名
         String realName = this.getName();
@@ -58,11 +57,10 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println("userPassword:"+pwd);
 
         //用户密码shiro会自己进行验证 验证不正确将会出现相应的错误
-
         ShootUser user=list.get(0);
 
         return new SimpleAuthenticationInfo(
-                list,     //用户数据
+                user,     //用户数据
                 pwd,   //密码
                 salt,         //加盐后的编码
                 realName

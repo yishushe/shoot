@@ -106,14 +106,8 @@ public class ShiroConfig {
     @Bean(name = "userRealm")
     public UserRealm userRealm(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher) {
         UserRealm authRealm = new UserRealm();
-        //开启认证缓存
-        authRealm.setAuthenticationCachingEnabled(true);
-        //开启权限缓存
-        authRealm.setAuthorizationCachingEnabled(true);
-
         //加入密码加密验证 比较器
         authRealm.setCredentialsMatcher(matcher);
-
         return authRealm;
     }
 
@@ -131,7 +125,6 @@ public class ShiroConfig {
         hashedCredentialsMatcher.setHashIterations(1024);
         //开启密码加密 true 开启  false 关闭
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
-        System.out.println("密码匹配凭证管理器");
         return hashedCredentialsMatcher;
     }
 
