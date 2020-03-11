@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 "cn.bdqn.photography.shoottheme.mapper"})
 //yang
 public class PhotographyApplication {
-    //yanglongyanglongddddddddddddddddddddddddd
+    //yanglongyanglongdddddddddddddddddddddddddddddddddddd
     public static void main(String[] args) {
         SpringApplication.run(PhotographyApplication.class, args);
     }
