@@ -10,9 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 "cn.bdqn.photography.shootimages.mapper","cn.bdqn.photography.shootinfo.mapper",
 "cn.bdqn.photography.shootletter.mapper","cn.bdqn.photography.shootselfie.mapper",
 "cn.bdqn.photography.shoottheme.mapper"})
-//yang
 public class PhotographyApplication {
-    //yanglong
+
     public static void main(String[] args) {
         SpringApplication.run(PhotographyApplication.class, args);
     }

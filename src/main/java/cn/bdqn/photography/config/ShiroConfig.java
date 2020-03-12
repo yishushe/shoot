@@ -43,13 +43,15 @@ public class ShiroConfig {
         System.out.println("欢迎来到shiro安全世界！");
         //用户有add权限才可以执行的添加功能
         //filterMap.put("/user/addUser","perms[add]");
-        filterMap.put("/shoot-user/logo","anon");
-        filterMap.put("/shoot-user/index","anon");
-        filterMap.put("/shoot-user/register","anon");
-        filterMap.put("/shoot-user/add","anon");
-        filterMap.put("/shoot-user/subLogin","anon");
+        filterMap.put("/shoot-user/logo","anon");   //登录页
+        filterMap.put("/shoot-user/index","anon");  //主页
+        filterMap.put("/shoot-user/register","anon");  //注册
+        filterMap.put("/shoot-user/add","anon");      //添加操作
+        filterMap.put("/shoot-user/subLogin","anon");   //登录操作
+        filterMap.put("/shoot-user/personage","authc");  //个人中心主页
 
         filterMap.put("/shoot-user/about","perms[query]");
+
 
         //要有相应的角色和授权才能访问的页面
         //filterMap.put("/user/delete","roles[系统管理员],perms[delete]");

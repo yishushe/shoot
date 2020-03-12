@@ -14,19 +14,10 @@
         if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
     </script>-->
     <link href="../css/core73.min.css" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.js}" type="text/javascript"></script>
+
 </head>
 <body class="body_default">
-
-<shiro:hasPermission name="query">
-    <p>你好 欢迎您的到来</p>
-</shiro:hasPermission>
-
-<p th:if="${info==true}">
-   <script type="text/javascript">
-       alert("注册成功");
-   </script>
-</p>
-
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
     <div class="container">
         <div class="navbar-header">
@@ -49,28 +40,25 @@
                     <a class="fy-navItem-active" href="#">首页</a>
                 </li>
                 <li>
-                    <a class="" href="#">关注</a>
+                    <a class="login" href="#">关注</a>
                 </li>
                 <li>
-                    <a class="" href="#">自拍</a>
+                    <a class="login" href="#">自拍</a>
                 </li>
                 <li>
-                    <a class="" href="#">主题</a>
+                    <a class="login" href="#">主题</a>
                 </li>
              <!--   <li>
                     <a class="" href="#">地点</a>
                 </li>-->
-                <li>
-                    <a class="" href="#" title="少年">
-                        <img class="img-circle data_avatar_xs" src="http://qzapp.qlogo.cn/qzapp/101219184/29FCB207DDB74B5E047DB0AD96E10AE0/30" />
-                        <span>我的</span>
-                    </a>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
                 </li>
                 <li>
-                    <a id="notification_menu" class="fy-navItem-notification" href="javascript:void(0);">通知</a>
+                    <a id="" class="fy-navItem-notification" href="#">通知</a>
                 </li>
                 <li>
-                    <a class="" href="#">加入会员</a>
+                    <a class="login" href="#">加入会员</a>
                 </li>
                <!-- <li>
                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
@@ -788,6 +776,7 @@
 
 <script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
 
+<script th:src="@{/js/notlogin.js}"></script>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/core36.min.js"></script>
 
