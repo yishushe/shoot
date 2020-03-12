@@ -39,7 +39,7 @@ public class UserRealm extends AuthorizingRealm {
         List<ShootUser> list=iShootUserService.findUserByUserCode(userCode);
 
         if(list.size()==0){  //未知账号
-            return null;    //没找到帐号
+            return null;
         }
 
         //获得当前用户 Subject当前用户
