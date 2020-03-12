@@ -5,14 +5,17 @@
 function checkForm() {
     var Form = document.getElementById("formId");
     var bool = true;
-    if (!InputUsernameBlur()){ alert("dd1");bool = false;}
-    if (!InputPasswordBlur()){ alert("dd2");bool = false;}
-    if (!InputRepasswordBlur()){ alert("dd3");bool = false;}
-    if (!InputPhoneBlur()) { alert("dd4");bool = false;}
-    if(!InputPortyaitlBlur()){ alert("dd5");bool = false;}
-    if(!selectProw()){ alert("dd6");bool = false;}
-    if(!selectCity()){ alert("dd7");bool = false;}
-    if(!selectCountry()) { alert("dd8");bool = false;}
+    if (!InputUsernameBlur()){ bool = false;}
+    if (!InputPasswordBlur()){ bool = false;}
+    if (!InputRepasswordBlur()){ bool = false;}
+    /*if (!InputUserCode1Blur()) {
+        alert(InputUserCode1Blur());
+        alert("InputUserCode1Blur");
+        bool = false;}*/
+    if(!InputPortyaitlBlur()){ bool = false;}
+    if(!selectProw()){ bool = false;}
+    if(!selectCity()){ bool = false;}
+    if(!selectCountry()) { bool = false;}
     if (bool==true) {
         Form.submit();
     }
@@ -25,7 +28,7 @@ function checkForm() {
 function InputUsernameBlur() {
     var uname = document.getElementById("InputUsername");
     var ename = document.getElementById("errorName");
-    
+
     /* 用户名为空/不为空 */
     if (uname.value=="") {
         ename.innerHTML="用户名不能为空";
@@ -99,18 +102,30 @@ function InputRepasswordBlur() {
 /**
  * 手机输入框失去焦点
  */
-function InputPhoneBlur() {
-    var phone = document.getElementById("InputPhone");
-    var error = document.getElementById("errorPhone");
+function InputUserCode1Blur() {
+    var userCode = document.getElementById("InputUserCode");
+    var error = document.getElementById("errorUserCode");
+    var input1 = document.getElementById("submitButton");
+    var flag=false;
+    //异步查看用户账号是否存在
+    $.get("userByUserCode/"+userCode.value,function (data) {
+        if(data=="true"){
+            error.innerHTML="本账号有人使用";
+            flag=false;
+            input1.attr("disabled","true");
+        }else {
+            error.innerHTML="账号可以使用";
+            flag=true;
+            input1.attr("disabled","false");
+        }
+    },"text");
+
     /* 邮箱不为空 */
-    if (phone.value=="") {
-        error.innerHTML="手机不能为空"
+    if (userCode.value=="") {
+        error.innerHTML="账号不能为空";
         return false;
     }
-    else {
-        error.innerHTML="";
-    }
-    return true;
+
 }
 
 /**

@@ -121,7 +121,6 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
             user.setShootAddressId(address.getId());  //加入新增id
         }
          user.setCreationDate(LocalDateTime.now());  //获得当前时间
-         user.setUserCode(round.round());   //随机账号
          user.setUserPassword(realm(user));  //密码MD5加密
         int count=shootUserMapper.insertUser(user);  //执行新增用户操作  并回写获得id
         userRole.setUserId(user.getId());         //回写新增id放入
