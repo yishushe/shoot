@@ -57,6 +57,7 @@ public class IsPath {
 
 
 		try {
+			//multipartFile.transferTo(new File(commonPath, newName));
 			switch (session.getAttribute("temp").toString()){
 				case "user" :
 					multipartFile.transferTo(new File(userPath, newName));
@@ -68,13 +69,12 @@ public class IsPath {
                     System.out.println("出现错误!");
 					break;
 			}
-			session.invalidate();  //session失效
+			//session.invalidate();  //session失效
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return newName;
 
 	}

@@ -27,6 +27,7 @@ mybatis-plus:
   mapper-locations: mapper/*/*.xml
   configuration:
     auto-mapping-behavior: full  #reslutMap列属性的自动映射
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 # Tomcat specifics
 tomcat:
   uri-encoding: UTF-8
