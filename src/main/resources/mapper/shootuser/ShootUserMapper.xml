@@ -4,7 +4,7 @@
 
     <insert id="insertUser" parameterType="ShootUser" useGeneratedKeys="true" keyProperty="id">
         insert into shoot_user (userCode,userName,userPassword,sex,creationDate,portyaitl,phone,shootAddressId)
-         values (#{userCode},#{userName},#{userPassword},#{sex},#{creationDate},#{portyaitl},${phone},#{shootAddressId})
+         values (#{userCode},#{userName},#{userPassword},#{sex},#{creationDate},#{portyaitl},#{phone},#{shootAddressId})
     </insert>
 
     <resultMap id="user" type="ShootUser">

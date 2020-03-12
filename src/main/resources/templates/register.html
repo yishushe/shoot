@@ -20,13 +20,18 @@
 
         <div class="reg-label">
             <label>用 户 注 册</label>
-
         </div>
         <div class="reg-box">
             <form action="/shoot-user/add" id="formId" class="reg-form" enctype="multipart/form-data" method="POST">
                 <div>
                     <tr>
-                        <td><input class="input" type="text" name="userName" id="InputUsername" placeholder="昵 称" onblur="InputUsernameBlur()"></td>
+                        <td><input class="input" type="text" name="userCode" id="InputUserCode" placeholder="账号" onblur="InputUserCode1Blur()"></td>
+                        <td><label id="errorUserCode"></label></td>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <td><input class="input" type="text" name="userName" id="InputUsername" placeholder="昵称" onblur="InputUsernameBlur()"></td>
                         <td><label id="errorName"></label></td>
                     </tr>
                 </div>
@@ -42,12 +47,7 @@
                         <td><label id="errorRepassword"></label></td>
                     </tr>
                 </div>
-                <div>
-                    <tr>
-                        <td><input class="input" type="phone" name="phone" id="InputPhone" placeholder="手机号码" onblur="InputPhoneBlur()"></td>
-                        <td><label id="errorPhone"></label></td>
-                    </tr>
-                </div>
+
                 <div class="div">
                     <tr>
                         <td>
