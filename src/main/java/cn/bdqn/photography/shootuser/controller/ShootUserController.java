@@ -173,10 +173,14 @@ public class ShootUserController {
         return "personage/personage";
     }
 
+
     //个人中心到发布信息页
     @RequestMapping(value = "/postMessage")
     public String postMessage(){
         return "personage/postMessage";
     }
+
+
+
 
 }

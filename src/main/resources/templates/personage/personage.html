@@ -96,7 +96,7 @@
             <span class="data_meta_info">我的积分：</span>
             <span class="money_amount">40</span>
             <div style="float:right;">
-                <a class="btn btn-sm btn-default" href="/u/points">获取新的积分</a>
+                <a class="btn btn-sm btn-default" th:href="@{/shoot-role/integral}">获取新的积分</a>
             </div>
         </div>
         <a class="data_post_cell data_post_cell_link" style="min-height:50px;" href="/u/account">
@@ -108,7 +108,7 @@
             <div style="float:right;">
                 <span class="data_meta_info">昵称、所在地区、联系方式等</span>
             </div>
-            <a id="edit-button" class="btn btn-primary btn-sm" href="/u/editprofile" role="button">编辑个人资料</a>
+            <a id="edit-button" class="btn btn-primary btn-sm" th:href="@{/shoot-role/personalInfo}" role="button">编辑个人资料</a>
         </div>
         <div class="data_post_cell">
             <div style="float:right;">
