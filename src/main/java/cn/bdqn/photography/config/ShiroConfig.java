@@ -49,6 +49,8 @@ public class ShiroConfig {
         filterMap.put("/shoot-user/add","anon");      //添加操作
         filterMap.put("/shoot-user/subLogin","anon");   //登录操作
         filterMap.put("/shoot-user/personage","authc");  //个人中心主页
+        filterMap.put("/shoot-role/personalInfo","authc");  //个人资料
+        filterMap.put("/shoot-role/integral","authc");   //签到领取积分页面
 
         filterMap.put("/shoot-user/about","perms[query]");
 
