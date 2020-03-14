@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-03-09
  */
 @RestController
-@RequestMapping("/shootinfo/shoot-state")
+@RequestMapping("/shoot-state")
 public class ShootStateController {
 
 }

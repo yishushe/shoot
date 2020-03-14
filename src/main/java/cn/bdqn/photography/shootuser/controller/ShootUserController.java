@@ -116,15 +116,15 @@ public class ShootUserController {
     @RequestMapping(value = {"/add"})
     public String add(ShootUser user, @RequestParam(value = "sexs", required = false) String sexs,
                       ShootProw prow, ShootCity city, ShootCountry country, ShootUserRole userRole,
-                      @RequestParam(value = "protyaitl", required = false) MultipartFile multipartFile,
+                      @RequestParam(value = "protyaitl", required = false) MultipartFile[] multipartFile,
                       HttpServletRequest request, HttpSession session,
                       RedirectAttributes attributes, Model model) {
         user.setSex(Sex.transition(sexs)); //性别转换
         session.setAttribute("temp", "user");
-        String img = isPath.upload(multipartFile, request, session);  //获得上传文件名称
-        user.setPortyaitl(img);
+        String[] img = isPath.upload(multipartFile, request, session);  //获得上传文件名称
+        user.setPortyaitl(img[0]);  //因为只有一个头像所以是下标为0
         ShootAddress address = new ShootAddress();
-        boolean insert = iShootUserService.saveUser(user, address, prow, city, country, userRole);
+        boolean insert = iShootUserService.saveUser(user, prow, city, country, userRole);
         if (insert == true) {
             //重定向 可以自动把参数拼接到url地址上
             attributes.addAttribute("info", "注册成功请输入密码登录");
@@ -167,20 +167,15 @@ public class ShootUserController {
         model.addAttribute("dizhi",shootUser.getShootAddress().getShootProw().getProw()+
                 shootUser.getShootAddress().getShootCity().getCity());  //地址
         model.addAttribute("juese",shootUser.getRoles().get(0).getRoleName());  //角色
-        System.out.println("ddddddddddddddd:"+shootUser.getShootAddress().getShootProw().getProw()+
-                shootUser.getShootAddress().getShootCity().getCity());
-        model.addAttribute("member",shootUser.getMember());
+        model.addAttribute("member",shootUser.getMember());  //是否有会员
         return "personage/personage";
     }
-
 
     //个人中心到发布信息页
     @RequestMapping(value = "/postMessage")
     public String postMessage(){
         return "personage/postMessage";
     }
-
-
 
 
 }

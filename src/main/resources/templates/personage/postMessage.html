@@ -196,9 +196,7 @@
                 <li>
                     <a class="login" href="#">主题</a>
                 </li>
-                <!--   <li>
-                       <a class="" href="#">地点</a>
-                   </li>-->
+
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
@@ -208,9 +206,7 @@
                 <li>
                     <a class="login" href="#">加入会员</a>
                 </li>
-                <!-- <li>
-                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
-                 </li>-->
+
             </ul>
         </nav>
     </div>
@@ -221,7 +217,7 @@
      ng-controller="wx_create_controller">
     <div class="row" style="margin-left:0px;margin-right:0px;">
         <div class="col-sm-9" style="padding-left:0px;padding-right:0px;">
-            <form id="submit_form" method="post" action="/y/save">
+            <form id="submit_form" method="post" th:action="@{/shoot-info/addInfo}" enctype="multipart/form-data">
                 <input name="__RequestVerificationToken" type="hidden"
                        value="CfDJ8N5cY4r00glLgFjYCU2NQn77SjsnyNVWUn7ennc6k9harV5kp27yt3ldFAcC9XeHMa_cJCzDTCehh63u8ZOWj8tCwTWpuySlW1LGZB-PhrURV_KbKnF9kFPOCOXlNobAUlzt5RtZoTMF3q6r847_OgM"/>
                 <div class="validation-summary-valid" data-valmsg-summary="true">
@@ -239,42 +235,45 @@
                     <div class="data_post_cell" style="text-align:center;">
                         <span class="data_group_title_bold">发布信息</span>
                     </div>
+
                     <div class="data_post_cell_dotted">
                         <label class="label_blue">分类：</label>
                         <span class="label_required">[必填]</span>
                         <div class="v10_margin">
                             <select class="form-control form_control_inline fy_form_control" id="ThreadGroup"
-                                    name="ThreadGroup">
-                                <option value="yuepai">约拍</option>
-                                <option value="notice">通告</option>
-                                <option value="activity">活动</option>
-                                <option value="show">演出</option>
-                                <option value="invite">找人</option>
-                                <option value="come">冒泡</option>
+                                    name="typeId">
+                                <option value="1">约拍</option>
+                                <option value="2">通告</option>
+                                <option value="3">活动</option>
+                                <option value="4">演出</option>
+                                <option value="5">找人</option>
+                                <option value="6">冒泡</option>
                             </select>
                         </div>
                     </div>
+
                     <div class="data_post_cell_dotted">
                         <label class="label_blue">地区：</label>
                         <span class="label_required">[必填]</span>
                         <div class="v10_margin">
-                            <select class="form-control form_control_inline fy_form_control" id="prow" name="prow"
+                            <select class="form-control form_control_inline fy_form_control" id="prow"
                                     onchange="showCity(this)">
                                 <option value="">请选择省</option>
 
                             </select>
-                            <select id="city" name="city" class="form-control form_control_inline fy_form_control"
+                            <select id="city" class="form-control form_control_inline fy_form_control"
                                     onchange="showCountry(this)">
                                 <option value="">请选择市</option>
 
                             </select>
-                            <select id="country" name="country"
+                            <select id="country"
                                     class="form-control form_control_inline fy_form_control">
                                 <option value="">请选择区</option>
 
                             </select>
                         </div>
                     </div>
+
                     <div class="data_post_cell_dotted">
                         <label class="label_blue">费用：</label>
                         <span class="label_required">[必填]</span>
@@ -282,25 +281,25 @@
                             <input id="FeeType" name="FeeType" type="hidden" value=""/>
                             <div class="radio">
                                 <label>
-                                    <input class="option" type="radio" name="FeeTypeOption" value="free"/>
+                                    <input class="option" type="radio" name="costId" value="1"/>
                                     希望互免
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input class="money" type="radio" name="FeeTypeOption" value="want"/>
+                                    <input class="money" type="radio" name="costId" value="2"/>
                                     需要收费
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input class="money" type="radio" name="FeeTypeOption" value="pay"/>
+                                    <input class="money" type="radio" name="costId" value="3"/>
                                     愿意付费
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input class="option" type="radio" name="FeeTypeOption" value="talk"/>
+                                    <input class="option" type="radio" name="costId" value="4"/>
                                     费用协商
                                 </label>
                             </div>
@@ -308,7 +307,7 @@
 
                         <div id="FeeValueInput" class="v10_margin" style="display:none;">
                             <div class="input-group">
-                                <input class="form-control" id="FeeValue" name="FeeValue" type="number" placeholder="请输入金额"/>
+                                <input class="form-control" id="FeeValue" name="price" type="number" placeholder="请输入金额"/>
                                 <div class="input-group-addon">元</div>
                             </div>
                         </div>
@@ -320,13 +319,13 @@
                         <div class="v10_margin">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="RequireRoles" value="" checked/>
+                                    <input type="radio" name="requireRoles" value="1" checked/>
                                     接受所有人的请求
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="RequireRoles" value="vip"/>
+                                    <input type="radio" name="requireRoles" value="2"/>
                                     只接受摄会社Club会员请求
                                 </label>
                             </div>
@@ -338,7 +337,7 @@
                         <div class="v10_margin">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="RequireSecurityAccount" value="1"/>
+                                    <input type="checkbox" name="requireSecurityAccount" value="1"/>
                                     要求对方存入信用保证金
                                 </label>
                                 <a id="btn_security_account_about" class="btn btn-default btn-xs"
@@ -351,7 +350,7 @@
                         <span class="label_required">[必填]</span>
                         <div class="field_attached_comment v5_margin">为了保障隐私，请勿在此处包含联系方式（否则审核不会通过）</div>
                         <div class="v10_margin">
-                            <textarea class="auto_textarea_editor input_gray" id="Message" name="Message"
+                            <textarea class="auto_textarea_editor input_gray" id="Message" name="content"
                                       placeholder="比如自我介绍，对应征者的要求等（勿留联系方式，发布后，有人应征即可看到对方的联系方式）"
                                       style="height:100px;"></textarea>
                         </div>
@@ -359,21 +358,21 @@
                     <div class="data_post_cell_dotted">
                         <label class="label_blue">时间说明：</label>
                         <div class="v10_margin">
-                            <textarea class="auto_textarea_editor input_gray" id="TakeTime" name="TakeTime"
+                            <textarea class="auto_textarea_editor input_gray" id="takeTime" name="takeTime"
                                       maxlength="200" placeholder="选填" style="height:30px;"></textarea>
                         </div>
                     </div>
                     <div class="data_post_cell_dotted">
                         <label class="label_blue">地点说明：</label>
                         <div class="v10_margin">
-                            <textarea class="auto_textarea_editor input_gray" id="TakeLocation" name="TakeLocation"
+                            <textarea class="auto_textarea_editor input_gray" id="takeLocation" name="takeLocation"
                                       maxlength="200" placeholder="选填" style="height:30px;"></textarea>
                         </div>
                     </div>
                     <div class="data_post_cell_dotted">
                         <label class="label_blue">其他说明：</label>
                         <div class="v10_margin">
-                            <textarea class="auto_textarea_editor input_gray" id="TakeResult" name="TakeResult"
+                            <textarea class="auto_textarea_editor input_gray" id="takeResult" name="takeResult"
                                       maxlength="500" placeholder="选填" style="height:30px;"></textarea>
                         </div>
                     </div>
@@ -381,36 +380,36 @@
                         <label class="label_blue">标签：</label>
                         <span class="data_meta_info">请选择标签</span>
                         <div id="tag_list" class="v10_margin">
-                            <span class="select_item">情侣</span>
-                            <span class="select_item">商务</span>
-                            <span class="select_item">民国</span>
-                            <span class="select_item">汉服</span>
-                            <span class="select_item">孕照</span>
-                            <span class="select_item">儿童摄影</span>
-                            <span class="select_item">暗黑</span>
-                            <span class="select_item">情绪</span>
-                            <span class="select_item">夜景</span>
-                            <span class="select_item">校园</span>
-                            <span class="select_item">妆容</span>
-                            <span class="select_item">古风</span>
-                            <span class="select_item">淘宝</span>
-                            <span class="select_item">时尚</span>
-                            <span class="select_item">和服</span>
-                            <span class="select_item">旗袍</span>
-                            <span class="select_item">韩系</span>
-                            <span class="select_item">欧美</span>
-                            <span class="select_item">森系</span>
-                            <span class="select_item">少女</span>
-                            <span class="select_item">宝丽来</span>
-                            <span class="select_item">清新</span>
-                            <span class="select_item">婚礼</span>
-                            <span class="select_item">cosplay</span>
-                            <span class="select_item">胶片</span>
-                            <span class="select_item">黑白</span>
-                            <span class="select_item">纪实</span>
-                            <span class="select_item">日系</span>
+                            <span class="select_item" val="1">情侣</span>
+                            <span class="select_item" val="2">商务</span>
+                            <span class="select_item" val="3">民国</span>
+                            <span class="select_item" val="4">汉服</span>
+                            <span class="select_item" val="5">孕照</span>
+                            <span class="select_item" val="6">儿童摄影</span>
+                            <span class="select_item" val="7">暗黑</span>
+                            <span class="select_item" val="8">情绪</span>
+                            <span class="select_item" val="9">夜景</span>
+                            <span class="select_item" val="10">校园</span>
+                            <span class="select_item" val="11">妆容</span>
+                            <span class="select_item" val="12">古风</span>
+                            <span class="select_item" val="13">淘宝</span>
+                            <span class="select_item" val="14">时尚</span>
+                            <span class="select_item" val="15">和服</span>
+                            <span class="select_item" val="16">旗袍</span>
+                            <span class="select_item" val="17">韩系</span>
+                            <span class="select_item" val="18">欧美</span>
+                            <span class="select_item" val="19">森系</span>
+                            <span class="select_item" val="20">少女</span>
+                            <span class="select_item" val="21">宝丽来</span>
+                            <span class="select_item" val="22">清新</span>
+                            <span class="select_item" val="23">婚礼</span>
+                            <span class="select_item" val="24">cosplay</span>
+                            <span class="select_item" val="25">胶片</span>
+                            <span class="select_item" val="26">黑白</span>
+                            <span class="select_item" val="27">纪实</span>
+                            <span class="select_item" val="28">日系</span>
                         </div>
-                        <input id="Tags" name="Tags" type="hidden" value=""/>
+                        <input id="styleName" name="styleName" type="hidden" value=""/>
                     </div>
 
                     <div class="data_post_cell_dotted">
@@ -422,7 +421,7 @@
                                     <span class="file-wrapper">
                                         <span class="fileupload_sign">+</span>
                                             <input class="fileinput" id="pic_selector" type="file"
-                                                   name="imagesName"  multiple="multiple" onchange="readFile();"><!--multiple，可选择多张图片-->
+                                                   name="imagesNamg"  multiple="multiple" onchange="readFile();"><!--multiple，可选择多张图片-->
                                     </span>
 
                             </div>
@@ -448,18 +447,27 @@
 
                         </div>
 
-                        <div class="field_attached_comment" ng-show="screenshots.length">选中图片，可删除后重新上传</div>
+                        <!--<div class="field_attached_comment" ng-show="screenshots.length">选中图片，可删除后重新上传</div>-->
                     </div>
 
                     <div class="v15_margin" style="text-align:center;">
-                        <button id="submit_button" type="button" class="btn btn-success btn-sm form_large_button">提交
+                        <button id="submit_button" type="submit" class="btn btn-success btn-sm form_large_button">提交
                         </button>
                         <a role="button" class="btn btn-default btn-sm btn_cancel form_medium_button"
-                           data-url="/">取消</a>
+                           data-url="/" >取消</a>
                     </div>
 
                 </div>
+
+                <!-- 存放地址input隐藏标签 -->
+                <tr>
+                    <td><input name="prow" id="p" type="text" hidden="hidden"></td>
+                    <td><input name="city" id="c" type="text" hidden="hidden"></td>
+                    <td><input name="country" id="u" type="text" hidden="hidden"></td>
+                </tr>
+
             </form>
+
             <div class="v20_margin"></div>
             <br/>
             <br/>
@@ -560,6 +568,7 @@
                 }
             });
 
+
             //费用框隐藏
             $(".option").click(function () {
                 $("#FeeValueInput").hide();
@@ -581,6 +590,37 @@
 
        });
 
+</script>
+
+<!-- 地址信息 -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submit_button").click(function () {
+            var proText=document.getElementById("prow");
+            var prow=document.getElementById("p");
+            var index=proText.selectedIndex;
+            prow.value=proText.options[index].innerText;
+            var proText=document.getElementById("city");
+            var city=document.getElementById("c");
+            var index=proText.selectedIndex;
+            city.value=proText.options[index].innerText;
+            var proText=document.getElementById("country");
+            var country=document.getElementById("u");
+            var index=proText.selectedIndex;
+            country.value=proText.options[index].innerText;
+            
+            //获取选择标签的text
+            var $styleName = $("#styleName");
+            var name="";
+            var selectItem = $(".select_item");
+            selectItem.each(function () {
+                if($(this).hasClass("biaoqian")){
+                    name=name+" "+$(this).attr("val");
+                }
+            });
+            $styleName.val(name);
+        });
+    })
 </script>
 
 <script th:src="@{/js/city.js}" type="text/javascript"></script>

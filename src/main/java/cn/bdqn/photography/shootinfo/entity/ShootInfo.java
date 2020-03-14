@@ -3,6 +3,7 @@ package cn.bdqn.photography.shootinfo.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
@@ -29,23 +30,48 @@ public class ShootInfo implements Serializable {
 
     private String content;
 
-    private String price;
+    private Float price;
 
-    @TableField("timeThat")
-    private String timeThat;
+    @TableField("takeTime")
+    private String takeTime;
 
-    private String instractions;
+    @TableField("takeLocation")
+    private String takeLocation;
 
-    @TableField("descriPtion")
-    private String descriPtion;
+    @TableField("takeResult")
+    private String takeResult;
 
     @TableField("creationDate")
-    private String creationDate;
+    private LocalDate creationDate;
 
     @TableField("typeId")
     private String typeId;
 
-    @TableField("styleId")
-    private String styleId;
+    @TableField("costId")
+    private Long costId;
+
+    //是否有会员
+    @TableField("requireRoles")
+    private Long requireRoles;
+
+    //是否需要存入保证金
+    @TableField("requireSecurityAccount")
+    private Long requireSecurityAccount;
+
+    //状态
+    @TableField("stateId")
+    private Long stateId;
+
+    //用户id
+    @TableField("userId")
+    private Long userId;
+
+    //关联地址字段
+    @TableField("shootAddressId")
+    private Long shootAddressId;
+
+    //infostle表
+    @TableField(exist = false)
+    private ShootInfoStyle shootInfoStyle;
 
 }

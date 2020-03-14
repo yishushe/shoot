@@ -11,16 +11,20 @@
     <meta name="description" />
     <meta name="keywords" />
 
-    <link href="../css/core73.min.css" rel="stylesheet" />
+    <link href="../css/core73.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/weui.min.css}">
     <script th:src="@{/js/jquery.min.js}"></script>
-    <!--<script type="text/javascript">
-        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
-    </script>-->
+
 
 </head>
+
 <body class="body_default">
 
+<!-- 性别值 -->
+<input hidden type="text" id="sexss" th:text="${session.user.sex}"/>
+
 <style type="text/css">
+
     a:link, a:visited, a:hover, a:active {
         text-decoration: none;
     }
@@ -54,7 +58,6 @@
     }
 </style>
 
-
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
     <div class="container">
         <div class="navbar-header">
@@ -66,7 +69,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img src="/content/custom/logo.png" class="fy-navbar-logo" />
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
                     <span>艺术摄</span>
                 </div>
             </a>
@@ -74,7 +77,7 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a class="fy-navItem-active" th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
                     <a class="login" href="#">关注</a>
@@ -85,9 +88,6 @@
                 <li>
                     <a class="login" href="#">主题</a>
                 </li>
-                <!--   <li>
-                       <a class="" href="#">地点</a>
-                   </li>-->
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
@@ -97,9 +97,6 @@
                 <li>
                     <a class="login" href="#">加入会员</a>
                 </li>
-                <!-- <li>
-                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
-                 </li>-->
             </ul>
         </nav>
     </div>
@@ -115,23 +112,38 @@
                         <label class="weui_label_override">头像</label>
                     </div>
                     <div class="weui_cell_ft">
-                        <img class="img-circle" width="40" height="40" src="http://qzapp.qlogo.cn/qzapp/101219184/29FCB207DDB74B5E047DB0AD96E10AE0/30" />
+                        <img class="img-circle" width="40" height="40" th:src="${tuxiang}"/>
                     </div>
                 </a>
                 <div id="name_cell" class="weui_cell">
                     <div class="weui_cell_hd"><label class="weui_label_override">昵称</label></div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input id="name_cell_input" class="weui_input" placeholder="请输入昵称" value="少年" style="color:#888;padding-left:18px;">
+                        <input id="name_cell_input" class="weui_input" placeholder="请输入昵称" th:value="${session.user.userName}" style="color:#888;padding-left:18px;">
                     </div>
                 </div>
+
+
+
                 <div class="weui_cell weui_cell_select weui_select_after">
                     <div class="weui_cell_hd">
                         <label class="weui_label_override">性别</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <select class="weui_select" id="gender_select" name="gender_select"><option selected="selected" value="m">男</option>
-                            <option value="f">女</option>
-                            <option value="">暂不填</option>
+
+                        <select class="weui_select" id="gender_select" name="gender_select">
+                            <option value="1" class="sex">男</option>
+                            <option value="2" class="sex1">女</option>
+
+                            <script type="text/javascript">
+                                var $sex = $(".sex");
+                                var $sex1 = $(".sex1");
+                                /*if($("#sexss").text==1){
+                                    $sex.attr("selected","selected");
+                                }else {
+                                    $sex1.attr("selected","selected");
+                                }*/
+                            </script>
+
                         </select>
                     </div>
                 </div>
@@ -141,26 +153,11 @@
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
                         <select class="weui_select" id="label_select" name="label_select"><option value="">暂不填</option>
-                            <option value="photographer">摄影师</option>
-                            <option value="model">模特</option>
-                            <option value="mua">化妆师</option>
-                            <option value="pd">修图师</option>
-                            <option value="merchant">商家</option>
-                            <option value="broker">经纪人</option>
-                            <option value="fan">摄影爱好者</option>
-                            <option value="actor">演员</option>
-                            <option value="dancer">舞蹈</option>
-                            <option value="singer">歌手</option>
-                            <option value="host">主持人</option>
-                            <option value="design">设计</option>
-                            <option value="dwriter">文案</option>
-                            <option value="fwriter">编剧</option>
-                            <option value="editor">剪辑</option>
-                            <option value="director">导演</option>
-                            <option value="clothes">服装</option>
-                            <option value="style">造型</option>
-                            <option value="property">道具</option>
-                            <option selected="selected" value="art">艺术其他</option>
+                            <option value="2">摄影师</option>
+                            <option value="3">模特</option>
+                            <option value="4">网店</option>
+                            <option value="5">校园</option>
+                            <option selected="selected" value="6">艺术其他</option>
                         </select>
                     </div>
                 </div>
@@ -173,12 +170,12 @@
                         <label class="weui_label_override">所在地区</label>
                     </div>
                     <div class="weui_cell_ft">
-                        <span>河南郑州</span>
+                        <span th:text="${dizhi}"></span>
                     </div>
                 </a>
             </div>
 
-            <div class="weui_cells_title">手机验证</div>
+           <!-- <div class="weui_cells_title">手机验证</div>
             <div class="weui_cells weui_cells_form weui_cells_access global_navs">
                 <div id="phone_cell" class="weui_cell">
                     <div class="weui_cell_hd"><label class="weui_label_override">手机</label></div>
@@ -186,10 +183,10 @@
                         <span style="padding-left:18px;color:#888;">18339281537</span>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
-            <div class="weui_cells_title">联系方式</div>
-            <div class="weui_cells weui_cells_form weui_cells_access global_navs">
+            <!--<div class="weui_cells_title">联系方式</div>-->
+           <!-- <div class="weui_cells weui_cells_form weui_cells_access global_navs">
                 <div id="qq_cell" class="weui_cell">
                     <div class="weui_cell_hd"><label class="weui_label_override">QQ</label></div>
                     <div class="weui_cell_bd weui_cell_primary">
@@ -202,7 +199,7 @@
                         <input id="wechat_cell_input" class="weui_input" placeholder="请输入微信号" value="abc2738922672" style="color:#888;padding-left:18px;">
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <br />
@@ -226,30 +223,15 @@
 </div>
 
 <div id="toast_update_success" style="display: none;">
+    <!-- 图片名称 -->
+    <input type="text" hidden id="touxiang01" th:text="${session.user.portyaitl}">
+
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <i class="weui_icon_toast"></i>
         <p id="toast_follow_text" class="weui_toast_content">已更新</p>
     </div>
 </div>
-
-
-
-
-
-<!--<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>-->
-
-<script src="../js/core36.min.js"></script>
-<script th:src="@{/js/notlogin.js}"></script>
-
-<link rel="stylesheet" href="../css/weui.min.css">
-<script type="text/javascript">
-    var selectLocationUrl = "/Location/Select?location=4101";
-    var setAvatarUrl = "/User/SetAvatar";
-    var setPhoneUrl = "/User/SetPhone";
-    var setWechatQrcodeUrl = "/User/SetWechatQrcode";
-    function showToastUpdateSuccess() { $("#toast_update_success").show(), setTimeout(function () { $("#toast_update_success").hide() }, 1e3) } function showTypeinDialog(a, b, c) { editProfileContext.currentEditField = a, $(".weui_dialog_title").text("请输入" + b), $("#typein_dialog_input").val(c), $("#typein_dialog").show(), $("#typein_dialog_input").focus() } function ajaxUpdateUserProfileField(a, b) { var c = siteRoot + "user/updateprofilefield", d = { Name: a, Value: b }; $.ajax({ url: c, type: "POST", contentType: "application/json; charset=utf-8", data: JSON.stringify(d), dataType: "json", success: function (a) { a.success ? showToastUpdateSuccess() : alert(a.error) }, error: function () { alert("操作失败！请稍后再试！") } }) } function updateUserProfileField(a, b) { "name" == a ? $("#name_cell_input").val(b) : "QQ" == a ? $("#qq_cell_input").val(b) : "wechat" == a ? $("#wechat_cell_input").val(b) : "phone" == a && $("#phone_cell_input").val(b), ajaxUpdateUserProfileField(a, b) } var editProfileContext = { currentEditField: "" }; $(function () { $("#gender_select").on("change", function () { updateUserProfileField("gender", $(this).val()) }), $("#label_select").on("change", function () { updateUserProfileField("label", $(this).val()) }), $("#name_cell").on("click", function () { showTypeinDialog("name", "昵称", $("#name_cell_input").val()) }), $("#qq_cell").on("click", function () { showTypeinDialog("QQ", "QQ", $("#qq_cell_input").val()) }), $("#wechat_cell").on("click", function () { showTypeinDialog("wechat", "微信号", $("#wechat_cell_input").val()) }), $("#phone_cell").on("click", function () { window.location.href = setPhoneUrl }), $("#typein_cancel_button").on("click", function () { $("#typein_dialog").hide() }), $("#typein_save_button").on("click", function () { $("#typein_dialog").hide(); var a = editProfileContext.currentEditField, b = $("#typein_dialog_input").val(); updateUserProfileField(a, b) }), $("#location_cell").on("click", function () { var a = $("#hidden_returnUrl").val(), b = selectLocationUrl; b += b.indexOf("?") == -1 ? "?" : "&", b += "returnUrl=" + encodeURIComponent(a), window.location.href = b }), $("#avatar_cell").on("click", function () { window.location.href = setAvatarUrl }), $("#wechatqrcode_cell").on("click", function () { window.location.href = setWechatQrcodeUrl }) });
-</script>
 
 
 <div id="notification_panel" style="position:fixed;">
@@ -260,8 +242,19 @@
     </div>
 </div>
 
+<!-- 图片属性赋值 -->
+<script type="text/javascript">
+
+    /*$(document).ready(function () {
+        var text = $("#touxiang01").text();
+        alert(text);
+        $(".img-circle").attr("src","/images/"+text);
+    });*/
+
+</script>
+
+<script th:src="@{/js/notlogin.js}"></script>
 
 
-<!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
 </body>
 </html>
