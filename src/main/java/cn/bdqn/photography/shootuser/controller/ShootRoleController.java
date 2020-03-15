@@ -27,9 +27,16 @@ import javax.servlet.http.HttpServletRequest;
 public class ShootRoleController {
     @Autowired
     private IShootUserService iShootUserService;
+
     //编辑个人资料页面
     @RequestMapping(value = "/personalInfo")
-    public String personalInfo(){
+    public String personalInfo(Model model){
+        Subject subject=SecurityUtils.getSubject();
+        ShootUser user = (ShootUser)subject.getSession().getAttribute("user");
+        ShootUser shootUser = iShootUserService.personageByUserCode(user.getUserCode());
+        model.addAttribute("dizhi",shootUser.getShootAddress().getShootProw().getProw()+
+                shootUser.getShootAddress().getShootCity().getCity());  //地址
+        model.addAttribute("tuxiang","/images/"+user.getPortyaitl());
         return "personage/personalInfo";
     }
 

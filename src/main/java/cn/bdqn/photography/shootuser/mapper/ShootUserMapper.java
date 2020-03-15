@@ -21,4 +21,5 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
     List<ShootUser> loginByUserCode(@Param("userCode") String userCode);  //登录
 
     ShootUser personageByUserCode(@Param("userCode") String userCode);  //个人信息
+
 }

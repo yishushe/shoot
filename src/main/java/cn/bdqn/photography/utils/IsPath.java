@@ -30,52 +30,62 @@ public class IsPath {
 	@Value("${file.userPath}")
 	private String userPath;
 
-	public String upload(MultipartFile multipartFile, HttpServletRequest request,
+	@Value("${file.infoPath}")
+	private String infoPath;
+
+	public String[] upload(MultipartFile[] multipartFile, HttpServletRequest request,
 						 HttpSession session) {
 
-		if(multipartFile==null || multipartFile.isEmpty()){
+		if(multipartFile==null || multipartFile.length==0){
 			return null;
 		}
+		String[] name1=new String[multipartFile.length];
+		for (int i=0;i<multipartFile.length;i++){
+              // 检查服务器下是否有上传文件夹 http://192.168.1.27:8088
+			String path = request.getScheme()+"://"+request.getServerName()+":"+
+					request.getServerPort()+request.getContextPath();
+			System.out.println("http:"+path);
 
-		// 检查服务器下是否有上传文件夹 http://192.168.1.27:8088
-		String path = request.getScheme()+"://"+request.getServerName()+":"+
-				request.getServerPort()+request.getContextPath();
-		System.out.println("http:"+path);
+			// 获取唯一文件名
+			String name = multipartFile[i].getOriginalFilename();
+			String type = name.substring(name.lastIndexOf(".")); // 获取后缀
+			String uuid = UUID.randomUUID().toString(); // 创建随机名
+			System.out.println("uuid:" + uuid);
+			uuid = uuid.replace("-", "");
+			String newName = uuid + type;
 
-		// 获取唯一文件名
-		String name = multipartFile.getOriginalFilename();
-		String type = name.substring(name.lastIndexOf(".")); // 获取后缀
-		String uuid = UUID.randomUUID().toString(); // 创建随机名
-		System.out.println("uuid:" + uuid);
-		uuid = uuid.replace("-", "");
-		String newName = uuid + type;
+			name1[i]=newName;
 
-		//需要访问的路劲
-		String fileServerPath=path+resourceHandler.substring(0,resourceHandler.lastIndexOf("/")+1)+newName;
-        System.out.println("fileServerPath  "+fileServerPath);
-        session.setAttribute("path",fileServerPath);
+			//需要访问的路劲
+			String fileServerPath=path+resourceHandler.substring(0,resourceHandler.lastIndexOf("/")+1)+newName;
+			System.out.println("fileServerPath  "+fileServerPath);
+			session.setAttribute("path",fileServerPath);
 
-
-		try {
-			//multipartFile.transferTo(new File(commonPath, newName));
-			switch (session.getAttribute("temp").toString()){
-				case "user" :
-					multipartFile.transferTo(new File(userPath, newName));
-					break;
-				case "common" :
-					multipartFile.transferTo(new File(commonPath, newName));
-					break;
-				default:
-                    System.out.println("出现错误!");
-					break;
+			try {
+				//multipartFile.transferTo(new File(commonPath, newName));
+				switch (session.getAttribute("temp").toString()){
+					case "user" :
+						multipartFile[i].transferTo(new File(userPath, newName));
+						break;
+					case "common" :
+						multipartFile[i].transferTo(new File(commonPath, newName));
+						break;
+					case "info" :
+						multipartFile[i].transferTo(new File(infoPath,newName));
+						break;
+					default:
+						System.out.println("出现错误!");
+						break;
+				}
+				//session.invalidate();  //session失效
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			//session.invalidate();  //session失效
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-		return newName;
 
+		return name1;
 	}
+
 }

@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bdqn.photography.shootinfo.mapper.ShootInfoMapper">
 
+    <insert id="addInfo" useGeneratedKeys="true" keyProperty="id">
+         INSERT INTO shoot.shoot_info
+	(content, price, takeTime, takeLocation, takeResult,
+	creationDate, typeId, costId, requireRoles,requireSecurityAccount,shootAddressId,stateId,userId
+	)VALUES (#{content},#{price},#{takeTime},#{takeLocation},#{takeResult},#{creationDate},
+	#{typeId},#{costId},#{requireRoles},#{requireSecurityAccount},#{shootAddressId},1,#{userId})
+    </insert>
+
 </mapper>

@@ -36,3 +36,4 @@ file:
   resourceHandler: /images/**
   commonPath: D:/static/common/
   userPath: D:/static/user/
+  infoPath: D:/static/info/
