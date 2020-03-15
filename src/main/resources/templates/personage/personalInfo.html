@@ -21,7 +21,7 @@
 <body class="body_default">
 
 <!-- 性别值 -->
-<input hidden type="text" id="sexss" th:text="${session.user.sex}"/>
+<input hidden type="text" id="sexss" th:value="${session.user.sex}"/>
 
 <style type="text/css">
 
@@ -137,11 +137,11 @@
                             <script type="text/javascript">
                                 var $sex = $(".sex");
                                 var $sex1 = $(".sex1");
-                                /*if($("#sexss").text==1){
+                                if($("#sexss").val()==1){
                                     $sex.attr("selected","selected");
                                 }else {
                                     $sex1.attr("selected","selected");
-                                }*/
+                                }
                             </script>
 
                         </select>
