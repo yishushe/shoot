@@ -136,4 +136,9 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
         return shootUserMapper.loginByUserCode(userCode);
     }
 
+    @Override
+    public ShootUser personageByUserCode(String userCode) {
+        return shootUserMapper.personageByUserCode(userCode);
+    }
+
 }

@@ -1,6 +1,10 @@
 package cn.bdqn.photography.shootuser.entity;
 
+import cn.bdqn.photography.common.entity.ShootCity;
+import cn.bdqn.photography.common.entity.ShootCountry;
+import cn.bdqn.photography.common.entity.ShootProw;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,5 +36,13 @@ public class ShootAddress implements Serializable {
 
     private Long countryId;
 
+    @TableField(exist = false)
+    private ShootProw shootProw;
+
+    @TableField(exist = false)
+    private ShootCity shootCity;
+
+    @TableField(exist = false)
+    private ShootCountry shootCountry;
 
 }

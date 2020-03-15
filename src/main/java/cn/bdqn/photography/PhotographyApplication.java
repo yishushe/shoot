@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 "cn.bdqn.photography.shootletter.mapper","cn.bdqn.photography.shootselfie.mapper",
 "cn.bdqn.photography.shoottheme.mapper"})
 public class PhotographyApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(PhotographyApplication.class, args);
     }

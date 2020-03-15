@@ -52,6 +52,21 @@ public class ShootUser implements Serializable {
     @TableField("shootAddressId")
     private Long shootAddressId;
 
+    @TableField("member")
+    private Long member;
+
+    @TableField("securityMoney")
+    private Float securityMoney;
+
+    @TableField("integral")
+    private Long integral;
+
+    @TableField(exist = false)
+    private ShootAddress shootAddress;
+
     @TableField(exist = false)  //忽略字段
     private List<ShootRole> roles;
+
+    @TableField("stateId")
+    private Long stateId;
 }

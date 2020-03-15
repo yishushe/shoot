@@ -36,6 +36,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/shoot-user")
 public class ShootUserController {
+    //获得当前用户 Subject当前用户 全局subject
+    Subject subject = null;
 
     @Autowired
     @Qualifier("isPath")
@@ -64,12 +66,11 @@ public class ShootUserController {
     //登录
     @RequestMapping(value = {"/sbuLogin"})
     public String login(ShootUser user, @RequestParam(value = "rememberMe", required = false)
-            boolean rememberMe) {
+            boolean rememberMe,Model model) {
         //传入用户编码 密码 将会去验证和认证授权
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getUserPassword());
-
-        //获得当前用户 Subject当前用户
-        Subject subject = SecurityUtils.getSubject();
+        //创建当前用户
+        subject=SecurityUtils.getSubject();
         subject.logout();   //退出登录
         //主体提交登录请求到SecurityManager
         token.setRememberMe(rememberMe);
@@ -79,9 +80,11 @@ public class ShootUserController {
             System.out.println("token:" + token.getPassword());
         } catch (IncorrectCredentialsException ice) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，密码不正确！");
+            model.addAttribute("info","密码不正确");
             ice.printStackTrace();
         } catch (UnknownAccountException uae) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，未知账户！");
+            model.addAttribute("info","未知账户");
         } catch (LockedAccountException lae) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，账户锁定！");
             lae.printStackTrace();
@@ -123,7 +126,7 @@ public class ShootUserController {
         boolean insert = iShootUserService.saveUser(user, address, prow, city, country, userRole);
         if (insert == true) {
             //重定向 可以自动把参数拼接到url地址上
-            attributes.addAttribute("info", "注册成功请输入密码登录登录");
+            attributes.addAttribute("info", "注册成功请输入密码登录");
             attributes.addAttribute("userCode",user.getUserCode());  //传递userCode到登录页
             return "redirect:login";
         } else {
@@ -157,9 +160,26 @@ public class ShootUserController {
 
     //我的 个人中心 主页
     @RequestMapping(value = "/personage")
-    public String personage(){
-
+    public String personage(Model model){
+        ShootUser user = (ShootUser)subject.getSession().getAttribute("user");
+        ShootUser shootUser = iShootUserService.personageByUserCode(user.getUserCode());
+        model.addAttribute("dizhi",shootUser.getShootAddress().getShootProw().getProw()+
+                shootUser.getShootAddress().getShootCity().getCity());  //地址
+        model.addAttribute("juese",shootUser.getRoles().get(0).getRoleName());  //角色
+        System.out.println("ddddddddddddddd:"+shootUser.getShootAddress().getShootProw().getProw()+
+                shootUser.getShootAddress().getShootCity().getCity());
+        model.addAttribute("member",shootUser.getMember());
         return "personage/personage";
     }
+
+
+    //个人中心到发布信息页
+    @RequestMapping(value = "/postMessage")
+    public String postMessage(){
+        return "personage/postMessage";
+    }
+
+
+
 
 }
