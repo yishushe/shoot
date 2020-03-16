@@ -32,4 +32,33 @@
         WHERE u.userCode=#{userCode}
     </select>
 
+    <resultMap id="personage" type="ShootUser">
+        <id property="id" column="id"></id>
+        <association property="shootAddress" javaType="ShootAddress">
+            <id property="id" column="a_id"></id>
+            <association property="shootProw" javaType="ShootProw">
+                <id property="id" column="p_id"></id>
+            </association>
+            <association property="shootCity" javaType="ShootCity">
+                <id property="id" column="c_id"></id>
+            </association>
+        </association>
+        <collection property="roles" ofType="ShootRole">
+            <id property="id" column="r_id"></id>
+        </collection>
+    </resultMap>
+
+    <select id="personageByUserCode" resultMap="personage">
+        SELECT u.*,r.id r_id,r.roleName,p.id p_id,p.prow,c.id c_id,c.city,a.id a_id
+         FROM shoot_user u
+        INNER JOIN shoot_user_role ur ON u.id=ur.userId
+        INNER JOIN shoot_role r ON ur.roleId=r.id
+        INNER JOIN shoot_address a ON u.shootAddressId=a.id
+        INNER JOIN shoot_prow p ON a.prow_id=p.id
+        INNER JOIN shoot_city c ON a.city_id=c.id
+        <where>
+            u.userCode=#{userCode}
+        </where>
+    </select>
+
 </mapper>

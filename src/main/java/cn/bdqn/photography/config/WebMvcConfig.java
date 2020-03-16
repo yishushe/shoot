@@ -11,8 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    //ddddddddddddddddddddddddd
-
     @Value("${file.resourceHandler}")
     private String resourceHandler;
 
@@ -22,13 +20,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Value("${file.userPath}")
     private String userPath;
 
+    @Value("${file.infoPath}")
+    private String infoPath;
+
     /**
      * 完成访问路劲与保存路劲的映射
      * @param registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(resourceHandler).addResourceLocations("file:///"+commonPath,"file:///"+userPath);
+        registry.addResourceHandler(resourceHandler).addResourceLocations("file:///"+commonPath,"file:///"+userPath,"file:///"+infoPath);
         super.addResourceHandlers(registry);
     }
 

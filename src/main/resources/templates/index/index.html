@@ -3,22 +3,24 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-   <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <title>河南郑州 - 摄会社 - 摄影师模特摄影约拍演艺通告平台</title>
 
-    <link href="/content/resources/core73.min.css" rel="stylesheet" />
-    <script type="text/javascript">
-        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
-    </script>-->
     <link href="../css/core73.min.css" rel="stylesheet">
-    <script th:src="@{/js/jquery-1.12.4.js}" type="text/javascript"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+    <style type="text/css">
+
+        .biaoqian{
+            background: #1b6d85;
+        }
+
+    </style>
 
 </head>
 <body class="body_default">
+
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
     <div class="container">
         <div class="navbar-header">
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
@@ -40,17 +42,14 @@
                     <a class="fy-navItem-active" href="#">首页</a>
                 </li>
                 <li>
-                    <a class="login" href="#">关注</a>
+                    <a class="login" href="javascript:;">关注</a>
                 </li>
                 <li>
-                    <a class="login" href="#">自拍</a>
+                    <a class="login" href="javascript:;">自拍</a>
                 </li>
                 <li>
-                    <a class="login" href="#">主题</a>
+                    <a class="login" href="javascript:;">主题</a>
                 </li>
-             <!--   <li>
-                    <a class="" href="#">地点</a>
-                </li>-->
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
@@ -58,105 +57,228 @@
                     <a id="" class="fy-navItem-notification" href="#">通知</a>
                 </li>
                 <li>
-                    <a class="login" href="#">加入会员</a>
+                    <a class="login" href="javascript:;">加入会员</a>
                 </li>
-               <!-- <li>
-                    <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
-                </li>-->
             </ul>
         </nav>
     </div>
-</header>
-<div class="fy-docs-nav-distance"></div>
 
+</header>
+
+<div class="fy-docs-nav-distance"></div>
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="row" style="margin-left:0px;margin-right:0px;">
+
         <div class="col-sm-9 xzero_padding">
+
+            <!-- 地址 费用 性别 -->
             <div class="data_posts">
+
+                <!-- 地址 -->
                 <div class="data_post_cell_dotted">
                     <span class="data_meta_info">地区：</span>
-                    <a class="data_item_link" href="/y?from=location_select">全部</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=11">北京</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=31">上海</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=12">天津</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=50">重庆</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=4401">广州</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=4403">深圳</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3201">南京</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3301">杭州</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=4201">武汉</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=4301">长沙</a>
-                    <span class="data_item_label">郑州</span>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=5101">成都</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=6101">西安</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=2301">哈尔滨</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=2201">长春</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=2101">沈阳</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=2102">大连</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=1301">石家庄</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3401">合肥</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3701">济南</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3702">青岛</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3601">南昌</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3501">福州</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3502">厦门</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=4501">南宁</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=5301">昆明</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=3205">苏州</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=4404">珠海</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=4419">东莞</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=67">香港</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=68">澳门</a>
-                    <a class="data_item_link" href="/y?from=location_select&amp;location=69">台湾</a>
-                    <a class="data_item_link" href="/Location/Select?returnUrl=%2Fy%3Ffrom%3Dlocation_select">>>其他地区</a>
+                    <a class="data_item_link data_city" href="javascript:;">全部</a>
+                    <a class="data_item_link data_city" href="javascript:;">北京</a>
+                    <a class="data_item_link data_city" href="javascript:;">上海</a>
+                    <a class="data_item_link data_city" href="javascript:;">天津</a>
+                    <a class="data_item_link data_city" href="javascript:;">重庆</a>
+                    <a class="data_item_link data_city" href="javascript:;">广州</a>
+                    <a class="data_item_link data_city" href="javascript:;">深圳</a>
+                    <a class="data_item_link data_city" href="javascript:;">南京</a>
+                    <a class="data_item_link data_city" href="javascript:;">杭州</a>
+                    <a class="data_item_link data_city" href="javascript:;">郑州</a>
+                    <a class="data_item_link data_city" href="javascript:;">武汉</a>
+                    <a class="data_item_link data_city" href="javascript:;">长沙</a>
+                    <a class="data_item_link data_city" href="javascript:;">成都</a>
+                    <a class="data_item_link data_city" href="javascript:;">西安</a>
+                    <a class="data_item_link data_city" href="javascript:;">哈尔滨</a>
+                    <a class="data_item_link data_city" href="javascript:;">长春</a>
+                    <a class="data_item_link data_city" href="javascript:;">沈阳</a>
+                    <a class="data_item_link data_city" href="javascript:;">大连</a>
+                    <a class="data_item_link data_city" href="javascript:;">石家庄</a>
+                    <a class="data_item_link data_city" href="javascript:;">合肥</a>
+                    <a class="data_item_link data_city" href="javascript:;">济南</a>
+                    <a class="data_item_link data_city" href="javascript:;">青岛</a>
+                    <a class="data_item_link data_city" href="javascript:;">南昌</a>
+                    <a class="data_item_link data_city" href="javascript:;">福州</a>
+                    <a class="data_item_link data_city" href="javascript:;">厦门</a>
+                    <a class="data_item_link data_city" href="javascript:;">南宁</a>
+                    <a class="data_item_link data_city" href="javascript:;">昆明</a>
+                    <a class="data_item_link data_city" href="javascript:;">苏州</a>
+                    <a class="data_item_link data_city" href="javascript:;">珠海</a>
+                    <a class="data_item_link data_city" href="javascript:;">东莞</a>
+                    <a class="data_item_link data_city" href="javascript:;">香港</a>
+                    <a class="data_item_link data_city" href="javascript:;">澳门</a>
+                    <a class="data_item_link data_city" href="javascript:;">台湾</a>
+                    <a class="data_item_link data_city" href="javascript:;">>>其他地区</a>
                 </div>
+
+                <!-- 费用条件 -->
                 <div class="data_post_cell_dotted">
                     <span class="data_meta_info">费用：</span>
-                    <a class="data_item_link" href="/y?location=4101">全部</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;fee=free">希望互免</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;fee=want">需要收费</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;fee=pay">愿意付费</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;fee=talk">费用协商</a>
+                    <a class="data_item_link data_cost" href="javascript:;">全部</a>
+                    <a class="data_item_link data_cost" href="javascript:;" val="1">希望互免</a>
+                    <a class="data_item_link data_cost" href="javascript:;" val="2">需要收费</a>
+                    <a class="data_item_link data_cost" href="javascript:;" val="3">愿意付费</a>
+                    <a class="data_item_link data_cost" href="javascript:;" val="4">费用协商</a>
                 </div>
+
+                <!-- 身份条件 -->
                 <div class="data_post_cell_dotted">
                     <span class="data_meta_info">身份：</span>
-                    <a class="data_item_link" href="/y?location=4101">全部</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=photographer">摄影师</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=model">模特</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=mua">化妆师</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=pd">修图师</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=merchant">商家</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=broker">经纪人</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=fan">摄影爱好者</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=actor">演员</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=dancer">舞蹈</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=singer">歌手</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=host">主持人</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=design">设计</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=dwriter">文案</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=fwriter">编剧</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=editor">剪辑</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=director">导演</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=clothes">服装</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=style">造型</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=property">道具</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;label=art">艺术其他</a>
+                    <a class="data_item_link data_role" href="javascript:;">全部</a>
+                    <a class="data_item_link data_role" href="javascript:;" val="2">摄影师</a>
+                    <a class="data_item_link data_role" href="javascript:;" val="3">模特</a>
+                    <a class="data_item_link data_role" href="javascript:;" val="4">网店</a>
+                    <a class="data_item_link data_role" href="javascript:;" val="5">校园</a>
+                    <a class="data_item_link data_role" href="javascript:;" val="6">艺术其他</a>
                 </div>
+
+                <!-- 性别条件 -->
                 <div class="data_post_cell_dotted">
                     <span class="data_meta_info">性别：</span>
-                    <a class="data_item_link" href="/y?location=4101">全部</a>
-                    <a class="data_item_link" href="/y?location=4101&amp;gender=m">
-                        男
+                    <a class="data_item_link" href="javascript:;">全部</a>
+                    <a class="data_item_link data_sex" href="javascript:;" val="1">男
                         <i class="web_wechat_men"></i>
                     </a>
-                    <a class="data_item_link" href="/y?location=4101&amp;gender=f">
-                        女
+                    <a class="data_item_link data_sex" href="javascript:;" val="2">女
                         <i class="web_wechat_women"></i>
                     </a>
                 </div>
-            </div>
 
-              <!-- 热门主题 -->
+                <!-- 条件选择js -->
+                <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        var city;
+                        var cost;
+                        var role;
+                        var sex;
+
+                        function data_city(){
+                            $(".data_city").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    city=$(this).text();
+                                    return;
+                                }
+                            });
+                        }
+                        function dataCost(){
+                            $(".data_cost").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    cost=$(this).attr("val");
+                                    return;
+                                }
+                            });
+                        }
+                        function dataRole(){
+                            $(".data_role").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    role=$(this).attr("val");
+                                    return;
+                                }
+                            });
+                        }
+                        function dataSex(){
+                            $(".data_sex").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    sex=$(this).attr("val");
+                                    return;
+                                }
+                            });
+                        }
+                        function data(){
+                            if(city==undefined){
+                                city="";
+                            }
+                            if (cost==undefined){
+                                cost=0;
+                            }
+                            if(role==undefined){
+                                role=0;
+                            }
+                            if(sex==undefined){
+                                sex=0;
+                            }
+                        }
+
+                        //地址
+                        $(".data_city").click(function () {
+
+                            $(".data_city").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    $(this).removeClass("biaoqian");
+                                }
+                            });
+                            $(this).addClass("biaoqian");
+                            data_city();
+                            dataCost();
+                            dataRole();
+                            dataSex();
+                            data();
+                            location.href="/shoot-user/index?city="
+                                +city+"&costId="+cost+"&roleId="+role+"&sex="+sex;
+                        });
+
+                        //性别选择
+                        $(".data_sex").click(function () {
+
+                            //如果有class样式先清除再添加
+                            $(".data_sex").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    $(this).removeClass("biaoqian");
+                                }
+                            });
+                            $(this).addClass("biaoqian");
+                            data_city();
+                            dataCost();
+                            dataRole();
+                            dataSex();
+                            data();
+                            location.href="/shoot-user/index?city="
+                                +city+"&costId="+cost+"&roleId="+role+"&sex="+sex;
+                        });
+
+
+
+                        //费用
+                        $(".data_cost").click(function () {
+                            $(".data_cost").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    $(this).removeClass("biaoqian");
+                                }
+                            });
+                            $(this).addClass("biaoqian");
+                            data_city();
+                            dataCost();
+                            dataRole();
+                            dataSex();
+                            data();
+                            location.href="/shoot-user/index?city="
+                                +city+"&costId="+cost+"&roleId="+role+"&sex="+sex;
+                        });
+
+                        //身份
+                        $(".data_role").click(function () {
+                            $(".data_role").each(function () {
+                                if($(this).hasClass("biaoqian")){
+                                    $(this).removeClass("biaoqian");
+                                }
+                            });
+                            $(this).addClass("biaoqian");
+                            data_city();
+                            dataCost();
+                            dataRole();
+                            dataSex();
+                            data();
+                            location.href="/shoot-user/index?city="
+                                +city+"&costId="+cost+"&roleId="+role+"&sex="+sex;
+                        });
+
+                    });
+                </script>
+
+            </div>
 
             <!-- 最新约拍返片 -->
             <div class="data_posts v8_margin">
@@ -206,559 +328,170 @@
                 </div>
             </div>
 
-            <div class="data_posts v8_margin">
+            <!-- 约拍信息 -->
+            <div class="data_posts v8_margin" >
 
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/993330">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/62591">
-                                    <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/62591/62591_016005701_1565525894281.jpeg/t150" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">喜欢拍照喜欢你</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影爱好者</span>
+                <!-- 约拍信息展示 -->
+                <div th:each="tem,index: ${info}">
+                    <!-- 循环每条约拍信息展示 -->
+                    <div class="data_post_container">
+                        <a class="data_post_container_link" th:href="@{/shoot-info/about(id=${tem.id})}">
+                            <div class="user_info_cell_sm v10_margin_bottom">
+                                <div class="user_info_cell_avatar">
+
+                                    <i class="data_post_author_title_link" data-url="/u/62591">
+                                        <img class="img-circle data_avatar_small2" th:src="${tem.shootUser.portyaitl}"/>
+                                    </i>
+
+                                </div>
+                                <div class="user_info_cell_content">
+                                    <span class="data_post_author_title" th:text="${tem.shootUser.userName}">喜欢拍照喜欢你</span>
+                                    <i class="web_wechat_men"></i>
+                                    <div>
+                                        <span class="data_meta_info_xs" th:text="${tem.shootUser.roles.get(0).roleName}">摄影爱好者</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">费用协商</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            有想拍这种风格的没？唯美复古、清新简约、情绪胶片，有的话滴滴，提供拍摄和民宿推荐，费用AA，模特自备服装妆造
-                            <span class="data_meta_info">（3张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/62591/62591_036501780_1576901740075.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                            <div class="data_post_fee_info">
+                                <span class="data_meta_info" th:text="${tem.shootType.typeName}">约拍</span>
+                                <span class="data_meta_info span_v2_margin_left" th:text="${tem.shootAddress.shootProw.prow+tem.shootAddress.shootCity.city+tem.shootAddress.shootCountry.country}">河南郑州</span>
+                                <span class="span_v2_margin_left" th:text="${tem.shootCost.costName}">费用协商</span>
+                                <span th:if="${tem.price!=0 and tem.price>0}" th:text="${tem.price}+'元'"></span>
                             </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/62591/62591_037227961_1576901740718.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                            <div class="data_post_message v8_margin" th:text="${tem.content}">
+                                有想拍这种风格的没？唯美复古、清新简约、情绪胶片，有的话滴滴，提供拍摄和民宿推荐，费用AA，模特自备服装妆造
+                                <!--<span class="data_meta_info" th:text="${tem.shootImages.size}">（3张）</span>-->
                             </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/62591/62591_032222612_1576901741371.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年12月21日12:15</span>
-                        </div>
-                        <div class="v10_margin">
-                            <span class="label label-success">收到约拍1条</span>
-                        </div>
-                    </a>
-                </div>
 
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/992819">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/501166">
-                                    <img class="img-circle data_avatar_small2" src="http://wx.qlogo.cn/mmopen/vi_32/5h0htk1De8mVWPC95dwtKQXPQGciahQYGCnDUeJAY9camDuTdLRLlaISJW4ic66wBf6ibSpmblcVEYUKCDfdRukpg/0" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">Bonjour&#xE003;</span>
-                                <i class="web_wechat_women"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">模特</span>
+                            <div class="row data_post_image_row" >
+                                <div th:if="${tem.shootImages!=null}" th:each="images,count : ${tem.shootImages}">
+                                <div class="col-xs-4 col-md-2 data_post_image_cell">
+                                    <img th:src="${images.imagesName}"/>
+                                </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">愿意付费</span>
-                            <span class="money_amount span_v2_margin_left">200元</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            想拍海马体的圣诞照(下面这种)，海马体排到太晚了，希望能出类似风格的摄影师约，能提供场地，妆容，服装，按成片效果协商价格
-                            <span class="data_meta_info">（3张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/501166/20191214Q13NKU/501166_023005021_1576333897785.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+
+                            <div class="data_meta_info v10_margin">
+                                <span class="data_meta_info" th:text="${tem.creationDate}">2019年12月21日12:15</span>
                             </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/501166/20191214Q13NKU/501166_024874612_1576333897786.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                            <div class="v10_margin" th:if="${tem.requireRoles==2}">
+                                <span class="label label-success">需要开通会员才能约拍</span>
                             </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/501166/20191214Q13NKU/501166_029035663_1576333897786.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年12月14日22:31</span>
-                        </div>
-                        <div class="v10_margin">
-                            <span class="label label-success">摄会社Club会员可请求</span>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+
                 </div>
 
+                <!-- 分页 数据 当前页 总页数 -->
+                <tr>
+                    <td hidden>
+                        <input hidden type="text" th:value="${current}" id="current">
+                        <input hidden type="text" th:value="${pages}" id="pages">
+                    </td>
+                </tr>
 
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/992356">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/1531674">
-                                    <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/1531674/201912068NB8O3/1531674_026105251_1575620634991.jpg/t150" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">街头punk</span>
-                                <i class="web_wechat_women"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">模特</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            金水东路绿地新都会新田360广场&#xA;本人是网拍模特&#xA;可以长期合作
-                            <span class="data_meta_info">（3张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1531674/20191209ZI8VWB/1531674_028960561_1575872316235.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1531674/20191209ZI8VWB/1531674_026242292_1575872316235.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1531674/20191209ZI8VWB/1531674_020024633_1575872316235.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年12月9日14:18</span>
-                        </div>
-                        <div class="v10_margin">
-                            <span class="label label-success">收到约拍1条</span>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/992294">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/1531890">
-                                    <img class="img-circle data_avatar_small2" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKhKicPfmH6FDhIpv87EBoWcicoKwoplaQrjpwDiaV43OM0wcpRsCg09vcpEUibRdJwNSWFiaozVhdsgvg/132" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">爱拍照你叁哥</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影师</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            有人喜欢这些风格吗？
-                            <span class="data_meta_info">（9张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1531890/20191208MFDE6N/1531890_029740861_1575794764721.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1531890/20191208MFDE6N/1531890_028157092_1575794764722.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1531890/20191208MFDE6N/1531890_028136873_1575794764722.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年12月8日16:46</span>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/992208">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/820695">
-                                    <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/820695/820695_039043250_1575690841704.jpg/t150" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">不谴是非，以与世俗处。</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影师</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            互勉约拍，本人刚接触人像，不介意我经验不足的，可以跟我一起约拍，相互提高，最好是可以长期一起研究一起提高的妹子。摄影摄像都可以。
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年12月7日12:00</span>
-                        </div>
-                        <div class="v10_margin">
-                            <span class="label label-success">收到约拍1条</span>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/991909">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/62591">
-                                    <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/62591/62591_016005701_1565525894281.jpeg/t150" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">喜欢拍照喜欢你</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影爱好者</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            11月末紫荆山公园散步拍的，想拍更多作品以不断提升自我（面对不同环境创作不同风格的能力与经验）&#xA;提升是永无止境的，所以希望是长期合作&#xA;92年...
-                            <span class="data_meta_info">（9张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/62591/62591_035310480_1575404912453.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/62591/62591_031640861_1575404916895.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/62591/62591_038906442_1575404920748.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年12月4日04:29</span>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/991388">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/826536">
-                                    <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/826536/20191112SXLDBX/826536_0240565310_1573534921428.jpg/t150" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">小龙</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影师</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            下周有时间的小姐姐可以联系我，拍一组古风样片，有想要合作的抓紧联系我，以下是我的一些作品
-                            <span class="data_meta_info">（9张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191128D6YRHG/826536_020481571_1574920571178.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191128D6YRHG/826536_023616212_1574920571178.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191128D6YRHG/826536_023381853_1574920571178.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年11月28日13:56</span>
-                        </div>
-                        <div class="v10_margin">
-                            <span class="label label-success">收到约拍4条</span>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/990985">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/826536">
-                                    <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/826536/20191112SXLDBX/826536_0240565310_1573534921428.jpg/t150" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">小龙</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影师</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            想拍一组复古的作品，服装造型全包，影楼拍摄，想合作的可以联系，以下是我的作品，想要快！快速联系！
-                            <span class="data_meta_info">（9张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191123T32EOH/826536_027847311_1574491308846.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191123T32EOH/826536_021845792_1574491308846.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191123T32EOH/826536_024959523_1574491308846.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年11月23日14:41</span>
-                        </div>
-                        <div class="v10_margin">
-                            <span class="label label-success">收到约拍1条</span>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/990958">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/826536">
-                                    <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/826536/20191112SXLDBX/826536_0240565310_1573534921428.jpg/t150" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">小龙</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影师</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            要拍一组工笔画的作品，有意向的小姐姐可以联系我，以下是我的一些作品
-                            <span class="data_meta_info">（9张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191123Z6LX52/826536_029814331_1574469663810.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191123Z6LX52/826536_027133712_1574469663810.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/826536/20191123Z6LX52/826536_026823753_1574469663810.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年11月23日08:41</span>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/990459">
-                        <div class="user_info_cell_sm v10_margin_bottom">
-                            <div class="user_info_cell_avatar">
-                                <i class="data_post_author_title_link" data-url="/u/1533917">
-                                    <img class="img-circle data_avatar_small2" src="http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eq5mKGj1W9a5FXZITskpnVEtibjqJT4VHico2kLGjnQAjqvZBU33gS32Lp9XDC07NvxG466Hgr1g76A/132" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
-                                </i>
-                            </div>
-                            <div class="user_info_cell_content">
-                                <span class="data_post_author_title">小明的绿领巾</span>
-                                <i class="web_wechat_men"></i>
-                                <div>
-                                    <span class="data_meta_info_xs">摄影师</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data_post_fee_info">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                            <span class="span_v2_margin_left">希望互免</span>
-                        </div>
-                        <div class="data_post_message v8_margin">
-                            新人练手，希望互勉，若不嫌弃，尽力而为
-                            <span class="data_meta_info">（4张）</span>
-                        </div>
-                        <div class="row data_post_image_row">
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1533917/20191116F12NHH/1533917_0137284320_1573898559415.jpeg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1533917/20191116F12NHH/1533917_0108189924_1573898656813.jpeg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                            <div class="col-xs-4 col-md-2 data_post_image_cell">
-                                <img src="http://image.shehuiapp.com/u/1533917/20191116F12NHH/1533917_0192946323_1573898656812.jpeg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                            </div>
-                        </div>
-                        <div class="data_meta_info v10_margin">
-                            <span class="data_meta_info">2019年11月16日18:05</span>
-                        </div>
-                        <div class="v10_margin">
-                            <span class="label label-success">摄会社Club会员可请求</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="container pager_container">
+                <!-- 翻页按钮 -->
+                <div class="container pager_container">
                 <nav>
                     <ul class="pager">
-                        <li class="disabled">
-                            <a href="javascript:void(0);" aria-label="Previous">
-                                <span aria-hidden="true">上一页</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="/y?location=4101&amp;page=0" aria-label="Next">
-                                <span aria-hidden="true">1</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="/y?location=4101&amp;page=1" aria-label="Next">
-                                <span aria-hidden="true">2</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="/y?location=4101&amp;page=2" aria-label="Next">
-                                <span aria-hidden="true">3</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="/y?location=4101&amp;page=3" aria-label="Next">
-                                <span aria-hidden="true">4</span>
-                            </a>
-                        </li>
-                        <li class="distance">
-                            <span>...</span>
-                        </li>
-                        <li class="">
-                            <a href="/y?location=4101&amp;page=26" aria-label="Next">
-                                <span aria-hidden="true">27</span>
+                        <li>
+                            <a href="javascript:;" id="prev" aria-label="Previous">
+                                <span>上一页</span>
                             </a>
                         </li>
                         <li>
-                            <a href="/y?location=4101&amp;page=1" aria-label="Next">
-                                <span aria-hidden="true">下一页</span>
+                            <a>
+                                <span th:text="'当前页'+${current}+'/'+${pages}"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" id="next" aria-label="Next">
+                                <span>下一页</span>
                             </a>
                         </li>
                     </ul>
                 </nav>
             </div>
 
-        </div>
-        <div class="col-sm-3 fy-rside-panel">
-            <div>
-                <a role="button" class="btn btn-success btn-sm btn_login_required" data-login="1" style="width:100%;" href="/y/publish">发布信息</a>
-            </div>
-            <div class="v8_margin"></div>
+                <!-- 分页js -->
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#prev").click(function () {
+                            var current = Number($("#current").val())-1;
+                            location.href = "/shoot-user/index?current=" + current;
+                        });
+                        $("#next").click(function () {
+                            var current = Number($("#current").val())+1;
+                            if(current>=Number($("#pages").val())){
+                                current=Number($("#pages").val());
+                            }
+                            location.href = "/shoot-user/index?current=" + current;
+                        })
+                    })
+                </script>
 
-            <div class="data_posts">
-                <div class="data_post_cell_dotted">
-                    <a class="data_post_title_link" href="/about">>>关于我们</a>
-                    <br />
-                    <a class="data_post_title_link" href="http://mp.weixin.qq.com/s?__biz=MzI5NTA0NzAwMA==&mid=504523102&idx=1&sn=1449a6fa4728921676dbf370e7debf2a&chksm=77bf536940c8da7fd9257ea9c5455f1633e57b34fa0692d4b5ed868ab1b7a6dc459355a6b241&scene=1&srcid=0909nP2GXXC6OCSM0j9BNHEs#rd" rel="nofollow">>>使用指南</a>
-                    <br />
-                    <a class="data_post_title_link" href="/UserAdvice/Submit">>>向我们提建议</a>
+
+            </div>
+
+            <!-- 关于我们 -->
+            <div class="col-sm-3 fy-rside-panel" style="float: right">
+                <div>
+                    <a role="button" class="btn btn-success btn-sm btn_login_required" data-login="1" style="width:100%;" href="/y/publish">发布信息</a>
                 </div>
-            </div>
-            <div class="v8_margin">
+                <div class="v8_margin"></div>
 
-                <div class="data_post_cell form_header_righticon download_panel">
-                    <div class="nav_left_items flex_row_panel">
-                        <img class="data_avatar_small2" src="/content/custom/logo.png" />
-                        <div class="span_v5_margin_left">
-                            <div class="data_meta_text_big">摄会社APP</div>
-                            <div class="data_meta_info">摄影约拍平台</div>
+                <div class="data_posts">
+                    <div class="data_post_cell_dotted">
+                        <a class="data_post_title_link" href="/about">>>关于我们</a>
+                        <br />
+                        <a class="data_post_title_link" href="http://mp.weixin.qq.com/s?__biz=MzI5NTA0NzAwMA==&mid=504523102&idx=1&sn=1449a6fa4728921676dbf370e7debf2a&chksm=77bf536940c8da7fd9257ea9c5455f1633e57b34fa0692d4b5ed868ab1b7a6dc459355a6b241&scene=1&srcid=0909nP2GXXC6OCSM0j9BNHEs#rd" rel="nofollow">>>使用指南</a>
+                        <br />
+                        <a class="data_post_title_link" href="/UserAdvice/Submit">>>向我们提建议</a>
+                    </div>
+                </div>
+                <div class="v8_margin">
+
+                    <div class="data_post_cell form_header_righticon download_panel">
+                        <div class="nav_left_items flex_row_panel">
+                            <img class="data_avatar_small2" src="/content/custom/logo.png" />
+                            <div class="span_v5_margin_left">
+                                <div class="data_meta_text_big">摄会社APP</div>
+                                <div class="data_meta_info">摄影约拍平台</div>
+                            </div>
+                        </div>
+                        <div class="nav_right_items flex_row_panel">
+                            <a class="btn btn-default" href="/Download" role="button">立即下载</a>
                         </div>
                     </div>
-                    <div class="nav_right_items flex_row_panel">
-                        <a class="btn btn-default" href="/Download" role="button">立即下载</a>
+                </div>
+                <div class="v8_margin"></div>
+
+                <div class="data_posts">
+                    <div class="data_post_cell_dotted">
+                        <span class="data_group_title">关注公众号</span>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <img src="/content/custom/wechat_qrcode.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
+                    </div>
+                </div>
+                <div class="v8_margin"></div>
+
+
+                <div class="data_posts">
+                    <div class="data_post_cell_dotted">
+                        <span class="data_group_title">联系我们</span>
+                    </div>
+                    <div class="data_post_cell_dotted">
+                        <img src="/content/custom/contactwechat.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
                     </div>
                 </div>
             </div>
-            <div class="v8_margin"></div>
-
-            <div class="data_posts">
-                <div class="data_post_cell_dotted">
-                    <span class="data_group_title">关注公众号</span>
-                </div>
-                <div class="data_post_cell_dotted">
-                    <img src="/content/custom/wechat_qrcode.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
-                </div>
-            </div>
-            <div class="v8_margin"></div>
 
 
-            <div class="data_posts">
-                <div class="data_post_cell_dotted">
-                    <span class="data_group_title">联系我们</span>
-                </div>
-                <div class="data_post_cell_dotted">
-                    <img src="/content/custom/contactwechat.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
-                </div>
-            </div>
         </div>
-    </div>
 </div>
 
+</div>
 
 <footer class="fy-docs-footer " role="contentinfo">
     <div class="container xzero_padding" style="text-align:center;">
@@ -770,24 +503,7 @@
     </div>
 </footer>
 
-
-
-
-
-<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
-
 <script th:src="@{/js/notlogin.js}"></script>
-<script src="../js/jquery.min.js"></script>
-<script src="../js/core36.min.js"></script>
-
-
-<link rel="stylesheet" href="../css/weui.min.css">
-<script type="text/javascript">
-    $(function () { $(".data_posts").on("click", ".data_post_author_title_link", function (t) { var a = $(this).attr("data-url"); a.length > 0 && window.open(a, "_self"), t.stopPropagation(), t.preventDefault() }) });
-</script>
-
-
-
 
 <div id="notification_panel" style="position:fixed;">
     <div class="data_posts">
@@ -797,8 +513,5 @@
     </div>
 </div>
 
-
-
-<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>
 </body>
 </html>

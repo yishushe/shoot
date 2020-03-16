@@ -13,6 +13,7 @@ import cn.bdqn.photography.shootuser.mapper.ShootAddressMapper;
 import cn.bdqn.photography.shootuser.mapper.ShootUserMapper;
 import cn.bdqn.photography.shootuser.mapper.ShootUserRoleMapper;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
+import cn.bdqn.photography.utils.AddressUtls;
 import cn.bdqn.photography.utils.Round;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -68,6 +69,9 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     @Qualifier("shootUserRoleMapper")
     private ShootUserRoleMapper shootUserRoleMapper;
 
+    @Autowired
+    private AddressUtls addressUtls;
+
     /**
      * md5 盐值加密密码
      * @param user
@@ -93,33 +97,8 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,
     rollbackFor = {Exception.class})
     @Override
-    public boolean saveUser(ShootUser user, ShootAddress address, ShootProw prow, ShootCity city, ShootCountry country, ShootUserRole userRole) {
-        QueryWrapper<ShootProw> queryProw=new QueryWrapper<>(); //sql对象
-        queryProw.eq("prow",prow.getProw());  //条件
-        ShootProw shootProw=shootProwMapper.selectOne(queryProw);
-        QueryWrapper<ShootCity> queryCity=new QueryWrapper<>();
-        queryCity.eq("city",city.getCity());
-        ShootCity shootCity=shootCityMapper.selectOne(queryCity);
-        QueryWrapper<ShootCountry> queryCountry=new QueryWrapper<>();
-        queryCountry.eq("country",country.getCountry());
-        ShootCountry shootCountry=shootCountryMapper.selectOne(queryCountry);
-        Long prowId=shootProw.getId();
-        Long cityId=shootCity.getId();
-        Long countryId=shootCountry.getId();
-        QueryWrapper<ShootAddress> queryAddress=new QueryWrapper<>();
-        queryAddress.eq("prow_id",prowId);
-        queryAddress.eq("city_id",cityId);
-        queryAddress.eq("country_id",countryId);
-        ShootAddress shootAddress=shootAddressMapper.selectOne(queryAddress);
-        if(shootAddress!=null){  //说明这个信息有过人用并且一致
-            user.setShootAddressId(shootAddress.getId());  //获得addressId
-        }else {  //说明没有人用则需要添加一天新的数据
-            address.setProwId(prowId);
-            address.setCityId(cityId);
-            address.setCountryId(countryId);
-            shootAddressMapper.insertAddress(address);  //插入数据到address并回写获得新增id
-            user.setShootAddressId(address.getId());  //加入新增id
-        }
+    public boolean saveUser(ShootUser user, ShootProw prow, ShootCity city, ShootCountry country, ShootUserRole userRole) {
+         user.setShootAddressId(addressUtls.address(prow,city,country)); //调用帮助方法 获得添加地址对应id
          user.setCreationDate(LocalDateTime.now());  //获得当前时间
          user.setUserPassword(realm(user));  //密码MD5加密
         int count=shootUserMapper.insertUser(user);  //执行新增用户操作  并回写获得id
@@ -134,6 +113,11 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     @Override
     public List<ShootUser> findUserByUserCode(String userCode) {
         return shootUserMapper.loginByUserCode(userCode);
+    }
+
+    @Override
+    public ShootUser personageByUserCode(String userCode) {
+        return shootUserMapper.personageByUserCode(userCode);
     }
 
 }

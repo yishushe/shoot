@@ -3,18 +3,15 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-   <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">-->
+
     <title>自拍 - 摄会社</title>
     <meta name="description" />
     <meta name="keywords" />
 
     <link href="../css/core73.min.css" rel="stylesheet" />
-   <!-- <script type="text/javascript">
-        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
-    </script>-->
+    <script th:src="@{/js/jquery.min.js}"></script>
 
 </head>
 <body class="body_default">
@@ -481,7 +478,6 @@
 
 <script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
 
-<script src="../js/jquery.min.js"></script>
 <script src="../js/core36.min.js"></script>
 
 
@@ -508,7 +504,7 @@
 </div>
 
 
-
+<script th:src="@{/js/notlogin.js}"></script>
 <script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>
 </body>
 </html>

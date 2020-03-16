@@ -20,10 +20,11 @@ import java.util.List;
  */
 public interface IShootUserService extends IService<ShootUser> {
 
-    boolean saveUser(ShootUser user, ShootAddress address,
+    boolean saveUser(ShootUser user,
                      ShootProw prow, ShootCity city, ShootCountry country,
                      ShootUserRole userRole);  //用户注册
 
     List<ShootUser> findUserByUserCode(String userCode);
 
+    ShootUser personageByUserCode(String userCode);   //个人信息
 }
