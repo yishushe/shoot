@@ -1,8 +1,8 @@
 package cn.bdqn.photography.houtai.controller;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jobob
  * @since 2020-01-15
  */
-@RestController
-@RequestMapping("/shoot-houtai-user-role")
-public class ShootUserRoleController {
+@Controller
+@RequestMapping("/shoot-houtai-permission")
+public class ShootPermissionControllers {
 
 }

@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         "cn.bdqn.photography.common.mapper","cn.bdqn.photography.shootattention.mapper",
 "cn.bdqn.photography.shootimages.mapper","cn.bdqn.photography.shootinfo.mapper",
 "cn.bdqn.photography.shootletter.mapper","cn.bdqn.photography.shootselfie.mapper",
-"cn.bdqn.photography.shoottheme.mapper"})
+"cn.bdqn.photography.shoottheme.mapper","cn.bdqn.photography.houtai.mapper"})
 public class PhotographyApplication {
     public static void main(String[] args) {
         SpringApplication.run(PhotographyApplication.class, args);
