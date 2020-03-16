@@ -1,10 +1,7 @@
 package cn.bdqn.photography.houtai.mapper;
 
-import cn.bdqn.photography.houtai.entity.ShootUser;
+import cn.bdqn.photography.houtai.entity.ShootUsers;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * <p>
@@ -14,7 +11,7 @@ import java.util.List;
  * @author jobob
  * @since 2020-01-15
  */
-public interface ShootUserMapper extends BaseMapper<ShootUser> {
+public interface ShootUserMappers extends BaseMapper<ShootUsers> {
 
 
 

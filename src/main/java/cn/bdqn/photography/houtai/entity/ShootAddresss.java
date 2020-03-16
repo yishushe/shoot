@@ -1,5 +1,8 @@
 package cn.bdqn.photography.houtai.entity;
 
+import cn.bdqn.photography.common.entity.ShootCity;
+import cn.bdqn.photography.common.entity.ShootCountry;
+import cn.bdqn.photography.common.entity.ShootProw;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -20,17 +23,26 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ShootUserRole implements Serializable {
+public class ShootAddresss implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id",type = IdType.AUTO)  //设置主键生成策略是id自增
     private Long id;
 
-    @TableField("userId")
-    private Long userId;
+    private Long prowId;
 
-    @TableField("roleId")
-    private Long roleId;
+    private Long cityId;
+
+    private Long countryId;
+
+    @TableField(exist = false)
+    private ShootProw shootProw;
+
+    @TableField(exist = false)
+    private ShootCity shootCity;
+
+    @TableField(exist = false)
+    private ShootCountry shootCountry;
 
 }

@@ -22,7 +22,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ShootUser implements Serializable {
+public class ShootUsers implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -62,9 +62,9 @@ public class ShootUser implements Serializable {
     private Long integral;
 
     @TableField(exist = false)
-    private ShootAddress shootAddress;
+    private ShootAddresss shootAddress;
 
     @TableField(exist = false)  //忽略字段
-    private List<ShootRole> roles;
+    private List<ShootRoles> roles;
 
 }

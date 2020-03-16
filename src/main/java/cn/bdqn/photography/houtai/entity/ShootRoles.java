@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -20,18 +21,16 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ShootRolePermission implements Serializable {
+public class ShootRoles implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id",type = IdType.AUTO)  //设置主键生成策略是id自增
     private Long id;
 
-    @TableField("roleId")
-    private String roleId;
+    @TableField("roleName")
+    private String roleName;
 
-    @TableField("PermissionId")
-    private String PermissionId;
-
-
+    @TableField(exist = false)  //忽略字段
+    private List<ShootPermissions> permissions;
 }

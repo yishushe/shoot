@@ -20,14 +20,17 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ShootPermission implements Serializable {
+public class ShootUserRoles implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id",type = IdType.AUTO)  //设置主键生成策略是id自增
     private Long id;
 
-    @TableField("permissionName")
-    private String permissionName;
+    @TableField("userId")
+    private Long userId;
+
+    @TableField("roleId")
+    private Long roleId;
 
 }

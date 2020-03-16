@@ -1,6 +1,6 @@
 package cn.bdqn.photography.houtai.mapper;
 
-import cn.bdqn.photography.houtai.entity.ShootRolePermission;
+import cn.bdqn.photography.houtai.entity.ShootRolePermissions;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jobob
  * @since 2020-01-15
  */
-public interface ShootRolePermissionMapper extends BaseMapper<ShootRolePermission> {
+public interface ShootRolePermissionMappers extends BaseMapper<ShootRolePermissions> {
 
 }

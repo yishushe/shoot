@@ -1,6 +1,6 @@
 package cn.bdqn.photography.houtai.service;
 
-import cn.bdqn.photography.houtai.entity.ShootAddress;
+import cn.bdqn.photography.houtai.entity.ShootRolePermissions;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jobob
  * @since 2020-01-15
  */
-public interface IShootAddressService extends IService<ShootAddress> {
+public interface IShootRolePermissionServices extends IService<ShootRolePermissions> {
 
 }

@@ -1,6 +1,6 @@
 package cn.bdqn.photography.houtai.mapper;
 
-import cn.bdqn.photography.houtai.entity.ShootAddress;
+import cn.bdqn.photography.houtai.entity.ShootAddresss;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jobob
  * @since 2020-01-15
  */
-public interface ShootAddressMapper extends BaseMapper<ShootAddress> {
+public interface ShootAddressMappers extends BaseMapper<ShootAddresss> {
 
 
 }
