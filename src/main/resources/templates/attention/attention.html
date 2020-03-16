@@ -10,7 +10,9 @@
     <meta name="description" />
     <meta name="keywords" />
 
-    <link href="../css/core73.min.css" rel="stylesheet" />
+   <!-- <link href="../css/core73.min.css" rel="stylesheet" />-->
+
+    <link th:href="@{/css/core73.min.css}" rel="stylesheet">
    <!-- <script type="text/javascript">
         if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
     </script>-->
@@ -53,7 +55,8 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <!--<img src="../images/logo.png" class="fy-navbar-logo" />-->
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo"/>
                     <span>艺术摄</span>
                 </div>
             </a>
@@ -165,12 +168,15 @@
 
 <script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
 
-<script src="../js/jquery.min.js"></script>
-<script src="../js/core36.min.js"></script>
+<!--<script src="../js/jquery.min.js"></script>
+<script src="../js/core36.min.js"></script>-->
+
+<script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/core36.min.js}" type="text/javascript"></script>
 
 
-<link rel="stylesheet" href="../css/weui.min.css">
-
+<!--<link rel="stylesheet" href="../css/weui.min.css">-->
+<link th:href="@{/css/weui.min.css}" rel="stylesheet">
 
 <div id="notification_panel" style="position:fixed;">
     <div class="data_posts">
