@@ -3,10 +3,7 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-   <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">-->
+
     <title>河南郑州模特 喜欢拍照留下回忆 - 摄会社 - 摄影师模特摄影约拍演艺通告平台</title>
     <meta name="description" />
     <meta name="keywords" />
@@ -29,12 +26,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-
                     <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
-
-                    <!--<img src="../../static/images/logo.png" class="fy-navbar-logo" />-->
-                    <img th:src="@{/images/logo.png}">
-
                     <span>摄会社</span>
                 </div>
             </a>
@@ -66,7 +58,6 @@
         </nav>
     </div>
 </header>
-
 
 <div class="fy-docs-nav-distance"></div>
 
@@ -183,6 +174,7 @@
                             <span class="label label-success label_count">收到约拍6条</span>
                         </div>-->
 
+                        <!-- 约拍会员 -->
                         <div class="v10_margin" style="text-align:center;" th:if="${info.requireRoles==2}">
                             <span class="label label-success label_count">摄会社Club会员可请求</span>
                         </div>
@@ -190,12 +182,13 @@
                         <!-- 提交后通知 -->
                         <div class="v15_margin" style="text-align:center;">
 
-                            <a id="dorequest_button" role="button" class="btn btn-success btn-sm form_large_button" data-login="1" data-id="993743" href="javascript:void(0);">发起请求</a>
+                            <!-- 发起约拍按钮 -->
+                            <a id="dorequest_button" role="button" class="btn btn-success btn-sm form_large_button"
+                               data-login="1" data-id="993743" href="javascript:;">发起请求</a>
+
                             <a id="requestdetail_link" class="data_post_title_link" style="display:none;" href="">你已经提交了请求，查看详情&gt;&gt;</a>
 
-                            <!--<div class="v10_margin">
-                                <span class="data_meta_info">您提交请求后，她会接收到微信通知</span>
-                            </div>-->
+
 
                         </div>
 
@@ -235,6 +228,7 @@
             </div>
 
 
+            <!-- 你也想约拍信息吗 -->
             <div class="data_posts v8_margin">
                 <div class="data_post_cell" style="text-align:center;">
                     <div class="data_group_title_bold">你也想发布信息吗？</div>
@@ -374,14 +368,13 @@
     </div>
 </div>
 
-
-
 <div id="toast_message" class="toast_message_fixed" style="display: none;">
     <div class="weui_toast weui_toast_fixed">
         <p id="toast_message_text" class="weui_toast_content weui_toast_content_fixed">
         </p>
     </div>
 </div>
+
 <div class="modal" id="report_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -443,12 +436,15 @@
 </div>
 
 
+<!-- 发起请求按钮 都提交内容 -->
 <div class="weui_dialog_confirm" id="request_submit_dialog" style="display:none;">
-    <div class="weui_mask" onclick="$(this).parent().hide();"></div>
+    <div class="weui_mask"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
+
         <div class="data_post_cell_sm">
             <span class="data_group_title_bold">发起请求</span>
         </div>
+
         <div class="data_post_cell_sm">
             <span id="request_submit_message_label" class="data_meta_info">留言</span>
             <span class="label_required">（必填）</span>
@@ -456,17 +452,29 @@
                 <textarea id="RequestMessage" class="auto_textarea_editor input_gray" placeholder="比如时间、地点、要求等说明" style="height:80px;"></textarea>
             </div>
         </div>
+
         <input id="request_submit_contacts_required" name="request_submit_contacts_required" type="hidden" value="0" />
         <div class="data_post_cell_sm" style="text-align:center;">
-            <a id="request_submit_dialog_confirm_button" class="btn btn-primary btn-sm form_medium_button" href="javascript:void(0);" role="button">提交</a>
-            <a id="request_submit_dialog_cancel_button" class="btn btn-default btn-sm form_medium_button" href="javascript:void(0);" onclick="$('#request_submit_dialog').hide();" role="button">取消</a>
+            <a id="request_submit_dialog_confirm_button" class="btn btn-primary btn-sm form_medium_button" href="javascript:;" role="button">提交</a>
+            <a id="request_submit_dialog_cancel_button" class="btn btn-default btn-sm form_medium_button" href="javascript:;" onclick="$('#request_submit_dialog').hide();" role="button">取消</a>
         </div>
+
     </div>
 </div>
 
+<script type="text/javascript">
 
+    $(document).ready(function () {
+        $("#dorequest_button").click(function () {
+            var $requestSubmitDialog = $("#request_submit_dialog");
+            alert($requestSubmitDialog);
+            alert("dddddddddd");
+        });
+    });
 
+</script>
 
+<!-- 约拍次数 -->
 <div class="weui_dialog_confirm" id="request_exceeds_count_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -485,8 +493,7 @@
 </div>
 
 
-
-
+<!-- 积分 -->
 <div class="weui_dialog_confirm" id="request_nomorecoins_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -507,7 +514,7 @@
 </div>
 
 
-
+<!-- 操作频繁提示 -->
 <div class="weui_dialog_confirm" id="request_bang_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -526,7 +533,7 @@
 </div>
 
 
-
+<!-- 判断是否有过发布信息记录1 -->
 <div class="weui_dialog_confirm" id="request_publishinfo_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -543,7 +550,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="weui_dialog_confirm" id="request_setprofile_dialog" style="display:none;">
@@ -563,7 +569,7 @@
 </div>
 
 
-
+<!-- 联系方式弹框-->
 <div class="weui_dialog_confirm" id="request_setcontact_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -582,7 +588,7 @@
 </div>
 
 
-
+<!-- 会员弹框 -->
 <div class="weui_dialog_confirm" id="request_required_vip_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -604,7 +610,7 @@
 </div>
 
 
-
+<!-- 存入保证金弹框 -->
 <div class="weui_dialog_confirm" id="request_required_security_account_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -625,33 +631,7 @@
     </div>
 </div>
 
-
-<script src="../js/core36.min.js"></script>
 <script th:src="@{/js/notlogin.js}"></script>
-
-
-<script>
-    function showToastMessage(text) {
-        $("#toast_message_text").text(text);
-        $('#toast_message').show();
-        setTimeout(function () {
-            $('#toast_message').hide();
-        }, 1000);
-    }
-    function hideToastMessage(text) {
-        $('#toast_message').hide();
-    }
-</script>
-
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification/993743">加载中</a>
-        </div>
-    </div>
-</div>
-
 
 </body>
 </html>

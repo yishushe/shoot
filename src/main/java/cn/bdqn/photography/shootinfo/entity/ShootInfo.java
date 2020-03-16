@@ -74,6 +74,10 @@ public class ShootInfo implements Serializable {
     @TableField("shootAddressId")
     private Long shootAddressId;
 
+    //主题字段
+    @TableField("themeId")
+    private Long themeId;
+
     //地址表
     @TableField(exist = false)
     private ShootAddress shootAddress;

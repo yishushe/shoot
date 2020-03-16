@@ -30,8 +30,4 @@ public class ShootTheme implements Serializable {
     @TableField("themName")
     private String themName;
 
-    @TableField("infoId")
-    private String infoId;
-
-
 }
