@@ -175,6 +175,8 @@ public class ShootUserController {
     public String postMessage(){
         return "personage/postMessage";
     }
-
-
+    @RequestMapping("/ses")
+    public void ses(){
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    }
 }

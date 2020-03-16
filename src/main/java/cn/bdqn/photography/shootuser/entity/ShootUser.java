@@ -69,4 +69,6 @@ public class ShootUser implements Serializable {
 
     @TableField("stateId")
     private Long stateId;
+
+
 }
