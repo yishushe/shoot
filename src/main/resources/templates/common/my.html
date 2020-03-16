@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+</style>
 <script src="../js/jquery.min.js"></script>
 <body>
+
+
 <li th:fragment="my">
 
     <span hidden th:if="${session.user!=null and session.user!=''}">
@@ -14,7 +18,7 @@
         <span hidden th:text="${session.user.userCode}" id="p02"></span>
     </span>
 
-        <a class="" href="#" th:if="${session.user!=null and session.user!=''}" th:title="${session.user.userName}">
+        <a class="" href="javascript:;" th:if="${session.user!=null and session.user!=''}" th:title="${session.user.userName}">
             <img id="image01" class="img-circle data_avatar_xs"/>
             <span>我的</span>
         </a>

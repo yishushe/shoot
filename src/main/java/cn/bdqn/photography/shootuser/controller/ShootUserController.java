@@ -4,6 +4,10 @@ package cn.bdqn.photography.shootuser.controller;
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
+import cn.bdqn.photography.shootimages.entity.ShootImages;
+import cn.bdqn.photography.shootimages.service.IShootImagesService;
+import cn.bdqn.photography.shootinfo.entity.ShootInfo;
+import cn.bdqn.photography.shootinfo.service.IShootInfoService;
 import cn.bdqn.photography.shootuser.entity.ShootAddress;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
@@ -11,6 +15,7 @@ import cn.bdqn.photography.shootuser.service.IShootUserService;
 import cn.bdqn.photography.utils.IsPath;
 import cn.bdqn.photography.utils.Sex;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -24,6 +29,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -48,9 +57,49 @@ public class ShootUserController {
     @Qualifier("shootUserService")
     private IShootUserService iShootUserService;
 
+    @Autowired
+    private IShootInfoService iShootInfoService;
+
+    @Autowired
+    private IShootImagesService iShootImagesService;
+
     //主页
-    @GetMapping(value = {"/index"})
-    public String index(Model model) {
+    @RequestMapping(value = {"/index"})
+    public String index(Model model,@RequestParam(value = "current",defaultValue = "0",required = false)
+            int current,@RequestParam(value = "city",required = false) String city
+            ,@RequestParam(value = "costId",required = false) Long costId,
+                        @RequestParam(value = "roleId",required = false) Long roleId,
+                        @RequestParam(value = "sex",required = false) Long sex) {
+        if(city!="" && city!=null){
+            city=city+"市";
+        }
+        //约拍信息查询
+        IPage<ShootInfo> page= iShootInfoService.findInfo(1l,city,costId,roleId,sex,current);
+
+        for (ShootInfo info1 : page.getRecords()){
+
+              //设置用户图片路劲
+              info1.getShootUser().setPortyaitl("/images/"+info1.getShootUser().getPortyaitl());
+
+              Map<String,Object> map=new HashMap<>();
+              map.put("infoId",info1.getId());
+              //根据id查找信息
+              Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
+              if(shootImages!=null && shootImages.size()>0){
+                  for (ShootImages images: shootImages
+                  ) {
+                      //设置info图片路劲
+                      images.setImagesName("/images/"+images.getImagesName());
+                  }
+                  info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
+              }
+        }
+
+        model.addAttribute("info",page.getRecords());     //数据
+        model.addAttribute("current",page.getCurrent());  //当前页
+        model.addAttribute("pages",page.getPages());      //总页数
+        model.addAttribute("total",page.getTotal());      //总条数
+
         return "index/index";
     }
 

@@ -13,13 +13,11 @@
 
     <link href="../css/core73.min.css" rel="stylesheet" />
     <script th:src="@{/js/jquery.min.js}"></script>
-   <!-- <script type="text/javascript">
-        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
-    </script>-->
 
 </head>
 <body class="body_default">
 
+<!-- 导航条 -->
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
     <div class="container">
         <div class="navbar-header">
@@ -31,7 +29,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img src="/content/custom/logo.png" class="fy-navbar-logo" />
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
                     <span>摄会社</span>
                 </div>
             </a>
@@ -50,9 +48,6 @@
                 <li>
                     <a class="login" href="#">主题</a>
                 </li>
-                <!--   <li>
-                       <a class="" href="#">地点</a>
-                   </li>-->
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
@@ -62,102 +57,155 @@
                 <li>
                     <a class="login" href="#">加入会员</a>
                 </li>
-                <!-- <li>
-                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
-                 </li>-->
             </ul>
         </nav>
     </div>
 </header>
+
+
 <div class="fy-docs-nav-distance"></div>
 
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="row" style="margin-left:0px;margin-right:0px;">
+
+        <!-- 显示约拍信息展示区 -->
         <div class="col-sm-9 xzero_padding">
 
-
-
-
+            <!-- 详情 -->
             <div class="data_posts">
                 <div class="data_post_cell user_info_cell">
+
                     <div class="user_info_cell_avatar">
+
+                        <!-- 头像 -->
                         <a class="data_post_author_title_link" href="/u/822903">
-                            <img class="img-circle data_avatar_small2" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLmplC3DmQhL41qjhyUYysPctOFZQncx78fXJr7DxqA8iaDEUxq67Xw1UR3BGicgsVVgc6SDjlwAgWQ/132" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
+                            <img class="img-circle data_avatar_small2"  th:src="${info.shootUser.portyaitl}"/>
                         </a>
+
                     </div>
                     <div style="float:right;">
 
-                        <a class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:void(0);">关注</a>
+                        <a class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:;">关注</a>
 
                     </div>
                     <div class="user_info_cell_content">
                         <a class="data_post_author_title_link" href="/u/822903">
-                            <span class="data_post_author_title">日久&#x1F36B; &#x1F505;</span>
+                            <span class="data_post_author_title" th:text="${info.shootUser.userName}">日久&#x1F36B; &#x1F505;</span>
                         </a>
                         <i class="web_wechat_women"></i>
+
+                        <!-- 身份 角色 -->
                         <div>
-                            <span class="data_meta_info_xs">模特</span>
+                            <span class="data_meta_info_xs" th:text="${info.shootUser.roles.get(0).roleName}">模特</span>
                         </div>
+
                     </div>
+
+                    <!-- 手机验证 -->
                     <div class="v10_margin">
                         <span class="label label-warning">手机验证</span>
                     </div>
+
                     <div class="v15_margin">
                         <div id="UserInfoPanel" class="row" style="margin-left:0px;margin-right:0px;">
+
+                            <!-- 地区 -->
                             <div class="col-xs-4 col-sm-4 xzero_padding" style="text-align:center;">
                                 <span class="data_meta_info">面向地区</span>
                                 <br />
-                                <span class="data_meta_text">河南郑州</span>
+                                <span class="data_meta_text" th:text="${info.shootAddress.shootProw.prow+info.shootAddress.shootCity.city+info.shootAddress.shootCountry.country}">河南郑州</span>
                             </div>
+
+                            <!-- 费用类型 -->
                             <div class="col-xs-4 col-sm-4 xzero_padding" style="text-align:center;">
                                 <span class="data_meta_info">费用</span>
                                 <br />
-                                <span class="data_meta_text">希望互免</span>
+                                <span class="data_meta_text" th:text="${info.shootCost.costName}">希望互免</span>
                             </div>
+
+                            <!-- 时间 -->
                             <div class="col-xs-4 col-sm-4 xzero_padding" style="text-align:center;">
                                 <span class="data_meta_info">发布时间</span>
                                 <br />
-                                <span class="data_meta_text">2019年12月26日23:18</span>
+                                <span class="data_meta_text" th:text="${info.creationDate}">2019年12月26日23:18</span>
+                            </div>
+
+                        </div>
+
+                        <!-- 约拍类型和标题 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:text="${info.shootType.typeName}">约拍</span>
+                            <span class="data_meta_text" th:text="${info.content}"></span>
+                        </div>
+
+                        <!-- 时间说明 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:if="${info.takeTime!='' and info.takeTime!=null}">时间: </span>
+                            <span class="data_meta_text" th:if="${info.takeTime!='' and info.takeTime!=null}" th:text="${info.takeTime}"></span>
+                        </div>
+
+                        <!-- 地点说明 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:if="${info.takeLocation!='' and info.takeLocation!=null}">地点: </span>
+                            <span class="data_meta_text" th:if="${info.takeLocation!='' and info.takeLocation!=null}" th:text="${info.takeLocation}"></span>
+                        </div>
+
+                        <!-- 其他说明 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:if="${info.takeResult!='' and info.takeResult!=null}">其他: </span>
+                            <span class="data_meta_text" th:if="${info.takeResult!='' and info.takeResult!=null}" th:text="${info.takeResult}"></span>
+                        </div>
+
+                        <!-- 约拍标签 -->
+                        <div class="v15_margin" th:if="${info.shootInfoStyle!=null}" >
+                            <div th:each="style,styleId :${info.shootInfoStyle.shootStyles}">
+                            <a class="tag_link" href="javascript:;" target="_blank">
+                                <span class="tag" th:text="${style.styleName}"></span>
+                            </a>
                             </div>
                         </div>
-                        <div class="v15_margin">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_text">喜欢拍照留下回忆</span>
-                        </div>
+
+                        <!-- 收藏 -->
                         <div class="v5_margin" style="text-align:right;">
                             <a class="btn_follow_wechat" data-to="993743" href="javascript:void(0);">收藏</a>
                             <a class="btn_report_button" data-type="yuepai" data-id="993743" href="javascript:void(0);">
                                 <span class="data_meta_info">举报</span>
                             </a>
                         </div>
-                        <div class="v10_margin" style="text-align:center;">
+
+                        <!--约拍条数 -->
+                       <!-- <div class="v10_margin" style="text-align:center;">
                             <span class="label label-success label_count">收到约拍6条</span>
-                        </div>
-                        <div class="v10_margin" style="text-align:center;">
+                        </div>-->
+
+                        <div class="v10_margin" style="text-align:center;" th:if="${info.requireRoles==2}">
                             <span class="label label-success label_count">摄会社Club会员可请求</span>
                         </div>
+
+                        <!-- 提交后通知 -->
                         <div class="v15_margin" style="text-align:center;">
 
                             <a id="dorequest_button" role="button" class="btn btn-success btn-sm form_large_button" data-login="1" data-id="993743" href="javascript:void(0);">发起请求</a>
                             <a id="requestdetail_link" class="data_post_title_link" style="display:none;" href="">你已经提交了请求，查看详情&gt;&gt;</a>
-                            <div class="v10_margin">
+
+                            <!--<div class="v10_margin">
                                 <span class="data_meta_info">您提交请求后，她会接收到微信通知</span>
-                            </div>
+                            </div>-->
+
                         </div>
+
                     </div>
                 </div>
             </div>
 
-
+            <!-- 约拍图片展示 -->
             <div class="data_posts v8_margin">
-                <div id="lightGallery" class="data_post_cell">
-                    <div class="data_meta_info">她附加的照片（点击图片可以查看原图）</div>
+                <div id="lightGallery" class="data_post_cell" th:if="${info.shootImages!=null}" th:each="images,count : ${info.shootImages}">
+
                     <div class="v10_margin gallery-item-container" style="text-align:center;" data-src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_020841584_1577373482590.jpg/hd">
-                        <img style="width:auto;max-width:100%;height:auto;" src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_020841584_1577373482590.jpg/hd" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                        <img style="width:auto;max-width:100%;height:auto;" th:src="${images.imagesName}" />
                     </div>
-                    <div class="v10_margin gallery-item-container" style="text-align:center;" data-src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_024380475_1577373482590.jpg/hd">
-                        <img style="width:auto;max-width:100%;height:auto;" src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_024380475_1577373482590.jpg/hd" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                    </div>
+
                 </div>
             </div>
 
@@ -206,6 +254,9 @@
             <div class="v20_margin"></div>
 
         </div>
+
+
+        <!-- 相关地区约拍 -->
         <div class="col-sm-3 fy-rside-panel">
             <div class="data_posts">
                 <a class="data_post_cell data_post_cell_link form_header_righticon" href="/u/822903">
@@ -227,6 +278,7 @@
                 </div>
             </div>
 
+            <!-- 相关推荐 -->
             <div class="data_posts v8_margin">
                 <div class="data_post_cell">
                     <span class="data_group_title_sm">相关推荐</span>
@@ -293,6 +345,7 @@
                 </a>
             </div>
 
+            <!-- 相关下载 -->
             <div class="data_posts v8_margin">
 
                 <div class="data_post_cell form_header_righticon download_panel">
@@ -308,10 +361,11 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
 </div>
-
 
 
 
@@ -577,45 +631,8 @@
 </div>
 
 
-
-
-
-
-
-
-<!--<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>-->
-
 <script src="../js/core36.min.js"></script>
 <script th:src="@{/js/notlogin.js}"></script>
 
-
-<!--<link rel="stylesheet" href="/content/resources/weui.min.css">
-<link rel="stylesheet" href="/content/resources/lightGallery.min.css">-->
-
-
-<script type="text/javascript">
-    var _currentUserAlive = "1";
-    eval(function(e,t,i,o,n,a){if(n=function(e){return(e<62?"":n(parseInt(e/62)))+(35<(e%=62)?String.fromCharCode(e+29):e.toString(36))},!"".replace(/^/,String)){for(;i--;)a[n(i)]=o[i]||n(i);o=[function(e){return a[e]}],n=function(){return"\\w+"},i=1}for(;i--;)o[i]&&(e=e.replace(new RegExp("\\b"+n(i)+"\\b","g"),o[i]));return e}('!3(e){"2r 4I";e.4E.L=3(t){6 i,a,n,l,s,o,d,r,c,u,h,m={1k:"7",3z:!0,2m:"4y",25:"4u",K:4o,8:"",2I:!0,1Q:!1,1O:!1,2P:4f,3e:!0,2u:!0,3n:!1,18:1,3s:!0,1J:M,1b:!1,3t:{3v:"41 3S"},11:!1,1R:!1,1h:!0,1i:!1,X:!0,3y:"3C",1g:1D,1B:5,2D:!1,3M:3P,3I:3G,2c:!0,3F:!0,3E:"3Q",2z:!1,1z:!0,2x:"4b",14:!1,Y:[],3i:3(){},3b:3(){},3a:3(){},36:3(){},35:3(){},34:3(){},2W:3(){}},f=e(4),v=4,p=M,b=0,g=!1,C=!1,y=2U 0!==2T.4g||"4j"2q 1d||"4k"2q 1d||2J.4l,w=!1,T=!1,x=!1,q=e.4n(!0,{},m,t),S={1w:3(){f.2l(3(){6 t=e(4);q.14?(p=q.Y,b=0,d=b,k.1w(b)):(p=M!==q.1J?e(q.1J):t.3m(),p.13("10",3(i){p=M!==q.1J?e(q.1J):t.3m(),i.1C(),i.1Y(),b=p.1b(4),d=b,k.1w(b)}))})}},k={1w:3(){g=!0,4.3h(),4.31(),4.2H(),4.2G(),4.11(),4.2F(),4.3A(),4.3r(),q.1b?(4.7(q.1b),4.X(q.1b)):(4.7(b),4.X(b)),q.3F&&4.2h(),q.2c&&4.2c(),W(3(){i.8("4N")},3G)},3h:3(){e("1n").17(\'<j R="B-2g" E="\'+q.8+\'"><j R="B-1f"><j R="B-2A"></j><a R="B-1K" E="1K"></a></j></j>\').8("1I-1f"),a=e("#B-2g"),i=e("#B-1f"),q.3s===!0&&i.8("4G-3o-2i"),n=i.D("#B-2A");6 t="";I(q.14)1F(6 s=0;s<q.Y.A;s++)t+=\'<j E="B-7"></j>\';22 p.2l(3(){t+=\'<j E="B-7"></j>\'});n.17(t),l=i.D(".B-7")},2H:3(){q.2I&&e("#B-2g").13("10",3(t){e(t.4F).4B(".B-7")&&v.21(!1)}),e("#B-1K").Q("10 1j",3(){v.21(!1)})},31:3(){6 t=3(){u=e(1d).19()};e(1d).Q("2k.L",t())},H:3(){6 e=3(){1F(6 e=["23","4A","4z","4x","4t","4q"],t=2T.4p,i=0;i<e.A;i++)I(e[i]2q t.2n)1t!0};1t q.3z&&e()?!0:!1},2c:3(){6 t=4;I(y){6 i={},a={};e("1n").13("2p.L",3(e){a=e.2b.2a[0],i.1s=e.2b.2a[0].1s,i.2L=e.2b.2a[0].2L}),e("1n").13("2M.L",3(e){6 t=e.2b;a=t.2a[0],e.1C()}),e("1n").13("1j.L",3(){6 e=a.1s-i.1s,n=q.3I;e>=n?(t.1G(),U(h)):-n>=e&&(t.1A(),U(h))})}},2h:3(){6 t,i,a=4;e(".1I-1f").Q("2Q",3(e){e.1Y(),e.1C(),t=e.1s}),e(".1I-1f").Q("2R",3(e){e.1Y(),e.1C(),i=e.1s,i-t>20?a.1G():t-i>20&&a.1A()})},2S:3(e,t){6 i=e.1E(/\\/\\/(?:1L\\.)?2V(?:\\.1X|1X\\.1p)\\/(?:2X\\?v=|2f\\/)?([a-2Z-30\\-]+)/i),a=e.1E(/\\/\\/(?:1L\\.)?2s.1p\\/([0-32-z\\-33]+)/i),n=!1;1t q.14?"2d"==q.Y[t].1a&&(n=!0):"2d"==p.9(t).12("1M-1a")&&(n=!0),i||a||n?!0:2U 0},3c:3(t,i){6 a=t.1E(/\\/\\/(?:1L\\.)?2V(?:\\.1X|1X\\.1p)\\/(?:2X\\?v=|2f\\/)?([a-2Z-30\\-]+)/i),n=t.1E(/\\/\\/(?:1L\\.)?2s.1p\\/([0-32-z\\-33]+)/i),l="",s="";I(a){I(s=q.1z===!0&&C===!1?"?3d=1&4d=0&3f=3g":"?3f=3g",q.2z){6 o=e.4c(q.2z);s=s+"&"+o}l=\'<1a E="Z" 19="3j" 3k="3l" V="//1L.4a.1p/2f/\'+a[1]+s+\'" 2v="0" 3p></1a>\'}22 n?(s=q.1z===!0&&C===!1?"3d=1&2w;":"",l=\'<1a E="Z" R="1m\'+i+\'" 19="3j" 3k="3l"  V="49://48.2s.1p/1m/\'+n[1]+"?"+s+"47=0&2w;44=0&2w;43="+q.3E+\'" 2v="0" 42 3U 3R></1a>\'):l=\'<1a E="Z" 2v="0" V="\'+t+\'"  3p="2d"></1a>\';1t\'<j E="1m-1r" 2n="3q-19:\'+q.2x+\' !3B;"><j E="1m">\'+l+"</j></j>"},1T:3(t){6 i=M;I(i=q.14?q.Y[t]["3D-1u"]:p.9(t).12("1M-3D-1u"),"1q"!=1v i&&M!==i){6 a=i.3H(0,1);i="."==a||"#"==a?e(i).1u():i,l.9(t).17(i)}},18:3(e){1F(6 t=e,i=0;i<=q.18&&!(i>=p.A-e);i++)4.1y(t+i,!0);1F(6 a=0;a<=q.18&&!(0>t-a);a++)4.1y(t-a,!0)},26:3(e,t){6 i=4;l.9(t).D(".Z").13("2i 3K",3(){l.9(t).8("2C")}),e===!1&&(l.9(t).J("2C")?i.18(t):l.9(t).D(".Z").13("2i 3K",3(){i.18(t)}))},1y:3(t,i){{6 a,n=4;p.A-t}q.18>p.A&&(q.18=p.A),q.2D===!0&&u<=q.3M&&(a=q.14?q.Y[t].2D:p.9(t).12("1M-3O-V")),a||(a=q.14?q.Y[t].V:p.9(t).12("1M-V"));6 s=0;i===!0&&(s=q.K+24),"1q"!=1v a&&""!==a?n.2S(a,t)?W(3(){l.9(t).J("1o")||(l.9(t).2B(n.3c(a,t)),n.1T(t),l.9(t).8("1o"),q.1O&&q.1z===!0&&U(h)),n.26(i,t)},s):W(3(){l.9(t).J("1o")||(l.9(t).2B(\'<1U E="Z" V="\'+a+\'" />\'),n.1T(t),l.9(t).8("1o")),n.26(i,t)},s):W(3(){I(!l.9(t).J("1o")){6 a=M;I(a=q.14?q.Y[t].1u:p.9(t).12("1M-1u"),"1q"!=1v a&&M!==a){6 s=a.3H(0,1);a="."==s||"#"==s?e(a).1u():a}"1q"!=1v a&&M!==a&&l.9(t).17(\'<j E="1m-1r" 2n="3q-19:\'+q.2x+\' !3B;"><j E="1m">\'+a+"</j></j>"),n.1T(t),l.9(t).8("1o 2C"),q.1O&&q.1z===!0&&U(h)}n.26(i,t)},s)},11:3(){I(q.11===!0){6 t=e("#B-2A > j").A;i.17("<j R=\'B-11\'><15 R=\'B-11-1Z\'></15> / <15 R=\'B-11-3T\'>"+t+"</15></j>")}},3A:3(){I(q.1h===!0&&p.A>1){6 t=4,a="";q.1i||(a=\'<15 E="1K 3x"><i E="3V-3W-3X-16" 3Y-3Z="2d"></i></15>\'),i.17(\'<j E="G-1r"><j E="G-3w">\'+a+\'</j><j E="G-1H"></j></j>\'),r=i.D(".G-1r"),s.3o(\'<a E="3u-G"></a>\'),s.45().8("46-G"),i.D(".3u-G").Q("10 1j",3(){i.8("O"),t.H()&&"7"===q.1k&&(l.9(b).2y().F("P-7").8("N-7"),l.9(b).2t().F("N-7").8("P-7"))}),i.D(".G-1r .1K").Q("10 1j",3(){i.F("O")});6 n,o=i.D(".G-3w"),d=i.D(".G-1H"),u="";I(q.14)1F(6 m=0;m<q.Y.A;m++)n=q.Y[m].G,u+=\'<j E="G"><1U V="\'+n+\'" /></j>\';22 p.2l(3(){n=q.1R===!1||"1q"==1v e(4).12(q.1R)||M===e(4).12(q.1R)?e(4).D("1U").12("V"):e(4).12(q.1R),u+=\'<j E="G"><1U V="\'+n+\'" /></j>\'});I(d.17(u),c=d.D(".G"),c.1l({"4e-2e":q.1B+"1N",19:q.1g+"1N"}),q.X===!0){6 f=p.A*(q.1g+q.1B);i.D(".G-1H").1l({19:f+"1N",4h:"4i","23-2O":q.K+"2K"})}c.Q("10 1j",3(){w=!0;6 i=e(4).1b();c.F("1W"),e(4).8("1W"),t.7(i),t.X(i),U(h)}),o.2B(\'<15 E="3x 4m">\'+q.3t.3v+" ("+c.A+")</15>"),q.1i&&i.8("O")}},X:3(e){I(q.X===!0){6 t,a=i.D(".G-1r").19();3N(q.3y){2o"1c":t=0;2E;2o"3C":t=a/2-q.1g/2;2E;2o"2e":t=a-q.1g}6 n=(q.1g+q.1B)*e-1-t,l=p.A*(q.1g+q.1B);n>l-a&&(n=l-a),0>n&&(n=0),4.H()?i.D(".G-1H").1l("4r","4s(-"+n+"1N, 3L, 3L)"):i.D(".G-1H").28({1c:-n+"1N"},q.K)}},2F:3(){6 e=4;q.2u===!0&&p.A>1&&(i.17(\'<j R="B-4v"><a R="B-N"></a><a R="B-P"></a></j>\'),s=i.D("#B-N"),o=i.D("#B-P"),s.Q("10",3(){e.1G(),U(h)}),o.Q("10",3(){e.1A(),U(h)}))},2G:3(){6 e=4;q.1O===!0&&(h=4w(3(){b=b+1<p.A?b:-1,b++,e.7(b)},q.2P))},3r:3(){6 t=4;e(1d).Q("3J.L",3(e){e.1C(),e.1Y(),37===e.1P&&(t.1G(),U(h)),38===e.1P&&q.1h===!0&&p.A>1?i.J("O")||(t.H()&&"7"===q.1k&&(l.9(b).2y().F("P-7").8("N-7"),l.9(b).2t().F("N-7").8("P-7")),i.8("O")):39===e.1P&&(t.1A(),U(h)),40===e.1P&&q.1h===!0&&p.A>1&&!q.1i?i.J("O")&&i.F("O"):q.3e===!0&&27===e.1P&&(!q.1i&&i.J("O")?i.F("O"):v.21(!1))})},1A:3(){6 e=4;b=l.1b(l.9(d)),b+1<p.A?(b++,e.7(b)):q.1Q?(b=0,e.7(b)):q.1h===!0&&p.A>1&&!q.1i?i.8("O"):(l.9(b).D(".Z").8("2e-1V"),W(3(){l.D(".Z").F("2e-1V")},24)),e.X(b),q.36.1e(4,v)},1G:3(){6 e=4;b=l.1b(l.9(d)),b>0?(b--,e.7(b)):q.1Q?(b=p.A-1,e.7(b)):q.1h===!0&&p.A>1&&!q.1i?i.8("O"):(l.9(b).D(".Z").8("1c-1V"),W(3(){l.D(".Z").F("1c-1V")},24)),e.X(b),q.35.1e(4,v)},7:3(t){6 i=4;I(C?(W(3(){i.1y(t,!1)},q.K+24),n.J("13")||n.8("13"),4.H()&&""!==q.K&&(n.J("K")||n.8("K"),x===!1&&(n.1l("23-2O",q.K+"2K"),x=!0)),4.H()&&""!==q.2m&&(n.J("2j")||n.8("2j"),T===!1&&(n.1l("23-2j-3",q.2m),T=!0)),q.3b.1e(4,v)):i.1y(t,!1),"7"===q.1k){6 a=M!==2J.4C.1E(/4D/i);!4.H()||n.J("7")||a?4.H()&&!n.J("2r-1c")&&a&&n.8("2r-1c"):n.8("7"),4.H()||C?!4.H()&&C&&n.28({1c:1D*-t+"%"},q.K,q.25):n.1l({1c:1D*-t+"%"})}22"29"===q.1k&&(4.H()&&!n.J("29-m")?n.8("29-m"):4.H()||n.J("28")||n.8("28"),4.H()||C?!4.H()&&C&&(l.9(d).2N(q.K,q.25),l.9(t).2Y(q.K,q.25)):(l.2N(1D),l.9(t).2Y(1D)));I(t+1>=p.A&&q.1O&&q.1Q===!1&&U(h),l.9(d).F("1Z"),l.9(t).8("1Z"),4.H()&&"7"===q.1k&&(w===!1?(e(".N-7").F("N-7"),e(".P-7").F("P-7"),l.9(t-1).8("N-7"),l.9(t+1).8("P-7")):(l.9(t).2y().F("P-7").8("N-7"),l.9(t).2t().F("N-7").8("P-7"))),q.1h===!0&&p.A>1&&(c.F("1W"),c.9(t).8("1W")),q.2u&&q.3n&&q.1Q===!1&&p.A>1){6 r=p.A;r=4H(r)-1,0===t?(s.8("1x"),o.F("1x")):t===r?(s.F("1x"),o.8("1x")):s.4J(o).F("1x")}d=t,C===!1?q.3i.1e(4,v):q.3a.1e(4,v),W(3(){C=!0}),w=!1,q.11&&e("#B-11-1Z").4K(t+1),e(1d).Q("2k.L",3(){W(3(){i.X(t)},4L)})}};1t v.4M=3(){1t g===!0?!0:!1},v.21=3(t){g=!1,t="1q"!=1v t?!1:!0,q.34.1e(4,v);6 n=C;C=!1,T=!1,x=!1,w=!1,U(h),t===!0&&p.1S("10 2h 2p"),e(".1I-1f").1S("2Q 2R"),e("1n").1S("2p.L 2M.L 1j.L"),e(1d).1S("2k.L 3J.L"),n===!0&&(i.8("29-m"),W(3(){a.4O(),e("1n").F("1I-1f")},4P)),q.2W.1e(4,v)},S.1w(),4}}(4Q);',0,301,"|||function|this||var|slide|addClass|eq||||||||||div|||||||||||||||||length|lg||find|class|removeClass|thumb|doCss|if|hasClass|speed|lightGallery|null|prev|open|next|bind|id|||clearInterval|src|setTimeout|animateThumb|dynamicEl|object|click|counter|attr|on|dynamic|span||append|preload|width|iframe|index|left|window|call|gallery|thumbWidth|thumbnail|showThumbByDefault|touchend|mode|css|video|body|loaded|com|undefined|cont|pageX|return|html|typeof|init|disabled|loadContent|videoAutoplay|nextSlide|thumbMargin|preventDefault|100|match|for|prevSlide|inner|light|selector|close|www|data|px|auto|keyCode|loop|exThumbImage|off|addHtml|img|end|active|be|stopPropagation|current||destroy|else|transition|400|easing|loadObj||animate|fade|targetTouches|originalEvent|enableTouch|true|right|embed|outer|touch|load|timing|resize|each|cssEasing|style|case|touchstart|in|use|vimeo|nextAll|controls|frameborder|amp|videoMaxWidth|prevAll|youtubePlayerParams|slider|prepend|complete|mobileSrc|break|slideTo|autoStart|closeSlide|closable|navigator|ms|pageY|touchmove|fadeOut|duration|pause|mousedown|mouseup|isVideo|document|void|youtu|onCloseAfter|watch|fadeIn|z0|9_|getWidth|9a|_|onBeforeClose|onSlidePrev|onSlideNext||||onSlideAfter|onSlideBefore|loadVideo|autoplay|escKey|wmode|opaque|structure|onOpen|560|height|315|children|hideControlOnEnd|after|allowfullscreen|max|keyPress|showAfterLoad|lang|cl|allPhotos|info|ib|currentPagerPosition|useCSS|buildThumbnail|important|middle|sub|vimeoColor|enableDrag|50|substring|swipeThreshold|keyup|error|0px|mobileSrcMaxWidth|switch|responsive|640|CCCCCC|allowFullScreen|photos|all|mozallowfullscreen|bUi|iCn|rMv|aria|hidden||All|webkitAllowFullScreen|color|portrait|parent|has|byline|player|http|youtube|855px|param|rel|margin|4e3|createTouch|position|relative|ontouchstart|onmsgesturechange|msMaxTouchPoints|count|extend|600|documentElement|KhtmlTransition|transform|translate3d|msTransition|linear|action|setInterval|OTransition|ease|WebkitTransition|MozTransition|is|userAgent|iPad|fn|target|show|parseInt|strict|add|text|200|isActive|opacity|remove|500|jQuery".split("|"),0,{}));var autoTextarea=function(n,a,r){if(null!=typeof n&&null!=n){a=a||0;function e(e,t){n.addEventListener?n.addEventListener(e,t,!1):n.attachEvent("on"+e,t)}var s=!!document.getBoxObjectFor||"mozInnerScreenX"in window,l=!!window.opera&&!!window.opera.toString().indexOf("Opera"),u=n.currentStyle?function(e){var t=n.currentStyle[e];if("height"!==e||1===t.search(/px/i))return t;var i=n.getBoundingClientRect();return i.bottom-i.top-parseFloat(u("paddingTop"))-parseFloat(u("paddingBottom"))+"px"}:function(e){return getComputedStyle(n,null)[e]},c=parseFloat(u("height"));n.style.resize="none";function t(){var e,t,i=0,o=n.style;n._length!==n.value.length&&(n._length=n.value.length,s||l||(i=parseInt(u("paddingTop"))+parseInt(u("paddingBottom"))),e=document.body.scrollTop||document.documentElement.scrollTop,n.style.height=c+"px",n.scrollHeight>c&&(r&&n.scrollHeight>r?(t=r-i,o.overflowY="auto"):(t=n.scrollHeight-i,o.overflowY="hidden"),o.height=t+a+"px",e+=parseInt(o.height)-n.currHeight,document.body.scrollTop=e,document.documentElement.scrollTop=e,n.currHeight=parseInt(o.height)))}e("propertychange",t),e("input",t),e("focus",t),t()}},idToOperate=null;function doCloseThread(e){$.ajax({url:siteRoot+"thread/doclose?id="+e,type:"POST",contentType:"application/json; charset=utf-8",success:function(e){e.success?($("#closeit_button").hide(),$("#openit_button").show(),showToastMessage("已关闭")):alert(e.error)},error:function(){alert("操作失败！请稍后再试！")}})}function doOpenThread(e){$.ajax({url:siteRoot+"thread/doopen?id="+e,type:"POST",contentType:"application/json; charset=utf-8",success:function(e){e.success?($("#closeit_button").show(),$("#openit_button").hide(),$("#close_status").hide(),showToastMessage("已恢复")):alert(e.error)},error:function(){alert("操作失败！请稍后再试！")}})}function getRequestDetailUrl(e){return siteRoot+"y/myrequestdetail/"+e}function displayRequestUrl(e){var t=getRequestDetailUrl(e);$("#requestdetail_link").attr("href",t),$("#requestdetail_link").show(),$("#dorequest_button").hide()}function onCheckBeforeSubmitRequestFailed(e){"require_publishinfo"==e.RequiredAction?$("#request_publishinfo_dialog").show():"require_setprofile"==e.RequiredAction?($("#request_setprofile_dialog_message").text(e.ErrorMessage),$("#request_setprofile_dialog").show()):"require_setcontact"==e.RequiredAction?$("#request_setcontact_dialog").show():"require_setphone"==e.RequiredAction?($("#request_setprofile_dialog_message").text("个人资料：未设置手机"),$("#request_setprofile_dialog").show()):"request_existed"==e.RequiredAction?(displayRequestUrl(e.RequestID),showToastMessage("已提交过了")):"require_joinvip"==e.RequiredAction?$("#request_required_vip_dialog").show():"require_securityaccount"==e.RequiredAction?$("#request_required_security_account_dialog").show():"request_exceedscount"==e.RequiredAction?($("#request_setprofile_dialog_message").text(e.ErrorMessage),$("#request_setprofile_dialog").show()):"require_nomorecoins"==e.RequiredAction?($("#request_nomorecoins_dialog_message").text(e.ErrorMessage),$("#request_nomorecoins_dialog").show()):($("#request_setprofile_dialog_message").text(e.ErrorMessage),$("#request_setprofile_dialog").show())}function onSubmitRequestResult(e,t){if(!e.success){if(e.vip_required)return void $("#request_required_vip_dialog").show();if(e.security_account_required)return void $("#request_required_security_account_dialog").show();if(e.exceeds_count)return void $("#request_exceeds_count_dialog").show();if(e.request_bang)return void $("#request_bang_dialog").show();if(e.existed)return displayRequestUrl(e.request_id),void showToastMessage("已经提交过了");t&&showToastMessage("提交失败")}}function checkOldRequest(){if($("#dorequest_button").length){var e=$("#dorequest_button").attr("data-id"),t=(new Date).getTime();$.ajax({url:siteRoot+"y/checkoldrequest?id="+e+"&t="+t,type:"GET",data:null,contentType:"application/json; charset=utf-8",success:function(e){e.success&&e.existed&&displayRequestUrl(e.request_id)},error:function(){}})}}function checkRequestBeforeSubmit(){if($("#dorequest_button").length){var e=$("#dorequest_button").attr("data-id");$.ajax({url:siteRoot+"y/checkbeforesubmitrequest/"+e,type:"POST",data:null,contentType:"application/json; charset=utf-8",success:function(e){e.Success?$("#request_submit_dialog").show():onCheckBeforeSubmitRequestFailed(e)},error:function(){alert("操作失败，请稍后再试！")}})}}function doSubmitRequest(e,t,i,o){var n={ID:e,Message:t,Wechat:i,QQ:o};$.ajax({url:siteRoot+"y/submitrequest",type:"POST",data:JSON.stringify(n),contentType:"application/json; charset=utf-8",success:function(e){if(e.Success){if(displayRequestUrl(e.RequestID),e.require_pay){var t=getRequestDetailUrl(e.request_id);window.location.href=t}}else onSubmitRequestResult(e,!0)},error:function(){alert("操作失败！请稍后再试！")}})}var _wechatJSEnabled=!1;function doJsShareWechat(){var e=$(document).find("title").text();e=e.replace("摄会社 - 摄影师模特摄影约拍平台","摄会社");var t=location.href,i=_wxsharecoverurl;wx.onMenuShareTimeline({title:e,link:t,imgUrl:i,success:function(){},cancel:function(){}}),wx.onMenuShareAppMessage({title:e,desc:"摄会社",link:t,imgUrl:i,success:function(){},cancel:function(){}})}function doJsConfig(){wx.ready(function(){doJsShareWechat()}),wx.config({debug:_wxconfigDebug,appId:_wxconfigData.appId,timestamp:_wxconfigData.timestamp,nonceStr:_wxconfigData.nonceStr,signature:_wxconfigData.signature,jsApiList:["checkJsApi","previewImage","onMenuShareTimeline","onMenuShareAppMessage"]})}function wechatJsPreviewImage(e){var t=[];$(".gallery-item-container").each(function(){t.push($(this).attr("data-src"))}),wx.previewImage({current:e,urls:t})}function initImagePreviewContext(){(_wechatJSEnabled="undefined"!=typeof _wxconfigData&&null!=_wxconfigData)?(doJsConfig(),$(".gallery-item-container").click(function(e){var t=$(this);"gallery-item-container"!=t.className&&(t=t.closest(".gallery-item-container")),wechatJsPreviewImage(t.attr("data-src"))})):$("#lightGallery").lightGallery({lang:{allPhotos:"所有照片"},selector:".gallery-item-container",showAfterLoad:!1})}$(function(){window.onload=function(){1==_currentUserAlive&&checkOldRequest()},autoTextarea(document.getElementById("RequestMessage")),$("#closeit_button").click(function(e){idToOperate=$(this).attr("data-id"),$("#closeit_dialog").show()}),$("#closeit_cancel_button").click(function(){$("#closeit_dialog").hide()}),$("#closeit_confirm_button").click(function(){$("#closeit_dialog").hide(),doCloseThread(idToOperate)}),$("#openit_button").click(function(e){idToOperate=$(this).attr("data-id"),$("#openit_dialog").show()}),$("#openit_cancel_button").click(function(){$("#openit_dialog").hide()}),$("#openit_confirm_button").click(function(){$("#openit_dialog").hide(),doOpenThread(idToOperate)}),$("#dorequest_button").click(function(e){idToOperate=$(this).attr("data-id"),0!=$(this).attr("data-login")?checkRequestBeforeSubmit():$("#login_dialog").show()}),$("#request_submit_dialog_confirm_button").click(function(){var e=$("#RequestMessage").val();if(""!=e){$("#request_submit_message_label").removeClass("required");var t="",i="";if("1"==$("#request_submit_contacts_required").val()){if(t=$("#RequestWechat").val(),i=$("#RequestQQ").val(),""==t&&""==i)return void $("#request_submit_contacts_label").addClass("required");$("#request_submit_contacts_label").removeClass("required")}$("#request_submit_dialog").hide(),doSubmitRequest(idToOperate,e,t,i)}else $("#request_submit_message_label").addClass("required")}),$(".btn_contact_help").click(function(){$("#site_contact_help_dialog").show()}),initImagePreviewContext()});
-</script>
-
-
-
-<script type="text/javascript">
-    function hideUserReviewInfoBlock(a) { var b = '[data-id="' + a + '"]'; $(".userreviewinfo" + b).hide() } function deleteUserReview(a) { var b = a; $.ajax({ url: siteRoot + "userreview/delete?id=" + a, type: "POST", contentType: "application/json; charset=utf-8", success: function (a) { a.success ? (showToastMessage("删除成功"), hideUserReviewInfoBlock(b)) : alert(a.error) }, error: function () { alert("操作失败！请稍后再试！") } }) } function setReviewStartSelected(a, b) { var c = '[data-score="' + a + '"]', d = $(".review_star" + c); b ? d.attr("class", "review_star review_star_selected") : d.attr("class", "review_star review_star_gray") } function showUserReviewDialog(a, b) { var c; for (c = 1; c <= 5; c++) a >= c ? setReviewStartSelected(c, !0) : setReviewStartSelected(c, !1); $("#user_review_score").val(a), $("#user_review_comment").val(b), $("#user_review_dialog").show() } function queryUserReview(a, b) { showToastMessage("加载中"), $.ajax({ url: siteRoot + "userreview/queryscorereview?touserid=" + a, type: "POST", contentType: "application/json; charset=utf-8", success: function (a) { hideToastMessage(), b ? a.success && a.has_review ? showUserReviewDialog(a.score, a.comment) : alert("操作失败！请稍后再试！") : a.success && a.has_review ? showToastMessage("你已经评价过了") : showUserReviewDialog(0, "") }, error: function () { hideToastMessage(), alert("操作失败！请稍后再试！") } }) } function submitUserReview(a, b, c) { var d = { ToUserID: a, Score: b, Comment: c }; $.ajax({ url: siteRoot + "userreview/submitscorereview", type: "POST", contentType: "application/json; charset=utf-8", data: JSON.stringify(d), dataType: "json", success: function (a) { $("#user_review_dialog").hide(), a.success ? window.location.reload() : alert(a.error) }, error: function () { $("#user_review_dialog").hide(), alert("操作失败！请稍后再试！") } }) } function getReviewScoreTitle(a) { var b = ["很差", "较差", "还行", "不错推荐", "非常好"]; return b[a - 1] } var _userIDToReview = null, _reviewIDToUpdate = null; $(function () { $(".userreviewdeletebutton").click(function () { _reviewIDToUpdate = $(this).attr("data-id"), $("#user_review_delete_dialog").show() }), $("#user_review_delete_confirm_button").click(function () { $("#user_review_delete_dialog").hide(), deleteUserReview(_reviewIDToUpdate) }), $(".userrevieweditbutton").click(function () { _userIDToReview = $(this).attr("data-touserid"), queryUserReview(_userIDToReview, !0) }), $(".userreviewbutton").click(function () { _userIDToReview = $(this).attr("data-id"), queryUserReview(_userIDToReview, !1) }), $(".review_star").click(function () { $("#user_review_score_label").removeClass("required"); var a = parseInt($(this).attr("data-score")); $("#user_review_score").val(a); var b = getReviewScoreTitle(a); $("#user_review_score_text").text(b); var c; for (c = 1; c <= 5; c++) c <= a ? setReviewStartSelected(c, !0) : setReviewStartSelected(c, !1) }), $("#user_review_submit_button").click(function () { var a = parseInt($("#user_review_score").val()); if (a <= 0) return void $("#user_review_score_label").addClass("required"); var b = $("#user_review_comment").val(); submitUserReview(_userIDToReview, a, b) }) });
-</script>
-
-
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification/993743">加载中</a>
-        </div>
-    </div>
-</div>
-
-
-
-<!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
 </body>
 </html>
