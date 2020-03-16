@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>自拍 - 摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+</head>
+<body class="body_default">
+
+<style type="text/css">
+    .new_item_tip {
+        background-color: #fcf8e3;
+    }
+
+    .pai_logo {
+        width: 60px;
+        height: auto;
+    }
+
+    .pai_iscoming {
+        padding-top: 10px;
+    }
+</style>
+
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="/content/custom/logo.png" class="fy-navbar-logo" />
+                    <span>摄会社</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-selfie/att}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-selfie/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
+                </li>
+                <!--   <li>
+                       <a class="" href="#">地点</a>
+                   </li>-->
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+                <li>
+                    <a id="" class="fy-navItem-notification" href="#">通知</a>
+                </li>
+                <li>
+                    <a class="login" href="#">加入会员</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="fy-docs-nav-distance"></div>
+<div class="container bottom_menu_margin_plus xzero_padding">
+    <div class="newcard_container newcard_container_fix ">
+        <div class="flex_row_panel">
+            <img src="/content/resources/images/Selfie-512.png" class="pai_logo" />
+            <div class="span_v10_margin_left">
+                <span class="data_meta_info">发布自拍照片，让大家更好地认识你</span>
+                <div class="v10_margin">
+                    <a role="button" class="btn btn-default btn-sm btn_login_required" data-login="0" href="/pai/new">+ 立即参与</a>
+                    <span class="data_meta_info span_v5_margin_left">试运行</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row data_post_row newcards_panel v8_margin">
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996706">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5537192/20200315BI2J31/5537192_012012981_1584283606496.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://qzapp.qlogo.cn/qzapp/101219184/4A07BCB7C16425A57FBEDBF8EBC2426C/30" />
+                            <span class="data_meta_info span_v2_margin_left">列宁</span>
+                            <span class="data_meta_info span_v2_margin_left">山东青岛</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">昨天22:50 青岛约拍   约拍模特  照片本人</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996701">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/823465/823465_035672380_1584271449025.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="http://image.shehuiapp.com/u/823465/823465_039058880_1584268401277.jpg/t150" />
+                            <span class="data_meta_info span_v2_margin_left">网红摄影师昆子</span>
+                            <span class="data_meta_info span_v2_margin_left">山东济南</span>
+                            <span class="data_meta_info span_v2_margin_left">摄影师</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">昨天19:24 努力奋斗</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996681">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5536885/5536885_035270800_1584243334796.JPG/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="http://thirdwx.qlogo.cn/mmopen/vi_32/TpXzl8Tkc43nScElZibBJDlcvS6FibBZGqAsKMbwqMpgwEpxtQp4jIpFkm3ysPmv6ByHVAmPCFYp9pDhxo5CqYyw/132" />
+                            <span class="data_meta_info span_v2_margin_left">华子印象</span>
+                            <span class="data_meta_info span_v2_margin_left">广东深圳</span>
+                            <span class="data_meta_info span_v2_margin_left">摄影师</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">昨天11:35 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996658">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/44053/44053_033490850_1584166845714.38.51.png/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="http://image.shehuiapp.com/u/44053/44053_034295740_1557278089250.jpg/t150" />
+                            <span class="data_meta_info span_v2_margin_left">微醺苏_Selina</span>
+                            <span class="data_meta_info span_v2_margin_left">广东深圳</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">前天14:20 像风一样，没有归宿，却很酷 。</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996634">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5536714/20200313FEIIVR/5536714_024936881_1584100011343.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://wx.qlogo.cn/mmopen/vi_32/HQySmfzq8tTXghuia64SjqxxkCHSEvAfgwm7z2YLvbpDssVBBp8mDKSy4ria6QQ0PvTBSEkESStF5icSVzp5Bf8KA/132" />
+                            <span class="data_meta_info span_v2_margin_left">Selina</span>
+                            <span class="data_meta_info span_v2_margin_left">北京</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月13日19:46 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996551">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5536714/2020031118Y2MY/5536714_024949891_1583932606785.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://wx.qlogo.cn/mmopen/vi_32/HQySmfzq8tTXghuia64SjqxxkCHSEvAfgwm7z2YLvbpDssVBBp8mDKSy4ria6QQ0PvTBSEkESStF5icSVzp5Bf8KA/132" />
+                            <span class="data_meta_info span_v2_margin_left">Selina</span>
+                            <span class="data_meta_info span_v2_margin_left">北京</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月11日21:16 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996549">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5537090/5537090_034179430_1583924849895.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJYX2x2VVCxgW4nnRiciaOkr3QiaxicTV0loMIhoGZkJn3xGj8xUsibkX6wXHS1p3AlyBIJWTwAvR6no0g/132" />
+                            <span class="data_meta_info span_v2_margin_left">X_Q雯子</span>
+                            <span class="data_meta_info span_v2_margin_left">广东东莞</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月11日19:07 &#x1F62A;&#x1F62A;</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996527">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/66822/20200311M7VGTO/66822_028951611_1583892065791.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://wx.qlogo.cn/mmopen/P6fUjmSE0halibWPwsuaGuZOfe6x8f4EfvLgr5KW5ooJeTpGN4z34tcRUBXiat1XVvFnCZicziaKwibI1FTzMrT1cQPjw2CfrXl0u/0" />
+                            <span class="data_meta_info span_v2_margin_left">Claude</span>
+                            <span class="data_meta_info span_v2_margin_left">上海浦东新区</span>
+                            <span class="data_meta_info span_v2_margin_left">摄影师</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月11日10:01 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996508">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5536714/202003102HQ7O5/5536714_020697081_1583846078128.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://wx.qlogo.cn/mmopen/vi_32/HQySmfzq8tTXghuia64SjqxxkCHSEvAfgwm7z2YLvbpDssVBBp8mDKSy4ria6QQ0PvTBSEkESStF5icSVzp5Bf8KA/132" />
+                            <span class="data_meta_info span_v2_margin_left">Selina</span>
+                            <span class="data_meta_info span_v2_margin_left">北京</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月10日21:14 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996480">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5536469/20200309IJFU1M/5536469_011440291_1583759898928.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://thirdwx.qlogo.cn/mmopen/vi_32/av4NrjvjIicrvm8XhmJ3VWyWCLicuWhYTN84mCCHVvWYeU8ucLfdKmP5j7tIEVh0iaDU4zFibbSt1eoFbLvhlPn2Pw/132" />
+                            <span class="data_meta_info span_v2_margin_left">pigeon</span>
+                            <span class="data_meta_info span_v2_margin_left">浙江杭州</span>
+                            <span class="data_meta_info span_v2_margin_left">化妆师</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月9日21:18 下周一有约拍的吗，萧山</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996478">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5537059/20200309U7IWZQ/5537059_016340271_1583753878468.jpeg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="http://image.shehuiapp.com/u/5537059/20200309HXNYP4/5537059_019876701_1583752338065.jpeg/t150" />
+                            <span class="data_meta_info span_v2_margin_left">张弯弯 &#x1F433; &#x1F33A;小福星&#x1F31F;</span>
+                            <span class="data_meta_info span_v2_margin_left">辽宁大连</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月9日19:38 嗨er</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996457">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5537055/202003099WGGLS/5537055_025793327_1583739471861.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIhrTP3l4UXapsd3eQWB3ESdQqjCj7VqC8EvmZ5p1ckg3dxdK3zLYB9FxAwQ5gNywTQIoJSibRibHWg/132" />
+                            <span class="data_meta_info span_v2_margin_left">Roger</span>
+                            <span class="data_meta_info span_v2_margin_left">上海</span>
+                            <span class="data_meta_info span_v2_margin_left">摄影师</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月9日15:37 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996399">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/52633/52633_038302360_1583600827976.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="http://image.shehuiapp.com/u/52633/52633_033599740_1575083087246.jpg/t150" />
+                            <span class="data_meta_info span_v2_margin_left">☆Davina★</span>
+                            <span class="data_meta_info span_v2_margin_left">北京</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月8日01:07 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996368">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/5537017/202003072I1275/5537017_015835351_1583549995356.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83erAjZPZl0ZrqmOaUoQYD6AvkUMI2G6e1jHqNDwMdTlwMkLzXFKrDQV7nZE1EDkXB7N5yXcwFOevlA/132" />
+                            <span class="data_meta_info span_v2_margin_left">单淖</span>
+                            <span class="data_meta_info span_v2_margin_left">湖南</span>
+                            <span class="data_meta_info span_v2_margin_left">演员</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月7日11:00 新人模特</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996351">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/55252/2020030610BXDK/55252_027076831_1583506803498.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="http://image.shehuiapp.com/u/55252/55252_028771281_1553535274259.jpg/t150" />
+                            <span class="data_meta_info span_v2_margin_left">森 淵</span>
+                            <span class="data_meta_info span_v2_margin_left">香港</span>
+                            <span class="data_meta_info span_v2_margin_left">摄影师</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月6日23:00 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+
+
+            <div class="newcard">
+                <a class="data_post_container_link" href="/pai/996338">
+                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/821411/20200306YA5WFB/821411_0286290610_1583482870701.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                    <div class="newcard_content">
+                        <div class="card_userline">
+                            <img class="img-circle data_avatar_xs" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI6GR7rfOJ2Hx7j1iaEPMUkyfickrpRRwSWqJAGxnzu4icuMPuepKI7kEgJ4WAjQ8WoXCt5iaSM2vCmrw/132" />
+                            <span class="data_meta_info span_v2_margin_left">A.R.M.Y</span>
+                            <span class="data_meta_info span_v2_margin_left">广东佛山</span>
+                            <span class="data_meta_info span_v2_margin_left">模特</span>
+                        </div>
+                        <div class="card_oneline v5_margin">
+                            <span class="data_meta_info">2020年3月6日16:21 </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="newcard_container_fix">
+
+
+        <div class="container pager_container">
+            <nav>
+                <ul class="pager">
+                    <li class="disabled">
+                        <a href="javascript:void(0);" aria-label="Previous">
+                            <span aria-hidden="true">上一页</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/pai?page=0" aria-label="Next">
+                            <span aria-hidden="true">1</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/pai?page=1" aria-label="Next">
+                            <span aria-hidden="true">2</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/pai?page=2" aria-label="Next">
+                            <span aria-hidden="true">3</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/pai?page=3" aria-label="Next">
+                            <span aria-hidden="true">4</span>
+                        </a>
+                    </li>
+                    <li class="distance">
+                        <span>...</span>
+                    </li>
+                    <li class="">
+                        <a href="/pai?page=45" aria-label="Next">
+                            <span aria-hidden="true">46</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pai?page=1" aria-label="Next">
+                            <span aria-hidden="true">下一页</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="weui_dialog_confirm" id="login_dialog" style="display:none;">
+    <div class="weui_mask" onclick="$(this).parent().hide();"></div>
+    <div class="weui_dialog  popup_dialog" style="max-width:400px;">
+        <div class="data_post_cell">
+            <span class="data_group_title_bold site_login_title_fixed">登录摄会社</span>
+            <div style="float:right;">
+                <a role="button" class="btn btn-default btn-xs" href="javascript:void(0);" onclick="$('#login_dialog').hide();">关闭</a>
+            </div>
+        </div>
+        <div class="data_post_cell">
+            <a href="/account/loginwechat?returnUrl=%2Fpai">
+                <img src="/content/resources/images/wechat_login.png" />
+            </a>
+        </div>
+        <div class="data_post_cell">
+            <a href="/account/loginweibo?returnUrl=%2Fpai">
+                <img src="/content/resources/images/weibo_login.png" />
+            </a>
+        </div>
+        <div class="data_post_cell v15_margin_bottom">
+            <a href="/account/loginqq?returnUrl=%2Fpai">
+                <img src="/content/resources/images/qq_login.png" />
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
+
+<script src="/content/resources/jquery.min.js"></script>
+<script src="/content/resources/core39.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $(".data_post_container").on("click", function () {
+            var container = $(this);
+            var dataUrl = container.attr("data-url");
+            if (dataUrl.length > 0) {
+                window.open(dataUrl, "_self");
+            }
+        });
+    });
+</script>
+
+
+<div id="notification_panel" style="position:fixed;">
+    <div class="data_posts">
+        <div class="data_post_cell" style="text-align:center;">
+            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+<link href="../css/core73.min.css" rel="stylesheet" />
+<script th:src="@{/js/jquery.min.js}"></script>
+</html>

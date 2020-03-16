@@ -1,6 +1,7 @@
 package cn.bdqn.photography.shootselfie.controller;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jobob
  * @since 2020-03-09
  */
-@RestController
-@RequestMapping("/shootselfie/shoot-selfie")
+@Controller
+@RequestMapping("/shoot-selfie")
 public class ShootSelfieController {
+
 
 }

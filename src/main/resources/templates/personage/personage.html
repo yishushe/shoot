@@ -44,13 +44,13 @@
                     <a class="fy-navItem-active" href="#">首页</a>
                 </li>
                 <li>
-                    <a class="login" href="#">关注</a>
+                    <a class="login" th:href="@{/shoot-selfie/att}">关注</a>
                 </li>
                 <li>
-                    <a class="login" href="#">自拍</a>
+                    <a class="login" th:href="@{/shoot-selfie/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" href="#">主题</a>
+                    <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
