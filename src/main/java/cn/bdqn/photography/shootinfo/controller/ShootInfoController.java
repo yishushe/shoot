@@ -32,10 +32,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/shoot-info")
 public class ShootInfoController {
-    @RequestMapping("/about")
-    public String infor(){
-        return "index/about";
-    }
 
     @Autowired
     private IShootInfoService iShootInfoService;
@@ -83,7 +79,7 @@ public class ShootInfoController {
             infoById.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
         }
 
-        System.out.println("size:"+infoById.getShootInfoStyle().getShootStyles().size());
+        System.out.println(infoById.getShootInfoStyle());
 
         model.addAttribute("info",infoById);
         return "index/about";

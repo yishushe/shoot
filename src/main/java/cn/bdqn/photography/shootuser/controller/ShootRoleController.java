@@ -74,6 +74,7 @@ public class ShootRoleController {
         h.setAttribute("yqd","您还未签到");
         return "personage/integral";
     }
+
     @RequestMapping("/updintegral")
     public String updateintegral(HttpServletRequest h){
         all().setIntegral(all().getIntegral()+5);
@@ -82,6 +83,7 @@ public class ShootRoleController {
         boolean b= iShootUserService.updateById(all());
         return "personage/integral";
     }
+
     @RequestMapping("/updateuser")
     public String updatebyuser(ShootUser shootUser,String label_select){
 
