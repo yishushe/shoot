@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script th:src="@{/js/jquery-1.12.4.js}" type="text/javascript"></script>
+<body>
+<li th:fragment="my">
+
+    <span hidden th:if="${session.user!=null and session.user!=''}">
+        <span hidden th:text="${session.user.portyaitl}" id="p01"></span>
+        <span hidden th:text="${session.user.userCode}" id="p02"></span>
+    </span>
+
+        <a class="" href="#" th:if="${session.user!=null and session.user!=''}" th:title="${session.user.userName}">
+            <img id="image01" class="img-circle data_avatar_xs"/>
+            <span>我的</span>
+        </a>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var p01 = $("#p01").text();
+        //动态显示用户头像
+        if(p01!='' && p01!=null){
+            $("#image01").attr("src", "/images/" + p01);  //设置imagesrc属性值
+        }
+
+        //跳转个人中心页面
+        $("#image01").parent().parent().click(function () {
+            location.href = "/shoot-user/personage";
+        });
+
+    });
+
+</script>
+
+</li>
+
+</body>
+</html>

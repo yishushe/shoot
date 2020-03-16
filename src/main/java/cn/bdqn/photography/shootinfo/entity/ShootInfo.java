@@ -48,5 +48,4 @@ public class ShootInfo implements Serializable {
     @TableField("styleId")
     private String styleId;
 
-
 }
