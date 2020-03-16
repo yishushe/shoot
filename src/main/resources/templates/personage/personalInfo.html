@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
 <head>
     <meta charset="utf-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +25,18 @@
 <input hidden type="text" id="sexss" th:value="${session.user.sex}"/>
 
 <style type="text/css">
-
+    #inp{
+        width: 80px;
+        height: 50px;
+        /*display: inline-block;*/
+        /*vertical-align: middle;*/
+        text-align: center;
+        background-color: yellow;
+    }
+    /*#inpu{*/
+    /*    display: inline-block;*/
+    /*    text-align: center;*/
+    /*}*/
     a:link, a:visited, a:hover, a:active {
         text-decoration: none;
     }
@@ -102,8 +114,12 @@
     </div>
 </header>
 <div class="fy-docs-nav-distance"></div>
+<form method="post" action="updateuser">
 <div class="container js_container bottom_menu_margin_plus">
     <div class="page">
+
+
+
         <div class="bd">
             <div class="weui_cells_title">个人资料</div>
             <div class="weui_cells weui_cells_access global_navs" style="margin-top:0px;">
@@ -118,7 +134,7 @@
                 <div id="name_cell" class="weui_cell">
                     <div class="weui_cell_hd"><label class="weui_label_override">昵称</label></div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input id="name_cell_input" class="weui_input" placeholder="请输入昵称" th:value="${session.user.userName}" style="color:#888;padding-left:18px;">
+                        <input id="name_cell_input" class="weui_input" name="userName" placeholder="请输入昵称" th:value="${session.user.userName}" style="color:#888;padding-left:18px;">
                     </div>
                 </div>
 
@@ -130,7 +146,7 @@
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
 
-                        <select class="weui_select" id="gender_select" name="gender_select">
+                        <select class="weui_select" id="gender_select" name="sex">
                             <option value="1" class="sex">男</option>
                             <option value="2" class="sex1">女</option>
 
@@ -152,17 +168,23 @@
                         <label class="weui_label_override">身份</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <select class="weui_select" id="label_select" name="label_select"><option value="">暂不填</option>
+                        <input id="sf" style="display:none" th:value="${session.user.getRoles().get(0).getId()}"/>
+                        <select class="weui_select" id="label_select" name="label_select">
+                            <option value="">暂不填</option>
+                            <option value="1">系统管理员</option>
                             <option value="2">摄影师</option>
                             <option value="3">模特</option>
                             <option value="4">网店</option>
                             <option value="5">校园</option>
-                            <option selected="selected" value="6">艺术其他</option>
+                            <option value="6">艺术其他</option>
                         </select>
                     </div>
                 </div>
             </div>
-
+            <script>
+            var sf=$("#sf").val();
+            $("#label_select").get(0).selectedIndex = sf;
+            </script>
             <div class="weui_cells_title">位置</div>
             <div class="weui_cells weui_cells_access global_navs">
                 <a id="location_cell" class="weui_cell" href="javascript:void(0);">
@@ -174,7 +196,14 @@
                     </div>
                 </a>
             </div>
-
+        <div id="inpu" style="text-align: center">
+            <input id="inp" type="submit" value="提交"/>
+        </div>
+            <script>
+                $("#inp").click(function () {
+                alert("提交成功！")
+                })
+            </script>
            <!-- <div class="weui_cells_title">手机验证</div>
             <div class="weui_cells weui_cells_form weui_cells_access global_navs">
                 <div id="phone_cell" class="weui_cell">
@@ -201,9 +230,13 @@
                 </div>
             </div>-->
         </div>
+
+
+
     </div>
+
     <br />
-    <br />
+    <br /></div></form>
 </div>
 
 <input id="hidden_returnUrl" type="hidden" value="/u/editprofile?update=location" />

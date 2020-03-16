@@ -114,12 +114,13 @@
             <div style="float:right;">
                 <span class="data_meta_info">当前来自QQ登录</span>
             </div>
-            <form id="logoff-form" class="inline-form" method="post" action="/Account/LogOff">
-                <button id="exit-button" class="btn btn-danger btn-sm" type="button">退出当前账号</button>
-            </form>
+            <form id="logoff-form" class="inline-form" method="post" action="ses">
+                <button id="exit-button" onclick="if(!confirm('您确定要退出吗？')){return false;}window.location.href='http://localhost:8088/shoot-user/login';" class="btn btn-danger btn-sm" type="button">退出当前账号</button>
+            </form><!--,$.session.invalidate()-->
         </div>
     </div>
-
+    <script>
+    </script>
     <div class="row btstrap_row_fixed v10_margin">
         <div class="col-xs-6" style="padding-left:0px;padding-right:5px;">
             <div class="data_posts">

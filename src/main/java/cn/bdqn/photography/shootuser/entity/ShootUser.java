@@ -66,4 +66,9 @@ public class ShootUser implements Serializable {
 
     @TableField(exist = false)  //忽略字段
     private List<ShootRole> roles;
+
+    @TableField("stateId")
+    private Long stateId;
+
+
 }

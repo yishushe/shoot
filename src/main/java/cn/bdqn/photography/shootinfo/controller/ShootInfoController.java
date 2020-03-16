@@ -33,6 +33,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/shoot-info")
 public class ShootInfoController {
+    @RequestMapping("/about")
+    public String infor(){
+        return "index/about";
+    }
 
     @Autowired
     private IShootInfoService iShootInfoService;

@@ -29,7 +29,12 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
+
                     <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
+
+                    <!--<img src="../../static/images/logo.png" class="fy-navbar-logo" />-->
+                    <img th:src="@{/images/logo.png}">
+
                     <span>摄会社</span>
                 </div>
             </a>
@@ -307,12 +312,14 @@
                         <span class="data_meta_text">河南郑州 模特 喜欢拍照 新人想学习一下 希望互免 有摄影师约吗</span>
                     </div>
                 </a>
+
                 <a class="data_post_cell data_post_cell_link" href="/y/164123">
                     <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/819691/819691_014663721_1548409474056.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
                     <div class="card_oneline v10_margin">
                         <span class="data_meta_text">河南郑州 模特 河南郑州，开学回厦门上大学&#xD;&#xA;182&#xD;&#xA;什么都不会，希望您能教教我</span>
                     </div>
                 </a>
+
                 <a class="data_post_cell data_post_cell_link" href="/y/165752">
                     <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/819736/819736_014824321_1550890165328.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
                     <div class="card_oneline v10_margin">
@@ -375,18 +382,6 @@
         </p>
     </div>
 </div>
-<script type="text/javascript">
-    function showToastMessage(text) {
-        $("#toast_message_text").text(text);
-        $('#toast_message').show();
-        setTimeout(function () {
-            $('#toast_message').hide();
-        }, 1000);
-    }
-    function hideToastMessage(text) {
-        $('#toast_message').hide();
-    }
-</script>
 <div class="modal" id="report_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -442,7 +437,7 @@
         <div class="weui_dialog_hd"><strong class="weui_dialog_title">确定删除吗？</strong></div>
         <div class="weui_dialog_ft">
             <a href="javascript:void(0);" onclick="$('#user_review_delete_dialog').hide();" class="weui_btn_dialog default">取消</a>
-            <a id="user_review_delete_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+            <!--<a id="user_review_delete_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>-->
         </div>
     </div>
 </div>
@@ -633,6 +628,30 @@
 
 <script src="../js/core36.min.js"></script>
 <script th:src="@{/js/notlogin.js}"></script>
+
+
+<script>
+    function showToastMessage(text) {
+        $("#toast_message_text").text(text);
+        $('#toast_message').show();
+        setTimeout(function () {
+            $('#toast_message').hide();
+        }, 1000);
+    }
+    function hideToastMessage(text) {
+        $('#toast_message').hide();
+    }
+</script>
+
+
+<div id="notification_panel" style="position:fixed;">
+    <div class="data_posts">
+        <div class="data_post_cell" style="text-align:center;">
+            <a class="btn btn-xs btn-primary" role='button' href="/notification/993743">加载中</a>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

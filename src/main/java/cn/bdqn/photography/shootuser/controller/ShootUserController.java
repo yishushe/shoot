@@ -45,7 +45,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/shoot-user")
 public class ShootUserController {
-
     //获得当前用户 Subject当前用户 全局subject
     Subject subject = null;
 
@@ -225,6 +224,8 @@ public class ShootUserController {
     public String postMessage(){
         return "personage/postMessage";
     }
-
-
+    @RequestMapping("/ses")
+    public void ses(){
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    }
 }
