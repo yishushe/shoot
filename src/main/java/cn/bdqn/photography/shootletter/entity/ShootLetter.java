@@ -29,20 +29,18 @@ public class ShootLetter implements Serializable {
     @TableId(value = "id",type = IdType.AUTO)
     private Long id;
 
-    @TableField("giveContent")
-    private String giveContent;
+    private String content;
 
-    @TableField("replyContent")
-    private String replyContent;
+    @TableField("sendUserID")
+    private Long sendUserID;
 
-    @TableField("giveUserID")
-    private String giveUserID;
-
-    @TableField("repltUserId")
-    private String repltUserId;
+    @TableField("putUserId")
+    private Long putUserId;
 
     @TableField("creationDate")
     private LocalDateTime creationDate;
 
+    @TableField("infoId")
+    private Long infoId;
 
 }

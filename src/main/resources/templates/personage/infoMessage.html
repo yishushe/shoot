@@ -66,52 +66,52 @@
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="data_posts">
 
-        <div class="data_post_container">
-            <a class="data_post_container_link" href="/y/994014">
-                <div class="data_post_fee_info">
-                    <span class="data_meta_info">约拍</span>
-                    <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                    <span class="span_v2_margin_left">愿意付费</span>
-                    <span class="money_amount span_v2_margin_left">2元</span>
+        <div th:if="${info!=null and info.size()>0}">
+            <!-- 个人信息展示 -->
+            <div th:each="info,index : ${info}">
+
+                <div class="data_post_container">
+                    <a class="data_post_container_link" href="/y/994014">
+                        <div class="data_post_fee_info">
+                            <span class="data_meta_info" th:text="${info.shootType.typeName}">约拍</span>
+                            <span class="data_meta_info span_v2_margin_left" th:text="${info.shootAddress.shootProw.prow+info.shootAddress.shootCity.city+info.shootAddress.shootCountry.country}">河南郑州</span>
+                            <span class="span_v2_margin_left" th:text="${info.shootCost.costName}">愿意付费</span>
+                            <span th:if="${info.shootCost.id==2 or info.shootCost.id==3}">
+                             <span class="money_amount span_v2_margin_left" th:text="${info.price+'元'}">2元</span>
+                        </span>
+
+                        </div>
+
+                        <div class="data_post_message v8_margin">
+                            <span th:text="${info.content}"></span>
+                            <!--<span class="data_meta_info">（1张）</span>-->
+                        </div>
+
+                        <!-- 图片展示 -->
+                        <div class="row data_post_image_row">
+                            <div th:if="${info.shootImages!=null}" th:each="images,count : ${info.shootImages}">
+                                <div class="col-xs-4 col-md-2 data_post_image_cell">
+                                    <img th:src="${images.imagesName}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="data_meta_info v10_margin">
+                            <span class="data_meta_info" th:text="${info.creationDate}">2019年12月30日20:14</span>
+                        </div>
+                        <div class="data_post_status_info">
+                            <span class="data_post_status_label_red" th:text="${info.shootState.stateName}">审核中</span>
+                        </div>
+                    </a>
                 </div>
-                <div class="data_post_message v8_margin">
-                    最近一个星期
-                    <span class="data_meta_info">（1张）</span>
-                </div>
-                <div class="row data_post_image_row">
-                    <div class="col-xs-4 col-md-2 data_post_image_cell">
-                        <img src="http://image.shehuiapp.com/u/1534940/20191230KSTK7C/1534940_016229491_1577708085978.jpg/s300" onerror="javascript: imgLoadError(this);" />
-                    </div>
-                </div>
-                <div class="data_meta_info v10_margin">
-                    <span class="data_meta_info">2019年12月30日20:14</span>
-                </div>
-                <div class="data_post_status_info">
-                    <span class="data_post_status_label_red">审核中</span>
-                </div>
-            </a>
+
+            </div>
+        </div>
+        <div th:if="${info==null or info.size()==0}">
+            <h1>还没发布约拍信息吗?</h1>
+            <a style="font-size: 100px" th:href="@{/shoot-user/postMessage}">马上去发布</a>
         </div>
 
-
-
-        <div class="data_post_container">
-            <a class="data_post_container_link" href="/y/992425">
-                <div class="data_post_fee_info">
-                    <span class="data_meta_info">约拍</span>
-                    <span class="data_meta_info span_v2_margin_left">河南郑州</span>
-                    <span class="span_v2_margin_left">希望互免</span>
-                </div>
-                <div class="data_post_message v8_margin">
-                    希望互勉
-                </div>
-                <div class="data_meta_info v10_margin">
-                    <span class="data_meta_info">2019年12月9日23:22</span>
-                </div>
-                <div class="v10_margin">
-                    <span class="data_meta_info label_required">已关闭</span>
-                </div>
-            </a>
-        </div>
     </div>
 
 

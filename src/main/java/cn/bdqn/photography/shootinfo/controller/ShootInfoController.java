@@ -7,6 +7,12 @@ import cn.bdqn.photography.shootimages.entity.ShootImages;
 import cn.bdqn.photography.shootimages.service.IShootImagesService;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootinfo.service.IShootInfoService;
+import cn.bdqn.photography.shootletter.entity.ShootLetter;
+import cn.bdqn.photography.shootletter.service.IShootLetterService;
+import cn.bdqn.photography.shootuser.entity.ShootUser;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +46,9 @@ public class ShootInfoController {
     @Autowired
     private IShootImagesService iShootImagesService;
 
+    @Autowired
+    private IShootLetterService iShootLetterService;
+
     //约拍信息添加
     @RequestMapping(value = "/addInfo")
     public String addInfo(@RequestParam("imagesNamg") MultipartFile[] multipartFiles,
@@ -62,6 +71,18 @@ public class ShootInfoController {
     //@ResponseBodys
     public String about(@RequestParam("id") Long id, Model model){
 
+        Session session = SecurityUtils.getSubject().getSession();
+        ShootUser user = (ShootUser)session.getAttribute("user");
+        QueryWrapper<ShootLetter> query=new QueryWrapper<>();
+        query.eq("sendUserId",user.getId());
+        query.eq("infoId",id);
+        //查询是否 已经 给别人发送过约拍 留言
+        ShootLetter letter = iShootLetterService.getOne(query);
+        boolean flag=true;
+        if(letter!=null){
+            flag=false;
+        }
+
         ShootInfo infoById = iShootInfoService.findInfoById(id);
 
         //用户头像路劲设置
@@ -83,6 +104,7 @@ public class ShootInfoController {
         System.out.println(infoById.getShootInfoStyle());
 
         model.addAttribute("info",infoById);
+        model.addAttribute("flag",flag);
         return "index/about";
     }
 

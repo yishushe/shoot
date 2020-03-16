@@ -28,4 +28,9 @@ public interface ShootInfoMapper extends BaseMapper<ShootInfo> {
 
     ShootInfo getInfoById(@Param("id") Long id);   //约拍详情页面
 
+
+    ShootInfo getInfoMessageById(@Param("id") Long id);  //发起约拍信息详情页数据
+
+    List<ShootInfo> getInfoByUserId(@Param("userId") Long userId);   //根据用户id查询当前用户约拍信息
+
 }

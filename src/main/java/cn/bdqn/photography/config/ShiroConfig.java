@@ -54,6 +54,8 @@ public class ShiroConfig {
         filterMap.put("/shoot-user/postMessage","authc");  //发布约拍信息页
         filterMap.put("/shoot-info/addInfo","authc");   //添加约拍信息操作
         filterMap.put("/shoot-info/about","anon");      //约拍详情页面
+        filterMap.put("/shoot-letter/aboutMessage","authc");  //发起约拍详情页
+        filterMap.put("/shoot-state/infoMessage","authc");    //我的约拍信息页
 
         filterMap.put("/shoot-user/about","perms[query]");
 
