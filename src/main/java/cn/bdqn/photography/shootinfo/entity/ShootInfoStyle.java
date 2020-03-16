@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -24,5 +25,9 @@ public class ShootInfoStyle implements Serializable {
 
     @TableField("styleId")
     private Long styleId;
+
+    //标签表
+    @TableField(exist = false)
+    private List<ShootStyle> shootStyles;
 
 }

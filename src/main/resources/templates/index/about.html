@@ -21,14 +21,18 @@
 
     <link href="../css/core73.min.css" rel="stylesheet" />
     <script th:src="@{/js/jquery.min.js}"></script>
+<<<<<<< HEAD
 >>>>>>> f2aaf42a801695f31509cbbfa89a88d2411e4280
    <!-- <script type="text/javascript">
         if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
     </script>-->
+=======
+>>>>>>> 4ec201846b9a71c3d883e5da864952ac8b205408
 
 </head>
 <body class="body_default">
 
+<!-- 导航条 -->
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
     <div class="container">
         <div class="navbar-header">
@@ -42,6 +46,7 @@
                 <div>
                     <!--<img src="../../static/images/logo.png" class="fy-navbar-logo" />-->
                     <img th:src="@{../images/logo.png}">
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
                     <span>摄会社</span>
                 </div>
             </a>
@@ -60,9 +65,6 @@
                 <li>
                     <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
                 </li>
-                <!--   <li>
-                       <a class="" href="#">地点</a>
-                   </li>-->
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
@@ -72,102 +74,155 @@
                 <li>
                     <a class="login" href="#">加入会员</a>
                 </li>
-                <!-- <li>
-                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
-                 </li>-->
             </ul>
         </nav>
     </div>
 </header>
+
+
 <div class="fy-docs-nav-distance"></div>
 
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="row" style="margin-left:0px;margin-right:0px;">
+
+        <!-- 显示约拍信息展示区 -->
         <div class="col-sm-9 xzero_padding">
 
-
-
-
+            <!-- 详情 -->
             <div class="data_posts">
                 <div class="data_post_cell user_info_cell">
+
                     <div class="user_info_cell_avatar">
+
+                        <!-- 头像 -->
                         <a class="data_post_author_title_link" href="/u/822903">
-                            <img class="img-circle data_avatar_small2" src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLmplC3DmQhL41qjhyUYysPctOFZQncx78fXJr7DxqA8iaDEUxq67Xw1UR3BGicgsVVgc6SDjlwAgWQ/132" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
+                            <img class="img-circle data_avatar_small2"  th:src="${info.shootUser.portyaitl}"/>
                         </a>
+
                     </div>
                     <div style="float:right;">
 
-                        <a class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:void(0);">关注</a>
+                        <a class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:;">关注</a>
 
                     </div>
                     <div class="user_info_cell_content">
                         <a class="data_post_author_title_link" href="/u/822903">
-                            <span class="data_post_author_title">日久&#x1F36B; &#x1F505;</span>
+                            <span class="data_post_author_title" th:text="${info.shootUser.userName}">日久&#x1F36B; &#x1F505;</span>
                         </a>
                         <i class="web_wechat_women"></i>
+
+                        <!-- 身份 角色 -->
                         <div>
-                            <span class="data_meta_info_xs">模特</span>
+                            <span class="data_meta_info_xs" th:text="${info.shootUser.roles.get(0).roleName}">模特</span>
                         </div>
+
                     </div>
+
+                    <!-- 手机验证 -->
                     <div class="v10_margin">
                         <span class="label label-warning">手机验证</span>
                     </div>
+
                     <div class="v15_margin">
                         <div id="UserInfoPanel" class="row" style="margin-left:0px;margin-right:0px;">
+
+                            <!-- 地区 -->
                             <div class="col-xs-4 col-sm-4 xzero_padding" style="text-align:center;">
                                 <span class="data_meta_info">面向地区</span>
                                 <br />
-                                <span class="data_meta_text">河南郑州</span>
+                                <span class="data_meta_text" th:text="${info.shootAddress.shootProw.prow+info.shootAddress.shootCity.city+info.shootAddress.shootCountry.country}">河南郑州</span>
                             </div>
+
+                            <!-- 费用类型 -->
                             <div class="col-xs-4 col-sm-4 xzero_padding" style="text-align:center;">
                                 <span class="data_meta_info">费用</span>
                                 <br />
-                                <span class="data_meta_text">希望互免</span>
+                                <span class="data_meta_text" th:text="${info.shootCost.costName}">希望互免</span>
                             </div>
+
+                            <!-- 时间 -->
                             <div class="col-xs-4 col-sm-4 xzero_padding" style="text-align:center;">
                                 <span class="data_meta_info">发布时间</span>
                                 <br />
-                                <span class="data_meta_text">2019年12月26日23:18</span>
+                                <span class="data_meta_text" th:text="${info.creationDate}">2019年12月26日23:18</span>
+                            </div>
+
+                        </div>
+
+                        <!-- 约拍类型和标题 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:text="${info.shootType.typeName}">约拍</span>
+                            <span class="data_meta_text" th:text="${info.content}"></span>
+                        </div>
+
+                        <!-- 时间说明 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:if="${info.takeTime!='' and info.takeTime!=null}">时间: </span>
+                            <span class="data_meta_text" th:if="${info.takeTime!='' and info.takeTime!=null}" th:text="${info.takeTime}"></span>
+                        </div>
+
+                        <!-- 地点说明 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:if="${info.takeLocation!='' and info.takeLocation!=null}">地点: </span>
+                            <span class="data_meta_text" th:if="${info.takeLocation!='' and info.takeLocation!=null}" th:text="${info.takeLocation}"></span>
+                        </div>
+
+                        <!-- 其他说明 -->
+                        <div class="v15_margin">
+                            <span class="data_meta_info" th:if="${info.takeResult!='' and info.takeResult!=null}">其他: </span>
+                            <span class="data_meta_text" th:if="${info.takeResult!='' and info.takeResult!=null}" th:text="${info.takeResult}"></span>
+                        </div>
+
+                        <!-- 约拍标签 -->
+                        <div class="v15_margin" th:if="${info.shootInfoStyle!=null}" >
+                            <div th:each="style,styleId :${info.shootInfoStyle.shootStyles}">
+                            <a class="tag_link" href="javascript:;" target="_blank">
+                                <span class="tag" th:text="${style.styleName}"></span>
+                            </a>
                             </div>
                         </div>
-                        <div class="v15_margin">
-                            <span class="data_meta_info">约拍</span>
-                            <span class="data_meta_text">喜欢拍照留下回忆</span>
-                        </div>
+
+                        <!-- 收藏 -->
                         <div class="v5_margin" style="text-align:right;">
                             <a class="btn_follow_wechat" data-to="993743" href="javascript:void(0);">收藏</a>
                             <a class="btn_report_button" data-type="yuepai" data-id="993743" href="javascript:void(0);">
                                 <span class="data_meta_info">举报</span>
                             </a>
                         </div>
-                        <div class="v10_margin" style="text-align:center;">
+
+                        <!--约拍条数 -->
+                       <!-- <div class="v10_margin" style="text-align:center;">
                             <span class="label label-success label_count">收到约拍6条</span>
-                        </div>
-                        <div class="v10_margin" style="text-align:center;">
+                        </div>-->
+
+                        <div class="v10_margin" style="text-align:center;" th:if="${info.requireRoles==2}">
                             <span class="label label-success label_count">摄会社Club会员可请求</span>
                         </div>
+
+                        <!-- 提交后通知 -->
                         <div class="v15_margin" style="text-align:center;">
 
                             <a id="dorequest_button" role="button" class="btn btn-success btn-sm form_large_button" data-login="1" data-id="993743" href="javascript:void(0);">发起请求</a>
                             <a id="requestdetail_link" class="data_post_title_link" style="display:none;" href="">你已经提交了请求，查看详情&gt;&gt;</a>
-                            <div class="v10_margin">
+
+                            <!--<div class="v10_margin">
                                 <span class="data_meta_info">您提交请求后，她会接收到微信通知</span>
-                            </div>
+                            </div>-->
+
                         </div>
+
                     </div>
                 </div>
             </div>
 
-
+            <!-- 约拍图片展示 -->
             <div class="data_posts v8_margin">
-                <div id="lightGallery" class="data_post_cell">
-                    <div class="data_meta_info">她附加的照片（点击图片可以查看原图）</div>
+                <div id="lightGallery" class="data_post_cell" th:if="${info.shootImages!=null}" th:each="images,count : ${info.shootImages}">
+
                     <div class="v10_margin gallery-item-container" style="text-align:center;" data-src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_020841584_1577373482590.jpg/hd">
-                        <img style="width:auto;max-width:100%;height:auto;" src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_020841584_1577373482590.jpg/hd" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
+                        <img style="width:auto;max-width:100%;height:auto;" th:src="${images.imagesName}" />
                     </div>
-                    <div class="v10_margin gallery-item-container" style="text-align:center;" data-src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_024380475_1577373482590.jpg/hd">
-                        <img style="width:auto;max-width:100%;height:auto;" src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_024380475_1577373482590.jpg/hd" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                    </div>
+
                 </div>
             </div>
 
@@ -216,6 +271,9 @@
             <div class="v20_margin"></div>
 
         </div>
+
+
+        <!-- 相关地区约拍 -->
         <div class="col-sm-3 fy-rside-panel">
             <div class="data_posts">
                 <a class="data_post_cell data_post_cell_link form_header_righticon" href="/u/822903">
@@ -237,6 +295,7 @@
                 </div>
             </div>
 
+            <!-- 相关推荐 -->
             <div class="data_posts v8_margin">
                 <div class="data_post_cell">
                     <span class="data_group_title_sm">相关推荐</span>
@@ -305,6 +364,7 @@
                 </a>
             </div>
 
+            <!-- 相关下载 -->
             <div class="data_posts v8_margin">
 
                 <div class="data_post_cell form_header_righticon download_panel">
@@ -320,10 +380,11 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
 </div>
-
 
 
 
@@ -577,17 +638,10 @@
 </div>
 
 
-
-
-
-
-
-
-<!--<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>-->
-
 <script src="../js/core36.min.js"></script>
 <script th:src="@{/js/notlogin.js}"></script>
 
+<<<<<<< HEAD
 
 <!--<link rel="stylesheet" href="/content/resources/weui.min.css">
 <link rel="stylesheet" href="/content/resources/lightGallery.min.css">-->
@@ -629,5 +683,7 @@
 
 
 <!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
+=======
+>>>>>>> 4ec201846b9a71c3d883e5da864952ac8b205408
 </body>
 </html>

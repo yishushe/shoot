@@ -1,26 +1,25 @@
 package cn.bdqn.photography.shootinfo.controller;
-
-
-
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
 import cn.bdqn.photography.shootimages.entity.ShootImages;
+import cn.bdqn.photography.shootimages.service.IShootImagesService;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootinfo.service.IShootInfoService;
-import cn.bdqn.photography.utils.IsPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -41,6 +40,9 @@ public class ShootInfoController {
     @Autowired
     private IShootInfoService iShootInfoService;
 
+    @Autowired
+    private IShootImagesService iShootImagesService;
+
     //约拍信息添加
     @RequestMapping(value = "/addInfo")
     public String addInfo(@RequestParam("imagesNamg") MultipartFile[] multipartFiles,
@@ -55,6 +57,36 @@ public class ShootInfoController {
            return "redirect:/shoot-user/personage";  //重定向到个人页
         }
         return "personage/postMessage";
+    }
+
+
+    //约拍详情页面
+    @RequestMapping(value = "/about")
+    //@ResponseBodys
+    public String about(@RequestParam("id") Long id, Model model){
+
+        ShootInfo infoById = iShootInfoService.findInfoById(id);
+
+        //用户头像路劲设置
+        infoById.getShootUser().setPortyaitl("/images/"+infoById.getShootUser().getPortyaitl());
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("infoId",infoById.getId());
+        //根据id查找信息
+        Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
+        if(shootImages!=null && shootImages.size()>0){
+            for (ShootImages images: shootImages
+            ) {
+                //设置info图片路劲
+                images.setImagesName("/images/"+images.getImagesName());
+            }
+            infoById.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
+        }
+
+        System.out.println("size:"+infoById.getShootInfoStyle().getShootStyles().size());
+
+        model.addAttribute("info",infoById);
+        return "index/about";
     }
 
 }

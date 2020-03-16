@@ -15,6 +15,8 @@ import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.utils.AddressUtls;
 import cn.bdqn.photography.utils.IsPath;
 import cn.bdqn.photography.utils.SplitName;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -102,5 +104,21 @@ public class ShootInfoServiceImpl extends ServiceImpl<ShootInfoMapper, ShootInfo
         boolean b = iShootImagesService.saveBatch(list);  //添加多张图片
         return b;
     }
-    
+
+    @Override
+    public IPage<ShootInfo> findInfo(Long stateId,String city,Long costId,
+                                    Long roleIds,Long sex,int current) {
+        //分页帮助类
+        IPage<ShootInfo> page=new Page<>(current,5);
+        page= shootInfoMapper.getInfo(page,stateId, city, costId, roleIds,sex);
+        System.out.println("page:"+page.getRecords().size());
+        return page;
+    }
+
+
+    @Override
+    public ShootInfo findInfoById(Long id) {
+        return shootInfoMapper.getInfoById(id);
+    }
+
 }
