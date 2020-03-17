@@ -64,26 +64,29 @@ public class ShootThemeController {
     public String att(){
         return "selfie/attention";
     }
-
+     //分页查询用户主题
     @RequestMapping("/topic2")
-    public String topic2(Long id, Model model,
+    public String topic2(@RequestParam(value = "id",required = false) String id, Model model,
                          @RequestParam(value = "city",required = false)
                          String city,@RequestParam(value = "current",defaultValue = "0",required = false)
                          int current){
-       ShootTheme st= iShootThemeService.getById(id);
+        System.out.println("用户地址city"+city);
+        Long idd=Long.parseLong(id);
+
+       ShootTheme st= iShootThemeService.getById(idd);
        if(st!=null){
            List<ShootInfo> sif= iShootThemeService.selebythemeid(st);
-           System.out.println("风格名字"+st.getThemName()+st.getId());
-           System.out.println("用户约拍信息"+sif.get(0).getContent());
            model.addAttribute("st",st);
            model.addAttribute("sif",sif);
+
        }
 
         if(city!="" && city!=null){
             city=city+"市";
         }
+        System.out.println("地区"+city);
         //约拍信息查询
-        IPage<ShootInfo> page= iShootThemeService.findInfoByThemeId(id,city,current);
+        IPage<ShootInfo> page= iShootThemeService.findInfoByThemeId(idd,city,current);
 
         for (ShootInfo info1 : page.getRecords()){
 
@@ -108,7 +111,8 @@ public class ShootThemeController {
         model.addAttribute("current",page.getCurrent());  //当前页
         model.addAttribute("pages",page.getPages());      //总页数
         model.addAttribute("total",page.getTotal());      //总条数
-
+        //page.getRecords().get(0).getShootUser().getRoles().get(0).getRoleName()
+        //System.out.println("用户身份"+page.getRecords().g);
         return "selfie/topic2";
     }
 }
