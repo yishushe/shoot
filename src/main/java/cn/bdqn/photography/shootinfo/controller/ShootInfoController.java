@@ -75,6 +75,8 @@ public class ShootInfoController {
         QueryWrapper<ShootLetter> query=new QueryWrapper<>();
         query.eq("sendUserId",user.getId());
         query.eq("infoId",id);
+        query.groupBy("sendUserId");
+        query.orderBy(true,true,"creationDate");
         //查询是否 已经 给别人发送过约拍 留言
         ShootLetter letter = iShootLetterService.getOne(query);
         boolean flag=true;

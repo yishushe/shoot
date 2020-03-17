@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -60,6 +58,7 @@ public class ShootRoleController {
         return "personage/personalInfo";
     }
 
+    //获取当前用户 sesssion
     public ShootUser all(){
         Subject subject = SecurityUtils.getSubject();
         ShootUser s=(ShootUser) subject.getSession().getAttribute("user");
@@ -103,6 +102,5 @@ public class ShootRoleController {
             return "personage/personalInfo";
         }
     }
-
 
 }

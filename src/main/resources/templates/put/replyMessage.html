@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>私信 - 摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+                <li>
+                    <a id="" class="fy-navItem-notification" href="#">通知</a>
+                </li>
+                <li>
+                    <a class="login" href="javascript:;">加入会员</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+
+<div class="fy-docs-nav-distance"></div>
+
+<div id="replies_container" class="container bottom_menu_margin_plus xzero_padding" ng-app="message_chat_app" ng-controller="message_chat_controller">
+    <div class="data_posts">
+        <div class="data_post_cell">
+            <span class="data_group_title">与喜欢拍照喜欢你的私信</span>
+        </div>
+
+        <!-- 发送回复信息 -->
+        <div class="data_post_cell">
+
+            <input hidden name="infoId" id="infoId" th:value="${infoId}">
+                <!-- 当前给你发起请求 留言者id -->
+                <input hidden id="sendUserId" th:value="${session.sendUserId}">
+            <textarea class="auto_textarea_editor input_gray" ng-model="reply_message" id="content" name="content" placeholder="输入内容..." style="height:80px;"></textarea>
+            <div class="v10_margin">
+                <button type="button" id="fasong"  class="btn btn-success btn-sm form_large_button">发送</button>
+
+                <!-- 联系客户 和 举报对方 -->
+                <div style="float:right;">
+                    <a class="btn btn-default btn-sm" href="/u/62591?report=1" role="button">举报对方</a>
+                    <a class="btn btn-default btn-sm btn_contact_help span_v5_margin_left" href="javascript:;" role="button">联系客服</a>
+                </div>
+            </div>
+
+            <!-- 异步请求添加回复数据 -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#fasong").click(function () {
+                        var infoId = $("#infoId").val();
+                        var content = $("#content").val();
+                        var sendUserId=$("#sendUserId").val();
+                        $.post("/shoot-letter/addReplyMessage",{"infoId":infoId,"content":content},function (data) {
+                            if(data==true){
+                                location.href="/shoot-letter/replyMessage?sendUserId="+sendUserId;
+                            }
+                        },"json");
+                    })
+                });
+            </script>
+
+        </div>
+
+    </div>
+
+    <div class="data_posts v10_margin">
+
+        <!-- 私信展示区 你来我往展示区 -->
+        <div th:each="letter,index : ${letter}">
+
+            <div class="data_post_cell ng-hide" ng-show="initialized" ng-repeat="message in messages">
+            <div class="user_info_cell_sm v10_margin_bottom">
+                <div class="user_info_cell_avatar">
+                    <a class="data_post_author_title_link" href="javascript:;">
+                        <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
+                    </a>
+                </div>
+                <div class="user_info_cell_content">
+                    <a class="data_post_author_title_link" href="javascript:;">
+                        <span class="data_post_author_title" th:text="${letter.shootUser.userName}"></span>
+                    </a>
+                    <i class=""></i>
+                    <div>
+                        <span class="data_meta_info" th:text="${letter.shootUser.shootAddress.shootProw.prow+
+                        letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country}"></span>
+                        <span class="data_meta_info" th:text="${letter.shootUser.roles.get(0).roleName}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="data_post_content_clear"></div>
+            <div class="data_post_message v10_margin" th:text="${letter.content}">
+
+            </div>
+            <div class="data_meta_info v10_margin">
+                <span class="data_meta_info" th:text="${letter.creationDate}"></span>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="data_post_cell ng-hide" ng-show="initialized">
+            <img class="loading_progress ng-hide" ng-show="isLoading" src="/content/resources/loading_circle.gif" />
+            <button class="btn btn-default btn-sm ng-hide" ng-show="(!isLoading) && (totalPages > 1)" type="button" ng-click="loadMore()">加载更多...</button>
+            <span class="data_meta_info ng-hide" ng-show="(!isLoading) && (totalCount > 0 && totalPages <= 1)">已全部加载</span>
+            <span class="data_meta_info ng-hide" ng-show="(!isLoading) && (totalCount <= 0)">还没有消息</span>
+        </div>
+
+    </div>
+
+    <div class="v10_margin"></div>
+</div>
+
+<input id="_WithUserID" name="_WithUserID" type="hidden" value="62591" />
+<input id="_RequestID" name="_RequestID" type="hidden" value="0" />
+<div id="toast_message" class="toast_message_fixed" style="display: none;">
+    <div class="weui_toast weui_toast_fixed">
+        <p id="toast_message_text" class="weui_toast_content weui_toast_content_fixed">
+        </p>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="site_contact_help_dialog" style="display:none;">
+    <div class="weui_mask" onclick="$(this).parent().hide();"></div>
+    <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
+        <div class="data_post_cell_sm">
+            <span class="data_group_title_bold">联系客服</span>
+            <div style="float:right;">
+                <a role="button" class="btn btn-default btn-xs" href="javascript:void(0);" onclick="$('#site_contact_help_dialog').hide();">关闭</a>
+            </div>
+        </div>
+        <div class="data_post_cell_sm" style="text-align:center;">
+            <img src="/content/custom/contactwechat.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
