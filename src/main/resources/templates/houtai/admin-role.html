@@ -21,16 +21,13 @@
 	<link th:href="@{/h-ui.admin/css/style.css}" rel="stylesheet">
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
-<![endif]-->
-<!--/meta 作为公共模版分离出去-->
-
 <title>用户管理 - 管理员管理 - H-ui.admin v3.0</title>
 </head>
 <body>
 <header class="navbar-wrapper">
 	<header class="navbar-wrapper">
 		<div class="navbar navbar-fixed-top">
-			<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">H-ui.admin</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.0</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+			<!--<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">H-ui.admin</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.0</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 				<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 					<ul class="cl">
 						<li>超级管理员</li>
@@ -44,60 +41,11 @@
 						<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
 					</ul>
 				</nav>
-			</div>
+			</div>-->
 		</div>
 	</header>
 	<aside class="Hui-aside">
-
 		<div class="menu_dropdown bk_2">
-			<!--<dl id="menu-article">
-				<dt><i class="Hui-iconfont">&#xe616;</i> 审核管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-				<dd>
-					<ul>
-						<li class="current"><a href="article-list.html" title="审核管理">审核管理</a></li>
-					</ul>
-				</dd>
-			</dl>-->
-			<!--<dl id="menu-picture">
-				<dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-				<dd>
-					<ul>
-						<li><a href="picture-list.html" title="图片管理">图片管理</a></li>
-					</ul>
-				</dd>
-			</dl>-->
-			<!--<dl id="menu-product">
-				<dt><i class="Hui-iconfont">&#xe620;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-				<dd>
-					<ul>
-						<li><a href="product-brand.html" title="品牌管理">品牌管理</a></li>
-						<li><a href="product-category.html" title="分类管理">分类管理</a></li>
-						<li><a href="product-list.html" title="产品管理">产品管理</a></li>
-					</ul>
-				</dd>
-			</dl>-->
-	<!--		<dl id="menu-comments">
-				<dt><i class="Hui-iconfont">&#xe622;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-				<dd>
-					<ul>
-						<li><a href="http://h-ui.duoshuo.com/admin/" title="评论列表">评论列表</a></li>
-						<li><a href="feedback-list.html" title="意见反馈">意见反馈</a></li>
-					</ul>
-				</dd>
-			</dl>-->
-		<!--	<dl id="menu-member">
-				<dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-				<dd>
-					<ul>
-						<li><a href="member-list.html" title="会员列表">会员列表</a></li>
-						<li><a href="member-del.html" title="删除的会员">删除的会员</a></li>
-						<li><a href="member-level.html" title="等级管理">等级管理</a></li>
-						<li><a href="member-scoreoperation.html" title="积分管理">积分管理</a></li>
-						<li><a href="member-record-browse.html" title="浏览记录">浏览记录</a></li>
-						<li><a href="member-record-share.html" title="分享记录">分享记录</a></li>
-					</ul>
-				</dd>
-			</dl>-->
 			<dl id="menu-admin">
 				<dt class="selected"><i class="Hui-iconfont">&#xe62d;</i> 用户信息管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 				<dd style="display: block;">
@@ -107,32 +55,15 @@
 					</ul>
 				</dd>
 			</dl>
-
-			<!--<dl id="menu-system">
-				<dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-				<dd>
-					<ul>
-						<li><a href="system-category.html" title="分类管理">分类管理</a></li>
-						<li><a href="system-shielding.html" title="屏蔽词">屏蔽词</a></li>
-						<li><a href="system-log.html" title="系统日志">系统日志</a></li>
-					</ul>
-				</dd>
-			</dl>-->
 		</div>
 	</aside>
-
-
 <section class="Hui-article-box">
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
-			<div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" href="javascript:;" onclick="admin_role_add('添加角色','admin-role-add.html','800')"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a> </span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
 			<div class="mt-10">
 			<table class="table table-border table-bordered table-hover table-bg">
 				<thead>
-<!--					<tr>-->
-<!--						<th scope="col" colspan="6">用户管理</th>-->
-<!--					</tr>-->
 					<tr class="text-c">
 						<th><input type="checkbox" value="" name=""></th>
 						<th>id</th>
@@ -141,13 +72,13 @@
 						<th>电话</th>
 						<th>操作</th>
 					</tr>
-				<tr th:each="user:${info}">
+				<tr th:each="user:${info}" id="love">
 					<th><input type="checkbox" value="" name=""></th>
 					<td th:text="${user.id}"></td>
 					<td th:text="${user.userCode}"></td>
 					<td th:text="${user.userName}"></td>
 					<td th:text="${user.phone}"></td>
-					<td><a title="编辑" href="javascript:;" onclick="admin_role_edit('角色编辑','admin-role-add.html','1')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="admin_role_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td><a href="admin-role-add"  style="text-decoration:none">修改</a><a href="javascript:;" style="text-decoration:none">删除</a></td>
 					<!--<td><a href="#">修改</a><a href="#">删除</a></td>-->
 				</tr>
 				</thead>
@@ -169,24 +100,6 @@
 <link th:href="@{/lib/datatables/1.10.0/jquery.dataTables.min.js}" rel="stylesheet">
 <link th:href="@{/lib/laypage/1.2/laypage.js}" rel="stylesheet">
 <script type="text/javascript">
-/*管理员-角色-添加*/
-function admin_role_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-角色-编辑*/
-function admin_role_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
-}
-/*管理员-角色-删除*/
-function admin_role_del(obj,id){
-	layer.confirm('角色删除须谨慎，确认要删除吗？',function(index){
-		//此处请求后台程序，下方是成功后的前台处理……
-		
-		
-		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
-	});
-}
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </header>

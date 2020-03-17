@@ -28,4 +28,8 @@ public class ShootUserControllers {
         ht.setAttribute("info",usersList);
         return "houtai/admin-role";
     }
+    @RequestMapping("/admin-role-add")
+    public String html(){
+        return "houtai/admin-role-add";
+    }
 }
