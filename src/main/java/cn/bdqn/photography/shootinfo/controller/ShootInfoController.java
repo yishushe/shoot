@@ -1,5 +1,4 @@
 package cn.bdqn.photography.shootinfo.controller;
-
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
