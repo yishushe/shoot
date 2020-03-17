@@ -1,10 +1,13 @@
 package cn.bdqn.photography.houtai.controller;
-import cn.bdqn.photography.houtai.mapper.ShootUserMappers;
+import cn.bdqn.photography.houtai.entity.ShootUsers;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
+import cn.bdqn.photography.shootuser.service.IShootUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -17,14 +20,12 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("/shoot-houtai-user")
 public class ShootUserControllers {
-
     @Resource
-    private ShootUserMappers shootUserMappers;
-
-    //Increase one record
+    private IShootUserService iShootUserService;
     @RequestMapping("/love")
-    public int addRecord(ShootUser shootUser){
-        return ;
-
+    public String All(HttpServletRequest ht){
+        List<ShootUser> usersList = iShootUserService.list();
+        ht.setAttribute("info",usersList);
+        return "houtai/admin-role";
     }
 }
