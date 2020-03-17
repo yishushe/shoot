@@ -1,7 +1,10 @@
 package cn.bdqn.photography.shoottheme.service;
 
+import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shoottheme.entity.ShootTheme;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-03-09
  */
 public interface IShootThemeService extends IService<ShootTheme> {
+    List<ShootInfo> selebythemeid(ShootTheme shootTheme);
 
 }

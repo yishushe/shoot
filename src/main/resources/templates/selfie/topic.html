@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,13 +39,13 @@
                     <a class="fy-navItem-active" href="#">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/zipai}">自拍</a>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
                 <!--   <li>
                        <a class="" href="#">地点</a>
@@ -76,10 +75,7 @@
 
     <div class="data_posts tab_panel" data-tabname="hot">
         <div class="data_post_cell_sm">
-
-
-
-            <a class="data_post_container_link" href="/topic/23">
+            <a class="data_post_container_link" th:href="@{/shoot-theme/topic2(id=1)}">
                 <div class="topic_post">
                     <img class="data_avatar_middle avatar" src="http://image.shehuiapp.com/srv/files/2017/02/db6f305e92d7454e8e29885daed398d8.jpg/t150" alt="日系小清新 " />
                     <span class="data_meta_text_big">日系小清新 </span>
@@ -93,11 +89,10 @@
                 </div>
             </a>
         </div>
+
+
         <div class="data_post_cell_sm">
-
-
-
-            <a class="data_post_container_link" href="/topic/26">
+            <a class="data_post_container_link" th:href="@{/shoot-theme/topic2(id=2)}">
                 <div class="topic_post">
                     <img class="data_avatar_middle avatar" src="http://image.shehuiapp.com/srv/files/2017/02/cc572e15e8204f988078e8d2f80c6842.jpg/t150" alt="古风约拍" />
                     <span class="data_meta_text_big">古风约拍</span>
@@ -111,11 +106,9 @@
                 </div>
             </a>
         </div>
+
         <div class="data_post_cell_sm">
-
-
-
-            <a class="data_post_container_link" href="/topic/405">
+            <a class="data_post_container_link" th:href="@{/shoot-theme/topic2(id=3)}">
                 <div class="topic_post">
                     <img class="data_avatar_middle avatar" src="http://image.shehuiapp.com/u/499/499_010982931_1513725671252.jpg/t150" alt="圣诞主题" />
                     <span class="data_meta_text_big">圣诞主题</span>
