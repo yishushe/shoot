@@ -80,10 +80,10 @@
     <!-- 私信 -->
     <div class="data_posts">
 
-        <div th:if="${letter==null}">
+        <div th:if="${letter==null or letter.size()==0}">
             <h1>还没人给你留言</h1>
         </div>
-        <div th:if="${letter!=null}" th:each="letter,index : ${letter}">
+        <div th:if="${letter!=null and letter.size()>0}" th:each="letter,index : ${letter}">
 
             <div class="data_post_cell">
 
