@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+
+    <title>摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+    <link href="../css/core73.min.css" rel="stylesheet" />
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
+                    <span>摄会社</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+                <li>
+                    <a id="" class="fy-navItem-notification" href="#">通知</a>
+                </li>
+                <li>
+                    <a class="login" href="#">加入会员</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding">
+
+    <div class="data_posts">
+        <div class="data_post_cell">
+            <div style="min-height:60px;">
+                <div style="float:left;">
+                    <img class="data_avatar_middle avatar_radius2 span_v10_margin_right" />
+                </div>
+                <span class="data_group_title_bold" th:text="${st.themName}">
+
+            </span>
+                <div class="v10_margin">
+                    <a href="/topic/qrcode/23">
+                        <span class="qrcode_icon"></span>
+                        <span class="data_meta_info">分享二维码</span>
+                    </a>
+                </div>
+            </div>
+            <div class="v10_margin">
+
+                <a class="btn btn-sm btn_follow btn_join_topic btn-success" data-login="1" data-to="23" href="javascript:void(0);">关注</a>
+                <a class="btn btn-sm btn-primary btn_login_required" data-login="1" href="/y/publish/23?from=23">+发布信息</a>
+                <a class="btn btn-sm btn-primary btn_login_required" data-login="1" href="/gallery/new?from=23">+发布作品</a>
+            </div>
+        </div>
+    </div>
+
+    <ul id="topic_tabs" class="nav nav-tabs v10_margin">
+        <li role="presentation"><a href="javascript:void(0);" data-tabname="summary">简介</a></li>
+        <li role="presentation" class="active"><a href="javascript:void(0);" data-tabname="items">动态</a></li>
+        <li role="presentation"><a href="javascript:void(0);" data-tabname="galleries">相册</a></li>
+    </ul>
+
+    <div class="data_posts tab_panel" data-tabname="summary">
+        <div class="data_post_cell">
+            <div class="data_meta_info">
+                2017年2月20日22:23创建
+            </div>
+            <div class="v20_margin">
+                <a class="data_post_title_link" href="/topic/members/23">浏览关注人员（654人）</a>
+            </div>
+            <div class="v20_margin">
+                <span class="data_meta_text">喜欢<span th:text="${st.themName}"></span>的来这里</span>
+            </div>
+            <div class="v20_margin">
+                <span class="data_meta_info">创建人员</span>
+                <div class="v10_margin">
+                    <a class="data_post_author_title_link" href="/u/499" target="_blank">
+                        <input id="idz" th:value="${st.id}" style="display:none">
+                        <img id="img1" class="img-circle data_avatar_small" src="http://q.qlogo.cn/qqapp/1104438894/19D7C80DC5B6C9CFCA9706DA925DA4A5/100" />
+                        <span class="data_post_author_title">Ai</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab_panel" data-tabname="items">
+        <div class="data_posts">
+            <div class="data_post_cell_dotted">
+                <span class="data_meta_info">地区：</span>
+                <a class="data_item_link data_city" href="javascript:;">全部</a>
+                <a class="data_item_link data_city" href="javascript:;">北京</a>
+                <a class="data_item_link data_city" href="javascript:;">上海</a>
+                <a class="data_item_link data_city" href="javascript:;">天津</a>
+                <a class="data_item_link data_city" href="javascript:;">重庆</a>
+                <a class="data_item_link data_city" href="javascript:;">广州</a>
+                <a class="data_item_link data_city" href="javascript:;">深圳</a>
+                <a class="data_item_link data_city" href="javascript:;">南京</a>
+                <a class="data_item_link data_city" href="javascript:;">杭州</a>
+                <a class="data_item_link data_city" href="javascript:;">郑州</a>
+                <a class="data_item_link data_city" href="javascript:;">武汉</a>
+                <a class="data_item_link data_city" href="javascript:;">长沙</a>
+                <a class="data_item_link data_city" href="javascript:;">成都</a>
+                <a class="data_item_link data_city" href="javascript:;">西安</a>
+                <a class="data_item_link data_city" href="javascript:;">哈尔滨</a>
+                <a class="data_item_link data_city" href="javascript:;">长春</a>
+                <a class="data_item_link data_city" href="javascript:;">沈阳</a>
+                <a class="data_item_link data_city" href="javascript:;">大连</a>
+                <a class="data_item_link data_city" href="javascript:;">石家庄</a>
+                <a class="data_item_link data_city" href="javascript:;">合肥</a>
+                <a class="data_item_link data_city" href="javascript:;">济南</a>
+                <a class="data_item_link data_city" href="javascript:;">青岛</a>
+                <a class="data_item_link data_city" href="javascript:;">南昌</a>
+                <a class="data_item_link data_city" href="javascript:;">福州</a>
+                <a class="data_item_link data_city" href="javascript:;">厦门</a>
+                <a class="data_item_link data_city" href="javascript:;">南宁</a>
+                <a class="data_item_link data_city" href="javascript:;">昆明</a>
+                <a class="data_item_link data_city" href="javascript:;">苏州</a>
+                <a class="data_item_link data_city" href="javascript:;">珠海</a>
+                <a class="data_item_link data_city" href="javascript:;">东莞</a>
+                <a class="data_item_link data_city" href="javascript:;">香港</a>
+                <a class="data_item_link data_city" href="javascript:;">澳门</a>
+                <a class="data_item_link data_city" href="javascript:;">台湾</a>
+                <a class="data_item_link data_city" href="javascript:;">>>其他地区</a>
+            </div>
+
+            <!-- 地址条件查询 -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var city;
+                    function data_city(){
+                        $(".data_city").each(function () {
+                            if($(this).hasClass("biaoqian")){
+                                city=$(this).text();
+                                return;
+                            }
+                        });
+                    }
+                    function data(){
+                        if(city==undefined){
+                            city="";
+                        }
+                    }
+                    //地址
+                    $(".data_city").click(function () {
+                        var id=$("#idz").val();
+                        data_city();
+                        data();
+                        location.href="/shoot-theme/topic2?id="
+                            +id+"&city="+city;
+                    });
+                });
+            </script>
+
+            <!-- 约拍信息展示 -->
+            <div th:each="sif,index: ${info}">
+                <div class="data_post_cell">
+                    <a class="data_post_container_link" th:href="@{/shoot-info/about(id=${sif.id})}">
+                        <div class="user_info_cell_sm v10_margin_bottom">
+                            <div class="user_info_cell_avatar">
+                                <i class="data_post_author_title_link" data-url="/u/1534282">
+                                    <img class="img-circle data_avatar_small2" th:src="${sif.shootUser.portyaitl}"/>
+                                </i>
+                            </div>
+                            <div class="user_info_cell_content">
+                                <span class="data_post_author_title" th:text="${sif.shootUser.userName}"></span>
+                                <i class="web_wechat_women"></i>
+                                <div>
+                                    <span class="data_meta_info_xs" th:text="${sif.shootUser.roles.get(0).roleName}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="data_post_fee_info">
+                            <span class="data_meta_info" th:text="${sif.shootType.typeName}"></span>
+                            <span class="data_meta_info span_v2_margin_left" th:text="${sif.shootAddress.shootProw.prow+sif.shootAddress.shootCity.city+sif.shootAddress.shootCountry.country}"></span>
+                            <span class="span_v2_margin_left" th:text="${sif.shootCost.costName}"></span>
+                        </div>
+                        <div class="data_post_message v8_margin">
+                            <span th:text="${sif.content}"></span>
+                        </div>
+                        <div class="row data_post_image_row" >
+                            <div th:if="${sif.shootImages!=null}" th:each="images,count : ${sif.shootImages}">
+                                <div class="col-xs-4 col-md-2 data_post_image_cell">
+                                    <img th:src="${images.imagesName}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="data_meta_info v10_margin">
+                            <span th:text="${sif.creationDate}"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!--分页 数据 当前页 总页数-->
+            <tr>
+                <td hidden>
+                    <input hidden type="text" th:value="${current}" id="current">
+                    <input hidden type="text" th:value="${pages}" id="pages">
+                </td>
+            </tr>
+
+            <!-- 主题类型id -->
+            <input hidden id="id" th:value="${st.id}">
+
+            <!-- 上一页下一页 -->
+            <div class="container pager_container">
+                <nav>
+                    <ul class="pager">
+                        <li>
+                            <a href="javascript:;" id="prev" aria-label="Previous">
+                                <span>上一页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span th:text="'当前页'+${current}+'/'+${pages}"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" id="next" aria-label="Next">
+                                <span>下一页</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- 分页jQuery -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var id=$("#id").val();
+                    $("#prev").click(function () {
+                        var current = Number($("#current").val())-1;
+                        location.href = "/shoot-theme/topic2?current=" + current+"&id="+id;
+                    });
+                    $("#next").click(function () {
+                        var current = Number($("#current").val())+1;
+                        if(current>=Number($("#pages").val())){
+                            current=Number($("#pages").val());
+                        }
+                        location.href = "/shoot-theme/topic2?current=" + current+"&id="+id;
+                    });
+                });
+            </script>
+
+</div>
+    </div>
+        <div class="col-sm-3 fy-rside-panel" style="float: right">
+            <div>
+                <a role="button" class="btn btn-success btn-sm btn_login_required" data-login="1" style="width:100%;" href="/y/publish">发布信息</a>
+            </div>
+            <div class="v8_margin"></div>
+
+            <div class="data_posts">
+                <div class="data_post_cell_dotted">
+                    <a class="data_post_title_link" href="/about">>>关于我们</a>
+                    <br />
+                    <a class="data_post_title_link" href="http://mp.weixin.qq.com/s?__biz=MzI5NTA0NzAwMA==&mid=504523102&idx=1&sn=1449a6fa4728921676dbf370e7debf2a&chksm=77bf536940c8da7fd9257ea9c5455f1633e57b34fa0692d4b5ed868ab1b7a6dc459355a6b241&scene=1&srcid=0909nP2GXXC6OCSM0j9BNHEs#rd" rel="nofollow">>>使用指南</a>
+                    <br />
+                    <a class="data_post_title_link" href="/UserAdvice/Submit">>>向我们提建议</a>
+                </div>
+            </div>
+            <div class="v8_margin">
+
+                <div class="data_post_cell form_header_righticon download_panel">
+                    <div class="nav_left_items flex_row_panel">
+                        <img class="data_avatar_small2" src="/content/custom/logo.png" />
+                        <div class="span_v5_margin_left">
+                            <div class="data_meta_text_big">摄会社APP</div>
+                            <div class="data_meta_info">摄影约拍平台</div>
+                        </div>
+                    </div>
+                    <div class="nav_right_items flex_row_panel">
+                        <a class="btn btn-default" href="/Download" role="button">立即下载</a>
+                    </div>
+                </div>
+            </div>
+            <div class="v8_margin"></div>
+
+            <div class="data_posts">
+                <div class="data_post_cell_dotted">
+                    <span class="data_group_title">关注公众号</span>
+                </div>
+                <div class="data_post_cell_dotted">
+                    <img src="/content/custom/wechat_qrcode.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
+                </div>
+            </div>
+            <div class="v8_margin"></div>
+
+
+            <div class="data_posts">
+                <div class="data_post_cell_dotted">
+                    <span class="data_group_title">联系我们</span>
+                </div>
+                <div class="data_post_cell_dotted">
+                    <img src="/content/custom/contactwechat.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
+                </div>
+            </div>
+        </div>
+</div>
+</body>
+
+</html>

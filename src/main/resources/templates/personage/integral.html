@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
 <head>
     <meta charset="utf-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,13 +46,13 @@
                     <a class="fy-navItem-active" href="#">首页</a>
                 </li>
                 <li>
-                    <a class="login" href="#">关注</a>
+                    <a class="login" th:href="@{/shoot-selfie/att}">关注</a>
                 </li>
                 <li>
-                    <a class="login" href="#">自拍</a>
+                    <a class="login" th:href="@{/shoot-selfie/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" href="#">主题</a>
+                    <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
                 </li>
                 <!--   <li>
                        <a class="" href="#">地点</a>
@@ -73,22 +75,25 @@
 </header>
 <div class="fy-docs-nav-distance"></div>
 
+<form action="updintegral" method="post">
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="data_posts">
         <div class="data_post_cell" style="min-height:50px;">
             <span class="data_meta_info">我的积分：</span>
-            <span id="user_points" class="money_amount">45</span>
+            <span id="user_points" class="money_amount" name="integral" th:text="${integra}"></span>
+            <input type="submit" id="qd" onclick="" value="点击签到"/>
         </div>
         <div class="data_post_cell" style="min-height:50px;">
             <span class="data_meta_info">每天签到 积分 +5</span>
             <div class="v10_margin">签到可以获取一次额外的约拍次数</div>
             <div class="v10_margin">
-                <div id="marked_title" class="data_meta_info" style="">今天已签到</div>
-                <a id="mark_button" class="btn btn-sm btn-danger" style="display:none;" href="javascript:void(0);">点击签到</a>
+                <p id="marked_title" class="data_meta_info" style="" th:text="${yqd}"></p>
+                <!--<a id="mark_button" class="btn btn-sm btn-danger" style="display:none;" href="javascript:void(0);">点击签到</a>-->
             </div>
         </div>
     </div>
 </div>
+</form>
 
 <div id="toast_message" class="toast_message_fixed" style="display: none;">
     <div class="weui_toast weui_toast_fixed">
@@ -133,5 +138,19 @@
 
 <script th:src="@{/js/notlogin.js}"></script>
 <!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
+<script type="text/javascript">
+    var now;
+    var now2=
+    function getNow(s) {
+        return s < 10 ? '0' + s: s;
+    }
+    var bankCard1=$("#marked_title").text();
+        if(bankCard1 =="您已签到"){
+            $("#qd").click(function () {
+                alert("您已签到！")
+                $(this).attr({"disabled":"disabled"});
+            })
+        }
+</script>
 </body>
 </html>

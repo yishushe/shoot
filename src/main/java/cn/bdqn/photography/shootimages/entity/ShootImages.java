@@ -31,7 +31,6 @@ public class ShootImages implements Serializable {
     private String imagesName;
 
     @TableField("infoId")
-    private String infoId;
-
+    private Long infoId;
 
 }

@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+
+    <title>私信 - 摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+                <li>
+                    <a id="" class="fy-navItem-notification" href="#">通知</a>
+                </li>
+                <li>
+                    <a class="login" href="javascript:;">加入会员</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding" ng-app="wx_create_app" ng-controller="wx_create_controller">
+    <div class="tabs_header">
+
+        <!-- 四个 通知 私信 发送 请求 接收请求 -->
+        <ul id="message_tabs" class="nav nav-tabs">
+            <li role="presentation" class=""><a href="javascript:;" data-tabname="notifications">通知</a></li>
+            <li role="presentation" class="active"><a th:href="@{/shoot-letter/message}" data-tabname="chat">私信</a></li>
+            <li role="presentation" class=""><a th:href="@{/shoot-letter/requestMessage}" data-tabname="sentrequests">发出请求</a></li>
+            <li role="presentation" class=""><a href="javascript:;" data-tabname="incomingrequests">收到请求</a></li>
+        </ul>
+
+    </div>
+
+    <!-- 私信 -->
+    <div class="data_posts">
+
+        <div th:if="${letter==null or letter.size()==0}">
+            <h1>还没人给你留言</h1>
+        </div>
+        <div th:if="${letter!=null and letter.size()>0}" th:each="letter,index : ${letter}">
+
+            <div class="data_post_cell">
+
+                <a class="data_post_container_link" th:href="@{/shoot-letter/replyMessage(sendUserId=${letter.shootUser.id})}">
+                    <div class="user_info_cell_sm v10_margin_bottom">
+                        <div class="user_info_cell_avatar">
+                            <i class="data_post_author_title_link" data-url="/u/1531674">
+                                <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
+                            </i>
+                        </div>
+                        <div class="user_info_cell_content">
+                            <i class="data_post_author_title_link" data-url="/u/1531674">
+                                <span class="data_post_author_title" th:text="${letter.shootUser.userName}">街头punk</span>
+                            </i>
+                            <i class="web_wechat_women"></i>
+                            <div>
+                                <span class="data_meta_info" th:text="${letter.shootUser.shootAddress.shootProw.prow+
+                                letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country}">河南郑州</span>
+                                <span class="data_meta_info" th:text="${letter.shootUser.roles.get(0).roleName}">模特</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data_post_content_clear"></div>
+                    <div class="data_post_message v10_margin" th:text="${letter.content}">
+                        周二
+                    </div>
+                    <div class="data_meta_info v10_margin">
+                        <span class="data_meta_info" th:text="${letter.creationDate}">2019年12月28日11:20</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+       <!-- <div class="data_post_cell">
+
+
+            <a class="data_post_container_link" href="/message/chat/62591?from=message_center">
+                <div class="user_info_cell_sm v10_margin_bottom">
+                    <div class="user_info_cell_avatar">
+                        <i class="data_post_author_title_link" data-url="/u/62591">
+                            <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/62591/62591_016005701_1565525894281.jpeg/t150" onerror="javascript: avatarLoadError(this);" />
+                        </i>
+                    </div>
+                    <div class="user_info_cell_content">
+                        <i class="data_post_author_title_link" data-url="/u/62591">
+                            <span class="data_post_author_title">喜欢拍照喜欢你</span>
+                        </i>
+                        <i class="web_wechat_men"></i>
+                        <div>
+                            <span class="data_meta_info">河南郑州</span>
+                            <span class="data_meta_info">摄影爱好者</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="data_post_content_clear"></div>
+                <div class="data_post_message v10_margin">
+                    抱歉，不拍男生
+                </div>
+                <div class="data_meta_info v10_margin">
+                    <span class="data_meta_info">2019年12月22日14:20</span>
+                </div>
+            </a>
+        </div>-->
+
+    </div>
+
+
+
+    <div class="v20_margin"></div>
+</div>
+
+
+</body>
+</html>

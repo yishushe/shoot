@@ -51,9 +51,16 @@ public class ShiroConfig {
         filterMap.put("/shoot-user/personage","authc");  //个人中心主页
         filterMap.put("/shoot-role/personalInfo","authc");  //个人资料
         filterMap.put("/shoot-role/integral","authc");   //签到领取积分页面
+        filterMap.put("/shoot-user/postMessage","authc");  //发布约拍信息页
+        filterMap.put("/shoot-info/addInfo","authc");   //添加约拍信息操作
+        filterMap.put("/shoot-info/about","anon");      //约拍详情页面
+        filterMap.put("/shoot-letter/aboutMessage","authc");  //发起约拍详情页
+        filterMap.put("/shoot-state/infoMessage","authc");    //我的约拍信息页
+        filterMap.put("/shoot-letter/message","authc");  //查看别人给我发送的私信 留言页
+        filterMap.put("/shoot-letter/replyMessage","authc");   //回复私信页面
+        filterMap.put("/shoot-letter/requestMessage","authc");  //我发起的请求信息页
 
         filterMap.put("/shoot-user/about","perms[query]");
-
 
         //要有相应的角色和授权才能访问的页面
         //filterMap.put("/user/delete","roles[系统管理员],perms[delete]");
@@ -64,7 +71,6 @@ public class ShiroConfig {
         filterFactoryBean.setLoginUrl("/shoot-user/login");
         //未授权
         //filterFactoryBean.setUnauthorizedUrl("/user/unauth");
-
 
         return filterFactoryBean;
     }
@@ -144,7 +150,6 @@ public class ShiroConfig {
         advisor.setSecurityManager(securityManager);
         return advisor;
     }*/
-
 
 
     //如果没有这两个配置，可能会授权失败，所以依赖中还需要配置aop的依赖
