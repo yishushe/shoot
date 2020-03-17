@@ -50,9 +50,6 @@
                 <li>
                     <a class="login" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
-             <!--   <li>
-                    <a class="" href="#">地点</a>
-                </li>-->
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
@@ -507,14 +504,6 @@
 </footer>
 
 <script th:src="@{/js/notlogin.js}"></script>
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>

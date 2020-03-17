@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
@@ -6,17 +6,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!--<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">-->
+
     <title>摄会社</title>
     <meta name="description" />
     <meta name="keywords" />
     <link href="../css/core73.min.css" rel="stylesheet" />
     <script th:src="@{/js/jquery.min.js}"></script>
-    <!--<link href="/content/resources/core73.min.css" rel="stylesheet" />
-    <script type="text/javascript">
-        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
-    </script>-->
+
 </head>
 <body class="body_default">
 
@@ -77,7 +73,7 @@
         <div class="data_post_cell">
             <div style="min-height:60px;">
                 <div style="float:left;">
-                    <img id="img1" class="data_avatar_middle avatar_radius2 span_v10_margin_right" />
+                    <img class="data_avatar_middle avatar_radius2 span_v10_margin_right" />
                 </div>
                 <span class="data_group_title_bold" th:text="${st.themName}">
 
@@ -127,19 +123,7 @@
             </div>
         </div>
     </div>
-    <script>
-        var id=$("#idz").val();
-        if(id==1){
-            $("#img1").attr('src',"http://image.shehuiapp.com/srv/files/2017/02/db6f305e92d7454e8e29885daed398d8.jpg/t150");
-        }
-        if(id==2){
-            $("#img1").attr('src',"http://image.shehuiapp.com/srv/files/2017/02/cc572e15e8204f988078e8d2f80c6842.jpg/t150");
-        }
-        if(id==3){
-            $("#img1").attr('src',"http://image.shehuiapp.com/u/499/499_010982931_1513725671252.jpg/t150");
-        }
 
-    </script>
     <div class="tab_panel" data-tabname="items">
         <div class="data_posts">
             <div id="scroll_locations" class="data_post_cell_sm ">
