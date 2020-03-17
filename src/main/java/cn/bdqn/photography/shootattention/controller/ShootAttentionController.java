@@ -1,9 +1,8 @@
 package cn.bdqn.photography.shootattention.controller;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jobob
  * @since 2020-03-09
  */
-@RestController
+@Controller
 @RequestMapping("/shoot_attention/shoot-attention")
 public class ShootAttentionController {
+
+
 
 }
