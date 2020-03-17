@@ -103,12 +103,15 @@
 				<id property="id" column="yl_id"></id>
 			</collection>
 		</association>
+		<association property="shootState" javaType="ShootState">
+			<id property="id" column="te_id"></id>
+		</association>
 	</resultMap>
 	<select id="getInfoById" resultMap="info02">
 		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,
 		t.id t_id,t.typeName,st.id st_id,st.costName,r.id r_id,r.roleName,
 		a.id a_id,p.id p_id,p.prow,c.id c_id,c.city,co.id co_id,co.country,
-		sty.id sty_id,yl.id yl_id,yl.styleName
+		sty.id sty_id,yl.id yl_id,yl.styleName,te.id te_id
 		FROM shoot_info i
 		INNER JOIN shoot_user u ON i.userId=u.id
 		INNER JOIN shoot_type t ON i.typeId=t.id
@@ -119,6 +122,7 @@
 		INNER JOIN shoot_prow p ON a.prow_id=p.id
 		INNER JOIN shoot_city c ON a.city_id=c.id
 		INNER JOIN shoot_country co ON a.country_id=co.id
+		INNER JOIN shoot_state te ON i.stateId=te.id
 		LEFT JOIN shoot_info_style sty ON sty.infoId=i.id
 		LEFT JOIN shoot_style yl ON sty.styleId=yl.id
 		<where>

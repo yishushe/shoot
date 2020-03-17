@@ -168,11 +168,14 @@
                         </div>
 
                         <!-- 收藏 -->
-                        <div class="v5_margin" style="text-align:right;">
-                            <a class="btn_follow_wechat" data-to="993743" href="javascript:void(0);">收藏</a>
-                            <a class="btn_report_button" data-type="yuepai" data-id="993743" href="javascript:void(0);">
-                                <span class="data_meta_info">举报</span>
-                            </a>
+                        <!-- 如果当前约拍不是本用户的 则会显示 收藏 举报 -->
+                        <div th:if="${info.userId!=session.user.id}">
+                            <div class="v5_margin" style="text-align:right;">
+                                <a class="btn_follow_wechat" data-to="993743" href="javascript:void(0);">收藏</a>
+                                <a class="btn_report_button" data-type="yuepai" data-id="993743" href="javascript:void(0);">
+                                    <span class="data_meta_info">举报</span>
+                                </a>
+                            </div>
                         </div>
 
                         <!--约拍条数 -->
@@ -185,13 +188,44 @@
                             <span class="label label-success label_count">摄会社Club会员可请求</span>
                         </div>
 
+                        <!-- 信誉保证金 -->
+                        <div th:if="${info.requireSecurityAccount!=null and info.requireSecurityAccount>0}">
+                            <div class="v10_margin" style="text-align:center;">
+                                <span class="label label-success label_count">要求信用保证金</span>
+                            </div>
+                        </div>
+
+                        <!-- 查看是否已关闭 -->
+                        <div th:if="${stateId==7}">
+                            <div id="close_status" class="v15_margin" style="text-align:center;">
+                                <span class="data_meta_info label_required">已关闭</span>
+                            </div>
+                        </div>
+
+                        <!-- 查看收到的约拍信息 和 恢复 关闭 -->
+                        <div class="v15_margin" style="text-align:center;">
+
+                            <!-- 证明你是当前用户可以操作 恢复 或是 关闭 查看收到请求 -->
+                            <a th:if="${info.userId==session.user.id}">
+                                <a role="button" class="btn btn-primary btn-sm form_large_button" href="/yuepai/requests/992425">查看收到的请求</a>
+                            <a th:if="${stateId!=7}">
+                                <a id="closeit_button" role="button" class="btn btn-danger btn-sm" href="javascript:;" data-id="992425">关闭</a>
+                            </a>
+                            <a th:if="${stateId==7}">
+                                <a id="openit_button" role="button" class="btn btn-warning btn-sm" href="javascript:;" data-id="992425" style="">恢复</a>
+                            </a>
+                             </a>
+                        </div>
+
                         <!-- 提交后通知 -->
                         <div class="v15_margin" style="text-align:center;">
 
                             <a th:if="${flag==true}">
                             <!-- 发起约拍按钮 -->
+                                <a th:if="${info.userId!=session.user.id}">
                             <a id="dorequest_button" role="button" class="btn btn-success btn-sm form_large_button"
                                data-login="1" data-id="993743" href="javascript:;">发起请求</a>
+                            </a>
                             </a>
                             <a th:if="${flag==false}">
                             <a id="requestdetail_link" class="data_post_title_link" th:href="@{/shoot-letter/aboutMessage(infoId=${info.id})}">你已经提交了请求，查看详情&gt;&gt;</a>
@@ -283,7 +317,6 @@
                 </div>
             </div>
             <div class="v20_margin"></div>
-
 
 
         </div>

@@ -103,6 +103,9 @@ public class ShootInfoController {
 
         System.out.println(infoById.getShootInfoStyle());
 
+        System.out.println("shootStateId:"+infoById.getShootState().getId());
+
+        model.addAttribute("stateId",infoById.getShootState().getId());
         model.addAttribute("info",infoById);
         model.addAttribute("flag",flag);
         return "index/about";

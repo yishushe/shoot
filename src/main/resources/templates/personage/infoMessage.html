@@ -71,14 +71,14 @@
             <div th:each="info,index : ${info}">
 
                 <div class="data_post_container">
-                    <a class="data_post_container_link" href="/y/994014">
+                    <a class="data_post_container_link" th:href="@{/shoot-info/about(id=${info.id})}">
                         <div class="data_post_fee_info">
                             <span class="data_meta_info" th:text="${info.shootType.typeName}">约拍</span>
                             <span class="data_meta_info span_v2_margin_left" th:text="${info.shootAddress.shootProw.prow+info.shootAddress.shootCity.city+info.shootAddress.shootCountry.country}">河南郑州</span>
                             <span class="span_v2_margin_left" th:text="${info.shootCost.costName}">愿意付费</span>
                             <span th:if="${info.shootCost.id==2 or info.shootCost.id==3}">
                              <span class="money_amount span_v2_margin_left" th:text="${info.price+'元'}">2元</span>
-                        </span>
+                            </span>
 
                         </div>
 
