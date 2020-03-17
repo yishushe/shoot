@@ -3,6 +3,7 @@ import cn.bdqn.photography.houtai.entity.ShootUsers;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -31,5 +32,23 @@ public class ShootUserControllers {
     @RequestMapping("/admin-role-add")
     public String html(){
         return "houtai/admin-role-add";
+    }
+
+
+    @RequestMapping("/updateUser")
+    public String updateUser(ShootUser id,Model model){
+        ShootUser users = iShootUserService.getById(id);
+        model.addAttribute("users",users);
+        return "houtai/admin-role-add";
+    }
+
+    @RequestMapping("/userUpdate")
+    public  String userUpdate(ShootUser user){
+        boolean shootUser= iShootUserService.updateById(user);
+        if (shootUser==true){
+            return "redirect:updateUser?id="+user.getId();
+        }else {
+            return "houtai/admin-role-add";
+        }
     }
 }

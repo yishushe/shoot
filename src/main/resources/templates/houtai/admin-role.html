@@ -61,6 +61,7 @@
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
+			<form action="love" method="post">
 			<div class="mt-10">
 			<table class="table table-border table-bordered table-hover table-bg">
 				<thead>
@@ -69,6 +70,8 @@
 						<th>id</th>
 						<th>角色名</th>
 						<th>用户名</th>
+						<th>密码</th>
+						<!--<th>性别</th>-->
 						<th>电话</th>
 						<th>操作</th>
 					</tr>
@@ -77,13 +80,16 @@
 					<td th:text="${user.id}"></td>
 					<td th:text="${user.userCode}"></td>
 					<td th:text="${user.userName}"></td>
+					<td th:text="${user.userPassword}"></td>
+					<!--<td th:if="${user.sex} == 0">女</td>
+					<td th:if="${user.sex} == 1">男</td>-->
 					<td th:text="${user.phone}"></td>
-					<td><a href="admin-role-add"  style="text-decoration:none">修改</a><a href="javascript:;" style="text-decoration:none">删除</a></td>
-					<!--<td><a href="#">修改</a><a href="#">删除</a></td>-->
+					<td><a th:href="@{/shoot-houtai-user/updateUser(id=${user.id})}" style="text-decoration:none">修改</a><a href="javascript:;" style="text-decoration:none">删除</a></td>
 				</tr>
 				</thead>
 			</table>
 			</div>
+			</form>
 		</article>
 	</div>
 </section>
