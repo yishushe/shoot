@@ -77,14 +77,14 @@ public class ShootThemeController {
        if(st!=null){
            List<ShootInfo> sif= iShootThemeService.selebythemeid(st);
            model.addAttribute("st",st);
-           model.addAttribute("sif",sif);
+           //model.addAttribute("siff",sif);
 
        }
 
         if(city!="" && city!=null){
             city=city+"市";
         }
-        System.out.println("地区"+city);
+
         //约拍信息查询
         IPage<ShootInfo> page= iShootThemeService.findInfoByThemeId(idd,city,current);
 
@@ -111,8 +111,6 @@ public class ShootThemeController {
         model.addAttribute("current",page.getCurrent());  //当前页
         model.addAttribute("pages",page.getPages());      //总页数
         model.addAttribute("total",page.getTotal());      //总条数
-        //page.getRecords().get(0).getShootUser().getRoles().get(0).getRoleName()
-        //System.out.println("用户身份"+page.getRecords().g);
         return "selfie/topic2";
     }
 }
