@@ -50,12 +50,6 @@
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="javascript:;">加入会员</a>
-                </li>
             </ul>
         </nav>
     </div>
@@ -83,7 +77,7 @@
         <div th:if="${letter==null or letter.size()==0}">
             <h1>还没人给你留言</h1>
         </div>
-        <div th:if="${letter!=null and letter.size()>0}" th:each="letter,index : ${letter}">
+        <div th:if="${letter!=null} and letter.size()>0" th:each="letter,index : ${letter}">
 
             <div class="data_post_cell">
 
