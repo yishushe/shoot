@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>收到的约拍请求 - 希望互勉 - 艺术摄</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding">
+    <div class="data_posts">
+        <a class="data_post_cell data_post_cell_link data_post_cell_header" href="/u/1534940">
+            <div class="right_select" style="float:right;vertical-align:top;margin-top:10px;"></div>
+            <img class="img-circle data_avatar_small" src="https://qzapp.qlogo.cn/qzapp/101219184/29FCB207DDB74B5E047DB0AD96E10AE0/30" alt="少年" />
+            <span class="data_post_author_title">少年</span>
+            <span class="data_meta_info">的主页</span>
+        </a>
+
+        <div class="data_post_container">
+            <a class="data_post_container_link" href="javascript:void(0);">
+                <div class="data_post_fee_info">
+                    <span class="data_meta_info">约拍</span>
+                    <span class="data_meta_info span_v2_margin_left">河南郑州</span>
+                    <span class="span_v2_margin_left">希望互免</span>
+                </div>
+                <div class="data_post_message v8_margin">
+                    希望互勉
+                </div>
+                <div class="data_meta_info v10_margin">
+                    <span class="data_meta_info">2019年12月9日23:22</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!--<div class="v10_margin v10_margin_bottom" style="text-align:center;">
+        <span class="data_meta_info">收到了0条请求</span>
+    </div>-->
+
+    <div class="v20_margin"></div>
+</div>
+
+</body>
+</html>

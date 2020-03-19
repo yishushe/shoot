@@ -64,6 +64,7 @@ public class ShootThemeController {
     public String att(){
         return "selfie/attention";
     }
+
      //分页查询用户主题
     @RequestMapping("/topic2")
     public String topic2(@RequestParam(value = "id",required = false) String id, Model model,
@@ -78,7 +79,7 @@ public class ShootThemeController {
            List<ShootInfo> sif= iShootThemeService.selebythemeid(st);
            model.addAttribute("st",st);
            //model.addAttribute("siff",sif);
-
+           model.addAttribute("sif",sif);
        }
 
         if(city!="" && city!=null){

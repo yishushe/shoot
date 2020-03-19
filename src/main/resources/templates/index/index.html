@@ -3,6 +3,7 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
+    <title>首页 艺术摄 </title>
 
     <link href="../css/core73.min.css" rel="stylesheet">
     <script th:src="@{/js/jquery.min.js}"></script>
@@ -52,12 +53,6 @@
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
-                </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="javascript:;">加入会员</a>
                 </li>
             </ul>
         </nav>
@@ -486,7 +481,6 @@
                     </div>
                 </div>
             </div>
-
 
         </div>
 </div>

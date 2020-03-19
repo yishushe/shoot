@@ -2,6 +2,7 @@ package cn.bdqn.photography.shootletter.entity;
 
 import java.time.LocalDateTime;
 
+import cn.bdqn.photography.shootuser.entity.ShootUser;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -31,8 +32,8 @@ public class ShootLetter implements Serializable {
 
     private String content;
 
-    @TableField("sendUserID")
-    private Long sendUserID;
+    @TableField("sendUserId")
+    private Long sendUserId;
 
     @TableField("putUserId")
     private Long putUserId;
@@ -42,5 +43,8 @@ public class ShootLetter implements Serializable {
 
     @TableField("infoId")
     private Long infoId;
+
+    @TableField(exist = false)
+    private ShootUser shootUser;
 
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>关于我们 - 摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet" />
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="/content/custom/logo.png" class="fy-navbar-logo" />
+                    <span>摄会社</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="fy-docs-nav-distance"></div>
+<div class="container xzero_padding">
+    <div class="data_posts">
+        <div class="data_post_cell" style="text-align:center;">
+            <span class="data_meta_info">关于我们</span>
+        </div>
+        <div class="data_post_cell data_meta_text">
+            摄会社是一个轻网页约拍站，想要约拍、找摄影师、找模特、找化妆师、商家以及个人寻求摄影服务，均可使用摄会社网页版。目前还处于Beta阶段，后续功能会根据需求完善。<br><br>如果您有相关建议和意见也欢迎及时与我们取得联系。<br>
+        </div>
+        <div class="data_post_cell" style="text-align:center;">
+            <span class="data_meta_info">关注摄会社公众账号</span>
+            <div class="v10_margin">
+                <img th:src="@{/images/weixin.jpg}" style="width:100%;height:auto;max-width:300px;margin-left:0px;">
+            </div>
+        </div>
+        <div class="data_post_cell" style="text-align:center;">
+            <span class="data_meta_info">客服微信号</span>
+            <div class="v10_margin">
+                <img th:src="@{/images/weixin.jpg}" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="fy-docs-footer " role="contentinfo">
+    <div class="container xzero_padding" style="text-align:center;">
+        <a href="https://www.shehuiapp.com">
+            <span class="data_meta_info">
+                © 2014 - 2020 摄会社 摄影师模特摄影约拍演艺通告平台
+            </span>
+        </a>
+    </div>
+</footer>
+</body>
+</html>
