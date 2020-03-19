@@ -1,14 +1,16 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>加入会员 - 艺术摄</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>收到的约拍请求 - 希望互勉 - 艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
-    <link href="../css/core73.min.css" rel="stylesheet" />
+    <link href="../css/core73.min.css" rel="stylesheet">
     <script th:src="@{/js/jquery.min.js}"></script>
 
 </head>
@@ -59,59 +61,36 @@
 
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="data_posts">
-        <div class="data_post_cell_dotted">
-            <span class="data_meta_info">已加入：摄会社Club会员</span>
-        </div>
-        <div class="data_post_cell_dotted">
-            会员权益说明：
-            <br />
-            1，会员可以解锁一些功能限制；
-            <br />
-            2，会员每天可以发起更多的请求；
-            <br />
-            3，会员活动、平台福利、优先领取和发放；
-            <br />
-            4，平台最新功能首批体验，参与平台功能设计讨论。
+        <a class="data_post_cell data_post_cell_link data_post_cell_header" href="/u/1534940">
+            <div class="right_select" style="float:right;vertical-align:top;margin-top:10px;"></div>
+            <img class="img-circle data_avatar_small" src="https://qzapp.qlogo.cn/qzapp/101219184/29FCB207DDB74B5E047DB0AD96E10AE0/30" alt="少年" />
+            <span class="data_post_author_title">少年</span>
+            <span class="data_meta_info">的主页</span>
+        </a>
+
+        <div class="data_post_container">
+            <a class="data_post_container_link" href="javascript:void(0);">
+                <div class="data_post_fee_info">
+                    <span class="data_meta_info">约拍</span>
+                    <span class="data_meta_info span_v2_margin_left">河南郑州</span>
+                    <span class="span_v2_margin_left">希望互免</span>
+                </div>
+                <div class="data_post_message v8_margin">
+                    希望互勉
+                </div>
+                <div class="data_meta_info v10_margin">
+                    <span class="data_meta_info">2019年12月9日23:22</span>
+                </div>
+            </a>
         </div>
     </div>
+
+    <!--<div class="v10_margin v10_margin_bottom" style="text-align:center;">
+        <span class="data_meta_info">收到了0条请求</span>
+    </div>-->
+
     <div class="v20_margin"></div>
 </div>
 
-
-
-
-<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
-
-<script src="../js/core36.min.js"></script>
-
-
-<script type="text/javascript">
-    $(function () {
-        $("#back_link").click(function (e) {
-            var container = $(this);
-            var dataUrl = container.attr("data-url");
-            if (dataUrl != null && dataUrl.length > 0) {
-                window.location.href = dataUrl;
-            } else {
-                window.history.back();
-            }
-            e.stopPropagation();
-            e.preventDefault();
-        });
-    });
-</script>
-
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
-        </div>
-    </div>
-</div>
-
-
-<script th:src="@{/js/notlogin.js}"></script>
-<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>
 </body>
 </html>

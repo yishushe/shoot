@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-    <title>我的信用保证金 -艺术摄</title>
+
+    <title>提交成功 - 艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
@@ -57,51 +59,38 @@
 <div class="fy-docs-nav-distance"></div>
 
 <div class="container bottom_menu_margin_plus xzero_padding">
-
     <div class="data_posts">
-        <div class="data_post_cell">
-            <span class="warning_label">信用保证金</span>
-            <div class="v5_margin">
-                <span class="data_meta_info">保证金有效金额为200元；保证金存入后可以在3个月后提现，但是在发起新约拍和请求后可提现时间会延迟1个月。</span>
-            </div>
-            <div class="v10_margin">
-                <span class="data_meta_info">存入保证金后即同意以下内容：</span>
-                <br />
-                <span class="data_meta_info">1 在交流以及拍摄过程中，不会有恶意欺骗行为<br>2 在交流以及拍摄过程中，不能骚扰对方<br>3 如果在联系确认已经达成拍摄约定后，不会随意毁约<br>4 对于摄影师，拍摄完成后，会按照约定返片给对方<br>5 在对方没有同意的情况下，不会公开对方隐私<br>6 在发起新的约拍和请求后，保证金可提现时间会延迟</span>
-                <br />
-                <span class="data_meta_info">如果违反了其中一条，经客服同双方调查确认后，可以扣除保证金</span>
-            </div>
+        <div class="data_post_cell" style="text-align:center;">
+            <img class="data_avatar_middle" src="/content/custom/logo.png" />
+            <div class="data_meta_text v15_margin">已提交信息，需要进行审核，请关注站内消息获取审核结果</div>
         </div>
-        <div class="data_post_cell">
-            <span class="data_meta_text">您还没有存入信用保证金</span>
-            <div class="v5_margin">
-                <span class="money_amount">保证金有效金额为200元</span>
-            </div>
+        <div class="data_post_cell" style="text-align:center;">
+            <a class="btn btn-sm btn-success" th:href="@{/shoot-state/infoMessage}">查看 我已发布的信息</a>
+        </div>
+    </div>
+    <div class="data_posts v10_margin">
+        <div class="data_post_cell" style="text-align:center;">
+            <div class="data_meta_info">有事请联系客服（微信号：yuepai6）</div>
             <div class="v15_margin">
-                <a class="btn btn-sm btn-default" href="/Account/PaySecurityDefault?returnUrl=%2Fu%2Faccount">立即存入</a>
+                <img src="/content/custom/yuepai6.jpg" style="width:150px;height:auto;margin-left:0px;" />
             </div>
         </div>
     </div>
+
     <div class="v20_margin"></div>
 </div>
 
 
-
-<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
-
-<script src="../js/core36.min.js"></script>
-
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
-        </div>
+<footer class="fy-docs-footer " role="contentinfo">
+    <div class="container xzero_padding" style="text-align:center;">
+        <a href="https://www.shehuiapp.com">
+            <span class="data_meta_info">
+                © 2014 - 2020 摄会社 摄影师模特摄影约拍演艺通告平台
+            </span>
+        </a>
     </div>
-</div>
+</footer>
 
 
-<script th:src="@{/js/notlogin.js}"></script>
-<!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
 </body>
 </html>

@@ -3,19 +3,20 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-
-    <title>河南郑州模特 喜欢拍照留下回忆 - 摄会社 - 摄影师模特摄影约拍演艺通告平台</title>
+    <title> 艺术摄 </title>
     <meta name="description" />
     <meta name="keywords" />
 
-    <link href="../css/core73.min.css" rel="stylesheet" />
     <script th:src="@{/js/jquery.min.js}"></script>
+    <link href="../css/core73.min.css" rel="stylesheet" />
 
 </head>
 <body class="body_default">
 
 <!-- 导航条 -->
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
     <div class="container">
         <div class="navbar-header">
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
@@ -26,8 +27,8 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
-                    <span>摄会社</span>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
                 </div>
             </a>
         </div>
@@ -37,26 +38,21 @@
                     <a class="fy-navItem-active" href="#">首页</a>
                 </li>
                 <li>
-                    <a class="login" href="#">关注</a>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
                 </li>
                 <li>
-                    <a class="login" href="#">自拍</a>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" href="#">主题</a>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="#">加入会员</a>
-                </li>
             </ul>
         </nav>
     </div>
+
 </header>
 
 <div class="fy-docs-nav-distance"></div>
@@ -116,7 +112,13 @@
                             <div class="col-xs-4 col-sm-4 xzero_padding" style="text-align:center;">
                                 <span class="data_meta_info">费用</span>
                                 <br />
-                                <span class="data_meta_text" th:text="${info.shootCost.costName}">希望互免</span>
+                                <span th:if="${info.shootCost.id==1 or info.shootCost.id==4}">
+                                    <span class="data_meta_text" th:text="${info.shootCost.costName}">希望互免</span>
+                                </span>
+                                <span th:if="${info.shootCost.id==2 or info.shootCost.id==3}">
+                                    <span class="data_meta_text" th:text="${info.shootCost.costName+' '+info.price+'元'}">希望互免</span>
+                                </span>
+
                             </div>
 
                             <!-- 时间 -->
@@ -162,11 +164,14 @@
                         </div>
 
                         <!-- 收藏 -->
-                        <div class="v5_margin" style="text-align:right;">
-                            <a class="btn_follow_wechat" data-to="993743" href="javascript:void(0);">收藏</a>
-                            <a class="btn_report_button" data-type="yuepai" data-id="993743" href="javascript:void(0);">
-                                <span class="data_meta_info">举报</span>
-                            </a>
+                        <!-- 如果当前约拍不是本用户的 则会显示 收藏 举报 -->
+                        <div th:if="${info.userId!=session.user.id}">
+                            <div class="v5_margin" style="text-align:right;">
+                                <a class="btn_follow_wechat" data-to="993743" href="javascript:void(0);">收藏</a>
+                                <a class="btn_report_button" data-type="yuepai" data-id="993743" href="javascript:void(0);">
+                                    <span class="data_meta_info">举报</span>
+                                </a>
+                            </div>
                         </div>
 
                         <!--约拍条数 -->
@@ -179,17 +184,75 @@
                             <span class="label label-success label_count">摄会社Club会员可请求</span>
                         </div>
 
+                        <!-- 信誉保证金 -->
+                        <div th:if="${info.requireSecurityAccount!=null and info.requireSecurityAccount>0}">
+                            <div class="v10_margin" style="text-align:center;">
+                                <span class="label label-success label_count">要求信用保证金</span>
+                            </div>
+                        </div>
+
+                        <!-- 查看是否已关闭 -->
+                        <div th:if="${stateId==7}">
+                            <div id="close_status" class="v15_margin" style="text-align:center;">
+                                <span class="data_meta_info label_required">已关闭</span>
+                            </div>
+                        </div>
+
+                        <!-- 查看收到的约拍信息 和 恢复 关闭 -->
+                        <div class="v15_margin" style="text-align:center;">
+
+                            <!-- 证明你是当前用户可以操作 恢复 或是 关闭 查看收到请求 -->
+                            <a th:if="${info.userId==session.user.id}">
+                                <a role="button" class="btn btn-primary btn-sm form_large_button" href="/yuepai/requests/992425">查看收到的请求</a>
+                            <a th:if="${stateId!=7}">
+                                <a id="closeit_button" role="button" class="btn btn-danger btn-sm" href="javascript:;" data-id="992425">关闭</a>
+                            </a>
+                            <a th:if="${stateId==7}">
+                                <a id="openit_button" role="button" class="btn btn-warning btn-sm" href="javascript:;" data-id="992425" style="">恢复</a>
+                            </a>
+                             </a>
+                        </div>
+
                         <!-- 提交后通知 -->
                         <div class="v15_margin" style="text-align:center;">
 
+                            <a th:if="${flag==true}">
                             <!-- 发起约拍按钮 -->
+                                <a th:if="${info.userId!=session.user.id}">
                             <a id="dorequest_button" role="button" class="btn btn-success btn-sm form_large_button"
                                data-login="1" data-id="993743" href="javascript:;">发起请求</a>
+                            </a>
+                            </a>
+                            <a th:if="${flag==false}">
+                            <a id="requestdetail_link" class="data_post_title_link" th:href="@{/shoot-letter/aboutMessage(infoId=${info.id})}">你已经提交了请求，查看详情&gt;&gt;</a>
+                            </a>
 
-                            <a id="requestdetail_link" class="data_post_title_link" style="display:none;" href="">你已经提交了请求，查看详情&gt;&gt;</a>
+                        </div>
 
+                        <!-- 发起请求按钮 都提交内容 -->
+                        <div class="weui_dialog_confirm" id="request_submit_dialog" style="display:none;">
+                            <div class="weui_mask"></div>
+                            <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
 
+                                <div class="data_post_cell_sm">
+                                    <span class="data_group_title_bold">发起请求</span>
+                                </div>
 
+                                <div class="data_post_cell_sm">
+                                    <span id="request_submit_message_label" class="data_meta_info">留言</span>
+                                    <span class="label_required">（必填）</span>
+                                    <div class="v10_margin">
+                                        <textarea id="content" class="auto_textarea_editor input_gray" placeholder="比如时间、地点、要求等说明" style="height:80px;"></textarea>
+                                    </div>
+                                </div>
+
+                                <input id="request_submit_contacts_required" name="request_submit_contacts_required" type="hidden" value="0" />
+                                <div class="data_post_cell_sm" style="text-align:center;">
+                                    <a id="request_submit_dialog_confirm_button" class="btn btn-primary btn-sm form_medium_button" href="javascript:;" role="button">提交</a>
+                                    <a id="request_submit_dialog_cancel_button" class="btn btn-default btn-sm form_medium_button" href="javascript:;" onclick="$('#request_submit_dialog').hide();" role="button">取消</a>
+                                </div>
+
+                            </div>
                         </div>
 
                     </div>
@@ -227,7 +290,6 @@
                 </div>
             </div>
 
-
             <!-- 你也想约拍信息吗 -->
             <div class="data_posts v8_margin">
                 <div class="data_post_cell" style="text-align:center;">
@@ -252,7 +314,9 @@
             </div>
             <div class="v20_margin"></div>
 
+
         </div>
+
 
 
         <!-- 相关地区约拍 -->
@@ -393,7 +457,6 @@
     </div>
 </div>
 
-
 <div class="weui_dialog_confirm" id="user_review_dialog" style="display:none;">
     <div class="weui_mask" onclick="$(this).parent().hide();"></div>
     <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
@@ -436,39 +499,52 @@
 </div>
 
 
-<!-- 发起请求按钮 都提交内容 -->
-<div class="weui_dialog_confirm" id="request_submit_dialog" style="display:none;">
-    <div class="weui_mask"></div>
-    <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
-
-        <div class="data_post_cell_sm">
-            <span class="data_group_title_bold">发起请求</span>
+<!-- 约拍弹框 -->
+<div id="mymodal" class="modal fade" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">发起请求</h4>
         </div>
-
-        <div class="data_post_cell_sm">
-            <span id="request_submit_message_label" class="data_meta_info">留言</span>
-            <span class="label_required">（必填）</span>
-            <div class="v10_margin">
-                <textarea id="RequestMessage" class="auto_textarea_editor input_gray" placeholder="比如时间、地点、要求等说明" style="height:80px;"></textarea>
+            <div class="media-body">
+                <input id="name" name="" value="" placeholder="请输入留言">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">提交</button>
+                <button class="btn btn-default" data-dismiss="modal">取消</button>
             </div>
         </div>
-
-        <input id="request_submit_contacts_required" name="request_submit_contacts_required" type="hidden" value="0" />
-        <div class="data_post_cell_sm" style="text-align:center;">
-            <a id="request_submit_dialog_confirm_button" class="btn btn-primary btn-sm form_medium_button" href="javascript:;" role="button">提交</a>
-            <a id="request_submit_dialog_cancel_button" class="btn btn-default btn-sm form_medium_button" href="javascript:;" onclick="$('#request_submit_dialog').hide();" role="button">取消</a>
-        </div>
-
     </div>
 </div>
 
-<script type="text/javascript">
+<!-- 当前约拍信息id -->
+<input hidden id="infoId" th:value="${info.id}">
 
+<!-- 当前详情约拍信息用户的id -->
+<input hidden id="id" th:value="${info.shootUser.id}">
+
+<!-- 提交留言 -->
+<script type="text/javascript">
     $(document).ready(function () {
         $("#dorequest_button").click(function () {
             var $requestSubmitDialog = $("#request_submit_dialog");
-            alert($requestSubmitDialog);
-            alert("dddddddddd");
+            $requestSubmitDialog.show();
+            $requestSubmitDialog.css({"padding-left":200,"padding-top":-200,"z-index":1});
+        });
+        $("#request_submit_dialog_confirm_button").click(function () {
+            var text = $("#content").val();  //留言
+            var id=$("#id").val();           //当前信息用户id
+            var info=$("#infoId").val();      //当前infoId
+            //异步添加留言信息
+            $.post("/shoot-letter/addLetter",{"content":text,"putUserId":id,"infoId":info},function (data) {
+                   if(data==true){
+                       var infoId=$("#infoId").val();
+                       //发送留言 成功后再次 重新刷新页面数据
+                       location.href="/shoot-info/about?id="+infoId;
+                   }
+            },"json");
+
+            $(this).parent().parent().parent().hide();
         });
     });
 

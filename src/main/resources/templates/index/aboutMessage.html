@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>我发起的约拍订单 - 艺术摄</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <link href="../css/core73.min.css" rel="stylesheet" />
+
+</head>
+<body class="body_default">
+
+<!-- 导航头部 -->
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a class="fy-navItem-active" href="#">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding">
+
+    <div class="data_posts">
+        <a class="data_post_cell_dotted data_post_cell_link" th:href="@{/shoot-info/about(id=${message.id})}">
+            <div class="right_select right_select_fixed"></div>
+            <span class="data_meta_text">查看信息</span>
+            <div class="v10_margin">
+                <span class="data_meta_info" th:text="${message.shootUser.userName}">@夜喵munz</span>
+                <span class="data_meta_info" th:text="${message.shootUser.roles.get(0).roleName}">摄影师</span>
+                <span class="data_meta_info" th:text="'('+${message.shootAddress.shootProw.prow+
+                message.shootAddress.shootCity.city+message.shootAddress.shootCountry.country}+')'">(北京)</span>
+                <span class="data_meta_info" th:text="${message.shootCost.costName}">费用协商</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="data_posts v10_margin">
+        <div class="data_post_cell data_post_cell_group">
+            <span class="request_transaction_status">已提交</span>
+
+        </div>
+        <div class="data_post_cell">
+            <div>
+                <img class="img-circle data_avatar_small" th:src="${touxiang}" />
+                <span class="data_meta_text" th:text="${session.user.userName}">少年</span>
+            </div>
+            <div class="v15_margin">
+                <span class="data_meta_info">留言</span>
+                <span class="data_meta_text" th:text="${letter.content}">dfs</span>
+            </div>
+            <div class="v10_margin">
+                <span class="data_meta_info" th:text="${letter.creationDate}">今天10:44</span>
+            </div>
+        </div>
+
+        <div class="data_post_cell data_post_cell_buttons">
+            <span class="request_transaction_status"></span>
+            <div style="float:right;">
+                <a class="btn btn-default btn-sm btn_contact_help" href="javascript:void(0);" role="button">联系客服</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="data_posts v10_margin">
+        <div class="data_post_cell">
+            <span class="data_meta_text">操作历史</span>
+        </div>
+        <div class="data_post_cell">
+            <span class="data_meta_info span_v10_margin_right">2020-03-16 10:44:43</span>
+            <a class="data_post_author_title_link" href="/u/1534940">
+                <img class="img-circle data_avatar_small" th:src="${touxiang}" />
+                <span class="data_meta_text" th:text="${session.user.userName}">少年</span>
+            </a>
+            <span class="data_meta_info span_v10_margin_left">已提交请求</span>
+        </div>
+    </div>
+
+    <div class="v20_margin"></div>
+</div>
+
+
+<div class="weui_dialog_confirm" id="request_cancel_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您要取消请求吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="canceldlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="canceldlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="request_finish_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您确认完成后，订单金额将会转给对方，继续吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="finishdlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="finishdlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+<div id="toast_message" class="toast_message_fixed" style="display: none;">
+    <div class="weui_toast weui_toast_fixed">
+        <p id="toast_message_text" class="weui_toast_content weui_toast_content_fixed">
+        </p>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="site_contact_help_dialog" style="display:none;">
+    <div class="weui_mask" onclick="$(this).parent().hide();"></div>
+    <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
+        <div class="data_post_cell_sm">
+            <span class="data_group_title_bold">联系客服</span>
+            <div style="float:right;">
+                <a role="button" class="btn btn-default btn-xs" href="javascript:void(0);" onclick="$('#site_contact_help_dialog').hide();">关闭</a>
+            </div>
+        </div>
+        <div class="data_post_cell_sm" style="text-align:center;">
+            <img src="/content/custom/contactwechat.jpg" style="width:100%;height:auto;max-width:300px;margin-left:0px;" />
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/content/resources/weui.min.css">
+
+<script th:src="@{/js/notlogin.js}"></script>
+
+</body>
+</html>
