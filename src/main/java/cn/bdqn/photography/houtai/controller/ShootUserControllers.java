@@ -1,5 +1,4 @@
 package cn.bdqn.photography.houtai.controller;
-import cn.bdqn.photography.houtai.entity.ShootUsers;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import org.springframework.stereotype.Controller;
