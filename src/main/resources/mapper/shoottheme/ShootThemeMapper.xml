@@ -53,6 +53,7 @@
         <if test="city!='' and city!=null">
 			and c.city=#{city}
 		</if>
+		order by i.creationDate desc
 	</select>
 
 </mapper>

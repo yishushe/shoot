@@ -2,6 +2,8 @@ package cn.bdqn.photography.shootinfo.controller;
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
+import cn.bdqn.photography.shootattention.entity.ShootAttention;
+import cn.bdqn.photography.shootattention.service.IShootAttentionService;
 import cn.bdqn.photography.shootimages.entity.ShootImages;
 import cn.bdqn.photography.shootimages.service.IShootImagesService;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
@@ -21,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,9 @@ public class ShootInfoController {
 
     @Autowired
     private IShootLetterService iShootLetterService;
+
+    @Autowired
+    private IShootAttentionService iShootAttentionService;
 
     //约拍信息添加
     @RequestMapping(value = "/addInfo")
@@ -102,9 +106,13 @@ public class ShootInfoController {
             infoById.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
         }
 
-        System.out.println(infoById.getShootInfoStyle());
 
-        System.out.println("shootStateId:"+infoById.getShootState().getId());
+        //根据 关注者id 和 被关注者id 查询是否有数据
+        QueryWrapper<ShootAttention> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("attentionId",user.getId());  //关注者 当前用户id
+        queryWrapper.eq("focusedId",infoById.getShootUser().getId());  //被关注着 当前信息的id
+        ShootAttention one = iShootAttentionService.getOne(queryWrapper);
+        model.addAttribute("attentionId",one);    //传参到页面判断是否本条
 
         model.addAttribute("stateId",infoById.getShootState().getId());
         model.addAttribute("info",infoById);

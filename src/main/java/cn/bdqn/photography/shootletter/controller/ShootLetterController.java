@@ -85,6 +85,7 @@ public class ShootLetterController {
             letter.getShootUser().setPortyaitl("/images/"+letter.getShootUser().getPortyaitl());
         }
 
+        model.addAttribute("size",letterByPutUserId.size());
         model.addAttribute("letter",letterByPutUserId);
         return "put/letterMessage";
     }

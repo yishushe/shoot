@@ -50,41 +50,40 @@ public class ShootThemeController {
     @Autowired
     private IShootLetterService iShootLetterService;
 
+    //自拍页
     @RequestMapping("/zipai")
     public String zipai(){
         return "selfie/zipai";
     }
 
+    //主题页
     @RequestMapping("/top")
     public String topic(){
         return "selfie/topic";
     }
 
+    //关注页
     @RequestMapping("/att")
     public String att(){
         return "selfie/attention";
     }
 
-     //分页查询用户主题
+     //分页查询用户主题 主题页信息查询
     @RequestMapping("/topic2")
     public String topic2(@RequestParam(value = "id",required = false) String id, Model model,
                          @RequestParam(value = "city",required = false)
                          String city,@RequestParam(value = "current",defaultValue = "0",required = false)
                          int current){
-        System.out.println("用户地址city"+city);
         Long idd=Long.parseLong(id);
 
+        //查询主题名称
        ShootTheme st= iShootThemeService.getById(idd);
-       if(st!=null){
-           List<ShootInfo> sif= iShootThemeService.selebythemeid(st);
-           model.addAttribute("st",st);
-           model.addAttribute("sif",sif);
-       }
+       model.addAttribute("st",st);
 
         if(city!="" && city!=null){
             city=city+"市";
         }
-        System.out.println("地区"+city);
+
         //约拍信息查询
         IPage<ShootInfo> page= iShootThemeService.findInfoByThemeId(idd,city,current);
 
@@ -111,8 +110,6 @@ public class ShootThemeController {
         model.addAttribute("current",page.getCurrent());  //当前页
         model.addAttribute("pages",page.getPages());      //总页数
         model.addAttribute("total",page.getTotal());      //总条数
-        //page.getRecords().get(0).getShootUser().getRoles().get(0).getRoleName()
-        //System.out.println("用户身份"+page.getRecords().g);
         return "selfie/topic2";
     }
 }

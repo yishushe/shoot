@@ -120,4 +120,9 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
         return shootUserMapper.personageByUserCode(userCode);
     }
 
+    @Override
+    public ShootUser findByUserId(Long id) {
+        return shootUserMapper.getByUserId(id);
+    }
+
 }

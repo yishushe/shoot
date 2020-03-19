@@ -14,7 +14,6 @@
 </head>
 <body class="body_default">
 
-
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
 
     <!-- 导航条 -->
@@ -36,16 +35,16 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
                     <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                    <a class="login fy-navItem-active" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
@@ -69,8 +68,6 @@
     <div class="data_posts tab_panel" data-tabname="hot">
         <div class="data_post_cell_sm">
 
-
-
             <a class="data_post_container_link" href="/topic/23">
                 <div class="topic_post">
                     <img class="data_avatar_middle avatar" src="http://www.shehuiapp.com/files/2017/02/db6f305e92d7454e8e29885daed398d8_T150x150.jpg" alt="日系小清新 " />
@@ -84,10 +81,9 @@
                     </div>
                 </div>
             </a>
+
         </div>
         <div class="data_post_cell_sm">
-
-
 
             <a class="data_post_container_link" href="/topic/26">
                 <div class="topic_post">
