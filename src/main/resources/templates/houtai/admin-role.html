@@ -84,7 +84,7 @@
 					<!--<td th:if="${user.sex} == 0">女</td>
 					<td th:if="${user.sex} == 1">男</td>-->
 					<td th:text="${user.phone}"></td>
-					<td><a th:href="@{/shoot-houtai-user/updateUser(id=${user.id})}" style="text-decoration:none">修改</a><a href="javascript:;" style="text-decoration:none">删除</a></td>
+					<td><a th:href="@{/shoot-houtai-user/updateUser(id=${user.id})}" style="text-decoration:none">修改</a><a href="<%=appPath%>/paper/del/${paper.paperId}">删除</a></td>
 				</tr>
 				</thead>
 			</table>
