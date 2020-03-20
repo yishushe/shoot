@@ -3,6 +3,7 @@ package cn.bdqn.photography.shootinfo.mapper;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -33,4 +34,7 @@ public interface ShootInfoMapper extends BaseMapper<ShootInfo> {
 
     List<ShootInfo> getInfoByUserId(@Param("userId") Long userId);   //根据用户id查询当前用户约拍信息
 
+    Page<ShootInfo> getInfoByStateId(IPage<ShootInfo> page, @Param("stateid") Long id);  //根据状态查信息
+
+    List<ShootInfo> getinfobyinfoid(@Param("id") Long id);   //根据infoid查询
 }
