@@ -86,7 +86,7 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a th:href="@{/shoot-user/index}">首页</a>
+                    <a class="login" th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
                     <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
@@ -110,8 +110,6 @@
 <form method="post" action="updateuser">
 <div class="container js_container bottom_menu_margin_plus">
     <div class="page">
-
-
 
         <div class="bd">
             <div class="weui_cells_title">个人资料</div>
@@ -189,23 +187,41 @@
                     </div>
                 </a>
             </div>
-        <div id="inpu" style="text-align: center">
+
+            <!-- 设置手机号 -->
+            <div class="weui_cells_title">手机验证</div>
+            <div id="shouji" class="weui_cells weui_cells_form weui_cells_access global_navs">
+                <div id="phone_cell" class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label_override">手机</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <span th:if="${session.user.phone==null or session.user.phone==''}">
+                            <span style="padding-left:18px;color:#888;">设置手机号</span>
+                        </span>
+                        <span th:if="${session.user.phone!=null and session.user.phone!=''}">
+                            <span style="padding-left:18px;color:#888;" th:text="${session.user.phone}">设置手机号</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                $("#shouji").click(function () {
+                    location.href="/shoot-user/personagePhone";
+                });
+            </script>
+
+            <div id="inpu" style="text-align: center">
             <input id="inp" type="submit" value="提交"/>
-        </div>
+            </div>
+
+            <!-- 更新成功提示 -->
             <script>
                 $("#inp").click(function () {
                 alert("提交成功！")
                 })
             </script>
-           <!-- <div class="weui_cells_title">手机验证</div>
-            <div class="weui_cells weui_cells_form weui_cells_access global_navs">
-                <div id="phone_cell" class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label_override">手机</label></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <span style="padding-left:18px;color:#888;">18339281537</span>
-                    </div>
-                </div>
-            </div>-->
+
+
 
             <!--<div class="weui_cells_title">联系方式</div>-->
            <!-- <div class="weui_cells weui_cells_form weui_cells_access global_navs">

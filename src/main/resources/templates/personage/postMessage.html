@@ -516,9 +516,9 @@
 
 <!-- 多张照片选择显示页面 -->
 <script type="text/javascript">
+    var destination = document.getElementById('destination');
     document.getElementById('pic_selector').addEventListener('change', function() {
         var file;
-        var destination = document.getElementById('destination');
         //destination.innerHTML = '';//每次清空内容
         // 循环用户多选的文件
         for(var x = 0, xlen = this.files.length; x < xlen; x++) {

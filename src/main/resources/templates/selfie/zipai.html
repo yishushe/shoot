@@ -70,14 +70,16 @@
 </header>
 
 <div class="fy-docs-nav-distance"></div>
+
+<!-- 发布作品 按钮 -->
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="newcard_container newcard_container_fix ">
         <div class="flex_row_panel">
-            <img src="/content/resources/images/Selfie-512.png" class="pai_logo" />
+            <img th:src="@{/images/Selfie-512.png}" class="pai_logo" />
             <div class="span_v10_margin_left">
                 <span class="data_meta_info">发布自拍照片，让大家更好地认识你</span>
                 <div class="v10_margin">
-                    <a role="button" class="btn btn-default btn-sm btn_login_required" data-login="0" href="/pai/new">+ 立即参与</a>
+                    <a role="button" class="btn btn-default btn-sm btn_login_required" data-login="0" th:href="@{/shoot-selfie/selfie}">+ 立即参与</a>
                     <span class="data_meta_info span_v5_margin_left">试运行</span>
                 </div>
             </div>
@@ -85,7 +87,7 @@
 
     </div>
 
-
+    <!-- 自拍信息展示 -->
     <div class="row data_post_row newcards_panel v8_margin">
         <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
 
@@ -408,9 +410,10 @@
             </div>
         </div>
     </div>
+
     <div class="newcard_container_fix">
 
-
+        <!-- 分页按钮 -->
         <div class="container pager_container">
             <nav>
                 <ul class="pager">
@@ -457,6 +460,7 @@
         </div>
 
     </div>
+
 </div>
 
 
@@ -486,7 +490,6 @@
         </div>
     </div>
 </div>
-
 
 
 <script type="text/javascript">

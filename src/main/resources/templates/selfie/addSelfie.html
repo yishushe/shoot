@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+
+    <title>发布自拍 - 艺术摄</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet" />
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<style type="text/css">
+    .fileupload_image {
+        width: 100%;
+        height: 100%;
+        cursor: pointer
+    }
+
+    .file-wrapper {
+        cursor: pointer;
+        overflow: hidden
+    }
+
+    .fileinput {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 100px;
+        z-index: 2;
+        opacity: .01;
+        filter: alpha(opacity=0);
+        -ms-filter: alpha(opacity=0);
+        -khtml-opacity: 0;
+        -moz-opacity: 0;
+        cursor: pointer
+    }
+
+    #fileupload_box, #fileupload_box2 {
+        float: left;
+        margin-right: 4px;
+        margin-bottom: 4px
+    }
+
+    .fileupload {
+        background-color: #fff;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        font-weight: 700;
+        border: 1px dashed #b0b0b0;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer
+    }
+
+    .fileupload_label {
+        cursor: pointer;
+        position: absolute;
+        top: 35%;
+        left: 10px;
+        margin-top: -20px
+    }
+
+    .fileupload_sign {
+        cursor: pointer;
+        color: #cecece;
+        font-size: 30px;
+        position: absolute;
+        top: 15px;
+        left: 30px
+    }
+
+    .fileupload_small {
+        background-color: #6B7336;
+        width: 80px;
+        height: 30px;
+        text-align: center;
+        font-weight: 700;
+        border: 1px solid #b0b0b0;
+        display: inline-block;
+        position: relative;
+        top: 10px;
+        overflow: hidden;
+        cursor: pointer
+    }
+
+    .fileupload_label_small {
+        cursor: pointer;
+        color: #fff;
+        position: absolute;
+        top: 3px;
+        left: 10px
+    }
+
+    .fileupload_small_wechat {
+        height: 45px;
+        top: 0
+    }
+
+    .fileupload_label_small_wechat {
+        cursor: pointer;
+        color: #fff;
+        position: absolute;
+        top: 3px;
+        left: 0
+    }
+
+    .in {
+        width: 600px;
+        height: 200px;
+        line-height: 200px;
+        font-size: larger
+    }
+
+    .hover {
+        background: #7cfc00
+    }
+
+    .fade {
+        -webkit-transition: all .3s ease-out;
+        -moz-transition: all .3s ease-out;
+        -ms-transition: all .3s ease-out;
+        -o-transition: all .3s ease-out;
+        transition: all .3s ease-out;
+        opacity: 1
+    }
+
+    .itemimage_container {
+        width: 80px;
+        height: 80px;
+        border: 1px solid gray;
+        margin-right: 2px;
+        margin-bottom: 2px
+    }
+
+    .itemimage {
+        width: 80px;
+        height: 80px;
+        margin-right: 4px;
+        margin-bottom: 4px
+    }
+
+    .itemimage_selected {
+        border: 2px solid #EB6767
+    }
+</style>
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a th:href="@{/shoot-user/index}">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
+                </li>
+                <li>
+                    <a class="login fy-navItem-active" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding" ng-app="wx_create_app" ng-controller="wx_create_controller">
+    <form id="submit_form" method="post" action="/shoot-selfie/addSelfie" enctype="multipart/form-data">
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8J5CSEebsqxEkrpW_UgxB1h91sECmrp5YeOowXbDVm35TqvS7xkAiLqeLqbPXstvru-OMg_2U2wCtSsnl1CHH_TF9oPRPhzpsejpl_t4y7sbdbySxHaSmMenzKDKHy_nH-k6sThhn_WfRls7PfaUsRo" />
+        <div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+        </ul></div>
+        <input data-val="true" data-val-required="The ID field is required." id="ID" name="ID" type="hidden" value="0" />
+        <input id="ActionToken" name="ActionToken" type="hidden" value="pai553727163720322131818091017" />
+        <div class="data_posts newcard_container_wrapper newcard_container_fix ">
+            <div class="data_post_cell">
+                <div class="form_header_righticon">
+                    <span class="data_group_title">发布自拍</span>
+                    <img th:src="@{/images/Selfie-512.png}" style="width: 30px;height:auto;" />
+                </div>
+            </div>
+            <div class="data_post_cell">
+                <label class="label_blue">照片</label>
+
+                <div class="v5_margin" id="destination">
+                    <div id="fileupload_box" class="fileupload">
+
+                            <!-- 选择文件夹 -->
+                            <span class="file-wrapper">
+                                <span class="fileupload_sign">+</span>
+                                    <input class="fileinput" id="pic_selector" type="file"
+                                           name="imagesNamg" multiple="multiple" onchange="readFile();">
+                            </span>
+
+                    </div>
+                    <!--<img ng-repeat="image in screenshots" ng-src="{{image.url}}" ng-show="image.url" ng-click="imageClick($event.target)"
+                         data-value="{{image.id}}" data-name="{{image.name}}"
+                         class="itemimage" />-->
+                    <input id="JsonImages" name="JsonImages" type="hidden" value='' />
+                </div>
+
+                <div class="form-submit-row">
+                    <button id="delete-button" type="button" class="btn btn-danger btn-sm" style="display:none;">删除图片</button>
+                    <button id="uploding-button" type="button" class="btn btn-default btn-sm" style="display:none;">请稍后，上传图片中...</button>
+                </div>
+                <!--<div class="field_attached_comment" ng-show="screenshots.length">选中图片，可删除后重新上传</div>-->
+                <div class="v20_margin">
+                    <div class="v10_margin">
+                        <textarea class="auto_textarea_editor input_gray" id="content" name="content" placeholder="照片配文..." style="height:100px;"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="v15_margin" style="text-align:center;">
+            <button id="submit_button" type="submit" class="btn btn-sm btn-success form_medium_button">提交</button>
+            <a role="button" class="btn btn-default btn-sm btn_cancel form_medium_button" data-url="/pai">取消</a>
+        </div>
+
+    </form>
+    <div class="v20_margin"></div>
+</div>
+
+<!-- 多张照片选择显示页面 -->
+<script type="text/javascript">
+
+    var destination = document.getElementById('destination');
+    document.getElementById('pic_selector').addEventListener('change', function() {
+        var file;
+        //destination.innerHTML = '';//每次清空内容
+        // 循环用户多选的文件
+        for(var x = 0, xlen = this.files.length; x < xlen; x++) {
+            file = this.files[x];
+            console.log(file);
+            if(file.type.indexOf('image') != -1) {   // 非常简单的交验，判断文件是否是图片
+                var reader = new FileReader();   //文件预览对象
+                reader.readAsDataURL(file);      //设置要预览的文件
+                reader.onload = function(e) {    //监听文件加载完成事件
+                    var img = new Image();       //创键预览图片
+                    img.width=80;
+                    img.height=80;
+                    img.margin=5,5;
+                    img.src = e.target.result;   //把预览图片的src设置为e.target.result属性。返回预览文件的二进制内存数据
+                    destination.appendChild(img);    //在把每张图片，放到预览区域
+                };
+            }
+        }
+    });
+</script>
+
+<div id="toast_message" style="display: none;">
+    <div class="weui_toast">
+        <p id="toast_message_text" class="weui_toast_content" style="margin-top:30px;margin-left:10px;margin-right:10px;">
+        </p>
+    </div>
+</div>
+
+<div id="notification_panel" style="position:fixed;">
+    <div class="data_posts">
+        <div class="data_post_cell" style="text-align:center;">
+            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

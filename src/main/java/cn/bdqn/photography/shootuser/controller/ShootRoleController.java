@@ -49,12 +49,10 @@ public class ShootRoleController {
         model.addAttribute("tuxiang","/images/"+user.getPortyaitl());
         List<ShootUser> list=iShootUserService.findUserByUserCode(all().getUserCode());
         Subject sub = SecurityUtils.getSubject();
-        sub.getSession().setAttribute("user",list.get(0));   //登录成功把user放入shiro用户sesssion中
+        sub.getSession().setAttribute("user",list.get(0));   //更新完我的信息后 把session中的值更改掉
         ShootUser subb = (ShootUser)subject.getSession().getAttribute("user");
-//        model.addAttribute("sf",user.getRoles().get(0).getId());
        List<ShootUserRole> s= iShootUserRoleService.selebyuid(subb);
         ShootRole ss=iShootRoleService.getById(s.get(0).getRoleId());
-        System.out.println("用户登录时身份"+s.get(0).getRoleId());
         return "personage/personalInfo";
     }
 
@@ -74,6 +72,7 @@ public class ShootRoleController {
         return "personage/integral";
     }
 
+    //积分签到更改数值
     @RequestMapping("/updintegral")
     public String updateintegral(HttpServletRequest h){
         all().setIntegral(all().getIntegral()+5);
@@ -83,6 +82,7 @@ public class ShootRoleController {
         return "personage/integral";
     }
 
+    //更新个人信息
     @RequestMapping("/updateuser")
     public String updatebyuser(ShootUser shootUser,String label_select){
 
