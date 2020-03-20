@@ -34,6 +34,6 @@ tomcat:
 #配置文件 访问路劲 与 虚拟路径 绑定
 file:
   resourceHandler: /images/**
-  commonPath: /img/image/common/
-  userPath: /img/image/user/
-  infoPath: /img/image/info/
+  commonPath: D:/static/common/
+  userPath: D:/static/user/
+  infoPath: D:/static/info/
