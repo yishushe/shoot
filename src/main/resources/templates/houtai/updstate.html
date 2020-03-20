@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form action="wupdatebyinfoid" method="post">
+        <p th:each="uu,index: ${im}">
+            <input type="text" th:value="${uu.Content}"/>
+            <input type="text" th:value="${uu.Price}"/>
+            <input type="text" th:value="${uu.TakeTime}"/>
+            <input type="text" th:value="${uu.TakeLocation}"/>
+            <input type="text" th:value="${uu.TakeResult}"/><br>
+            <input type="text" th:value="${uu.CreationDate}"/>
+            <input type="text" th:value="${uu.ShootType.TypeName}"/>
+            <input type="text" th:value="${uu.ShootCost.CostName}"/>
+            <input type="text" th:value="${city}"/>
+            <input type="text" th:value="${uu.ShootState.StateName}"/><br>
+            <img th:width="100" th:height="90" th:src="${uu.ShootUser.Portyaitl}">
+        </p>
+        <input style="display: none" name="aa" th:value="${im.get(0).getId()}">
+        <input type="submit" value="审核通过"/>
+        <input type="button" class="btn"  value="返回" onclick="javascript:history.go(-1);"/>
+    </form>
+    </div>
+</body>
+</html>

@@ -63,6 +63,9 @@ public class ShootInfoServiceImpl extends ServiceImpl<ShootInfoMapper, ShootInfo
     @Autowired
     private SplitName splitName;
 
+    @Autowired
+    private IShootInfoService iShootInfoService;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,
             rollbackFor = {Exception.class})  //事物出现错误则回滚
@@ -129,6 +132,18 @@ public class ShootInfoServiceImpl extends ServiceImpl<ShootInfoMapper, ShootInfo
     @Override
     public List<ShootInfo> findInfoByUserId(Long userId) {
         return shootInfoMapper.getInfoByUserId(userId);
+    }
+
+    @Override
+    public Page<ShootInfo> getInfoByStateId(Long id, int current) {
+        IPage<ShootInfo> page=new Page<>(current,5);
+        Page<ShootInfo> infoByThemeId = shootInfoMapper.getInfoByStateId(page,id);
+        return infoByThemeId;
+    }
+
+    @Override
+    public List<ShootInfo> getinfobyinfoid(Long id) {
+        return shootInfoMapper.getinfobyinfoid(id);
     }
 
 

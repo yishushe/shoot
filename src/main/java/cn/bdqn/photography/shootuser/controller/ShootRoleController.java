@@ -103,4 +103,17 @@ public class ShootRoleController {
         }
     }
 
+    @RequestMapping("/abou")
+    public String abo(){
+        return "abouts/about";
+    }
+    @RequestMapping("/zhin")
+    public String zhinan(){
+        return "abouts/zhinan";
+    }
+    @RequestMapping("/kef")
+    public String kefu(){
+        return "abouts/kefu";
+    }
+
 }
