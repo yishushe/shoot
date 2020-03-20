@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bdqn.photography.shootletter.mapper.ShootLetterMapper">
 
+    <select id="getLetterById" resultType="ShootLetter">
+        SELECT 	* FROM shoot_letter
+        /*where id=#{id}*/
+    </select>
 
     <!-- 根据当前用户id查找 给我发送私信的信息 -->
     <resultMap id="letter01" type="ShootLetter">

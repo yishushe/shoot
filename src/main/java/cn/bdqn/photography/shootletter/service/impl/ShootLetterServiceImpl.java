@@ -3,9 +3,13 @@ package cn.bdqn.photography.shootletter.service.impl;
 import cn.bdqn.photography.shootletter.entity.ShootLetter;
 import cn.bdqn.photography.shootletter.mapper.ShootLetterMapper;
 import cn.bdqn.photography.shootletter.service.IShootLetterService;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.provider.SHA;
 
 import java.util.List;
 
@@ -42,5 +46,17 @@ public class ShootLetterServiceImpl extends ServiceImpl<ShootLetterMapper, Shoot
     public List<ShootLetter> findLetterByPutUserIdPut(Long putUserId) {
         return shootLetterMapper.getLetterByPutUserIdPut(putUserId);
     }
+
+    @Override
+    public IPage<ShootLetter> selectPage(IPage<ShootLetter> page, Wrapper<ShootLetter> queryWrapper) {
+        return shootLetterMapper.selectPage(page,queryWrapper);
+    }
+
+   /* @Override
+    public Page<ShootLetter> findLetterPage(Long id, int current) {
+        IPage<ShootLetter> page = new Page<>(current,5);
+        Page<ShootLetter> infoById = shootLetterMapper.getLetterById(page,id);
+        return infoById;
+    }*/
 
 }
