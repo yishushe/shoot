@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.provider.SHA;
 
 import java.util.List;
 
@@ -48,8 +47,8 @@ public class ShootLetterServiceImpl extends ServiceImpl<ShootLetterMapper, Shoot
     }
 
     @Override
-    public IPage<ShootLetter> selectPage(IPage<ShootLetter> page, Wrapper<ShootLetter> queryWrapper) {
-        return shootLetterMapper.selectPage(page,queryWrapper);
+    public Page<ShootLetter> selectPage(IPage<ShootLetter> page/*, Wrapper<ShootLetter> queryWrapper*/) {
+        return shootLetterMapper.getLetterById(page);
     }
 
    /* @Override

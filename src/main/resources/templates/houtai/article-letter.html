@@ -192,8 +192,8 @@
 						<tr th:each="users:${info}" id="like">
 							<td th:text="${users.id}"></td>
 							<td th:text="${users.content}"></td>
-							<td th:text="${users.sendUserId}"></td>
-							<td th:text="${users.putUserId}"></td>
+							<td th:text="${users.getShootUser().getUserCode()}"></td>
+							<td th:text="${users.getShootUser().getUserCode()}"></td>
 							<td th:text="${users.creationDate}"></td>
 							<td class="f-14 td-manage"><a style="text-decoration:none" onClick="article_shenhe(this,'10001')" th:href="javascript" title="审核">审核</a>
 								<a style="text-decoration:none" class="ml-5" onClick="article_edit('资讯编辑','article-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>

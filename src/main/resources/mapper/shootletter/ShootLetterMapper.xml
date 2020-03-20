@@ -2,11 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bdqn.photography.shootletter.mapper.ShootLetterMapper">
 
-    <select id="getLetterById" resultType="ShootLetter">
-        SELECT 	* FROM shoot_letter
-        /*where id=#{id}*/
+    <resultMap id="han" type="ShootLetter">
+        <id property="id" column="le_id"></id>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="us_id"></id>
+        </association>
+        <association property="shootUsers" javaType="ShootUser">
+            <id property="id" column="s_id"></id>
+        </association>
+    </resultMap>
+    <select id="getLetterById" resultMap="han">
+      SELECT us.id us_id,s.id s_id,le.id le_id,le.content,us.userCode,s.userCode,le.creationDate FROM shoot_letter le
+        INNER JOIN shoot_user s  ON le.putUserId =s.id
+        INNER JOIN shoot_user us ON us.id=le.sendUserId
     </select>
-
     <!-- 根据当前用户id查找 给我发送私信的信息 -->
     <resultMap id="letter01" type="ShootLetter">
         <id property="id" column="le_id"></id>

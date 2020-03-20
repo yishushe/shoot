@@ -17,14 +17,15 @@ public class ShootLetterControllers {
     //查询所有私信
     @RequestMapping("/like")
     public String select(Model model){
-        QueryWrapper<ShootLetter> wrapper = new QueryWrapper();
-        wrapper.select();
+        /*QueryWrapper<ShootLetter> wrapper = new QueryWrapper();*/
+       /* wrapper.select();*/
         Page<ShootLetter> page1 = new Page<>(1,5);
-        IPage<ShootLetter> iPage = letterService.selectPage(page1,wrapper);
+        IPage<ShootLetter> iPage = letterService.selectPage(page1);
         model.addAttribute("info",iPage.getRecords());     //数据
         model.addAttribute("current",iPage.getCurrent());   //当前页
         model.addAttribute("pages",iPage.getPages());      //总页数
         model.addAttribute("total",iPage.getTotal());      //总条数
+       /* System.out.println(iPage.getRecords().get(0).getShootUser().getUserCode());*/
         return "houtai/article-letter";
     }
 }

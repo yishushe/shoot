@@ -56,7 +56,7 @@ public interface IShootLetterService extends IService<ShootLetter> {
      *
      *
      */
-    IPage<ShootLetter> selectPage(IPage<ShootLetter> page, @Param(Constants.WRAPPER) Wrapper<ShootLetter> queryWrapper);
+    IPage<ShootLetter> selectPage(IPage<ShootLetter> page/*, @Param(Constants.WRAPPER) Wrapper<ShootLetter> queryWrapper*/);
     /*Page<ShootLetter> findLetterPage(Long id,int current);*/
 
 }
