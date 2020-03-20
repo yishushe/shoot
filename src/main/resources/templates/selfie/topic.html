@@ -34,16 +34,16 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
                     <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                    <a class="login fy-navItem-active" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
@@ -58,9 +58,9 @@
 
 <div class="container bottom_menu_margin_plus xzero_padding">
     <ul id="topic_tabs" class="nav nav-tabs">
-        <li role="presentation"><a href="javascript:void(0);" data-tabname="hot">热门主题</a></li>
+        <li role="presentation" class="active"><a href="javascript:void(0);" data-tabname="hot">热门主题</a></li>
         <li role="presentation"><a href="javascript:void(0);" data-tabname="newest">最新主题</a></li>
-        <li role="presentation" class="active"><a href="javascript:void(0);" data-tabname="joined">我关注的</a></li>
+        <li role="presentation"><a href="javascript:void(0);" data-tabname="joined">我关注的</a></li>
         <li role="presentation"><a href="javascript:void(0);" data-tabname="created">我创建的</a></li>
     </ul>
 

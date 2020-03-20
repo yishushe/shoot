@@ -35,16 +35,16 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
                     <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                    <a class="login fy-navItem-active" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
@@ -76,9 +76,8 @@
                 </div>
             </div>
             <div class="v10_margin">
-
                 <a class="btn btn-sm btn_follow btn_join_topic btn-success" data-login="1" data-to="23" href="javascript:void(0);">关注</a>
-                <a class="btn btn-sm btn-primary btn_login_required" data-login="1" href="/y/publish/23?from=23">+发布信息</a>
+                <a class="btn btn-sm btn-primary btn_login_required" data-login="1" th:href="@{/shoot-user/postMessage(themName=${st.themName})}">+发布信息</a>
                 <a class="btn btn-sm btn-primary btn_login_required" data-login="1" href="/gallery/new?from=23">+发布作品</a>
             </div>
         </div>
@@ -99,7 +98,7 @@
                 <a class="data_post_title_link" href="/topic/members/23">浏览关注人员（654人）</a>
             </div>
             <div class="v20_margin">
-                <span class="data_meta_text">喜欢<span th:text="${st.themName}"></span>的来这里</span>
+                <span class="data_meta_text"><span th:text="${'喜欢'+st.themName+'的来这里'}"></span></span>
             </div>
             <div class="v20_margin">
                 <span class="data_meta_info">创建人员</span>
@@ -170,7 +169,7 @@
             </script>
 
             <!-- 约拍信息展示 -->
-            <div th:each="sif,index: ${info}">
+            <div th:each="sif,index: ${info}" style="margin-top: 10px">
                 <div class="data_post_cell">
                     <a class="data_post_container_link" th:href="@{/shoot-info/about(id=${sif.id})}">
                         <div class="user_info_cell_sm v10_margin_bottom">

@@ -10,6 +10,12 @@
     <script th:src="@{/js/jquery.min.js}"></script>
     <link href="../css/core73.min.css" rel="stylesheet" />
 
+    <style type="text/css">
+        .guanzhu{
+            background: #5e5e5e;
+        }
+    </style>
+
 </head>
 <body class="body_default">
 
@@ -35,10 +41,10 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a  th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
                     <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
@@ -75,11 +81,53 @@
                         </a>
 
                     </div>
+
                     <div style="float:right;">
+                        <!-- 是否已关注数据 -->
+                         <input hidden id="attentionId" th:value="${attentionId}">
+                        <!-- 当前这条约拍信息userId -->
+                        <input hidden id="focusedId" th:value="${info.shootUser.id}">
+                        <!-- 关注功能 -->
+                        <a th:if="${info.shootUser.id!=session.user.id}">
+                        <a id="guanzhu" class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:;">关注</a>
+                        </a>
+                            <!-- 关注javascript -->
+                        <script type="text/javascript">
+                            $(document).ready(function () {
 
-                        <a class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:;">关注</a>
+                                  <!-- 判断是否已关注 -->
+                                  var attentionId = $("#attentionId").val();
+                                  if(attentionId!=null && attentionId!=undefined && attentionId!=""){
+                                      $("#guanzhu").text("已关注");
+                                      $("#guanzhu").addClass("guanzhu");
+                                  }
 
+                                   <!-- 异步做关注和取消关注操作 -->
+                                   $("#guanzhu").click(function () {
+                                       var text = $(this).text();
+                                       var focusedId=$("#focusedId").val();
+                                       if(text=="关注"){
+                                           $.post("/shoot-attention/addAttention",{"focusedId":focusedId},function (data) {
+                                              if(data==true){
+                                                  $("#guanzhu").text("已关注");
+                                                  $("#guanzhu").addClass("guanzhu");
+                                              }
+                                           },"json");
+                                       }
+                                       if(text!="关注"){
+                                          $.post("/shoot-attention/deleteAttention",{"focusedId":focusedId},function (data) {
+                                              if(data==true){
+                                                  $("#guanzhu").text("关注");
+                                                  $("#guanzhu").removeClass("guanzhu");
+                                              }
+                                          },"json");
+                                       }
+                                   });
+
+                            });
+                        </script>
                     </div>
+
                     <div class="user_info_cell_content">
                         <a class="data_post_author_title_link" href="/u/822903">
                             <span class="data_post_author_title" th:text="${info.shootUser.userName}">日久&#x1F36B; &#x1F505;</span>

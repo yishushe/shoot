@@ -49,13 +49,13 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                    <a class="login fy-navItem-active" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
                     <a class="login" th:href="@{/shoot-theme/top}">主题</a>
