@@ -25,8 +25,8 @@ public class ShootInfoControllers {
     private IShootImagesService iShootImagesService;
 
     @RequestMapping("/shenhe")
-    public String shenhe(@RequestParam(value = "id",required = false) Long id,@RequestParam(value = "current",required = false) int current, Model model){
-        IPage<ShootInfo> page= iShootInfoService.getInfoByStateId(id,current);
+    public String shenhe(@RequestParam(value = "current",required = false) int current, Model model){
+        IPage<ShootInfo> page= iShootInfoService.getInfoByStateId(current);
         for (ShootInfo info1 : page.getRecords()){
             //设置用户图片路劲
             info1.getShootUser().setPortyaitl("/images/"+info1.getShootUser().getPortyaitl());
@@ -87,6 +87,5 @@ public class ShootInfoControllers {
         }else{
             return "houtai/sb";
         }
-
     }
 }

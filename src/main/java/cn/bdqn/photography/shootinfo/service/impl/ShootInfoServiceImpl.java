@@ -135,9 +135,9 @@ public class ShootInfoServiceImpl extends ServiceImpl<ShootInfoMapper, ShootInfo
     }
 
     @Override
-    public Page<ShootInfo> getInfoByStateId(Long id, int current) {
+    public Page<ShootInfo> getInfoByStateId(int current) {
         IPage<ShootInfo> page=new Page<>(current,5);
-        Page<ShootInfo> infoByThemeId = shootInfoMapper.getInfoByStateId(page,id);
+        Page<ShootInfo> infoByThemeId = shootInfoMapper.getInfoByStateId(page);
         return infoByThemeId;
     }
 
