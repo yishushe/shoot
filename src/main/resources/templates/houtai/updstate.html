@@ -13,18 +13,31 @@
             <input type="text" th:value="${uu.Price}"/>
             <input type="text" th:value="${uu.TakeTime}"/>
             <input type="text" th:value="${uu.TakeLocation}"/>
-            <input type="text" th:value="${uu.TakeResult}"/><br>
+            <input type="text" th:value="${uu.TakeResult}"/>
             <input type="text" th:value="${uu.CreationDate}"/>
             <input type="text" th:value="${uu.ShootType.TypeName}"/>
             <input type="text" th:value="${uu.ShootCost.CostName}"/>
-            <input type="text" th:value="${city}"/>
-            <input type="text" th:value="${uu.ShootState.StateName}"/><br>
+            <input type="text" th:value="${city}"/><br>
             <img th:width="100" th:height="90" th:src="${uu.ShootUser.Portyaitl}">
         </p>
+        <select name="sele" id="sss">
+            <option value="1">审核</option>
+            <option value="2">发布</option>
+            <option value="3">接单</option>
+            <option value="4">完成</option>
+            <option value="5">举报</option>
+            <option value="6">未守约</option>
+            <option value="7">关闭</option>
+        </select>
+        <input id="sf" style="display:none" th:value="${im.get(0).getShootState().getId()}"/>
         <input style="display: none" name="aa" th:value="${im.get(0).getId()}">
-        <input type="submit" value="审核通过"/>
+        <input type="submit" value="提交"/>
         <input type="button" class="btn"  value="返回" onclick="javascript:history.go(-1);"/>
     </form>
     </div>
+<script>
+    var sf=$("#sf").val();
+    $("#sss").get(0).selectedIndex = sf;
+</script>
 </body>
 </html>
