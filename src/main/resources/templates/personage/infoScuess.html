@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>提交成功 - 摄会社</title>
+    <title>提交成功 - 艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
@@ -15,9 +15,8 @@
 </head>
 <body class="body_default">
 
-
-
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
     <!-- 导航条 -->
     <div class="container">
         <div class="navbar-header">
@@ -37,29 +36,24 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" href="javascript:;">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
-                    <a class="login" href="javascript:;">自拍</a>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" href="javascript:;">主题</a>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="javascript:;">加入会员</a>
-                </li>
             </ul>
         </nav>
     </div>
+
 </header>
 <div class="fy-docs-nav-distance"></div>
 
@@ -85,6 +79,7 @@
     <div class="v20_margin"></div>
 </div>
 
+<script th:src="@{/js/style.js}"></script>
 
 <footer class="fy-docs-footer " role="contentinfo">
     <div class="container xzero_padding" style="text-align:center;">

@@ -3,7 +3,13 @@ package cn.bdqn.photography.shootletter.service.impl;
 import cn.bdqn.photography.shootletter.entity.ShootLetter;
 import cn.bdqn.photography.shootletter.mapper.ShootLetterMapper;
 import cn.bdqn.photography.shootletter.service.IShootLetterService;
+<<<<<<< HEAD
 import com.baomidou.mybatisplus.core.metadata.IPage;
+=======
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+>>>>>>> 59aa669a0946cfe4b46498c5bebc50bc3d72d1f7
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +51,22 @@ public class ShootLetterServiceImpl extends ServiceImpl<ShootLetterMapper, Shoot
     }
 
     @Override
+<<<<<<< HEAD
     public IPage<ShootLetter> selectPage(IPage<ShootLetter> page,int current) {
         return shootLetterMapper.getLetterById(page,current);
     }
 
+=======
+    public Page<ShootLetter> selectPage(IPage<ShootLetter> page/*, Wrapper<ShootLetter> queryWrapper*/) {
+        return shootLetterMapper.getLetterById(page);
+    }
+
+   /* @Override
+    public Page<ShootLetter> findLetterPage(Long id, int current) {
+        IPage<ShootLetter> page = new Page<>(current,5);
+        Page<ShootLetter> infoById = shootLetterMapper.getLetterById(page,id);
+        return infoById;
+    }*/
+
+>>>>>>> 59aa669a0946cfe4b46498c5bebc50bc3d72d1f7
 }

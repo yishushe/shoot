@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>私信 - 摄会社</title>
+    <title>私信 - 艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
@@ -36,10 +36,10 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-theme/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
                     <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
@@ -49,12 +49,6 @@
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
-                </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="javascript:;">加入会员</a>
                 </li>
             </ul>
         </nav>
@@ -83,7 +77,7 @@
         <div th:if="${letter==null or letter.size()==0}">
             <h1>还没人给你留言</h1>
         </div>
-        <div th:if="${letter!=null and letter.size()>0}" th:each="letter,index : ${letter}">
+        <div th:if="${size>0}" th:each="letter,index : ${letter}">
 
             <div class="data_post_cell">
 
@@ -118,44 +112,12 @@
 
         </div>
 
-       <!-- <div class="data_post_cell">
-
-
-            <a class="data_post_container_link" href="/message/chat/62591?from=message_center">
-                <div class="user_info_cell_sm v10_margin_bottom">
-                    <div class="user_info_cell_avatar">
-                        <i class="data_post_author_title_link" data-url="/u/62591">
-                            <img class="img-circle data_avatar_small2" src="http://image.shehuiapp.com/u/62591/62591_016005701_1565525894281.jpeg/t150" onerror="javascript: avatarLoadError(this);" />
-                        </i>
-                    </div>
-                    <div class="user_info_cell_content">
-                        <i class="data_post_author_title_link" data-url="/u/62591">
-                            <span class="data_post_author_title">喜欢拍照喜欢你</span>
-                        </i>
-                        <i class="web_wechat_men"></i>
-                        <div>
-                            <span class="data_meta_info">河南郑州</span>
-                            <span class="data_meta_info">摄影爱好者</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="data_post_content_clear"></div>
-                <div class="data_post_message v10_margin">
-                    抱歉，不拍男生
-                </div>
-                <div class="data_meta_info v10_margin">
-                    <span class="data_meta_info">2019年12月22日14:20</span>
-                </div>
-            </a>
-        </div>-->
-
     </div>
-
-
 
     <div class="v20_margin"></div>
 </div>
 
+<script th:src="@{/js/style.js}"></script>
 
 </body>
 </html>

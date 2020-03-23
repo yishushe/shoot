@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
+
 @Controller
 @RequestMapping("/ShootLetter")
 public class ShootLetterControllers {
@@ -18,12 +19,12 @@ public class ShootLetterControllers {
     public String select(Model model,int current){
         Page<ShootLetter> page1 = new Page<>(current,5);
         IPage<ShootLetter> iPage = letterService.selectPage(page1,current);
-
-        System.out.println("账号"+iPage.getRecords().get(0).getShootUser().getUserCode());
         model.addAttribute("info",iPage.getRecords());     //数据
         model.addAttribute("current",iPage.getCurrent());   //当前页
         model.addAttribute("pages",iPage.getPages());      //总页数
         model.addAttribute("total",iPage.getTotal());      //总条数
         return "houtai/article-letter";
     }
-}
+    }
+
+

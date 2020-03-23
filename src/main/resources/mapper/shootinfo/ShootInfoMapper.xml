@@ -5,9 +5,9 @@
     <insert id="addInfo" useGeneratedKeys="true" keyProperty="id">
          INSERT INTO shoot.shoot_info
 	(content, price, takeTime, takeLocation, takeResult,
-	creationDate, typeId, costId, requireRoles,requireSecurityAccount,shootAddressId,stateId,userId
+	creationDate, typeId, costId, requireRoles,requireSecurityAccount,shootAddressId,stateId,userId,themeId
 	)VALUES (#{content},#{price},#{takeTime},#{takeLocation},#{takeResult},#{creationDate},
-	#{typeId},#{costId},#{requireRoles},#{requireSecurityAccount},#{shootAddressId},1,#{userId})
+	#{typeId},#{costId},#{requireRoles},#{requireSecurityAccount},#{shootAddressId},1,#{userId},#{themeId})
     </insert>
 
 	<!-- 约拍信息首页 -->
@@ -193,13 +193,21 @@
 		<association property="shootState" javaType="ShootState">
 			<id property="id" column="te_id"></id>
 		</association>
+		<association property="shootUser" javaType="ShootUser">
+			<id property="id" column="id"></id>
+			<collection property="roles" ofType="ShootRole">
+				<id property="id" column="r_id"></id>
+			</collection>
+		</association>
 	</resultMap>
 	<select id="getInfoByUserId" resultMap="info04">
-		SELECT i.id i_id,i.content,i.creationDate,ty.id ty_id,
+		SELECT u.*,i.id i_id,i.content,i.creationDate,ty.id ty_id,
     ty.typeName,p.id p_id,p.prow,c.id c_id,c.city,
     co.id co_id,co.country,st.id st_id,st.costName,
-    te.id te_id,te.stateName FROM shoot_user u
+    te.id te_id,te.stateName,r.id r_id,r.roleName FROM shoot_user u
     INNER JOIN shoot_info i ON i.userId=u.id
+    inner join shoot_user_role ur on ur.userId=u.id
+    inner join shoot_role r on r.id=ur.roleId
     INNER JOIN shoot_address a ON a.id=i.shootAddressId
     INNER JOIN shoot_prow p ON p.id=a.prow_id
     INNER JOIN shoot_city c ON c.id=a.city_id
@@ -209,5 +217,6 @@
     INNER JOIN shoot_type ty ON ty.id=i.typeId
     WHERE u.id=#{userId}
 	</select>
+
 
 </mapper>

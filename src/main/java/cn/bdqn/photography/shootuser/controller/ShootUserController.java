@@ -1,6 +1,5 @@
 package cn.bdqn.photography.shootuser.controller;
 
-
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
@@ -8,6 +7,8 @@ import cn.bdqn.photography.shootimages.entity.ShootImages;
 import cn.bdqn.photography.shootimages.service.IShootImagesService;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootinfo.service.IShootInfoService;
+import cn.bdqn.photography.shoottheme.entity.ShootTheme;
+import cn.bdqn.photography.shoottheme.service.IShootThemeService;
 import cn.bdqn.photography.shootuser.entity.ShootAddress;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
@@ -61,6 +62,9 @@ public class ShootUserController {
 
     @Autowired
     private IShootImagesService iShootImagesService;
+
+    @Autowired
+    private IShootThemeService iShootThemeService;
 
     //主页
     @RequestMapping(value = {"/index"})
@@ -221,11 +225,25 @@ public class ShootUserController {
 
     //个人中心到发布信息页
     @RequestMapping(value = "/postMessage")
-    public String postMessage(){
+    public String postMessage(@RequestParam(value = "themName",defaultValue = "发布信息")
+                              String themName,Model model){
+
+        //有主题就查询主题id传过去
+        if(!themName.equals("发布信息")){
+            QueryWrapper<ShootTheme> queryWrapper=new QueryWrapper<>();
+            System.out.println("theme:"+themName);
+            queryWrapper.eq("themName",themName);
+            ShootTheme one = iShootThemeService.getOne(queryWrapper);
+            model.addAttribute("id",one.getId());
+        }
+        
+        model.addAttribute("themName",themName);
         return "personage/postMessage";
     }
+
     @RequestMapping("/ses")
     public void ses(){
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     }
+
 }

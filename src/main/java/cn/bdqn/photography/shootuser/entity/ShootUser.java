@@ -1,5 +1,6 @@
 package cn.bdqn.photography.shootuser.entity;
 
+import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -66,5 +67,8 @@ public class ShootUser implements Serializable {
 
     @TableField(exist = false)  //忽略字段
     private List<ShootRole> roles;
+
+    @TableField(exist = false)
+    private List<ShootInfo> shootInfos;
 
 }

@@ -59,6 +59,8 @@ public class ShiroConfig {
         filterMap.put("/shoot-letter/message","authc");  //查看别人给我发送的私信 留言页
         filterMap.put("/shoot-letter/replyMessage","authc");   //回复私信页面
         filterMap.put("/shoot-letter/requestMessage","authc");  //我发起的请求信息页
+        filterMap.put("/shoot-attention/attention","authc");    //关注页面
+        filterMap.put("/shoot-attention/personalInfo","authc");   //被关注人的主页
 
         filterMap.put("/shoot-user/about","perms[query]");
 

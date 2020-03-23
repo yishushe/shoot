@@ -23,5 +23,5 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
 
     ShootUser personageByUserCode(@Param("userCode") String userCode);  //个人信息
 
-
+    ShootUser getByUserId(@Param("id") Long id);   //查询个人信息
 }

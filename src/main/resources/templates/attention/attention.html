@@ -1,23 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!--<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">-->
-    <title>关注 - 摄会社</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>关注 - 艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
-   <!-- <link href="../css/core73.min.css" rel="stylesheet" />-->
-
-    <link href="../css/core73.min.css" rel="stylesheet" />
     <script th:src="@{/js/jquery.min.js}"></script>
-   <!-- <script type="text/javascript">
-        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
-    </script>-->
+    <link href="../css/core73.min.css" rel="stylesheet" />
 
 </head>
 <body class="body_default">
@@ -45,8 +38,10 @@
     }
 </style>
 
-
+<!-- 导航条 -->
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
     <div class="container">
         <div class="navbar-header">
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
@@ -57,8 +52,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <!--<img src="../images/logo.png" class="fy-navbar-logo" />-->
-                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo"/>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
                     <span>艺术摄</span>
                 </div>
             </a>
@@ -66,122 +60,93 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/att}">关注</a>
+                    <a class="login fy-navItem-active" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/zipai}">自拍</a>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
-                <!--   <li>
-                       <a class="" href="#">地点</a>
-                   </li>-->
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="#">加入会员</a>
-                </li>
-                <!-- <li>
-                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
-                 </li>-->
             </ul>
         </nav>
     </div>
+
 </header>
+
+
 <div class="fy-docs-nav-distance"></div>
 
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="newcard_container newcard_container_fix ">
         <div class="updates_top_panel form_header_righticon">
+
+            <!-- 关注用户的头像展示 -->
             <div class="scroll_options nav_left_items">
-                <a class="following_user data_post_author_title_link" title="kentuil 广东广州 摄影师" href="/u/1534672">
-                    <img class="img-circle data_avatar_small2" alt="kentuil" src="https://wx.qlogo.cn/mmopen/vi_32/IMWMPRtsRtXLxeSs4THvqnnVibtNQkvVTiaITic5HgvhQsiaEHzvYk2icLkQOZHnASw1libegBAdCwmwUicNnHVAJ4Cug/132" onerror='this.src="https://www.shehuiapp.com/content/resources/images/avatar_placeholder_300.png"' />
+
+                <a th:if="${attentionTouxiang==null or attentionTouxiang.size()<1}">
+                    <h5>你还没有关注任何人</h5>
+                </a>
+
+                <a th:if="${attentionTouxiang!=null and attentionTouxiang.size()>0}" th:each="attention,index : ${attentionTouxiang}">
+                    <a class="following_user data_post_author_title_link" th:title="${attention.shootUser.userName+' '+
+                    attention.shootUser.shootAddress.shootProw.prow+attention.shootUser.shootAddress.shootCity.city+
+                    attention.shootUser.shootAddress.shootCountry.country+' '+attention.shootUser.roles.get(0).roleName}" th:href="@{/shoot-attention/personalInfo(userId=${attention.shootUser.id})}">
+                        <img class="img-circle data_avatar_small2" th:alt="${attention.shootUser.userName}" th:src="${attention.shootUser.portyaitl}" />
+                    </a>
                 </a>
             </div>
+
+            <!-- 页面展示的计算人数 -->
             <div class="nav_right_items flex_row_panel">
-                <a class="data_post_title_link" href="/u/following?userID=1534940">全部1人</a>
+                <a class="data_post_title_link" href="/u/following?userID=5537271" th:text="${attentionTouxiang.size()>0?'全部'+attentionTouxiang.size()+'人':'全部0人'}">全部3人</a>
                 <div class="right_select"></div>
             </div>
+
         </div>
     </div>
+
+    <!-- 我关注的人信息展示 -->
     <div class="row data_post_row newcards_panel v8_margin">
-        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
 
-
-            <div class="newcard">
-                <a class="data_post_container_link" href="/pai/991922">
-                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/1534672/20191204J1WBD8/1534672_024568741_1575430206638.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                    <div class="newcard_content">
-                        <div class="card_userline">
-                            <img class="img-circle data_avatar_xs" src="https://wx.qlogo.cn/mmopen/vi_32/IMWMPRtsRtXLxeSs4THvqnnVibtNQkvVTiaITic5HgvhQsiaEHzvYk2icLkQOZHnASw1libegBAdCwmwUicNnHVAJ4Cug/132" />
-                            <span class="data_meta_info span_v2_margin_left">kentuil</span>
-                            <span class="data_meta_info span_v2_margin_left">广东广州</span>
-                            <span class="data_meta_info span_v2_margin_left">摄影师</span>
+        <!-- 循环便利 -->
+        <div th:if="${attentionInfo!=null and attentionInfo.size()>0}" th:each="info,count : ${attentionInfo}">
+            <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
+                <div class="newcard">
+                    <a class="data_post_container_link" th:href="@{/shoot-info/about(id=${info.id})}">
+                        <img style="width:100%;height:auto;" th:src="${info.shootImages!=null and info.shootImages.size()>0?info.shootImages.get(0).imagesName:images}" />
+                        <div class="newcard_content">
+                            <div class="card_userline">
+                                <img class="img-circle data_avatar_xs" th:src="${info.shootUser.portyaitl}" />
+                                <span class="data_meta_info span_v2_margin_left"  th:text="${info.shootUser.userName}">Desert</span>
+                                <span class="data_meta_info span_v2_margin_left" th:text="${info.shootUser.shootAddress.shootProw.prow+
+                                info.shootUser.shootAddress.shootCity.city+
+                                info.shootUser.shootAddress.shootCountry.country}">上海</span>
+                                <span class="data_meta_info span_v2_margin_left" >摄影师</span>
+                            </div>
+                            <div class="card_2line v5_margin">
+                                <span class="data_meta_info" th:text="${info.creationDate+' '+info.shootType.typeName+' '+info.content}">今天13:57 约拍 精修30张&#xA;底片全送</span>
+                            </div>
                         </div>
-                        <div class="card_2line v5_margin">
-                            <span class="data_meta_info">2019年12月4日11:30 自拍 图虫认证，微博认证摄影师，悉尼自由摄影师，专攻ins风，日系小清新，复古胶片，私房。新南威尔士大学设...</span>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="col-xs-6 col-sm-3 col-md-3 newcard_cell">
 
-
-            <div class="newcard">
-                <a class="data_post_container_link" href="/y/991862">
-                    <img style="width:100%;height:auto;" src="http://image.shehuiapp.com/u/1534672/20191203TIAL4X/1534672_020963151_1575365074746.jpg/s300" onerror='this.src="https://www.shehuiapp.com/content/resources/images/photo_placeholder_300.png"' />
-                    <div class="newcard_content">
-                        <div class="card_userline">
-                            <img class="img-circle data_avatar_xs" src="https://wx.qlogo.cn/mmopen/vi_32/IMWMPRtsRtXLxeSs4THvqnnVibtNQkvVTiaITic5HgvhQsiaEHzvYk2icLkQOZHnASw1libegBAdCwmwUicNnHVAJ4Cug/132" />
-                            <span class="data_meta_info span_v2_margin_left">kentuil</span>
-                            <span class="data_meta_info span_v2_margin_left">广东广州</span>
-                            <span class="data_meta_info span_v2_margin_left">摄影师</span>
-                        </div>
-                        <div class="card_2line v5_margin">
-                            <span class="data_meta_info">2019年12月3日17:30 约拍 图虫认证，微博认证摄影师，悉尼自由摄影师，专攻ins风，日系小清新，复古胶片，私房。新南威尔士大学设...</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
         </div>
+
     </div>
+
     <div class="newcard_container_fix">
 
-
-
-    </div>
-</div>
-<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
-
-<!--<script src="../js/jquery.min.js"></script>
-<script src="../js/core36.min.js"></script>-->
-
-<script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
-<script th:src="@{/js/core36.min.js}" type="text/javascript"></script>
-<script src="../js/core36.min.js"></script>
-<script th:src="@{/js/notlogin.js}"></script>
-
-
-<!--<link rel="stylesheet" href="../css/weui.min.css">-->
-<link th:href="@{/css/weui.min.css}" rel="stylesheet">
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
-        </div>
     </div>
 </div>
 
-<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>
 </body>
 </html>

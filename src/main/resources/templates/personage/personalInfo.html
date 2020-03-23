@@ -4,10 +4,6 @@
 
 <head>
     <meta charset="utf-8">
-    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">-->
     <title>编辑个人资料</title>
     <meta name="description" />
     <meta name="keywords" />
@@ -15,7 +11,6 @@
     <link href="../css/core73.min.css" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/css/weui.min.css}">
     <script th:src="@{/js/jquery.min.js}"></script>
-
 
 </head>
 
@@ -71,6 +66,8 @@
 </style>
 
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
     <div class="container">
         <div class="navbar-header">
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
@@ -81,7 +78,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
                     <span>艺术摄</span>
                 </div>
             </a>
@@ -89,30 +86,26 @@
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" th:href="@{/shoot-user/index}">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/zipai}">自拍</a>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="#">加入会员</a>
-                </li>
             </ul>
         </nav>
     </div>
+
 </header>
+
 <div class="fy-docs-nav-distance"></div>
 <form method="post" action="updateuser">
 <div class="container js_container bottom_menu_margin_plus">
@@ -274,6 +267,8 @@
         </div>
     </div>
 </div>
+
+<script th:src="@{/js/style.js}"></script>
 
 <!-- 图片属性赋值 -->
 <script type="text/javascript">

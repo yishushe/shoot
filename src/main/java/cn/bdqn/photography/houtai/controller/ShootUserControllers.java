@@ -1,5 +1,4 @@
 package cn.bdqn.photography.houtai.controller;
-import cn.bdqn.photography.houtai.entity.ShootUsers;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import org.springframework.stereotype.Controller;
@@ -23,6 +22,8 @@ import java.util.List;
 public class ShootUserControllers {
     @Resource
     private IShootUserService iShootUserService;
+
+    //查询所有
     @RequestMapping("/love")
     public String All(HttpServletRequest ht){
         List<ShootUser> usersList = iShootUserService.list();
@@ -34,21 +35,37 @@ public class ShootUserControllers {
         return "houtai/admin-role-add";
     }
 
-
+    //根据id获取
     @RequestMapping("/updateUser")
     public String updateUser(ShootUser id,Model model){
         ShootUser users = iShootUserService.getById(id);
         model.addAttribute("users",users);
         return "houtai/admin-role-add";
     }
-
+    //更新
     @RequestMapping("/userUpdate")
     public  String userUpdate(ShootUser user){
         boolean shootUser= iShootUserService.updateById(user);
         if (shootUser==true){
-            return "redirect:updateUser?id="+user.getId();
+            return "redirect:love?id="+user.getId();
         }else {
             return "houtai/admin-role-add";
         }
     }
+    //添加
+    @RequestMapping("/insterUser")
+    public String insterUser() {
+        return "houtai/article-list";
+    }
+    //添加
+    @RequestMapping("/add")
+    public String add(ShootUser user){
+        boolean save = iShootUserService.save(user);
+        if (save==true){
+            return "redirect:love";
+        }else {
+            return "houtai/article-list";
+        }
+    }
+
 }
