@@ -32,5 +32,4 @@ public class ShootUserRole implements Serializable {
 
     @TableField("roleId")
     private Long roleId;
-
 }

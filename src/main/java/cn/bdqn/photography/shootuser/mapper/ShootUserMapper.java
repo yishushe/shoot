@@ -1,5 +1,6 @@
 package cn.bdqn.photography.shootuser.mapper;
 
+import cn.bdqn.photography.shootuser.entity.ShootRole;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -24,4 +25,6 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
     ShootUser personageByUserCode(@Param("userCode") String userCode);  //个人信息
 
     ShootUser getByUserId(@Param("id") Long id);   //查询个人信息
+
+    List<ShootUser> getUserAll();//查询所有
 }

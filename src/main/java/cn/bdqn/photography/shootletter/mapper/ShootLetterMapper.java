@@ -51,7 +51,6 @@ public interface ShootLetterMapper extends BaseMapper<ShootLetter> {
      * @return
      */
     List<ShootLetter> getLetterByPutUserIdPut(@Param("putUserId") Long putUserId);
-<<<<<<< HEAD
 
     /**
      *
@@ -60,7 +59,6 @@ public interface ShootLetterMapper extends BaseMapper<ShootLetter> {
      * @return
      */
     Page<ShootLetter> getLetterById(IPage<ShootLetter> shootLetterIPage,int current);
-=======
     /**
      *
      * 分页
@@ -68,5 +66,4 @@ public interface ShootLetterMapper extends BaseMapper<ShootLetter> {
      */
     Page<ShootLetter> getLetterById(IPage<ShootLetter> shootLetterIPage/*, Wrapper<ShootLetter> queryWrapper*/);
     /*,@Param("id") Long id*/
->>>>>>> 59aa669a0946cfe4b46498c5bebc50bc3d72d1f7
 }

@@ -29,4 +29,9 @@ public interface IShootUserService extends IService<ShootUser> {
     ShootUser personageByUserCode(String userCode);   //个人信息
 
     ShootUser findByUserId(Long id);   //查询个人信息
+
+
+    List<ShootUser> getUsersAll();//查询所有
+
+
 }

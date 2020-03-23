@@ -1,5 +1,6 @@
 package cn.bdqn.photography.houtai.controller;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
+import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +29,11 @@ public class ShootUserControllers {
     public String All(HttpServletRequest ht){
         List<ShootUser> usersList = iShootUserService.list();
         ht.setAttribute("info",usersList);
-        return "houtai/admin-role";
+        return "houtai/admin-user";
     }
-    @RequestMapping("/admin-role-add")
+    @RequestMapping("/admin-user-add")
     public String html(){
-        return "houtai/admin-role-add";
+        return "houtai/admin-user-add";
     }
 
     //根据id获取
@@ -40,7 +41,7 @@ public class ShootUserControllers {
     public String updateUser(ShootUser id,Model model){
         ShootUser users = iShootUserService.getById(id);
         model.addAttribute("users",users);
-        return "houtai/admin-role-add";
+        return "houtai/admin-user-add";
     }
     //更新
     @RequestMapping("/userUpdate")
@@ -49,7 +50,7 @@ public class ShootUserControllers {
         if (shootUser==true){
             return "redirect:love?id="+user.getId();
         }else {
-            return "houtai/admin-role-add";
+            return "houtai/admin-user-add";
         }
     }
     //添加
@@ -66,6 +67,15 @@ public class ShootUserControllers {
         }else {
             return "houtai/article-list";
         }
+    }
+
+
+    //查看用户角色信息
+    @RequestMapping("/select")
+    public  String selectAll(HttpServletRequest ht){
+        List<ShootUser> usersList = (List<ShootUser>) iShootUserService.getUsersAll();
+        ht.setAttribute("info",usersList);
+        return "houtai/admin-role";
     }
 
 }

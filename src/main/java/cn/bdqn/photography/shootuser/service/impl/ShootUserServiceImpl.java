@@ -125,4 +125,10 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
         return shootUserMapper.getByUserId(id);
     }
 
+    @Override
+    public List<ShootUser> getUsersAll() {
+        return shootUserMapper.getUserAll();
+    }
+
+
 }
