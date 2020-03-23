@@ -383,12 +383,56 @@
                 </div>
 
                 <!-- 分页 数据 当前页 总页数 -->
+                <!-- 分页 数据 当前页 总页数 -->
                 <tr>
                     <td hidden>
                         <input hidden type="text" th:value="${current}" id="current">
                         <input hidden type="text" th:value="${pages}" id="pages">
                     </td>
                 </tr>
+
+                <!-- 翻页按钮 -->
+                <div class="container pager_container">
+                    <nav>
+                        <ul class="pager">
+                            <li>
+                                <a href="javascript:;" id="prev" aria-label="Previous">
+                                    <span>上一页</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span th:text="'当前页'+${current}+'/'+${pages}"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" id="next" aria-label="Next">
+                                    <span>下一页</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- 分页js -->
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#prev").click(function () {
+                            var current = Number($("#current").val())-1;
+                            location.href = "/shoot-user/index?current=" + current;
+                        });
+                        $("#next").click(function () {
+                            var current = Number($("#current").val())+1;
+                            if(current>=Number($("#pages").val())){
+                                current=Number($("#pages").val());
+                            }
+                            location.href = "/shoot-user/index?current=" + current;
+                        })
+                    })
+                </script>
+
+
+            </div>
 
                 <!-- 翻页按钮 -->
                 <div class="container pager_container">
