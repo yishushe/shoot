@@ -14,5 +14,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface ShootUserMappers extends BaseMapper<ShootUsers> {
 
 
-
 }

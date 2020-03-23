@@ -78,7 +78,13 @@ public class ShootThemeController {
 
         //查询主题名称
        ShootTheme st= iShootThemeService.getById(idd);
+
        model.addAttribute("st",st);
+       if(st!=null){
+           List<ShootInfo> sif= iShootThemeService.selebythemeid(st);
+           model.addAttribute("st",st);
+           model.addAttribute("sif",sif);
+       }
 
         if(city!="" && city!=null){
             city=city+"市";
@@ -112,4 +118,5 @@ public class ShootThemeController {
         model.addAttribute("total",page.getTotal());      //总条数
         return "selfie/topic2";
     }
+
 }

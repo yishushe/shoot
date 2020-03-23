@@ -31,9 +31,13 @@
                       <button class="close"  data-dismiss="modal">&times;</button>
                       <h4 class="modal-title">登录艺术摄账号</h4>
                   </div>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small th:text="${info}" th:if="${info!='密码不正确' and info!='未知账户'}" style="color: green"></small>
-
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small th:text="${info}" style="color: green"></small>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<a href="/shoot-user/registerPhone">手机登录</a>
+                  <small th:if="${info!='密码不正确' and info!='未知账户'}">
+                      &nbsp;&nbsp;&nbsp;&nbsp;<small style="color: green" th:text="${indo}"></small>
+                  </small>
+                  <small th:if="${info=='密码不正确' or info=='未知账户'}">
+                      &nbsp;&nbsp;&nbsp;&nbsp;<small style="color: red" th:text="${info}"></small>
+                  </small>
                   <form action="/shoot-user/sbuLogin" method="post">
                   <div class="modal-body" >
                       <input type="text" name="userCode" placeholder="账号" th:value="${userCode}"><label id="userName"></label><br>

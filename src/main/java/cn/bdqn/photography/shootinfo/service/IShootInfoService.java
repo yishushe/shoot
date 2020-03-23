@@ -38,4 +38,7 @@ public interface IShootInfoService extends IService<ShootInfo> {
        ShootInfo findInfoMessageById(Long id);  //发起约拍信息详情页数据
 
        List<ShootInfo> findInfoByUserId(Long userId);  //查看当前用户约拍信息
+
+       Page<ShootInfo> getInfoByStateId(Long id, int current);//根据状态查询数据
+       List<ShootInfo> getinfobyinfoid(Long id);   //根据infoid查询
 }

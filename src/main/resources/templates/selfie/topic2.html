@@ -248,6 +248,7 @@
                     var id=$("#id").val();
                     $("#prev").click(function () {
                         var current = Number($("#current").val())-1;
+                        location.href = "/shoot-theme/index?current=" + current;
                         location.href = "/shoot-theme/topic2?current=" + current+"&id="+id;
                     });
                     $("#next").click(function () {

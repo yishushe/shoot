@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link th:href="@{/css/core73.min.css}" rel="stylesheet">
+<script th:src="@{/js/jquery.min.js}"></script>
+<body>
+
+<!-- 手机号登录表格 -->
+<table style="margin: auto" border="1" cellpadding="5" cellspacing="5">
+    <tr>
+        <td>手机号</td>
+        <td><input type="text" placeholder="请输入手机号" autocomplete="off" id="memPhone" name="memPhone"></td>
+    </tr>
+    <tr>
+        <td>验证码</td>
+        <td><input type="text" placeholder="请输入验证码" autocomplete="off" id="code" name="code" maxlength="6"></td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="获取验证码" id="sendBtn" onclick="sendCode(this)"></input>
+        </td>
+        <td>
+            <button type="button" id="denglu" style="background: green">登录</button>
+        </td>
+    </tr>
+</table>
+
+<!-- 手机号登录js -->
+<script type="text/javascript">
+    var code;
+    var phone;
+    function sendCode(){
+        var memPhone = $("#memPhone").val();
+        console.log(memPhone.length);
+        if(memPhone == '' || memPhone.length != 11){
+            layer.msg("请输入正确的手机号！");
+            return;
+        }else{
+            $.ajax({
+                type: 'GET',
+                url: '/shoot-user/phone',
+                data: {
+                    phone : memPhone
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if(data!=false){
+                        timer();
+                        code=data.code;
+                        phone=data.phone;
+                    }else{
+                        layer.msg("获取验证码失败");
+                    }
+                },
+                error: function(data) {
+                    layer.msg('连接超时！');
+                },
+            });
+        }
+    }
+
+
+    $("#denglu").click(function () {
+        if(code!=undefined && code!=''){ //验证成功
+             $.post("/shoot-user/byPhone",{"phone":phone},function (data) {
+                if(data!=null){
+                    //查询出数据则执行登录操作
+                    location.href="/shoot-user/sbuLogin?userCode="+data.userCode+"&userPassword="+"123456";
+                 }
+             },"json");
+        }
+    });
+
+    var wait = 60;
+    //倒计时
+    function timer() {
+        if(wait == 0){
+            $("#sendBtn").val("获取验证码");
+            $("#sendBtn").removeAttr("disabled");
+            $("#sendBtn").css("border-color","1e9fff").css("background", "#ffffff").css("cursor", "pointer");
+            wait = 60;
+        }else{
+            $("#sendBtn").attr("disabled","true");
+            $("#sendBtn").css("border-color","fbfbfb").css("background", "#ccc").css("cursor", "not-allowed");
+            $("#sendBtn").val(wait + "秒后重发");
+            wait--;
+            setTimeout(function() {timer()}, 1000);
+        }
+    }
+
+</script>
+
+</body>
+</html>

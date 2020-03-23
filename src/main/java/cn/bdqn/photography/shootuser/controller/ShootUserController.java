@@ -15,8 +15,11 @@ import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import cn.bdqn.photography.utils.IsPath;
 import cn.bdqn.photography.utils.Sex;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zhenzi.sms.ZhenziSmsClient;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -30,10 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -68,40 +68,40 @@ public class ShootUserController {
 
     //主页
     @RequestMapping(value = {"/index"})
-    public String index(Model model,@RequestParam(value = "current",defaultValue = "0",required = false)
-            int current,@RequestParam(value = "city",required = false) String city
-            ,@RequestParam(value = "costId",required = false) Long costId,
-                        @RequestParam(value = "roleId",required = false) Long roleId,
-                        @RequestParam(value = "sex",required = false) Long sex) {
-        if(city!="" && city!=null){
-            city=city+"市";
+    public String index(Model model, @RequestParam(value = "current", defaultValue = "0", required = false)
+            int current, @RequestParam(value = "city", required = false) String city
+            , @RequestParam(value = "costId", required = false) Long costId,
+                        @RequestParam(value = "roleId", required = false) Long roleId,
+                        @RequestParam(value = "sex", required = false) Long sex) {
+        if (city != "" && city != null) {
+            city = city + "市";
         }
         //约拍信息查询
-        IPage<ShootInfo> page= iShootInfoService.findInfo(1l,city,costId,roleId,sex,current);
+        IPage<ShootInfo> page = iShootInfoService.findInfo(1l, city, costId, roleId, sex, current);
 
-        for (ShootInfo info1 : page.getRecords()){
+        for (ShootInfo info1 : page.getRecords()) {
 
-              //设置用户图片路劲
-              info1.getShootUser().setPortyaitl("/images/"+info1.getShootUser().getPortyaitl());
+            //设置用户图片路劲
+            info1.getShootUser().setPortyaitl("/images/" + info1.getShootUser().getPortyaitl());
 
-              Map<String,Object> map=new HashMap<>();
-              map.put("infoId",info1.getId());
-              //根据id查找信息
-              Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
-              if(shootImages!=null && shootImages.size()>0){
-                  for (ShootImages images: shootImages
-                  ) {
-                      //设置info图片路劲
-                      images.setImagesName("/images/"+images.getImagesName());
-                  }
-                  info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
-              }
+            Map<String, Object> map = new HashMap<>();
+            map.put("infoId", info1.getId());
+            //根据id查找信息
+            Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
+            if (shootImages != null && shootImages.size() > 0) {
+                for (ShootImages images : shootImages
+                ) {
+                    //设置info图片路劲
+                    images.setImagesName("/images/" + images.getImagesName());
+                }
+                info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
+            }
         }
 
-        model.addAttribute("info",page.getRecords());     //数据
-        model.addAttribute("current",page.getCurrent());  //当前页
-        model.addAttribute("pages",page.getPages());      //总页数
-        model.addAttribute("total",page.getTotal());      //总条数
+        model.addAttribute("info", page.getRecords());     //数据
+        model.addAttribute("current", page.getCurrent());  //当前页
+        model.addAttribute("pages", page.getPages());      //总页数
+        model.addAttribute("total", page.getTotal());      //总条数
 
         return "index/index";
     }
@@ -109,21 +109,21 @@ public class ShootUserController {
     //到登录页面
     @RequestMapping(value = {"/login"})
     public String logo(@RequestParam(value = "info", required = false)
-                               String info,@RequestParam(value = "userCode",required = false)
-            String userCode, Model model) {
+                               String info, @RequestParam(value = "userCode", required = false)
+                               String userCode, Model model) {
         model.addAttribute("info", info);   //存放注册成功信息
-        model.addAttribute("userCode",userCode);  //userCode编码
+        model.addAttribute("userCode", userCode);  //userCode编码
         return "login";
     }
 
     //登录
     @RequestMapping(value = {"/sbuLogin"})
     public String login(ShootUser user, @RequestParam(value = "rememberMe", required = false)
-            boolean rememberMe,Model model) {
+            boolean rememberMe, Model model) {
         //传入用户编码 密码 将会去验证和认证授权
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getUserPassword());
         //创建当前用户
-        subject=SecurityUtils.getSubject();
+        subject = SecurityUtils.getSubject();
         subject.logout();   //退出登录
         //主体提交登录请求到SecurityManager
         token.setRememberMe(rememberMe);
@@ -133,11 +133,11 @@ public class ShootUserController {
             System.out.println("token:" + token.getPassword());
         } catch (IncorrectCredentialsException ice) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，密码不正确！");
-            model.addAttribute("info","密码不正确");
+            model.addAttribute("info", "密码不正确");
             ice.printStackTrace();
         } catch (UnknownAccountException uae) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，未知账户！");
-            model.addAttribute("info","未知账户");
+            model.addAttribute("info", "未知账户");
         } catch (LockedAccountException lae) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，账户锁定！");
             lae.printStackTrace();
@@ -180,7 +180,7 @@ public class ShootUserController {
         if (insert == true) {
             //重定向 可以自动把参数拼接到url地址上
             attributes.addAttribute("info", "注册成功请输入密码登录");
-            attributes.addAttribute("userCode",user.getUserCode());  //传递userCode到登录页
+            attributes.addAttribute("userCode", user.getUserCode());  //传递userCode到登录页
             return "redirect:login";
         } else {
             model.addAttribute("info", insert);
@@ -213,37 +213,115 @@ public class ShootUserController {
 
     //我的 个人中心 主页
     @RequestMapping(value = "/personage")
-    public String personage(Model model){
-        ShootUser user = (ShootUser)subject.getSession().getAttribute("user");
+    public String personage(Model model) {
+        ShootUser user = (ShootUser) subject.getSession().getAttribute("user");
         ShootUser shootUser = iShootUserService.personageByUserCode(user.getUserCode());
-        model.addAttribute("dizhi",shootUser.getShootAddress().getShootProw().getProw()+
+        model.addAttribute("dizhi", shootUser.getShootAddress().getShootProw().getProw() +
                 shootUser.getShootAddress().getShootCity().getCity());  //地址
-        model.addAttribute("juese",shootUser.getRoles().get(0).getRoleName());  //角色
-        model.addAttribute("member",shootUser.getMember());  //是否有会员
+        model.addAttribute("juese", shootUser.getRoles().get(0).getRoleName());  //角色
+        model.addAttribute("member", shootUser.getMember());  //是否有会员
         return "personage/personage";
     }
 
     //个人中心到发布信息页
     @RequestMapping(value = "/postMessage")
-    public String postMessage(@RequestParam(value = "themName",defaultValue = "发布信息")
-                              String themName,Model model){
+    public String postMessage(@RequestParam(value = "themName", defaultValue = "发布信息")
+                                      String themName, Model model) {
 
         //有主题就查询主题id传过去
-        if(!themName.equals("发布信息")){
-            QueryWrapper<ShootTheme> queryWrapper=new QueryWrapper<>();
-            System.out.println("theme:"+themName);
-            queryWrapper.eq("themName",themName);
+        if (!themName.equals("发布信息")) {
+            QueryWrapper<ShootTheme> queryWrapper = new QueryWrapper<>();
+            System.out.println("theme:" + themName);
+            queryWrapper.eq("themName", themName);
             ShootTheme one = iShootThemeService.getOne(queryWrapper);
-            model.addAttribute("id",one.getId());
+            model.addAttribute("id", one.getId());
         }
-        
-        model.addAttribute("themName",themName);
+
+        model.addAttribute("themName", themName);
         return "personage/postMessage";
     }
 
     @RequestMapping("/ses")
-    public void ses(){
+    public void ses() {
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    }
+
+
+    //绑定手机页
+    @RequestMapping(value = "/personagePhone")
+    public String personagePhone() {
+        return "personage/personagePhone";
+    }
+
+    //短信平台相关参数
+    private String apiUrl = "https://sms_developer.zhenzikj.com";  //平台地址
+    private String appId = "104923";   //id
+    private String appSecret = "d45c2fce-ed04-4ba2-9a7e-670e038374f1";  //实例
+
+    //绑定手机号 获取验证码 成功后 添加到用户中
+    @RequestMapping(value = "/phone")
+    @ResponseBody
+    public Object addPhone(@RequestParam(value = "phone", required = false)
+                                    String phone,HttpSession session) {
+
+        try {
+            JSONObject json = null;
+            //随机生成验证码
+            String code = String.valueOf(new Random().nextInt(999999));
+            //将验证码通过榛子云接口发送至手机
+            ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+            String result = client.send(phone,"您的验证码为:" + code + "，该码有效期为5分钟，该码只能使用一次!");
+            json = JSONObject.parseObject(result);  //装换为object json格式
+            if (json.getIntValue("code") != 0) {//发送短信失败
+                return false;
+            }
+            //将验证码存到session中,同时存入创建时间
+            //以json存放，这里使用的是阿里的fastjson
+            json = new JSONObject();
+            json.put("phone", phone);
+            json.put("code", code);
+            json.put("createTime", System.currentTimeMillis());
+            session.setAttribute("code",json);  //放入session中
+            return json;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //到达手机登录页面
+    @RequestMapping(value = "/registerPhone")
+    public String registerPhone(){
+        return "registerPhone";
+    }
+
+    //更改字段 增加值
+    @RequestMapping(value = "/updatePhone")
+    public String updatePhone(@RequestParam(value = "phone",required = false)
+                              String phone,Model model){
+
+        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        user.setPhone(phone);
+        boolean b = iShootUserService.updateById(user);
+        if(b==true){
+            return "redirect:/shoot-role/personalInfo";
+        }else {
+            model.addAttribute("message","绑定手机号失败");
+            return "personage/personalInfo";
+        }
+
+    }
+
+
+    //根据手机号码查询数据
+    @RequestMapping(value = "/byPhone")
+    @ResponseBody
+    public ShootUser byPhone(@RequestParam(value = "phone",required = false)
+                             String phone){
+        QueryWrapper<ShootUser> query=new QueryWrapper<>();
+        query.eq("phone",phone);
+        ShootUser one = iShootUserService.getOne(query);
+        return one;
     }
 
 }
