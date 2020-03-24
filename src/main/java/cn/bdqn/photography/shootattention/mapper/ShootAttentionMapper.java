@@ -3,7 +3,6 @@ package cn.bdqn.photography.shootattention.mapper;
 import cn.bdqn.photography.shootattention.entity.ShootAttention;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import jdk.internal.dynalink.linker.LinkerServices;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
