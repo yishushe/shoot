@@ -29,7 +29,6 @@ public class ShootInfoControllers {
         /*if(current==0){
             current=1;
         }*/
-        System.out.println("stateidaaaaaaaaaaaaaaaaaaaaaaaa"+id);
         IPage<ShootInfo> page=iShootInfoService.getInfoByStateId(current,id);
         for (ShootInfo info1 : page.getRecords()){
             //设置用户图片路劲

@@ -1,8 +1,11 @@
 package cn.bdqn.photography.shootuser.mapper;
 
+import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,6 +25,16 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
     List<ShootUser> loginByUserCode(@Param("userCode") String userCode);  //登录
 
     ShootUser personageByUserCode(@Param("userCode") String userCode);  //个人信息
+
+    Page<ShootUser> getpermission(IPage<ShootUser> page,@Param("id")Long id);  //查询权限
+
+    Long seleid(@Param("rid")Long id,@Param("pid")Long pid);  //查询是否有此权限
+
+    boolean updp(@Param("rid")Long id,@Param("pid")Long pid,@Param("qxid")Long qxid); //更改权限
+
+    boolean ins(@Param("rid")Long id,@Param("pid")Long pid);//增加权限
+
+    boolean del(@Param("pid")Long id,@Param("rid")Long rid);//根据权限名称删除权限
 
 
 }
