@@ -61,6 +61,9 @@ public class ShiroConfig {
         filterMap.put("/shoot-letter/requestMessage","authc");  //我发起的请求信息页
         filterMap.put("/shoot-attention/attention","authc");    //关注页面
         filterMap.put("/shoot-attention/personalInfo","authc");   //被关注人的主页
+        filterMap.put("/shoot-user/joinMember","authc");          //加入会员页面
+        filterMap.put("/shoot-user/payment","authc");             //选择支付方式页面
+        filterMap.put("/shoot-user/credit","authc");              //提高信用页面
 
         filterMap.put("/shoot-user/about","perms[query]");
 

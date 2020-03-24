@@ -119,7 +119,7 @@ public class ShootAttentionController {
     }
 
 
-    //被关注人的主页
+    //被关注人的主页 即 是个人主页
     @RequestMapping(value = "/personalInfo")
     public String personalInfo(@RequestParam(value = "userId",required = false) Long userId, Model model){
         List<ShootInfo> infoByUserId = iShootInfoService.findInfoByUserId(userId);

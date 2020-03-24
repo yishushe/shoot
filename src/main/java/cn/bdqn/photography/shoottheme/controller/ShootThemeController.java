@@ -7,6 +7,8 @@ import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootinfo.service.IShootInfoService;
 import cn.bdqn.photography.shootletter.entity.ShootLetter;
 import cn.bdqn.photography.shootletter.service.IShootLetterService;
+import cn.bdqn.photography.shootselfie.entity.ShootSelfie;
+import cn.bdqn.photography.shootselfie.service.IShootSelfieService;
 import cn.bdqn.photography.shoottheme.entity.ShootTheme;
 import cn.bdqn.photography.shoottheme.service.IShootThemeService;
 import cn.bdqn.photography.shootuser.entity.ShootRole;
@@ -16,6 +18,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.HashMap;
@@ -50,9 +54,20 @@ public class ShootThemeController {
     @Autowired
     private IShootLetterService iShootLetterService;
 
+    @Autowired
+    private IShootSelfieService iShootSelfieService;
+    
     //自拍页
     @RequestMapping("/zipai")
-    public String zipai(){
+    public String zipai(Model model)
+    {
+        List<ShootSelfie> selfieLIst = iShootSelfieService.findSelfieLIst();
+        for (ShootSelfie selfie:selfieLIst
+             ) {
+             selfie.setImagesName("/images/"+selfie.getImagesName());
+             selfie.getShootUser().setPortyaitl("/images/"+selfie.getShootUser().getPortyaitl());
+        }
+        model.addAttribute("selfie",selfieLIst);
         return "selfie/zipai";
     }
 

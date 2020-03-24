@@ -8,6 +8,7 @@ import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -29,4 +30,6 @@ public interface IShootUserService extends IService<ShootUser> {
     ShootUser personageByUserCode(String userCode);   //个人信息
 
     ShootUser findByUserId(Long id);   //查询个人信息
+
+    int modifyMember(Long id,LocalDate memberDate);  //添加会员
 }

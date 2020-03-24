@@ -41,4 +41,8 @@ public interface IShootInfoService extends IService<ShootInfo> {
 
        Page<ShootInfo> getInfoByStateId(Long id, int current);//根据状态查询数据
        List<ShootInfo> getinfobyinfoid(Long id);   //根据infoid查询
+
+       int modifyStateIdById(Long id,Long stateId);   //根据id更改信息状态
+
 }
+

@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -123,6 +124,11 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     @Override
     public ShootUser findByUserId(Long id) {
         return shootUserMapper.getByUserId(id);
+    }
+
+    @Override
+    public int modifyMember(Long id, LocalDate memberDate) {
+        return shootUserMapper.updateMember(id,memberDate);
     }
 
 }

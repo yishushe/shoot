@@ -92,4 +92,10 @@
        WHERE u.id=#{id}
     </select>
 
+
+    <update id="updateMember">
+        UPDATE shoot_user SET member=1,memberDate=#{memberDate}
+        WHERE id=#{id}
+    </update>
+
 </mapper>

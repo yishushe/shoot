@@ -37,4 +37,6 @@ public interface ShootInfoMapper extends BaseMapper<ShootInfo> {
     Page<ShootInfo> getInfoByStateId(IPage<ShootInfo> page, @Param("stateid") Long id);  //根据状态查信息
 
     List<ShootInfo> getinfobyinfoid(@Param("id") Long id);   //根据infoid查询
+
+    int updateStateIdById(@Param("id") Long id,Long stateId);    //根据id更改状态
 }

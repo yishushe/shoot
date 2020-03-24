@@ -146,5 +146,10 @@ public class ShootInfoServiceImpl extends ServiceImpl<ShootInfoMapper, ShootInfo
         return shootInfoMapper.getinfobyinfoid(id);
     }
 
+    @Override
+    public int modifyStateIdById(Long id,Long stateId) {
+        return shootInfoMapper.updateStateIdById(id,stateId);
+    }
+
 
 }

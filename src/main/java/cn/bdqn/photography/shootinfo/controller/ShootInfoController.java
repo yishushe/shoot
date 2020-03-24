@@ -120,4 +120,22 @@ public class ShootInfoController {
         return "index/about";
     }
 
+
+    //约拍信息状态修改
+    @RequestMapping(value = "/updateState")
+    @ResponseBody
+    public boolean updateState(@RequestParam(value = "id",required = false)
+                              Long id,@RequestParam(value = "stateId",required = false)
+                              Long stateId){
+        int i = iShootInfoService.modifyStateIdById(id, stateId);
+        if(i>0){   //更新成功
+            return true;
+        }else {   //失败
+            return false;
+        }
+    }
+
+
+
 }
+

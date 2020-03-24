@@ -50,6 +50,7 @@
         INNER JOIN shoot_country co ON a.country_id=co.id
         inner join shoot_theme th on th.id=i.themeId
         where th.id=#{themeid}
+        and i.stateId=2
         <if test="city!='' and city!=null">
 			and c.city=#{city}
 		</if>

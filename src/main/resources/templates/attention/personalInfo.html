@@ -87,7 +87,7 @@
             </div>
 
             <!-- 手机验证 -->
-            <div class="v10_margin">
+            <div class="v10_margin" th:if="${info.get(0).shootUser.phone!='' and info.get(0).shootUser.phone!=null}">
                 <span class="label label-warning">手机验证</span>
             </div>
 

@@ -5,6 +5,7 @@ import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -24,4 +25,17 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
     ShootUser personageByUserCode(@Param("userCode") String userCode);  //个人信息
 
     ShootUser getByUserId(@Param("id") Long id);   //查询个人信息
+
+
+    /**
+     * 添加会员
+     * @param id
+     * @param memberDate
+     * @return
+     */
+    int updateMember(@Param("id") Long id,
+                     @Param("memberDate")LocalDate memberDate);
+
+
 }
+

@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -55,6 +56,9 @@ public class ShootUser implements Serializable {
 
     @TableField("member")
     private Long member;
+
+    @TableField("memberDate")
+    private LocalDate memberDate;
 
     @TableField("securityMoney")
     private Float securityMoney;

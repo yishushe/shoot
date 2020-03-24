@@ -53,7 +53,7 @@
         INNER JOIN shoot_city c ON a.city_id=c.id
         INNER JOIN shoot_country co ON a.country_id=co.id
         <where>
-			i.stateId=1
+			i.stateId=2
 			<if test="city!='' and city!=null">
 				and c.city=#{city}
 			</if>
@@ -108,7 +108,7 @@
 		</association>
 	</resultMap>
 	<select id="getInfoById" resultMap="info02">
-		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,
+		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,u.phone,
 		t.id t_id,t.typeName,st.id st_id,st.costName,r.id r_id,r.roleName,
 		a.id a_id,p.id p_id,p.prow,c.id c_id,c.city,co.id co_id,co.country,
 		sty.id sty_id,yl.id yl_id,yl.styleName,te.id te_id
@@ -218,7 +218,6 @@
     WHERE u.id=#{userId}
 	</select>
 
-
 	<!-- 根据主题id 数据查询 -->
 	<resultMap id="infostat" type="ShootInfo">
 		<id property="id" column="id"></id>
@@ -272,6 +271,7 @@
 			and i.stateId=#{stateid}
 		</if>
 	</select>
+
 	<!--根据约拍信息id查询-->
 	<resultMap id="infoid" type="ShootInfo">
 		<id property="id" column="id"></id>
@@ -321,5 +321,11 @@
 		INNER JOIN shoot_state stt ON i.stateid=stt.id
 		WHERE i.id=#{id}
 	</select>
+
+	<!-- 根据约拍信息id 更改状态 -->
+	<update id="updateStateIdById">
+         UPDATE shoot_info SET stateId=#{stateId}
+         WHERE id=#{id}
+	</update>
 
 </mapper>
