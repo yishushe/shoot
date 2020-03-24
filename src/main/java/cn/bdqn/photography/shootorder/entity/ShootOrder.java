@@ -1,4 +1,4 @@
-package cn.bdqn.photography.shootOrder.entity;
+package cn.bdqn.photography.shootorder.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

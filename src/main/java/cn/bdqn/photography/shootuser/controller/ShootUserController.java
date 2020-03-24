@@ -4,8 +4,8 @@ import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
 import cn.bdqn.photography.config.AliPayConfig;
-import cn.bdqn.photography.shootOrder.entity.ShootOrder;
-import cn.bdqn.photography.shootOrder.service.IShootOrderService;
+import cn.bdqn.photography.shootorder.entity.ShootOrder;
+import cn.bdqn.photography.shootorder.service.IShootOrderService;
 import cn.bdqn.photography.shootimages.entity.ShootImages;
 import cn.bdqn.photography.shootimages.service.IShootImagesService;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
@@ -16,7 +16,6 @@ import cn.bdqn.photography.shootuser.entity.ShootAddress;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
-import cn.bdqn.photography.utils.Day;
 import cn.bdqn.photography.utils.IsPath;
 import cn.bdqn.photography.utils.Round;
 import cn.bdqn.photography.utils.Sex;
@@ -340,7 +339,6 @@ public class ShootUserController {
         ShootUser one = iShootUserService.getOne(query);
         return one;
     }
-
 
     //加入会员页面
     @RequestMapping(value = "/joinMember")

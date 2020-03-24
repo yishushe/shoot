@@ -1,6 +1,6 @@
-package cn.bdqn.photography.shootOrder.mapper;
+package cn.bdqn.photography.shootorder.mapper;
 
-import cn.bdqn.photography.shootOrder.entity.ShootOrder;
+import cn.bdqn.photography.shootorder.entity.ShootOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 public interface ShootOrderMapper extends BaseMapper<ShootOrder> {
