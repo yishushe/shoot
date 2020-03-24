@@ -218,7 +218,11 @@
     WHERE u.id=#{userId}
 	</select>
 
+
 	<!-- 根据主题id 数据查询 -->
+
+	<!--000000000000000000000000000000000000000000000000根据staticid查询-->
+
 	<resultMap id="infostat" type="ShootInfo">
 		<id property="id" column="id"></id>
 		<association property="shootUser" javaType="ShootUser">
@@ -250,7 +254,7 @@
 		</association>
 
 	</resultMap>
-	<select id="getInfoByStateId" resultMap="infostat">
+	<select id="getinfobystateid" resultMap="infostat">
 		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,
 		t.id t_id,t.typeName,st.id st_id,st.costName,r.id r_id,r.roleName,
 		a.id a_id,p.id p_id,p.prow,c.id c_id,c.city,co.id co_id,co.country,
@@ -267,9 +271,10 @@
 		INNER JOIN shoot_country co ON a.country_id=co.id
 		INNER JOIN shoot_state stt ON i.stateid=stt.id
 		WHERE 1=1
-		<if test="stateid!='' and stateid!=null">
-			and i.stateId=#{stateid}
+		<if test="id!=null and id!=''">
+			and i.stateId=#{id}
 		</if>
+		ORDER BY i.id DESC
 	</select>
 
 	<!--根据约拍信息id查询-->

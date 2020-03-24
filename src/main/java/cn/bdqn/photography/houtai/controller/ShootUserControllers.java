@@ -46,7 +46,7 @@ public class ShootUserControllers {
     public  String userUpdate(ShootUser user){
         boolean shootUser= iShootUserService.updateById(user);
         if (shootUser==true){
-            return "redirect:updateUser?id="+user.getId();
+            return "redirect:love";
         }else {
             return "houtai/admin-role-add";
         }

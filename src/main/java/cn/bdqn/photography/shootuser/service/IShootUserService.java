@@ -6,7 +6,10 @@ import cn.bdqn.photography.common.entity.ShootProw;
 import cn.bdqn.photography.shootuser.entity.ShootAddress;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,7 +32,19 @@ public interface IShootUserService extends IService<ShootUser> {
 
     ShootUser personageByUserCode(String userCode);   //个人信息
 
+
     ShootUser findByUserId(Long id);   //查询个人信息
 
     int modifyMember(Long id,LocalDate memberDate);  //添加会员
+
+    Page<ShootUser> getpermission(int current,Long id);  //查询权限
+
+    Long seleid(Long id,Long pid);  //查询是否有此权限
+
+    boolean updp(Long id,Long pid,Long qxid); //更改权限
+
+    boolean ins(Long id,Long pid);//增加权限
+
+    boolean del(Long id,Long rid);//根据权限名称删除权限
+
 }

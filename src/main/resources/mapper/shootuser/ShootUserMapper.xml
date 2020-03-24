@@ -62,6 +62,7 @@
     </select>
 
 
+
     <resultMap id="user01" type="ShootUser">
         <id property="id" column="id"></id>
         <association property="shootAddress" javaType="ShootAddress">
@@ -98,4 +99,54 @@
         WHERE id=#{id}
     </update>
 
+    <!--000000000000000000000000000查询权限-->
+    <resultMap id="per" type="ShootUser">
+        <id property="id" column="id"></id>
+        <result property="userName" column="userName"></result>
+        <collection property="roles" ofType="ShootRole" resultMap="roles"></collection>
+    </resultMap>
+    <resultMap id="roles" type="ShootRole">
+        <id property="id" column="r_id"></id>
+        <result property="roleName" column="roleName"></result>
+        <collection property="permissions" ofType="ShootPermission" resultMap="permissionss"></collection>
+    </resultMap>
+    <resultMap id="permissionss" type="ShootPermission">
+        <id property="id" column="pe_id"></id>
+        <result property="permissionName" column="permissionName"></result>
+    </resultMap>
+
+    <select id="getpermission" resultMap="per">
+       SELECT u.*,r.id r_id,r.roleName,pe.id pe_id,pe.permissionName
+        FROM shoot_user u
+        INNER JOIN shoot_user_role ur ON u.id=ur.userId
+        INNER JOIN shoot_role r ON ur.roleId=r.id
+        INNER JOIN shoot_role_permission rp ON r.id=rp.roleId
+        INNER JOIN shoot_permission pe ON rp.PermissionId=pe.id
+        where 1=1
+        <if test="id!='' and id!=null">
+            and ur.userid=#{id}
+        </if>
+    </select>
+    <!--000000000000000000000000000000000000000根据id查询权限-->
+<select id="seleid" resultType="Long">
+     SELECT COUNT(1) FROM shoot_user u
+        INNER JOIN shoot_user_role ur ON u.id=ur.userId
+        INNER JOIN shoot_role r ON ur.roleId=r.id
+        INNER JOIN shoot_role_permission rp ON r.id=rp.roleId
+        INNER JOIN shoot_permission pe ON rp.PermissionId=pe.id
+        WHERE rp.roleid=#{rid} AND rp.permissionid=#{pid}
+</select>
+    <!--00000000000000000000000000000增加权限-->
+    <insert id="ins">
+        INSERT INTO shoot.shoot_role_permission ( roleId, PermissionId) VALUES ( #{rid}, #{pid});
+    </insert>
+<!--000000000000000000000000修改权限-->
+    <update id="updp">
+        UPDATE shoot.shoot_role_permission SET PermissionId = #{pid} WHERE roleid = #{rid} and permissionid=#{qxid};
+    </update>
+    <!--0000000000000000000000000000删除权限-->
+    <delete id="del">
+        DELETE FROM shoot.shoot_role_permission WHERE permissionid = #{pid} AND roleid=#{rid};
+    </delete>
 </mapper>
+
