@@ -47,4 +47,12 @@ public interface IShootUserService extends IService<ShootUser> {
 
     boolean del(Long id,Long rid);//根据权限名称删除权限
 
+    /**
+     * 根据 id 添加 保证金
+     * @param id
+     * @param securityMoney
+     * @return
+     */
+    int modifySecurityMoney(Long id,Float securityMoney);
+
 }

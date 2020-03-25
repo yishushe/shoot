@@ -103,19 +103,23 @@
             </div>
         </div>
         <div class="data_post_cell">
+            <div th:if="${session.user.securityMoney!=0 and session.user.securityMoney>0}">
+                <span class="data_meta_text">你已存入保证金</span>
+            </div>
+            <div th:if="${session.user.securityMoney=='' or session.user.securityMoney<1}">
             <span class="data_meta_text">您还没有存入信用保证金</span>
             <div class="v5_margin">
                 <span class="money_amount">保证金有效金额为200元</span>
             </div>
             <div class="v15_margin">
-                <a class="btn btn-sm btn-default" href="/account/paysecuritydefault?returnUrl=%2Fu%2Faccount">立即存入</a>
+                    <a class="btn btn-sm btn-default" th:href="@{/shoot-user/payment(price=200,subject='保证金')}">立即存入</a>
+            </div>
             </div>
         </div>
     </div>
 
     <div class="v20_margin"></div>
 </div>
-
 
 </body>
 </html>

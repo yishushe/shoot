@@ -352,10 +352,10 @@ public class ShootUserController {
                                   Float price,
             @RequestParam(value = "subject",required = false)
             String subject, Model model) {
-        String qixian;
+        String qixian="";
         if (price == 50) {
             qixian = "月";
-        } else {
+        } else if(price==300){
             qixian = "年";
         }
         model.addAttribute("subject",subject);  //商品名称
@@ -374,7 +374,7 @@ public class ShootUserController {
                                    String amount,@RequestParam(value = "subject",required = false)
                          String subject,@RequestParam(value = "body",required = false)
                          String body,HttpSession session,
-                         HttpServletResponse response, HttpServletRequest request) throws Exception {
+                         HttpServletResponse response) throws Exception {
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.app_id, AliPayConfig.merchant_private_key, "json", AliPayConfig.charset, AliPayConfig.alipay_public_key, AliPayConfig.sign_type);
 
@@ -444,7 +444,7 @@ public class ShootUserController {
     }
 
     //支付成功之后回调函数
-    @GetMapping("/alipay/return_url")
+    @RequestMapping("/alipay/return_url")
     public String returnAlipay(HttpSession session) {
         Session session1 = SecurityUtils.getSubject().getSession();
         ShootOrder order =(ShootOrder) session.getAttribute("order");
@@ -467,7 +467,11 @@ public class ShootUserController {
                     localDate=LocalDate.now().plusYears(1);
                 }
             }
-            iShootUserService.modifyMember(order.getUserId(),localDate);
+            if(localDate!=null){   //会员支付操作
+                iShootUserService.modifyMember(order.getUserId(),localDate);
+            }else {    //保证金支付操作
+                iShootUserService.modifySecurityMoney(order.getUserId(),order.getTotalAmount());
+            }
             session.removeAttribute("order");   //删除订单信息
             List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
             session1.setAttribute("user",userByUserCode.get(0));   //更改之后重新查询当前user信息

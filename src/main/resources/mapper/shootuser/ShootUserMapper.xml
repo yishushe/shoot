@@ -148,5 +148,12 @@
     <delete id="del">
         DELETE FROM shoot.shoot_role_permission WHERE permissionid = #{pid} AND roleid=#{rid};
     </delete>
+
+    <!-- 根据id 添加保证金 -->
+    <insert id="updateSecurityMoney">
+        UPDATE shoot_user SET securityMoney=#{securityMoney}
+        WHERE id=#{id}
+    </insert>
+
 </mapper>
 

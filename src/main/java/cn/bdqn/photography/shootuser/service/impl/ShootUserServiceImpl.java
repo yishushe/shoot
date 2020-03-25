@@ -158,7 +158,11 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     @Override
     public boolean del(Long id,Long rid) {
         return shootUserMapper.del(id,rid);
+    }
 
+    @Override
+    public int modifySecurityMoney(Long id, Float securityMoney) {
+        return shootUserMapper.updateSecurityMoney(id,securityMoney);
     }
 
 }

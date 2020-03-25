@@ -126,7 +126,6 @@ public class ShootLetterController {
         letter.setPutUserId((Long) SecurityUtils.getSubject().getSession().getAttribute("sendUserId"));
         ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
         letter.setSendUserId(user.getId());
-        System.out.println("ddddddddddddddddddddddddddddddddddddd");
         boolean save = iShootLetterService.save(letter);  //存入信息
         return save;
     }
@@ -148,6 +147,43 @@ public class ShootLetterController {
 
         model.addAttribute("letter",letterByPutUserId);
         return "put/requestMessage";
+    }
+
+
+    //我接收的约拍信息  页面
+    @RequestMapping(value = "/responseMessage")
+    public String responseMessage(Model model){
+        ShootUser user = (ShootUser)SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        List<ShootLetter> letterByPutUserId = iShootLetterService.findLetterByPutUserId(user.getId());
+
+        for (ShootLetter letter: letterByPutUserId
+        ) {
+            //设置头像路劲
+            letter.getShootUser().setPortyaitl("/images/"+letter.getShootUser().getPortyaitl());
+        }
+
+        model.addAttribute("size",letterByPutUserId.size());
+        model.addAttribute("letter",letterByPutUserId);
+        return "put/responseMessage";
+    }
+
+    //我收到的请求全部
+    @RequestMapping(value = "/incomingrequests")
+    public String incomingrequests(Model model){
+        ShootUser user = (ShootUser)SecurityUtils.getSubject().getSession().getAttribute("user");
+
+        List<ShootLetter> letterByPutUserId = iShootLetterService.findLetterByPutUserId(user.getId());
+
+        for (ShootLetter letter: letterByPutUserId
+        ) {
+            //设置头像路劲
+            letter.getShootUser().setPortyaitl("/images/"+letter.getShootUser().getPortyaitl());
+        }
+
+        model.addAttribute("size",letterByPutUserId.size());
+        model.addAttribute("letter",letterByPutUserId);
+        return "put/incomingrequests";
     }
 
 }
