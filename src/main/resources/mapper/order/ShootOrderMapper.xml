@@ -3,17 +3,34 @@
 <mapper namespace="cn.bdqn.photography.shootorder.mapper.ShootOrderMapper">
     <resultMap id="ord" type="ShootOrder">
         <id property="id" column="id"></id>
+        <result property="totalAmount" column="toal" javaType="Float"></result>
         <association property="shootUser" javaType="ShootUser">
             <id property="id" column="su_id"></id>
         </association>
     </resultMap>
 <select id="showallorder" resultMap="ord">
-    SELECT su.id su_id,su.userCode,so.* FROM shoot_order so
+    SELECT su.id su_id,su.userCode,so.id,so.outTradeNo,so.subject,so.body,so.userId,so.creationDate,so.totalAmount toal FROM shoot_order so
 INNER JOIN shoot_user su ON so.userId=su.id
 WHERE 1=1
 <if test="uid!='' and uid!=null">   /*此处id为usercode*/
     and su.userCode=#{uid}
 </if>
 </select>
+    <!--000000000000000000000000000000根据当月消费金额查询-->
+    <resultMap id="ordd" type="ShootOrder">
+        <id property="id" column="id"></id>
+        <result property="toalyue" column="yuemoney" javaType="Float"></result>
+        <result property="totalAmount" column="toals" javaType="Float"></result>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="su_id"></id>
+        </association>
+    </resultMap>
+    <select id="showorderby" resultMap="ordd">
+        SELECT su.id su_id,su.userCode,so.id,so.outTradeNo,so.subject,so.body,so.userId,so.creationDate,so.totalAmount toals,so.totalAmount yuemoney FROM shoot_order so
+        INNER JOIN shoot_user su ON so.userId=su.id
+        WHERE 1=1
+        AND DATE_FORMAT( so.creationDate, '%Y%m' ) = DATE_FORMAT(CURDATE( ) , '%Y%m' )
+    </select>
+
 </mapper>
 

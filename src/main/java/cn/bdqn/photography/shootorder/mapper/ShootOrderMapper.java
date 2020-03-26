@@ -9,5 +9,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ShootOrderMapper extends BaseMapper<ShootOrder> {
-Page<ShootOrder> showallorder(IPage<ShootOrder> iPage, @Param("uid") String id);
+List<ShootOrder> showallorder(@Param("uid") String id);
+List<ShootOrder> showorderby();
 }

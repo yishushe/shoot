@@ -18,9 +18,13 @@ public class ShootOrderServiceImpl extends ServiceImpl<ShootOrderMapper, ShootOr
     private ShootOrderMapper shootOrderMapper;
 
     @Override
-    public Page<ShootOrder> showallorder(int current,String id) {
-        IPage<ShootOrder> page=new Page<>(current,5);
-        Page<ShootOrder> infoByThemeId = shootOrderMapper.showallorder(page,id);
+    public List<ShootOrder> showallorder(String id) {
+        List<ShootOrder> infoByThemeId = shootOrderMapper.showallorder(id);
         return infoByThemeId;
+    }
+
+    @Override
+    public List<ShootOrder> showorderby() {
+        return shootOrderMapper.showorderby();
     }
 }
