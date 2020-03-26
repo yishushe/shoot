@@ -152,5 +152,10 @@ public class ShootInfoServiceImpl extends ServiceImpl<ShootInfoMapper, ShootInfo
         return shootInfoMapper.updateStateIdById(id,stateId);
     }
 
+    @Override
+    public boolean insertinform(String cause, Long pid, LocalDate date) {
+        return shootInfoMapper.insertinform(cause,pid,date);
+    }
+
 
 }

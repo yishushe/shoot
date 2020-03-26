@@ -148,5 +148,6 @@
     <delete id="del">
         DELETE FROM shoot.shoot_role_permission WHERE permissionid = #{pid} AND roleid=#{rid};
     </delete>
+
 </mapper>
 

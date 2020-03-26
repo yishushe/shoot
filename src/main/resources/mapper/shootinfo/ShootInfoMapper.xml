@@ -332,5 +332,8 @@
          UPDATE shoot_info SET stateId=#{stateId}
          WHERE id=#{id}
 	</update>
-
+	<!--0000000000000插入inform表-->
+	<insert id="insertinform">
+		INSERT INTO shoot.shoot_inform (content, putUserId, creationDate) VALUES (#{cause},#{pid},#{date});
+	</insert>
 </mapper>

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -90,6 +92,15 @@ public class ShootInfoControllers {
     public String updatebyinfoid(Long aa,String sele,String tj,String cause){
         System.out.println("原因"+cause+"aa"+aa);
         boolean b=false;
+        if(tj.equals("发送")){
+            LocalDate now = LocalDate.now();
+        boolean bb= iShootInfoService.insertinform(cause,aa,now);
+        if(bb==true){
+            return "redirect:shenhe?id=1&current=1";
+        }else{
+            return "houtai/sb";
+        }
+        }
         if(tj.equals("提交")){
             Long stateid=Long.parseLong(sele);
             ShootInfo s= iShootInfoService.findInfoMessageById(aa);

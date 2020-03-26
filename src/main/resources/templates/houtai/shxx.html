@@ -106,7 +106,7 @@
 
 <!--_menu 作为公共模版分离出去-->
 <aside class="Hui-aside">
-	
+
 	<div class="menu_dropdown bk_2">
 		<dl id="menu-article">
 			<dt class="selected"><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
@@ -190,7 +190,10 @@
 						<a href="admin-role.html" title="用户管理">用户信息管理</a>
 					</li>
 					<li>
-						<a href="admin-permission.html" title="权限管理">权限管理</a>
+						<a th:href="@{/shoot-permission/permission(id=1,current=1)}" title="权限管理">权限管理</a>
+					</li>
+					<li>
+						<a th:href="@{/shootstaticsh/shenhe/(current=1)}" title="权限管理">审核管理</a>
 					</li>
 				</ul>
 			</dd>

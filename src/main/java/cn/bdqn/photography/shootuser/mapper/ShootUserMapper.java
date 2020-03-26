@@ -1,6 +1,7 @@
 package cn.bdqn.photography.shootuser.mapper;
 
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
+import cn.bdqn.photography.shootorder.entity.ShootOrder;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

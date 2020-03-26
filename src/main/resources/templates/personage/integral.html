@@ -64,6 +64,7 @@
         <div class="data_post_cell" style="min-height:50px;">
             <span class="data_meta_info">我的积分：</span>
             <span id="user_points" class="money_amount" name="integral" th:text="${integra}"></span>
+            <input id="zt" hidden th:value="${zt}"/>
             <input type="submit" id="qd" onclick="" value="点击签到"/>
         </div>
         <div class="data_post_cell" style="min-height:50px;">
@@ -71,16 +72,30 @@
             <div class="v10_margin">签到可以获取一次额外的约拍次数</div>
             <div class="v10_margin">
                 <p id="marked_title" class="data_meta_info" style="" th:text="${yqd}"></p>
-                <!--<a id="mark_button" class="btn btn-sm btn-danger" style="display:none;" href="javascript:void(0);">点击签到</a>-->
             </div>
         </div>
     </div>
 </div>
 </form>
-
+<script type="text/javascript">
+    var zt=$("#zt").val();
+    if(zt!=null && zt==8){
+        $("#marked_title").text("您还未签到");
+    }else{
+        $("#marked_title").text("您已签到")
+        $(this).attr({"disabled":"disabled"});
+    }
+    var bankCard1=$("#marked_title").text();
+    if(bankCard1 =="您已签到"){
+        $("#qd").click(function () {
+            alert("您已签到！")
+            $(this).attr({"disabled":"disabled"});
+        })
+    }
+</script>
 <script th:src="@{/js/style.js}"></script>
 
-<div id="toast_message" class="toast_message_fixed" style="display: none;">
+<!--<div id="toast_message" class="toast_message_fixed" style="display: none;">
     <div class="weui_toast weui_toast_fixed">
         <p id="toast_message_text" class="weui_toast_content weui_toast_content_fixed">
         </p>
@@ -97,45 +112,9 @@
     function hideToastMessage(text) {
         $('#toast_message').hide();
     }
-</script>
-
-
-
-
-<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
-
-<script src="../js/core36.min.js"></script>
-
-
-<link rel="stylesheet" href="/content/resources/weui.min.css">
-<script type="text/javascript">
-    function executeMarkProc() { $.ajax({ url: siteRoot + "user/mark", type: "POST", contentType: "application/json; charset=utf-8", success: function (t) { t.success ? (showToastMessage("签到成功"), $("#mark_button").hide(), $("#marked_title").show(), $("#user_points").text(t.newPoints)) : showToastMessage(t.error) }, error: function () { alert("操作失败！请稍后再试！") } }) } $(function () { $("#mark_button").click(function (t) { executeMarkProc() }) });
-</script>
-
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
-        </div>
-    </div>
-</div>
+</script>-->
 
 <script th:src="@{/js/notlogin.js}"></script>
-<!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
-<script type="text/javascript">
-    var now;
-    var now2=
-    function getNow(s) {
-        return s < 10 ? '0' + s: s;
-    }
-    var bankCard1=$("#marked_title").text();
-        if(bankCard1 =="您已签到"){
-            $("#qd").click(function () {
-                alert("您已签到！")
-                $(this).attr({"disabled":"disabled"});
-            })
-        }
-</script>
+
 </body>
 </html>
