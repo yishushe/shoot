@@ -90,6 +90,7 @@ public class ShootInfoController {
 
         ShootInfo infoById = iShootInfoService.findInfoById(id);
 
+
         //用户头像路劲设置
         infoById.getShootUser().setPortyaitl("/images/"+infoById.getShootUser().getPortyaitl());
 
