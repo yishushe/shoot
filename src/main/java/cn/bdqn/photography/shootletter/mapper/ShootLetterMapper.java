@@ -48,4 +48,6 @@ public interface ShootLetterMapper extends BaseMapper<ShootLetter> {
      * @return
      */
     List<ShootLetter> getLetterByPutUserIdPut(@Param("putUserId") Long putUserId);
+
+
 }

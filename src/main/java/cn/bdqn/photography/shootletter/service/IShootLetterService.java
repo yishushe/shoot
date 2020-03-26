@@ -2,6 +2,7 @@ package cn.bdqn.photography.shootletter.service;
 
 import cn.bdqn.photography.shootletter.entity.ShootLetter;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -45,5 +46,7 @@ public interface IShootLetterService extends IService<ShootLetter> {
      * @return
      */
     List<ShootLetter> findLetterByPutUserIdPut(Long putUserId);
+
+
 
 }

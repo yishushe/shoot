@@ -1,5 +1,6 @@
 package cn.bdqn.photography.shootorder.entity;
 
+import cn.bdqn.photography.shootuser.entity.ShootUser;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -37,5 +38,8 @@ public class ShootOrder implements Serializable {
 
     @TableField("creationDate")
     private LocalDateTime creationDate;
+
+    @TableField(exist = false)
+    private ShootUser shootUser;
 
 }

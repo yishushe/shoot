@@ -7,58 +7,53 @@
 </head>
 <body>
 <form action="/shoot-permission/ins" method="post">
-    用户昵称:<input type="text" th:value="${info.get(0).getUserCode()}"/><br>
+    用户昵称:<input type="text" th:value="${info.get(0).getUserCode()}"/><br><br>
     用户权限:<table th:each="per,index: ${info}">
 <tr class="text-c">
     <td th:text="${per.id}"></td>
     <input th:value="${per.id}" hidden name="pid"/>
     <td th:text="${per.UserName}"></td>
     <td th:each="ro: ${per.Roles}">
-        <input th:value="${ro.id}" hidden name="rid"/>
+        <input th:value="${ro.id}" hidden id="rid" name="rid"/>
         <select name="select" >
             <p th:each="pp:${ro.Permissions}"><option th:value="${pp.id}" th:text="${pp.PermissionName}"></option>
             </p>
         </select>
     </td>
 </tr>
-</table>
+</table><br><br>
  权限: <select name="sele1">
         <option value="1">query</option>
         <option value="2">add</option>
         <option value="3">update</option>
         <option value="4">delete</option>
-    </select><input name="zzjj" type="submit" value="修改"/><br>
-<!--    <input hidden id="rriidd" name="rid"/>-->
-        <select name="sele">
+    </select><input name="zzjj" type="submit" value="修改"/><br><br>
+权限:        <select name="sele">
             <option value="1">query</option>
             <option value="2">add</option>
             <option value="3">update</option>
             <option value="4">delete</option>
         </select>
-        <input name="zzjj" type="submit" value="增加"/><br>
-    权限: <select name="select2">
+        <input name="zzjj" type="submit" value="增加"/><br><br>
+    权限: <select name="select2" id="seqx">
     <option value="1">query</option>
     <option value="2">add</option>
     <option value="3">update</option>
     <option value="4">delete</option>
-</select><input name="zzjj" type="submit" value="删除"/>
+</select><input name="zzjj" type="submit" id="sc" onclick="openResult()" value="删除"/>
 </form>
 </body>
-<!--<script>
-    function onform() {
-        var pidd=$(".piid").val();
-        $.ajax({
-            type:"POST",
-            url:"/shoot-permission/ins",
-            data:{pid:pidd},
-            dataType:JSON,
-            success:function () {
-                alert("成功提交")
-            }
-
-        })
+<script>
+    function openResult(){    /* 绑定事件 */
+        var r = confirm("您确定要删除吗？")
+        if (r == true) {
+            var myselect=document.getElementById("seqx");
+            var rid=document.getElementById("rid");
+            var index=myselect.selectedIndex;
+            location.href = "/shoot-permission/ins?zzjj='删除'&rid="+rid+'&select2='+index;
+        } else {
+        return false;
+        }
     }
-
-
-</script>-->
+</script>
 </html>

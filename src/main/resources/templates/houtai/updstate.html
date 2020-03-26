@@ -7,7 +7,7 @@
 </head>
 <body>
 <div>
-    <form action="wupdatebyinfoid" method="post">
+    <form action="wupdatebyinfoid" method="post" onsubmit="return ooo()">
         <p th:each="uu,index: ${im}">
             <input type="text" th:value="${uu.Content}"/>
             <input type="text" th:value="${uu.Price}"/>
@@ -19,7 +19,7 @@
             <input type="text" th:value="${uu.ShootCost.CostName}"/>
             <input type="text" th:value="${city}"/><br>
             <img th:width="100" th:height="90" th:src="${uu.ShootUser.Portyaitl}">
-        </p>
+        </p>输入更改的状态:
         <select name="sele" id="sss">
             <option value="1">审核</option>
             <option value="2">发布</option>
@@ -31,13 +31,26 @@
         </select>
         <input id="sf" style="display:none" th:value="${im.get(0).getShootState().getId()}"/>
         <input style="display: none" name="aa" th:value="${im.get(0).getId()}">
-        <input type="submit" value="提交"/>
-        <input type="button" class="btn"  value="返回" onclick="javascript:history.go(-1);"/>
+        <input type="submit" name="tj" value="提交"/>
+        <input type="button" class="btn"  value="返回" onclick="javascript:history.go(-1);"/><br>
+        输入审核不通过的原因:<br>
+        <textarea id="ca" name="cause" style="width:200px;height:80px;"></textarea>
+        <input onclick="ooo()" id="fs" name="tj" type="submit" value="发送"/>
     </form>
     </div>
 <script>
     var sf=$("#sf").val();
     $("#sss").get(0).selectedIndex = sf;
+    function ooo() {
+        var str=document.getElementById("ca").value.replace(/(^[\s\t\xa0\u3000]+)|([\u3000\xa0\s\t]+$)/g, "");//顺便去除空格
+        if(str=="") {
+            alert("必须输入审核不通过的原因！")
+            return false;
+        }
+        /*if (str.length<0) {
+            alert("必须输入审核不通过的原因！")
+        }*/
+    }
 </script>
 </body>
 </html>
