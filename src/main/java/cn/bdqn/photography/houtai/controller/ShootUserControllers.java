@@ -1,6 +1,8 @@
 package cn.bdqn.photography.houtai.controller;
+import cn.bdqn.photography.shootuser.entity.ShootRole;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
+import cn.bdqn.photography.shootuser.service.IShootUserRoleService;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import java.util.List;
 public class ShootUserControllers {
     @Resource
     private IShootUserService iShootUserService;
+    @Resource
+    private IShootUserRoleService iShootUserRoleService;
 
     //查询所有
     @RequestMapping("/love")
@@ -47,6 +51,7 @@ public class ShootUserControllers {
     @RequestMapping("/userUpdate")
     public  String userUpdate(ShootUser user){
         boolean shootUser= iShootUserService.updateById(user);
+
         if (shootUser==true){
             return "redirect:love?id="+user.getId();
         }else {
@@ -76,6 +81,34 @@ public class ShootUserControllers {
         List<ShootUser> usersList = (List<ShootUser>) iShootUserService.getUsersAll();
         ht.setAttribute("info",usersList);
         return "houtai/admin-role";
+    }
+
+    //修改角色信息
+    @RequestMapping("/updateUsers")
+    public String updateUsers(Model model,ShootUserRole id){
+        ShootUserRole shootUserRole = iShootUserRoleService.getById(id);
+        ShootUser users = iShootUserService.getById(id);
+        model.addAttribute("user",shootUserRole);
+        model.addAttribute("users",users);
+        return "houtai/admin-role-add";
+    }
+    //更新
+    @RequestMapping("/usersUpdate")
+    public  String usersUpdate(ShootUser user,long RoleId ,long userId,long rolesId){
+        ShootUserRole role = new ShootUserRole();
+        role.setId(RoleId);
+        role.setUserId(userId);
+        role.setRoleId(rolesId);
+        System.out.println(rolesId);
+        iShootUserRoleService.updateById(role);
+
+        boolean shootUser= iShootUserService.updateById(user);
+        System.out.println(user.getUserName());
+        if (shootUser==true){
+            return "redirect:select?id="+user.getId();
+        }else {
+            return "houtai/admin-role-add";
+        }
     }
 
 }

@@ -4,7 +4,6 @@
 
     <resultMap id="han" type="ShootLetter">
         <id property="id" column="le_id"></id>
-
         <association property="shootUser" javaType="ShootUser">
             <id property="id" column="us_id"></id>
         </association>

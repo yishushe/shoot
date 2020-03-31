@@ -18,6 +18,7 @@ spring:
     view:
       prefix: classpath:/templates
       suffix: .html
+    date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
     mode: HTML5
