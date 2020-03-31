@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>我收到的请求 - 摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link th:href="@{/css/core73.min.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a th:href="@{/shoot-user/index}">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+<div class="container bottom_menu_margin_plus xzero_padding">
+
+    <!-- 详细信息展示区 -->
+    <div class="data_post_cell">
+
+        <div class="data_post_cell">
+
+            <a class="data_post_container_link">
+                <div class="user_info_cell_sm v10_margin_bottom">
+                    <div class="user_info_cell_avatar">
+                        <i class="data_post_author_title_link" data-url="/u/1531674">
+                            <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
+                        </i>
+                    </div>
+                    <div class="user_info_cell_content">
+                        <i class="data_post_author_title_link" data-url="/u/1531674">
+                            <span class="data_post_author_title" th:text="${letter.shootUser.userName}">街头punk</span>
+                        </i>
+                        <i class="web_wechat_women"></i>
+                        <div>
+                                <span class="data_meta_info" th:text="${letter.shootUser.shootAddress.shootProw.prow+
+                                letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country}">河南郑州</span>
+                            <span class="data_meta_info" th:text="${letter.shootUser.roles.get(0).roleName}">模特</span>
+                            <span class="data_meta_info" style="color: green" th:text="${'    手机号:  '+letter.shootUser.phone}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="data_post_content_clear"></div>
+                <div class="data_post_message v10_margin" th:text="${letter.content}">
+                    周二
+                </div>
+                <div class="data_meta_info v10_margin">
+                    <span class="data_meta_info" th:text="${letter.creationDate}">2019年12月28日11:20</span>
+                </div>
+            </a>
+        </div>
+
+    </div>
+    <table style="margin: auto" border="1" cellpadding="5" cellspacing="5">
+        <tr>
+            <td>
+                <button id="ti" type="button" style="font-size: 20px;color: green">同意</button>
+            </td>
+            <td>
+                <button type="button" style="font-size: 20px;color: red">拒绝</button>
+            </td>
+        </tr>
+    </table>
+
+    <!-- 隐藏值 用于生成约拍状态 infoId-->
+    <tr hidden>
+        <td>
+            <!--<input id="sendUserId" th:value="${letter.sendUserId}">
+            <input id="putUserId" th:value="${letter.putUserId}">-->
+            <input hidden id="infoId" th:value="${letter.infoId}">
+        </td>
+    </tr>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ti").click(function () {
+                var b = confirm("你确定要同意本次约拍吗?");
+                var infoId = $("#infoId").val();
+                var stateId=3;   //因为是接单所以状态是3
+                if(b){
+                    $.post("/shoot-letter/consent",{"infoId":infoId,"stateId":stateId},function (data) {
+                         if(data==true){  //接单成功
+                             $("#ti").css("background","#5e5e5e");
+                             $("#ti").text("已同意");
+                        }
+                    },"json");
+                }
+            });
+        });
+    </script>
+
+</div>
+
+<!--<div class="weui_dialog_confirm" id="request_reject_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您要拒绝约拍吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="rejectdlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="rejectdlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="request_receive_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您要接受约拍吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="receivedlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="receivedlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="weui_dialog_confirm" id="requestreply_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog data_posts" style="max-width:500px;">
+        <div class="data_post_cell_dotted">
+            <div id="member_submit_label" class="requestreply_title">请输入回复内容</div>
+            <div class="data_meta_info v10_margin">（注意：您只能每人回复一次）</div>
+            <div class="v10_margin">
+                <textarea id="requestreply_message_text" class="auto_textarea_editor input_gray" placeholder="例如：对不起，感觉不太合适"></textarea>
+            </div>
+        </div>
+        <div class="data_post_cell_dotted">
+            <a id="confirm_requestreply_button" role="button" class="btn btn-success btn-sm form_medium_button">发送</a>
+            <a id="cancel_requestreply_button" role="button" class="btn btn-default btn-sm form_medium_button" href="javascript:void(0);" onclick="$('#requestreply_dialog').hide();">取消</a>
+        </div>
+    </div>
+</div>-->
+
+<script th:src="@{/js/style.js}"></script>
+</body>
+</html>

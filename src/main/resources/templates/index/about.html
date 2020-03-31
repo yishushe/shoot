@@ -253,7 +253,7 @@
                         <div class="v15_margin" style="text-align:center;">
                             <!-- 证明你是当前用户可以操作 恢复 或是 关闭 查看收到请求 -->
                             <a th:if="${info.userId==session.user.id}">
-                                <a role="button" class="btn btn-primary btn-sm form_large_button" th:href="@{/shoot-letter/responseMessage}">查看收到的请求</a>
+                                <a role="button" class="btn btn-primary btn-sm form_large_button" th:href="@{/shoot-letter/responseMessage(infoId=${info.id})}">查看收到的请求</a>
                                 <input id="state" th:value="${stateId}" hidden>
                                 <input id="idd" th:value="${info.id}" hidden>
                                 <a id="stateCaozuo" role="button" class="btn btn-danger btn-sm" href="javascript:;" data-id="992425">关闭</a>
@@ -343,7 +343,7 @@
                 <div id="lightGallery" class="data_post_cell" th:if="${info.shootImages!=null}" th:each="images,count : ${info.shootImages}">
 
                     <div class="v10_margin gallery-item-container" style="text-align:center;" data-src="http://image.shehuiapp.com/u/822903/201912264F4DX5/822903_020841584_1577373482590.jpg/hd">
-                        <img style="width:auto;max-width:100%;height:auto;" th:src="${images.imagesName}" />
+                        <img style="width:auto;max-width:100%;height:auto;" th:src="${images.imagesName}" onerror="javascript: imgLoadError(this);"/>
                     </div>
 
                 </div>

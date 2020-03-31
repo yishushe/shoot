@@ -41,24 +41,20 @@ import java.util.List;
  * @author jobob
  * @since 2020-01-15
  */
-@Service("shootUserService")
+@Service
 @Transactional
 public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser> implements IShootUserService {
 
     @Autowired
-    @Qualifier("shootUserMapper")
     private ShootUserMapper shootUserMapper;
 
     @Autowired
-    @Qualifier("shootProwMapper")
     private ShootProwMapper shootProwMapper;
 
     @Autowired
-    @Qualifier("shootCityMapper")
     private ShootCityMapper shootCityMapper;
 
     @Autowired
-    @Qualifier("shootCountryMapper")
     private ShootCountryMapper shootCountryMapper;
 
     @Autowired
@@ -70,7 +66,6 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     private Round round;
 
     @Autowired
-    @Qualifier("shootUserRoleMapper")
     private ShootUserRoleMapper shootUserRoleMapper;
 
     @Autowired

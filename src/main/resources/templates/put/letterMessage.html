@@ -27,7 +27,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
                     <span>艺术摄</span>
                 </div>
             </a>
@@ -62,7 +62,7 @@
 
         <!-- 四个 通知 私信 发送 请求 接收请求 -->
         <ul id="message_tabs" class="nav nav-tabs">
-            <li role="presentation" class=""><a href="javascript:;" data-tabname="notifications">通知</a></li>
+            <li role="presentation" class=""><a th:href="@{/shoot-letter/inform}" data-tabname="notifications">通知</a></li>
             <li role="presentation" class="active"><a th:href="@{/shoot-letter/message}" data-tabname="chat">私信</a></li>
             <li role="presentation" class=""><a th:href="@{/shoot-letter/requestMessage}" data-tabname="sentrequests">发出请求</a></li>
             <li role="presentation" class=""><a th:href="@{/shoot-letter/responseMessage}" data-tabname="incomingrequests">收到请求</a></li>
@@ -80,34 +80,34 @@
 
             <div class="data_post_cell">
 
-                <a class="data_post_container_link" th:href="@{/shoot-letter/replyMessage(sendUserId=${letter.shootUser.id})}">
-                    <div class="user_info_cell_sm v10_margin_bottom">
-                        <div class="user_info_cell_avatar">
-                            <i class="data_post_author_title_link" data-url="/u/1531674">
-                                <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
-                            </i>
-                        </div>
-                        <div class="user_info_cell_content">
-                            <i class="data_post_author_title_link" data-url="/u/1531674">
-                                <span class="data_post_author_title" th:text="${letter.shootUser.userName}">街头punk</span>
-                            </i>
-                            <i class="web_wechat_women"></i>
-                            <div>
+            <a class="data_post_container_link" th:href="@{/shoot-letter/replyMessage(sendUserId=${letter.shootUser.id})}">
+                <div class="user_info_cell_sm v10_margin_bottom">
+                    <div class="user_info_cell_avatar">
+                        <i class="data_post_author_title_link" data-url="/u/1531674">
+                            <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
+                        </i>
+                    </div>
+                    <div class="user_info_cell_content">
+                        <i class="data_post_author_title_link" data-url="/u/1531674">
+                            <span class="data_post_author_title" th:text="${letter.shootUser.userName}">街头punk</span>
+                        </i>
+                        <i class="web_wechat_women"></i>
+                        <div>
                                 <span class="data_meta_info" th:text="${letter.shootUser.shootAddress.shootProw.prow+
                                 letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country}">河南郑州</span>
-                                <span class="data_meta_info" th:text="${letter.shootUser.roles.get(0).roleName}">模特</span>
-                            </div>
+                            <span class="data_meta_info" th:text="${letter.shootUser.roles.get(0).roleName}">模特</span>
                         </div>
                     </div>
-                    <div class="data_post_content_clear"></div>
-                    <div class="data_post_message v10_margin" th:text="${letter.content}">
-                        周二
-                    </div>
-                    <div class="data_meta_info v10_margin">
-                        <span class="data_meta_info" th:text="${letter.creationDate}">2019年12月28日11:20</span>
-                    </div>
-                </a>
-            </div>
+                </div>
+                <div class="data_post_content_clear"></div>
+                <div class="data_post_message v10_margin" th:text="${letter.content}">
+                    周二
+                </div>
+                <div class="data_meta_info v10_margin">
+                    <span class="data_meta_info" th:text="${letter.creationDate}">2019年12月28日11:20</span>
+                </div>
+            </a>
+        </div>
 
         </div>
 

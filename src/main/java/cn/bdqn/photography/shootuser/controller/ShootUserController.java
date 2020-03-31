@@ -67,7 +67,6 @@ public class ShootUserController {
     private IsPath isPath;
 
     @Autowired
-    @Qualifier("shootUserService")
     private IShootUserService iShootUserService;
 
     @Autowired

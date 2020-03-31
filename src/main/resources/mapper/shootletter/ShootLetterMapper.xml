@@ -23,12 +23,17 @@
                 <id property="id" column="r_id"></id>
             </collection>
         </association>
+        <association property="shootInfo" javaType="ShootInfo">
+            <id property="id" column="i_id"></id>
+            <result property="content" column="i_content"></result>
+        </association>
     </resultMap>
     <select id="getLetterByPutUserId" resultMap="letter01">
-        SELECT le.id le_id,le.creationDate,le.content,
+        SELECT le.id le_id,le.creationDate,le.content,le.infoId,
         u.id u_id,u.portyaitl,u.userName,
         r.id r_id,r.roleName,p.id p_id,p.prow,
-        c.id c_id,c.city,co.id co_id,co.country FROM shoot_letter le
+        c.id c_id,c.city,co.id co_id,co.country,
+         i.id i_id,i.content i_content FROM shoot_letter le
         INNER JOIN shoot_user u ON u.id=le.sendUserId
         INNER JOIN shoot_user_role ur ON ur.userId=u.id
         INNER JOIN shoot_role r ON r.id=ur.roleId
@@ -36,7 +41,12 @@
         INNER JOIN shoot_prow p ON p.id=a.prow_id
         INNER JOIN shoot_city c ON c.id=a.city_id
         INNER JOIN shoot_country co ON co.id=a.country_id
-        WHERE le.putUserId=#{putUserId}
+        inner join shoot_info i on i.id=le.infoId
+        inner join shoot_state st on i.stateId=st.id
+        WHERE le.putUserId=#{putUserId} and i.stateId=2
+        <if test="infoId!=null and infoId>0">
+            and le.infoId=#{infoId}
+        </if>
         group by u.id
         order by le.creationDate desc
     </select>
@@ -101,12 +111,17 @@
                 <id property="id" column="r_id"></id>
             </collection>
         </association>
+        <association property="shootInfo" javaType="ShootInfo">
+            <id property="id" column="i_id"></id>
+            <result property="content" column="i_content"></result>
+        </association>
     </resultMap>
     <select id="getLetterBySendUserIdSend" resultMap="letter03">
          SELECT le.id le_id,le.creationDate,le.content,le.infoId,
         u.id u_id,u.portyaitl,u.userName,
         r.id r_id,r.roleName,p.id p_id,p.prow,
-        c.id c_id,c.city,co.id co_id,co.country FROM shoot_letter le
+        c.id c_id,c.city,co.id co_id,co.country,
+         i.id i_id,i.content i_content FROM shoot_letter le
         INNER JOIN shoot_user u ON u.id=le.sendUserId
         INNER JOIN shoot_user_role ur ON ur.userId=u.id
         INNER JOIN shoot_role r ON r.id=ur.roleId
@@ -114,13 +129,14 @@
         INNER JOIN shoot_prow p ON p.id=a.prow_id
         INNER JOIN shoot_city c ON c.id=a.city_id
         INNER JOIN shoot_country co ON co.id=a.country_id
+        inner join shoot_info i on i.userId=u.id
         WHERE le.sendUserId=#{sendUserId}
         GROUP BY u.id
         ORDER BY le.creationDate ASC
     </select>
 
 
-    <!-- 我接受的约拍 留言 -->
+    <!-- 我接收的约拍 留言 -->
     <resultMap id="letter04" type="ShootLetter">
         <id property="id" column="le_id"></id>
         <association property="shootUser" javaType="ShootUser">
@@ -140,12 +156,17 @@
                 <id property="id" column="r_id"></id>
             </collection>
         </association>
+        <association property="shootInfo" javaType="ShootInfo">
+            <id property="id" column="i_id"></id>
+            <result property="content" column="i_content"></result>
+        </association>
     </resultMap>
     <select id="getLetterByPutUserIdPut" resultMap="letter04">
         SELECT le.id le_id,le.creationDate,le.content,le.infoId,
         u.id u_id,u.portyaitl,u.userName,
         r.id r_id,r.roleName,p.id p_id,p.prow,
-        c.id c_id,c.city,co.id co_id,co.country FROM shoot_letter le
+        c.id c_id,c.city,co.id co_id,co.country,
+         i.id i_id,i.content i_content FROM shoot_letter le
         INNER JOIN shoot_user u ON u.id=le.sendUserId
         INNER JOIN shoot_user_role ur ON ur.userId=u.id
         INNER JOIN shoot_role r ON r.id=ur.roleId
@@ -153,7 +174,172 @@
         INNER JOIN shoot_prow p ON p.id=a.prow_id
         INNER JOIN shoot_city c ON c.id=a.city_id
         INNER JOIN shoot_country co ON co.id=a.country_id
+        inner join shoot_info i on i.id=le.infoId
+        inner join shoot_cost st on st.id=i.costId
+        inner join shoot_state ta on ta.id=i.stateId
         WHERE le.putUserId=#{putUserId}
+        <if test="costName!='' and costName!=null">
+            and st.costName=#{costName}
+        </if>
+        and i.stateId=2
+        GROUP BY u.id
+        ORDER BY le.creationDate ASC
+    </select>
+
+
+    <!-- 根据请求id 和被请求id 查看 信息详情 做 同意拒绝操作页面 -->
+    <resultMap id="letter05" type="ShootLetter">
+        <id property="id" column="le_id"></id>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="u_id"></id>
+            <association property="shootAddress" javaType="ShootAddress">
+                <association property="shootProw" javaType="ShootProw">
+                    <id property="id" column="p_id"></id>
+                </association>
+                <association property="shootCity" javaType="ShootCity">
+                    <id property="id" column="c_id"></id>
+                </association>
+                <association property="shootCountry" javaType="ShootCountry">
+                    <id property="id" column="co_id"></id>
+                </association>
+            </association>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+    </resultMap>
+    <select id="getLetterBySendUserIdAndPutUserId2" resultMap="letter05">
+      SELECT le.id le_id,le.sendUserId,
+        le.putUserId,le.creationDate,le.content,le.infoId,
+        u.id u_id,u.portyaitl,u.userName,u.phone,
+        r.id r_id,r.roleName,p.id p_id,p.prow,
+        c.id c_id,c.city,co.id co_id,co.country FROM shoot.shoot_letter le
+        INNER JOIN shoot.shoot_user u ON u.id=le.sendUserId
+        INNER JOIN shoot.shoot_user_role ur ON ur.userId=u.id
+        INNER JOIN shoot.shoot_role r ON r.id=ur.roleId
+        INNER JOIN shoot.shoot_address a ON a.id=u.shootAddressId
+        INNER JOIN shoot.shoot_prow p ON p.id=a.prow_id
+        INNER JOIN shoot.shoot_city c ON c.id=a.city_id
+        INNER JOIN shoot.shoot_country co ON co.id=a.country_id
+        WHERE le.sendUserId=#{sendUserId} AND le.putUserId=#{putUserId}
+        and le.infoId=#{infoId}
+        group by u.id
+        order by le.creationDate desc
+    </select>
+
+
+    <!-- 查看待执行约拍信息 -->
+    <resultMap id="letter06" type="ShootLetter">
+        <id property="id" column="le_id"></id>
+        <result property="content" column="le_content"></result>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="u_id"></id>
+            <association property="shootAddress" javaType="ShootAddress">
+                <association property="shootProw" javaType="ShootProw">
+                    <id property="id" column="p_id"></id>
+                </association>
+                <association property="shootCity" javaType="ShootCity">
+                    <id property="id" column="c_id"></id>
+                </association>
+                <association property="shootCountry" javaType="ShootCountry">
+                    <id property="id" column="co_id"></id>
+                </association>
+            </association>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+        <association property="shootInfo" javaType="ShootInfo">
+            <id property="id" column="i_id"></id>
+            <result property="content" column="i_content"></result>
+            <association property="shootCost" javaType="ShootCost">
+                <id property="id" column="st_id"></id>
+            </association>
+            <association property="shootType" javaType="ShootType">
+                <id  property="id" column="ty_id"></id>
+            </association>
+        </association>
+    </resultMap>
+    <select id="getLetterConset" resultMap="letter06">
+        SELECT le.id le_id,le.sendUserId
+        ,le.creationDate,le.content le_content,le.infoId,
+        u.id u_id,u.portyaitl,u.userName,u.phone,
+        r.id r_id,r.roleName,p.id p_id,p.prow,
+        c.id c_id,c.city,co.id co_id,co.country,
+        i.id i_id,i.content i_content,st.id st_id,st.costName,
+        ty.id ty_id,ty.typeName FROM shoot_letter le
+        INNER JOIN shoot_user u ON u.id=le.sendUserId
+        INNER JOIN shoot_user_role ur ON ur.userId=u.id
+        INNER JOIN shoot_role r ON r.id=ur.roleId
+        INNER JOIN shoot_address a ON a.id=u.shootAddressId
+        INNER JOIN shoot_prow p ON p.id=a.prow_id
+        INNER JOIN shoot_city c ON c.id=a.city_id
+        INNER JOIN shoot_country co ON co.id=a.country_id
+        inner join shoot_info i on i.id=le.infoId
+        inner join shoot_cost st on st.id=i.costId
+        inner join shoot_state ta on ta.id=i.stateId
+        inner join shoot_type ty on ty.id=i.typeId
+        WHERE le.putUserId=#{putUserId}
+        and i.stateId=#{stateId}
+        GROUP BY u.id
+        ORDER BY le.creationDate ASC
+    </select>
+
+
+    <!-- 查看已完成约拍信息 -->
+    <resultMap id="letter07" type="ShootLetter">
+        <id property="id" column="le_id"></id>
+        <result property="content" column="le_content"></result>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="u_id"></id>
+            <association property="shootAddress" javaType="ShootAddress">
+                <association property="shootProw" javaType="ShootProw">
+                    <id property="id" column="p_id"></id>
+                </association>
+                <association property="shootCity" javaType="ShootCity">
+                    <id property="id" column="c_id"></id>
+                </association>
+                <association property="shootCountry" javaType="ShootCountry">
+                    <id property="id" column="co_id"></id>
+                </association>
+            </association>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+        <association property="shootInfo" javaType="ShootInfo">
+            <id property="id" column="i_id"></id>
+            <result property="content" column="i_content"></result>
+            <association property="shootCost" javaType="ShootCost">
+                <id property="id" column="st_id"></id>
+            </association>
+            <association property="shootType" javaType="ShootType">
+                <id  property="id" column="ty_id"></id>
+            </association>
+        </association>
+    </resultMap>
+    <select id="getOrderByStateIdAndUserId" resultMap="letter07">
+        SELECT le.id le_id,le.sendUserId
+        ,le.creationDate,le.content le_content,le.infoId,
+        u.id u_id,u.portyaitl,u.userName,u.phone,
+        r.id r_id,r.roleName,p.id p_id,p.prow,
+        c.id c_id,c.city,co.id co_id,co.country,
+        i.id i_id,i.content i_content,st.id st_id,st.costName,
+        ty.id ty_id,ty.typeName FROM shoot_letter le
+        INNER JOIN shoot_user u ON u.id=le.sendUserId
+        INNER JOIN shoot_user_role ur ON ur.userId=u.id
+        INNER JOIN shoot_role r ON r.id=ur.roleId
+        INNER JOIN shoot_address a ON a.id=u.shootAddressId
+        INNER JOIN shoot_prow p ON p.id=a.prow_id
+        INNER JOIN shoot_city c ON c.id=a.city_id
+        INNER JOIN shoot_country co ON co.id=a.country_id
+        inner join shoot_info i on i.id=le.infoId
+        inner join shoot_cost st on st.id=i.costId
+        inner join shoot_state ta on ta.id=i.stateId
+        inner join shoot_type ty on ty.id=i.typeId
+        inner join shoot_order ro on ro.sendUserId=u.id
+        WHERE le.putUserId=#{userId}
+        and i.stateId=#{stateId} and ro.userId=#{userId}
         GROUP BY u.id
         ORDER BY le.creationDate ASC
     </select>

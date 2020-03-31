@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>收到请求 - 艺术摄</title>
+    <title>通知 - 艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
@@ -61,19 +61,19 @@
     <div class="tabs_header">
 
         <ul id="message_tabs" class="nav nav-tabs">
-            <li role="presentation" class=""><a th:href="@{/shoot-letter/inform}" data-tabname="notifications">通知</a></li>
+            <li role="presentation" class="active"><a th:href="@{/shoot-letter/inform}" data-tabname="notifications">通知</a></li>
             <li role="presentation" class=""><a th:href="@{/shoot-letter/message}" data-tabname="chat">私信</a></li>
             <li role="presentation" class=""><a th:href="@{/shoot-letter/requestMessage}" data-tabname="sentrequests">发出请求</a></li>
-            <li role="presentation" class="active"><a th:href="@{/shoot-letter/responseMessage}" data-tabname="incomingrequests">收到请求</a></li>
+            <li role="presentation" class=""><a th:href="@{/shoot-letter/responseMessage}" data-tabname="incomingrequests">收到请求</a></li>
         </ul>
 
     </div>
 
     <!-- 接收请求页面 -->
-    <div class="data_posts">
+   <!-- <div class="data_posts">
 
         <div th:if="${letter==null or letter.size()==0}">
-            <h1>还没人给你留言</h1>
+            <h1>还没通知</h1>
         </div>
         <div th:if="${size>0}" th:each="letter,index : ${letter}">
 
@@ -113,7 +113,7 @@
 
         </div>
 
-    </div>
+    </div>-->
 
 
     <div class="v20_margin"></div>

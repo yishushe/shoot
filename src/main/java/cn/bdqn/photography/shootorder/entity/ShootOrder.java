@@ -38,4 +38,7 @@ public class ShootOrder implements Serializable {
     @TableField("creationDate")
     private LocalDateTime creationDate;
 
+    @TableField("sendUserId")
+    private Long sendUserId;
+
 }

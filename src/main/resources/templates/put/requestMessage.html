@@ -27,7 +27,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
                     <span>艺术摄</span>
                 </div>
             </a>
@@ -62,7 +62,7 @@
 
 
         <ul id="message_tabs" class="nav nav-tabs">
-            <li role="presentation" class=""><a href="/notification" data-tabname="notifications">通知</a></li>
+            <li role="presentation" class=""><a th:href="@{/shoot-letter/inform}" data-tabname="notifications">通知</a></li>
             <li role="presentation" class=""><a th:href="@{/shoot-letter/message}" data-tabname="chat">私信</a></li>
             <li role="presentation" class="active"><a th:href="@{/shoot-letter/requestMessage}" data-tabname="sentrequests">发出请求</a></li>
             <li role="presentation" class=""><a th:href="@{/shoot-letter/responseMessage}" data-tabname="incomingrequests">收到请求</a></li>
@@ -101,6 +101,9 @@
                     </div>
                     <div class="data_post_content_clear"></div>
                     <div class="data_post_message v10_margin" th:text="${letter.content}">
+                        周二
+                    </div>
+                    <div class="data_post_message v10_margin" th:text="${'  约拍名:'+letter.shootInfo.content}">
                         周二
                     </div>
                     <div class="data_meta_info v10_margin">

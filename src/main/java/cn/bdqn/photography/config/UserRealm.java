@@ -27,7 +27,6 @@ import java.util.List;
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
-    @Qualifier("shootUserService")
     private IShootUserService iShootUserService;
 
     //先 认证
