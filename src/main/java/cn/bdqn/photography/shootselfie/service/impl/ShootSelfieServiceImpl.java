@@ -28,4 +28,10 @@ public class ShootSelfieServiceImpl extends ServiceImpl<ShootSelfieMapper, Shoot
         return shootSelfieMapper.getSelfieList();
     }
 
+    @Override
+    public ShootSelfie findById(Long id) {
+        return shootSelfieMapper.getById(id);
+    }
+
 }
+

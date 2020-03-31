@@ -250,11 +250,25 @@
 						</tr>
 					</tbody>
 				</table>
+				<form action="shenhe?current=1" method="post">
+					<select name="id" class="sss">
+						<option class="sh" value="1">审核</option>
+						<option class="sh" value="2">发布</option>
+						<option class="sh" value="3">接单</option>
+						<option class="sh" value="4">完成</option>
+						<option class="sh" value="5">举报</option>
+						<option  class="sh" value="6">未守约</option>
+						<option class="sh" value="7">关闭</option>
+					</select>
+					<input type="submit" value="查询.."/>
+				</form>
+
 				<!-- 分页 数据 当前页 总页数 -->
 				<tr>
 					<td hidden>
 						<input hidden type="text" th:value="${current}" id="current">
 						<input hidden type="text" th:value="${pages}" id="pages">
+						<input hidden type="text" th:value="${idd}" id="idd"/>
 					</td>
 				</tr>
 
@@ -284,16 +298,17 @@
 				<!-- 分页js -->
 				<script type="text/javascript">
 					$(document).ready(function () {
+						var idd=$("#idd").val();
 						$("#prev").click(function () {
 							var current = Number($("#current").val())-1;
-							location.href = "/shootstaticsh/shenhe?id=1&current=" + current;
+							location.href = "/shootstaticsh/shenhe?id="+idd+"&current=" + current;
 						});
 						$("#next").click(function () {
 							var current = Number($("#current").val())+1;
 							if(current>=Number($("#pages").val())){
 								current=Number($("#pages").val());
 							}
-							location.href = "/shootstaticsh/shenhe?id=1&current=" + current;
+							location.href = "/shootstaticsh/shenhe?id="+idd+"&current=" + current;
 						})
 					})
 				</script>

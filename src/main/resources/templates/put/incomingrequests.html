@@ -3,8 +3,7 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-
-    <title>收到请求 - 艺术摄</title>
+    <title>我收到的请求 - 摄会社</title>
     <meta name="description" />
     <meta name="keywords" />
 
@@ -56,24 +55,36 @@
 </header>
 
 <div class="fy-docs-nav-distance"></div>
-
 <div class="container bottom_menu_margin_plus xzero_padding">
-    <div class="tabs_header">
-
-        <ul id="message_tabs" class="nav nav-tabs">
-            <li role="presentation" class=""><a href="/notification" data-tabname="notifications">通知</a></li>
-            <li role="presentation" class=""><a th:href="@{/shoot-letter/message}" data-tabname="chat">私信</a></li>
-            <li role="presentation" class=""><a th:href="@{/shoot-letter/requestMessage}" data-tabname="sentrequests">发出请求</a></li>
-            <li role="presentation" class="active"><a th:href="@{/shoot-letter/responseMessage}" data-tabname="incomingrequests">收到请求</a></li>
-        </ul>
-
+    <div style="">
+        <div class="btn-group v10_margin v10_margin_bottom" role="group" aria-label="...">
+            <a role="button" class="btn btn-primary btn-sm" th:href="@{/shoot-letter/incomingrequests}">全部</a>
+            <a role="button" class="btn btn-default btn-sm" >互免请求</a>
+            <a role="button" class="btn btn-default btn-sm" href="/y/incomingrequeststoreceive">待接受</a>
+            <a role="button" class="btn btn-default btn-sm" href="/y/incomingrequeststofinish">待执行</a>
+            <a role="button" class="btn btn-default btn-sm" href="/y/incomingrequestsfinished">已完成</a>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $(".btn-sm").click(function () {
+                       $(".btn-sm").each(function () {
+                           if($(this).hasClass("btn-primary")){
+                                    $(this).removeClass("btn-primary");
+                                    $(this).addClass("btn-default");
+                           }
+                       });
+                       $(this).addClass("btn-primary");
+                    });
+                });
+            </script>
+        </div>
     </div>
 
-    <!-- 接收请求页面 -->
+
+    <!-- 私信 -->
     <div class="data_posts">
 
         <div th:if="${letter==null or letter.size()==0}">
-            <h1>还没人给你留言</h1>
+            <h1>还没人给你发起请求</h1>
         </div>
         <div th:if="${size>0}" th:each="letter,index : ${letter}">
 
@@ -112,9 +123,46 @@
 
     </div>
 
+</div>
 
-    <div class="v20_margin"></div>
+<div class="weui_dialog_confirm" id="request_reject_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您要拒绝约拍吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="rejectdlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="rejectdlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
 
+<div class="weui_dialog_confirm" id="request_receive_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您要接受约拍吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="receivedlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="receivedlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="weui_dialog_confirm" id="requestreply_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog data_posts" style="max-width:500px;">
+        <div class="data_post_cell_dotted">
+            <div id="member_submit_label" class="requestreply_title">请输入回复内容</div>
+            <div class="data_meta_info v10_margin">（注意：您只能每人回复一次）</div>
+            <div class="v10_margin">
+                <textarea id="requestreply_message_text" class="auto_textarea_editor input_gray" placeholder="例如：对不起，感觉不太合适"></textarea>
+            </div>
+        </div>
+        <div class="data_post_cell_dotted">
+            <a id="confirm_requestreply_button" role="button" class="btn btn-success btn-sm form_medium_button">发送</a>
+            <a id="cancel_requestreply_button" role="button" class="btn btn-default btn-sm form_medium_button" href="javascript:void(0);" onclick="$('#requestreply_dialog').hide();">取消</a>
+        </div>
+    </div>
 </div>
 
 

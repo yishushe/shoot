@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>选择支付方式</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet" />
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<style type="text/css">
+    .account_pay_cell, .pay_cell {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .account_pay_cell {
+        padding-left: 38px;
+    }
+</style>
+
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a class="login" th:href="@{/shoot-user/index}">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding">
+    <div class="data_posts">
+        <div class="data_post_cell_dotted" style="text-align:center;">
+                <span th:if="${qixian!=''}">
+                    <span class="data_group_title_bold" th:text="'摄会社Club'+${qixian}+'会员'">
+                    摄会社Club月会员
+                </span>
+                </span>
+                <span th:if="${qixian==''}">
+                     <span class="data_group_title_bold">
+                    信用保证金
+                </span>
+                </span>
+
+        </div>
+        <div class="data_post_cell_dotted" style="text-align:center;">
+                <span class="money_amount" th:text="'需要支付:'+${price}+'元'">
+                    需要支付：50元
+                </span>
+        </div>
+    </div>
+
+    <div class="data_posts v15_margin">
+        <div class="v10_margin_bottom" style="text-align:center;">
+            <span class="data_group_title">选择支付方式</span>
+        </div>
+        <!-- 支付宝支付 -->
+        <div class="data_post_cell pay_cell">
+            <div style="float:right;">
+                <a th:if="${qixian!=''}">
+                    <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='摄会社Club'+${qixian}+'会员')}">去支付</a>
+                </a>
+                <a th:if="${qixian==''}">
+                    <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='信用保证金')}">去支付</a>
+                </a>
+            </div>
+            <span class="paymethod_icon alipay_paymethod_icon">支付宝</span>
+        </div>
+      <!--  <div class="data_post_cell pay_cell">
+            <div style="float:right;">
+                <a class="btn btn-success btn_pay" role="button" href="/xclient/wechatpay?payKey=a53a4ed5d22e4544a72654222ab0f0f7">去支付</a>
+            </div>
+            <span class="paymethod_icon wechat_paymethod_icon"></span>
+        </div>-->
+    </div>
+
+</div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/core39.min.js"></script>
+
+</body>
+</html>

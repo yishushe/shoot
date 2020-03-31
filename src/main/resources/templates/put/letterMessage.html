@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
@@ -66,7 +65,7 @@
             <li role="presentation" class=""><a href="javascript:;" data-tabname="notifications">通知</a></li>
             <li role="presentation" class="active"><a th:href="@{/shoot-letter/message}" data-tabname="chat">私信</a></li>
             <li role="presentation" class=""><a th:href="@{/shoot-letter/requestMessage}" data-tabname="sentrequests">发出请求</a></li>
-            <li role="presentation" class=""><a href="javascript:;" data-tabname="incomingrequests">收到请求</a></li>
+            <li role="presentation" class=""><a th:href="@{/shoot-letter/responseMessage}" data-tabname="incomingrequests">收到请求</a></li>
         </ul>
 
     </div>

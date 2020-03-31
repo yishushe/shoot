@@ -14,6 +14,9 @@
         .guanzhu{
             background: #5e5e5e;
         }
+        .caozuo{
+            background: #5e5e5e;
+        }
     </style>
 
 </head>
@@ -76,12 +79,13 @@
                     <div class="user_info_cell_avatar">
 
                         <!-- 头像 -->
-                        <a class="data_post_author_title_link" href="/u/822903">
+                        <a class="data_post_author_title_link" th:href="@{/shoot-attention/personalInfo(userId=${info.shootUser.id})}">
                             <img class="img-circle data_avatar_small2"  th:src="${info.shootUser.portyaitl}"/>
                         </a>
 
                     </div>
 
+                    <!-- 关注功能 -->
                     <div style="float:right;">
                         <!-- 是否已关注数据 -->
                          <input hidden id="attentionId" th:value="${attentionId}">
@@ -142,7 +146,7 @@
                     </div>
 
                     <!-- 手机验证 -->
-                    <div class="v10_margin">
+                    <div class="v10_margin" th:if="${info.shootUser.phone!='' and info.shootUser.phone!=null}">
                         <span class="label label-warning">手机验证</span>
                     </div>
 
@@ -233,32 +237,59 @@
                         </div>
 
                         <!-- 信誉保证金 -->
-                        <div th:if="${info.requireSecurityAccount!=null and info.requireSecurityAccount>0}">
+                        <div th:if="${info.requireSecurityAccount!='' and info.requireSecurityAccount!=null}">
                             <div class="v10_margin" style="text-align:center;">
                                 <span class="label label-success label_count">要求信用保证金</span>
                             </div>
                         </div>
 
                         <!-- 查看是否已关闭 -->
-                        <div th:if="${stateId==7}">
-                            <div id="close_status" class="v15_margin" style="text-align:center;">
+                            <div id="close_status" class="v15_margin" style="text-align:center;display: none">
                                 <span class="data_meta_info label_required">已关闭</span>
                             </div>
-                        </div>
+
 
                         <!-- 查看收到的约拍信息 和 恢复 关闭 -->
                         <div class="v15_margin" style="text-align:center;">
-
                             <!-- 证明你是当前用户可以操作 恢复 或是 关闭 查看收到请求 -->
                             <a th:if="${info.userId==session.user.id}">
-                                <a role="button" class="btn btn-primary btn-sm form_large_button" href="/yuepai/requests/992425">查看收到的请求</a>
-                            <a th:if="${stateId!=7}">
-                                <a id="closeit_button" role="button" class="btn btn-danger btn-sm" href="javascript:;" data-id="992425">关闭</a>
+                                <a role="button" class="btn btn-primary btn-sm form_large_button" th:href="@{/shoot-letter/responseMessage}">查看收到的请求</a>
+                                <input id="state" th:value="${stateId}" hidden>
+                                <input id="idd" th:value="${info.id}" hidden>
+                                <a id="stateCaozuo" role="button" class="btn btn-danger btn-sm" href="javascript:;" data-id="992425">关闭</a>
                             </a>
-                            <a th:if="${stateId==7}">
-                                <a id="openit_button" role="button" class="btn btn-warning btn-sm" href="javascript:;" data-id="992425" style="">恢复</a>
-                            </a>
-                             </a>
+                            <!-- 关闭 恢复 js 操作 -->
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    var val = $("#state").val();
+                                    var id = $("#idd").val();
+                                    if(val==7){
+                                        $("#stateCaozuo").addClass("caozuo");
+                                        $("#stateCaozuo").text("恢复");
+                                        $("#close_status").show();
+                                    }
+                                    <!-- 异步请求更改info状态 -->
+                                    $("#stateCaozuo").click(function () {
+                                           if($(this).text()=="关闭"){
+                                               $.post("/shoot-info/updateState",{"id":id,"stateId":7},function (data) {
+                                                   if(data==true){
+                                                       $("#stateCaozuo").addClass("caozuo");
+                                                       $("#stateCaozuo").text("恢复");
+                                                       $("#close_status").show();
+                                                   }
+                                               },"json");
+                                           }else if($(this).text()=="恢复"){
+                                               $.post("/shoot-info/updateState",{"id":id,"stateId":2},function (data) {
+                                                   if(data==true){
+                                                       $("#stateCaozuo").removeClass("caozuo");
+                                                       $("#stateCaozuo").text("关闭");
+                                                       $("#close_status").hide();
+                                                   }
+                                               },"json");
+                                           }
+                                    });
+                                });
+                            </script>
                         </div>
 
                         <!-- 提交后通知 -->

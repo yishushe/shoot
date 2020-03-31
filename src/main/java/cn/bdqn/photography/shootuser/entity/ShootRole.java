@@ -33,4 +33,6 @@ public class ShootRole implements Serializable {
 
     @TableField(exist = false)  //忽略字段
     private List<ShootPermission> permissions;
+
 }
+

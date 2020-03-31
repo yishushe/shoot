@@ -68,7 +68,7 @@
     <div class="data_posts">
         <div class="data_post_cell_dotted">
             <div style="text-align:center;">
-                <a class="data_post_author_title_link" href="/u/1534940">
+                <a class="data_post_author_title_link" th:href="@{/shoot-attention/personalInfo(userId=${session.user.id})}">
                     <img id="grzx" class="img-circle data_avatar_small2" th:alt="${session.user.userName}" />
                 </a>
                 <div class="v10_margin">
@@ -149,7 +149,7 @@
         </div>
         <div class="col-xs-6" style="padding-left:5px;padding-right:0px;">
             <div class="data_posts">
-                <a class="data_post_cell data_post_cell_link" style="min-height:50px;" href="/y/incomingrequests">
+                <a class="data_post_cell data_post_cell_link" style="min-height:50px;" th:href="@{/shoot-letter/incomingrequests}">
                     <div class="right_select right_select_fixed"></div>
                     <span class="data_meta_text">我收到的请求</span>
                 </a>
@@ -183,11 +183,16 @@
             <div style="float:right;">
                 <span class="data_meta_info">提高信用等级</span>
             </div>
-            <a class="btn btn-warning btn-sm" href="/u/certification" role="button">提高信用等级</a>
+            <a class="btn btn-warning btn-sm" th:href="@{/shoot-user/credit}" role="button">提高信用等级</a>
         </div>
-        <a class="data_post_cell data_post_cell_link" style="min-height:50px;" href="/vip">
+        <a class="data_post_cell data_post_cell_link" style="min-height:50px;" th:href="@{/shoot-user/joinMember}">
             <div class="right_select right_select_fixed"></div>
-            <span class="data_meta_text">加入会员</span>
+            <span th:if="${session.user.member==1}">
+                <span class="data_meta_text" style="color: green">你已是会员</span>
+            </span>
+            <span th:if="${session.user.member!=1}">
+                <span class="data_meta_text">加入会员</span>
+            </span>
         </a>
         <a class="data_post_cell data_post_cell_link" style="min-height:50px;" th:href="@{/shoot-role/kef}">
             <div class="right_select right_select_fixed"></div>

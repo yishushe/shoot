@@ -3,6 +3,9 @@ package cn.bdqn.photography.shootuser.controller;
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
+import cn.bdqn.photography.config.AliPayConfig;
+import cn.bdqn.photography.shootorder.entity.ShootOrder;
+import cn.bdqn.photography.shootorder.service.IShootOrderService;
 import cn.bdqn.photography.shootimages.entity.ShootImages;
 import cn.bdqn.photography.shootimages.service.IShootImagesService;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
@@ -14,15 +17,22 @@ import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import cn.bdqn.photography.utils.IsPath;
+import cn.bdqn.photography.utils.Round;
 import cn.bdqn.photography.utils.Sex;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhenzi.sms.ZhenziSmsClient;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -32,7 +42,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -65,6 +78,9 @@ public class ShootUserController {
 
     @Autowired
     private IShootThemeService iShootThemeService;
+
+    @Autowired
+    private IShootOrderService iShootOrderService;
 
     //主页
     @RequestMapping(value = {"/index"})
@@ -208,6 +224,7 @@ public class ShootUserController {
     //约拍信息详情
     @RequestMapping(value = {"/about"})
     public String about() {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         return "index/about";
     }
 
@@ -246,7 +263,6 @@ public class ShootUserController {
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     }
 
-
     //绑定手机页
     @RequestMapping(value = "/personagePhone")
     public String personagePhone() {
@@ -262,7 +278,7 @@ public class ShootUserController {
     @RequestMapping(value = "/phone")
     @ResponseBody
     public Object addPhone(@RequestParam(value = "phone", required = false)
-                                    String phone,HttpSession session) {
+                                   String phone, HttpSession session) {
 
         try {
             JSONObject json = null;
@@ -270,7 +286,7 @@ public class ShootUserController {
             String code = String.valueOf(new Random().nextInt(999999));
             //将验证码通过榛子云接口发送至手机
             ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
-            String result = client.send(phone,"您的验证码为:" + code + "，该码有效期为5分钟，该码只能使用一次!");
+            String result = client.send(phone, "您的验证码为:" + code + "，该码有效期为5分钟，该码只能使用一次!");
             json = JSONObject.parseObject(result);  //装换为object json格式
             if (json.getIntValue("code") != 0) {//发送短信失败
                 return false;
@@ -281,7 +297,7 @@ public class ShootUserController {
             json.put("phone", phone);
             json.put("code", code);
             json.put("createTime", System.currentTimeMillis());
-            session.setAttribute("code",json);  //放入session中
+            session.setAttribute("code", json);  //放入session中
             return json;
         } catch (Exception e) {
             e.printStackTrace();
@@ -291,22 +307,22 @@ public class ShootUserController {
 
     //到达手机登录页面
     @RequestMapping(value = "/registerPhone")
-    public String registerPhone(){
+    public String registerPhone() {
         return "registerPhone";
     }
 
     //更改字段 增加值
     @RequestMapping(value = "/updatePhone")
-    public String updatePhone(@RequestParam(value = "phone",required = false)
-                              String phone,Model model){
+    public String updatePhone(@RequestParam(value = "phone", required = false)
+                                      String phone, Model model) {
 
-        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        ShootUser user = (ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
         user.setPhone(phone);
         boolean b = iShootUserService.updateById(user);
-        if(b==true){
+        if (b == true) {
             return "redirect:/shoot-role/personalInfo";
-        }else {
-            model.addAttribute("message","绑定手机号失败");
+        } else {
+            model.addAttribute("message", "绑定手机号失败");
             return "personage/personalInfo";
         }
 
@@ -316,12 +332,161 @@ public class ShootUserController {
     //根据手机号码查询数据
     @RequestMapping(value = "/byPhone")
     @ResponseBody
-    public ShootUser byPhone(@RequestParam(value = "phone",required = false)
-                             String phone){
-        QueryWrapper<ShootUser> query=new QueryWrapper<>();
-        query.eq("phone",phone);
+    public ShootUser byPhone(@RequestParam(value = "phone", required = false)
+                                     String phone) {
+        QueryWrapper<ShootUser> query = new QueryWrapper<>();
+        query.eq("phone", phone);
         ShootUser one = iShootUserService.getOne(query);
         return one;
     }
 
+    //加入会员页面
+    @RequestMapping(value = "/joinMember")
+    public String joinMember() {
+        return "personage/joinMember";
+    }
+
+    //选择支付方式页面
+    @RequestMapping(value = "/payment")
+    public String payment(@RequestParam(value = "price", required = false)
+                                  Float price,
+            @RequestParam(value = "subject",required = false)
+            String subject, Model model) {
+        String qixian="";
+        if (price == 50) {
+            qixian = "月";
+        } else if(price==300){
+            qixian = "年";
+        }
+        model.addAttribute("subject",subject);  //商品名称
+        model.addAttribute("price", price);     //商品价格
+        model.addAttribute("qixian", qixian);   //月 或 年
+        return "personage/payment";
+    }
+
+
+    Logger logger = LoggerFactory.getLogger("PayController.class");
+
+    //访问支付宝页面 支付页面
+    @RequestMapping(value = "/alipay/toPay")
+    @ResponseBody
+    public void alipay(@RequestParam(value = "amount",required = false)
+                                   String amount,@RequestParam(value = "subject",required = false)
+                         String subject,@RequestParam(value = "body",required = false)
+                         String body,HttpSession session,
+                         HttpServletResponse response) throws Exception {
+        //获得初始化的AlipayClient
+        AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.app_id, AliPayConfig.merchant_private_key, "json", AliPayConfig.charset, AliPayConfig.alipay_public_key, AliPayConfig.sign_type);
+
+        //设置请求参数
+        AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
+        alipayRequest.setReturnUrl(AliPayConfig.return_url);
+        alipayRequest.setNotifyUrl(AliPayConfig.notify_url);
+
+        //生成订单号类
+        Round round=new Round();
+        //商户订单号，商户网站订单系统中唯一订单号，必填
+        String out_trade_no = round.round();
+        //付款金额，必填
+        String total_amount =amount;
+
+        //信息存放订单实体类
+        ShootOrder order=new ShootOrder();
+        order.setOutTradeNo(out_trade_no);
+        order.setTotalAmount(Float.valueOf(total_amount));
+        order.setSubject(subject);
+        order.setBody(body);
+        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        order.setUserId(user.getId());
+        session.setAttribute("order",order);
+
+        //订单名称，必填
+        //String subject ="蒋蒋集团";
+        //商品描述，可空
+        //String body ="好吃的好玩的";
+
+        alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
+                + "\"total_amount\":\"" + total_amount + "\","
+                + "\"subject\":\"" + subject + "\","
+                + "\"body\":\"" + body + "\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+
+        //若想给BizContent增加其他可选请求参数，以增加自定义超时时间参数timeout_express来举例说明
+        //alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
+        //		+ "\"total_amount\":\""+ total_amount +"\","
+        //		+ "\"subject\":\""+ subject +"\","
+        //		+ "\"body\":\""+ body +"\","
+        //		+ "\"timeout_express\":\"10m\","
+        //		+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+        //请求参数可查阅【电脑网站支付的API文档-alipay.trade.page.pay-请求参数】章节
+
+        //请求
+        String form = "";
+        try {
+            form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("text/html;charset=" + AliPayConfig.charset);
+        response.getWriter().write(form);//直接将完整的表单html输出到页面
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
+
+
+    //支付宝异步通知
+    @GetMapping("/alipay/notify_url")
+    @ResponseBody
+    public String notifyAlipay() {
+        System.out.println("");
+        logger.info("----notify-----");
+        return " a li pay notify ";
+    }
+
+    //支付成功之后回调函数
+    @RequestMapping("/alipay/return_url")
+    public String returnAlipay(HttpSession session) {
+        Session session1 = SecurityUtils.getSubject().getSession();
+        ShootOrder order =(ShootOrder) session.getAttribute("order");
+        order.setCreationDate(LocalDateTime.now());   //存入当前生成订单时间
+        boolean save = iShootOrderService.save(order);
+        logger.info("----return-----");
+        if(save){   //成功
+            ShootUser user = (ShootUser)session1.getAttribute("user");
+            LocalDate localDate=null;
+            if(order.getTotalAmount()==50){   //办理 月会员
+                if(user.getMember()==1){  //已是会员 续费
+                    localDate = user.getMemberDate().plusMonths(1);
+                }else {  //不是会员
+                    localDate=LocalDate.now().plusMonths(1);
+                }
+            }else if(order.getTotalAmount()==300){  //办理年会员
+                if(user.getMember()==1){  //已是会员 续费
+                    localDate = user.getMemberDate().plusYears(1);
+                }else {  //不是会员
+                    localDate=LocalDate.now().plusYears(1);
+                }
+            }
+            if(localDate!=null){   //会员支付操作
+                iShootUserService.modifyMember(order.getUserId(),localDate);
+            }else {    //保证金支付操作
+                iShootUserService.modifySecurityMoney(order.getUserId(),order.getTotalAmount());
+            }
+            session.removeAttribute("order");   //删除订单信息
+            List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
+            session1.setAttribute("user",userByUserCode.get(0));   //更改之后重新查询当前user信息
+            return "redirect:/shoot-user/personage";  //重工回到个人主页
+        }else {
+            return "personage/joinMember";            //失败则回到充值页
+        }
+    }
+
+
+    //提高信用等级页面
+    @RequestMapping(value = "/credit")
+    public String credit(){
+        return "personage/credit";
+    }
+
 }
+

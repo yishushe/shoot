@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bdqn.photography.shootselfie.mapper.ShootSelfieMapper">
 
-    
+
+    <!-- 查询所有自拍信息 -->
     <resultMap id="selfie01" type="ShootSelfie">
         <id property="id" column="id"></id>
         <association property="shootUser" javaType="ShootUser">
@@ -35,6 +36,26 @@
        INNER JOIN shoot_city c ON c.id=a.city_id
        INNER JOIN shoot_country co ON co.id=a.country_id
        ORDER BY se.creationDate DESC
+    </select>
+
+
+    <!-- 查看自拍详情 -->
+    <resultMap id="selfie02" type="ShootSelfie">
+        <id property="id" column="id"></id>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="u_id"></id>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+    </resultMap>
+    <select id="getById" resultMap="selfie02">
+       SELECT se.*,u.id u_id,u.userName,u.portyaitl,
+       r.id r_id,r.roleName FROM shoot_selfie se
+       INNER JOIN shoot_user u ON u.id=se.userId
+       INNER JOIN shoot_user_role ur ON u.id=ur.userId
+       INNER JOIN shoot_role r ON r.id=ur.roleId
+       WHERE se.id=#{id}
     </select>
 
 </mapper>

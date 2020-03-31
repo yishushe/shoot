@@ -25,12 +25,14 @@ public class ShootInfoControllers {
     private IShootImagesService iShootImagesService;
 
     @RequestMapping("/shenhe")
-    public String shenhe(@RequestParam(value = "id",required = false) Long id,@RequestParam(value = "current",required = false) int current, Model model){
-        IPage<ShootInfo> page= iShootInfoService.getInfoByStateId(id,current);
+    public String shenhe(@RequestParam(value = "id",required = false)Long id,@RequestParam(value = "current",required = false) int current, Model model){
+        /*if(current==0){
+            current=1;
+        }*/
+        IPage<ShootInfo> page=iShootInfoService.getInfoByStateId(current,id);
         for (ShootInfo info1 : page.getRecords()){
             //设置用户图片路劲
             info1.getShootUser().setPortyaitl("/images/"+info1.getShootUser().getPortyaitl());
-
             Map<String,Object> map=new HashMap<>();
             map.put("infoId",info1.getId());
             //根据id查找信息
@@ -45,6 +47,7 @@ public class ShootInfoControllers {
             }
         }
         model.addAttribute("info",page.getRecords());     //数据
+        model.addAttribute("idd",id);
         model.addAttribute("current",page.getCurrent());  //当前页
         model.addAttribute("pages",page.getPages());      //总页数
         model.addAttribute("total",page.getTotal());      //总条数
@@ -77,16 +80,15 @@ public class ShootInfoControllers {
         return "houtai/updstate";
     }
     @RequestMapping("/wupdatebyinfoid")
-    public String updatebyinfoid(Long  aa){
+    public String updatebyinfoid(Long  aa,String sele){
+        Long stateid=Long.parseLong(sele);
         ShootInfo s= iShootInfoService.findInfoMessageById(aa);
-        Long id=Long.parseLong("2");
-        s.setStateId(id);
+        s.setStateId(stateid);
         boolean b= iShootInfoService.updateById(s);
         if(b==true){
             return "redirect:shenhe?id=1&current=2";
         }else{
             return "houtai/sb";
         }
-
     }
 }

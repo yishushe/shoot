@@ -6,6 +6,7 @@ import cn.bdqn.photography.common.entity.ShootProw;
 import cn.bdqn.photography.common.mapper.ShootCityMapper;
 import cn.bdqn.photography.common.mapper.ShootCountryMapper;
 import cn.bdqn.photography.common.mapper.ShootProwMapper;
+import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootuser.entity.ShootAddress;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
@@ -16,6 +17,8 @@ import cn.bdqn.photography.shootuser.service.IShootUserService;
 import cn.bdqn.photography.utils.AddressUtls;
 import cn.bdqn.photography.utils.Round;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -126,9 +130,48 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     }
 
     @Override
+<<<<<<< HEAD
     public List<ShootUser> getUsersAll() {
         return shootUserMapper.getUserAll();
     }
 
 
 }
+=======
+    public int modifyMember(Long id, LocalDate memberDate) {
+        return shootUserMapper.updateMember(id, memberDate);
+    }
+
+    public Page<ShootUser> getpermission(int current,Long id) {
+        IPage<ShootUser> iPage=new Page<>(current,5);
+        Page<ShootUser> s= shootUserMapper.getpermission(iPage,id);
+        return s;
+    }
+
+    @Override
+    public Long seleid(Long id, Long pid) {
+        return shootUserMapper.seleid(id,pid);
+    }
+
+    @Override
+    public boolean updp(Long id, Long pid,Long qxid) {
+        return shootUserMapper.updp(id,pid,qxid);
+    }
+
+    @Override
+    public boolean ins(Long id, Long pid) {
+        return shootUserMapper.ins(id,pid);
+    }
+
+    @Override
+    public boolean del(Long id,Long rid) {
+        return shootUserMapper.del(id,rid);
+    }
+
+    @Override
+    public int modifySecurityMoney(Long id, Float securityMoney) {
+        return shootUserMapper.updateSecurityMoney(id,securityMoney);
+    }
+
+}
+>>>>>>> 9f0a8f7ca5499571ffe2b5406b5c678c33f8e892
