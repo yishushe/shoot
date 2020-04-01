@@ -57,7 +57,7 @@
 <div class="fy-docs-nav-distance"></div>
 
 <div class="container bottom_menu_margin_plus xzero_padding">
-    <form method="post" action="/Account/DepositSubmit">
+    <form method="post" action="/shoot-user/payment">
         <div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
         </ul></div>
         <div class="data_posts">
@@ -71,8 +71,9 @@
                         <input type="hidden" name="MoneyOption" value="custom">
                         <label class="sr-only">输入充值金额</label><!--for="exampleInputAmount"-->
                         <div class="input-group">
-                            <input type="text" class="form-control" id="MoneyInput" name="MoneyInput" placeholder="输入充值金额">
+                            <input type="text" class="form-control" id="MoneyInput" name="price" placeholder="输入充值金额">
                             <div class="input-group-addon">元</div>
+                            <input hidden name="subject" value="账户余额">
                         </div>
                     </div>
                 </div>
@@ -81,8 +82,15 @@
 
             <div class="data_post_cell_dotted">
                 <button id="submit-button" type="submit" class="btn btn-sm btn-primary form_large_button">下一步</button>
-                <a role="button" class="btn btn-default btn-sm btn_cancel form_medium_button" data-url="/u/account">取消</a>
+                <a role="button" id="quxiao" class="btn btn-default btn-sm btn_cancel form_medium_button">取消</a>
             </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#quxiao").click(function () {
+                        location.href="/shoot-user/account";
+                    });
+                });
+            </script>
 
         </div>
     </form>
@@ -91,30 +99,8 @@
 
 <script th:src="@{/js/style.js}"></script>
 
-<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
-
-<script src="../js/core36.min.js"></script>
-
-
-<script type="text/javascript">
-    function selectRadioOption(strValue) {
-        $("input[name=MoneyOption][value='" + strValue + "']").prop("checked", true);
-    }
-
-    $(function () {
-    });
-</script>
-
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
-        </div>
-    </div>
-</div>
 
 <script th:src="@{/js/notlogin.js}"></script>
-<!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
+
 </body>
 </html>

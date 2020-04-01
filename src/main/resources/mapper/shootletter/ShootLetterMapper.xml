@@ -340,7 +340,7 @@
         inner join shoot_order ro on ro.sendUserId=u.id
         WHERE le.putUserId=#{userId}
         and i.stateId=#{stateId} and ro.userId=#{userId}
-        GROUP BY u.id
+        group by i.content
         ORDER BY le.creationDate ASC
     </select>
 

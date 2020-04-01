@@ -76,16 +76,19 @@ public class ShootInfoController {
 
         Session session = SecurityUtils.getSubject().getSession();
         ShootUser user = (ShootUser)session.getAttribute("user");
-        QueryWrapper<ShootLetter> query=new QueryWrapper<>();
-        query.eq("sendUserId",user.getId());
-        query.eq("infoId",id);
-        query.groupBy("sendUserId");
-        query.orderBy(true,true,"creationDate");
-        //查询是否 已经 给别人发送过约拍 留言
-        ShootLetter letter = iShootLetterService.getOne(query);
         boolean flag=true;
-        if(letter!=null){
-            flag=false;
+        if(user!=null){
+            QueryWrapper<ShootLetter> query=new QueryWrapper<>();
+            query.eq("sendUserId",user.getId());
+            query.eq("infoId",id);
+            query.groupBy("sendUserId");
+            query.orderBy(true,true,"creationDate");
+            //查询是否 已经 给别人发送过约拍 留言
+            ShootLetter letter = iShootLetterService.getOne(query);
+
+            if(letter!=null){
+                flag=false;
+            }
         }
 
         ShootInfo infoById = iShootInfoService.findInfoById(id);
@@ -107,13 +110,16 @@ public class ShootInfoController {
             infoById.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
         }
 
+        System.out.println("sssssssssssssssssssss:"+infoById.getRequireSecurityAccount());
 
-        //根据 关注者id 和 被关注者id 查询是否有数据
-        QueryWrapper<ShootAttention> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("attentionId",user.getId());  //关注者 当前用户id
-        queryWrapper.eq("focusedId",infoById.getShootUser().getId());  //被关注着 当前信息的id
-        ShootAttention one = iShootAttentionService.getOne(queryWrapper);
-        model.addAttribute("attentionId",one);    //传参到页面判断是否本条
+        if(user!=null){
+            //根据 关注者id 和 被关注者id 查询是否有数据
+            QueryWrapper<ShootAttention> queryWrapper=new QueryWrapper<>();
+            queryWrapper.eq("attentionId",user.getId());  //关注者 当前用户id
+            queryWrapper.eq("focusedId",infoById.getShootUser().getId());  //被关注着 当前信息的id
+            ShootAttention one = iShootAttentionService.getOne(queryWrapper);
+            model.addAttribute("attentionId",one);    //传参到页面判断是否本条
+        }
 
         model.addAttribute("stateId",infoById.getShootState().getId());
         model.addAttribute("info",infoById);

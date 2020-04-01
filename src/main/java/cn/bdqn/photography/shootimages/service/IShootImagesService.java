@@ -3,6 +3,8 @@ package cn.bdqn.photography.shootimages.service;
 import cn.bdqn.photography.shootimages.entity.ShootImages;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-03-09
  */
 public interface IShootImagesService extends IService<ShootImages> {
-
+    List<ShootImages> imglist();
 }

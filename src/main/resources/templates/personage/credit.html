@@ -105,6 +105,20 @@
         <div class="data_post_cell">
             <div th:if="${session.user.securityMoney!=0 and session.user.securityMoney>0}">
                 <span class="data_meta_text">你已存入保证金</span>
+                <button class="data_meta_text" id="tiqu">提取保证金</button>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#tiqu").click(function () {
+                            if(confirm("确定提取?")){
+                                $.post("/shoot-user/orderByUserIdAndBody",{"body":"信用保证金"},function (data) {
+                                    if(data!=null){
+                                        location.href="/shoot-user/tiqu?securityMoney="+200+"&out_trade_no="+data.outTradeNo;
+                                    }
+                                },"json");
+                            }
+                        });
+                    });
+                </script>
             </div>
             <div th:if="${session.user.securityMoney=='' or session.user.securityMoney<1}">
             <span class="data_meta_text">您还没有存入信用保证金</span>

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -43,6 +44,9 @@ public interface IShootInfoService extends IService<ShootInfo> {
        List<ShootInfo> getinfobyinfoid(Long id);   //根据infoid查询
 
        int modifyStateIdById(Long id,Long stateId);   //根据id更改信息状态
+
+       boolean insertinform(String cause, Long pid,LocalDate date,Long infoId);//插入
+
 
 }
 

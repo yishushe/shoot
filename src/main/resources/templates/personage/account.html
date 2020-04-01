@@ -63,47 +63,33 @@
         </div>
         <div class="data_post_cell_dotted">
             <span class="data_meta_info">账户余额：</span>
-            <span class="money_amount">0元</span>
+            <span class="money_amount" th:text="${session.user.money!=null and session.user.money>0?session.user.money+'元':'0元'}">0元</span>
             <div class="v15_margin">
-                <a role="button" class="btn btn-sm btn-danger form_medium_button" href="/Account/Deposit">充值</a>
+                <a role="button" class="btn btn-sm btn-danger form_medium_button" th:href="@{/shoot-user/topup}">充值</a>
             </div>
         </div>
     </div>
 
+    <!-- 信用保障金 -->
     <div class="data_posts v10_margin">
         <div class="data_post_cell">
-            <a role="button" class="btn btn-sm btn-primary" href="/u/securityaccount">我的信用保证金</a>
+            <a role="button" class="btn btn-sm btn-primary" th:href="@{/shoot-user/credit}">我的信用保证金</a>
         </div>
     </div>
 
+    <!-- 提取记录 -->
     <div class="data_posts v10_margin">
         <div class="data_post_cell">
             <span class="data_meta_info">没有提现记录</span>
         </div>
     </div>
+
 </div>
 
 
 <script th:src="@{/js/style.js}"></script>
 
-<script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
-
-<script src="../js/core36.min.js"></script>
-
-
-<link rel="stylesheet" href="/content/resources/weui.min.css">
-
-
-<div id="notification_panel" style="position:fixed;">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-xs btn-primary" role='button' href="/notification">加载中</a>
-        </div>
-    </div>
-</div>
-
-
 <script th:src="@{/js/notlogin.js}"></script>
-<!--<script type="text/javascript" src="https://tajs.qq.com/stats?sId=45681568" charset="UTF-8"></script>-->
+
 </body>
 </html>

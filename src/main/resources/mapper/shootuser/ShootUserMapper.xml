@@ -3,13 +3,14 @@
 <mapper namespace="cn.bdqn.photography.shootuser.mapper.ShootUserMapper">
 
     <insert id="insertUser" parameterType="ShootUser" useGeneratedKeys="true" keyProperty="id">
-        insert into shoot_user (userCode,userName,userPassword,sex,creationDate,portyaitl,phone,shootAddressId)
-         values (#{userCode},#{userName},#{userPassword},#{sex},#{creationDate},#{portyaitl},#{phone},#{shootAddressId})
+        insert into shoot_user (userCode,userName,userPassword,sex,creationDate,portyaitl,phone,shootAddressId,integral,stateId)
+         values (#{userCode},#{userName},#{userPassword},#{sex},#{creationDate},#{portyaitl},#{phone},#{shootAddressId},5,8)
     </insert>
 
     <resultMap id="user" type="ShootUser">
         <id property="id" column="id"></id>
         <result property="userName" column="userName"></result>
+        <result property="integral" column="integral"></result>
         <collection property="roles" ofType="ShootRole" resultMap="role"></collection>
     </resultMap>
     <resultMap id="role" type="ShootRole">
@@ -149,11 +150,13 @@
         DELETE FROM shoot.shoot_role_permission WHERE permissionid = #{pid} AND roleid=#{rid};
     </delete>
 
+
     <!-- 根据id 添加保证金 -->
     <insert id="updateSecurityMoney">
         UPDATE shoot_user SET securityMoney=#{securityMoney}
         WHERE id=#{id}
     </insert>
+
 
 </mapper>
 

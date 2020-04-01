@@ -78,7 +78,7 @@
                 </span>
                 </span>
                 <span th:if="${qixian==''}">
-                     <span class="data_group_title_bold">
+                     <span class="data_group_title_bold" th:text="${subject}">
                     信用保证金
                 </span>
                 </span>
@@ -101,8 +101,11 @@
                 <a th:if="${qixian!=''}">
                     <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='摄会社Club'+${qixian}+'会员')}">去支付</a>
                 </a>
-                <a th:if="${qixian==''}">
+                <a th:if="${qixian=='' and subject!='账户余额'}">
                     <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='信用保证金')}">去支付</a>
+                </a>
+                <a th:if="${qixian=='' and subject=='账户余额'}">
+                    <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='账户金额')}">去支付</a>
                 </a>
             </div>
             <span class="paymethod_icon alipay_paymethod_icon">支付宝</span>

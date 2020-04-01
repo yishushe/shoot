@@ -48,6 +48,7 @@ public interface IShootLetterService extends IService<ShootLetter> {
     List<ShootLetter> findLetterByPutUserIdPut(Long putUserId,String costName);
 
 
+
     /**
      * 根据 发起人id 和 接受人id 查找发起人的详细信息
      * \
@@ -75,5 +76,6 @@ public interface IShootLetterService extends IService<ShootLetter> {
      * @return
      */
     List<ShootLetter> findOrderByStateIdAndUserId(Long stateId,Long userId);
+
 }
 

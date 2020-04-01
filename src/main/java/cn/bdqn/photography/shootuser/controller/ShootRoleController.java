@@ -66,20 +66,33 @@ public class ShootRoleController {
     //积分签到页面
     @RequestMapping(value = "/integral")
     public String integral(HttpServletRequest h){
+        System.out.println("签到的状态id"+all().getStateId());
         ShootUser uid= iShootUserService.getById(all().getId());
         h.setAttribute("integra",uid.getIntegral());
-        h.setAttribute("yqd","您还未签到");
+        h.setAttribute("zt",uid.getStateId());
+        if(uid!=null){
+            if(uid.getStateId()==8){
+                h.setAttribute("yqd","您还未签到");
+            }else{
+                h.setAttribute("yqd","您已签到");
+            }
+        }
         return "personage/integral";
     }
-
     //积分签到更改数值
     @RequestMapping("/updintegral")
     public String updateintegral(HttpServletRequest h){
         all().setIntegral(all().getIntegral()+5);
+        all().setStateId(Long.parseLong("9"));
         h.setAttribute("integra",all().getIntegral());
-        h.setAttribute("yqd","您已签到");
+        h.setAttribute("zt",all().getStateId());
         boolean b= iShootUserService.updateById(all());
-        return "personage/integral";
+        if(b==true){
+            return "redirect:integral";
+        }else{
+            return "houtai/sb";
+        }
+
     }
 
     //更新个人信息

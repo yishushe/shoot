@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 "cn.bdqn.photography.shootimages.mapper","cn.bdqn.photography.shootinfo.mapper",
 "cn.bdqn.photography.shootletter.mapper","cn.bdqn.photography.shootselfie.mapper",
 "cn.bdqn.photography.shoottheme.mapper","cn.bdqn.photography.houtai.mapper",
-"cn.bdqn.photography.shootOrder.mapper"})
+"cn.bdqn.photography.shootOrder.mapper","cn.bdqn.photography.shootinform.mapper"})
 @ComponentScan(basePackages = {"cn.bdqn"})
 @Component(value = "cn.bdqn")
 public class PhotographyApplication {

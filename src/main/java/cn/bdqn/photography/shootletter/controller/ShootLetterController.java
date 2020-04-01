@@ -2,6 +2,8 @@ package cn.bdqn.photography.shootletter.controller;
 
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootinfo.service.IShootInfoService;
+import cn.bdqn.photography.shootinform.entity.ShootInform;
+import cn.bdqn.photography.shootinform.service.IShootInformService;
 import cn.bdqn.photography.shootletter.entity.ShootLetter;
 import cn.bdqn.photography.shootletter.service.IShootLetterService;
 import cn.bdqn.photography.shootorder.entity.ShootOrder;
@@ -51,7 +53,8 @@ public class ShootLetterController {
     @Autowired
     private IShootOrderService iShootOrderService;
 
-
+    @Autowired
+    private IShootInformService iShootInformService;
 
     //发起约拍信息 留言添加
     @RequestMapping(value = "/addLetter")
@@ -311,6 +314,10 @@ public class ShootLetterController {
     //通知页面
     @RequestMapping(value = "/inform")
     public String inform(Model model){
+        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        List<ShootInform> list = iShootInformService.findByPutUserId(user.getId());
+        model.addAttribute("size",list.size());
+        model.addAttribute("inform",list);
         return "put/inform";
     }
 

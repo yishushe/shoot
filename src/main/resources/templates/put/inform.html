@@ -70,17 +70,17 @@
     </div>
 
     <!-- 接收请求页面 -->
-   <!-- <div class="data_posts">
+    <div class="data_posts">
 
-        <div th:if="${letter==null or letter.size()==0}">
+        <div th:if="${inform==null or size==0}">
             <h1>还没通知</h1>
         </div>
-        <div th:if="${size>0}" th:each="letter,index : ${letter}">
+        <div th:if="${size>0}" th:each="inform,index : ${inform}">
 
             <div class="data_post_cell">
 
                 <a class="data_post_container_link">
-                    <div class="user_info_cell_sm v10_margin_bottom">
+                    <!--<div class="user_info_cell_sm v10_margin_bottom">
                         <div class="user_info_cell_avatar">
                             <i class="data_post_author_title_link" data-url="/u/1531674">
                                 <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
@@ -97,23 +97,25 @@
                                 <span class="data_meta_info" th:text="${letter.shootUser.roles.get(0).roleName}">模特</span>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="data_post_content_clear"></div>
-                    <div class="data_post_message v10_margin" th:text="${letter.content}">
+                    <div class="data_post_message v10_margin" th:text="${'通知信息: '+inform.content}">
                         周二
                     </div>
-                    <div class="data_post_message v10_margin" th:text="${'  约拍名:'+letter.shootInfo.content}">
-                        周二
+                    <div th:if="${inform.shootInfo.content!='' and inform.shootInfo.content!=null}">
+                        <div class="data_post_message v10_margin" th:text="${'  约拍名:'+inform.shootInfo.content}">
+                            周二
+                        </div>
                     </div>
                     <div class="data_meta_info v10_margin">
-                        <span class="data_meta_info" th:text="${letter.creationDate}">2019年12月28日11:20</span>
+                        <span class="data_meta_info" th:text="${inform.creationDate}">2019年12月28日11:20</span>
                     </div>
                 </a>
             </div>
 
         </div>
 
-    </div>-->
+    </div>
 
 
     <div class="v20_margin"></div>

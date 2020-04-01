@@ -64,6 +64,7 @@ public class ShiroConfig {
         filterMap.put("/shoot-user/joinMember","authc");          //加入会员页面
         filterMap.put("/shoot-user/payment","authc");             //选择支付方式页面
         filterMap.put("/shoot-user/credit","authc");              //提高信用页面
+        filterMap.put("/shoot-user/account","authc");             //宇额界面
 
         filterMap.put("/shoot-user/about","perms[query]");
 

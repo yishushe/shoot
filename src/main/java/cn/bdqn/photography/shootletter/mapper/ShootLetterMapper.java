@@ -82,5 +82,9 @@ public interface ShootLetterMapper extends BaseMapper<ShootLetter> {
      */
    List<ShootLetter> getOrderByStateIdAndUserId(@Param("stateId") Long stateId,
                                                 @Param("userId") Long userId);
+
+    List<ShootLetter> getLetterByPutUserIdPut(@Param("putUserId") Long putUserId);
+
+
 }
 

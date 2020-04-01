@@ -302,7 +302,7 @@
                          var sendUserId = $(this).attr("val3");
                          var stateId=4;    //完成本次 约拍状态更改为4
                          if(confirm("确定本次约拍已经完成?")){
-                         $.post("/shoot-letter/complete",{"infoId":infoId,"stateId":stateId,"typeName":typeName,"costName":costName},function (data) {
+                         $.post("/shoot-letter/complete",{"infoId":infoId,"stateId":stateId,"typeName":typeName,"costName":costName,"sendUserId":sendUserId},function (data) {
                                if(data==true){
                                    $(this).text("已完成");
                                }

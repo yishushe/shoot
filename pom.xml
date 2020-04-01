@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.bdqn</groupId>
-    <!--<packaging>jar</packaging>-->
+    <packaging>war</packaging>
     <artifactId>photography</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>photography</name>

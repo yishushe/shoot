@@ -66,6 +66,11 @@ public class ShootUser implements Serializable {
     @TableField("integral")
     private Long integral;
 
+    @TableField("stateId")
+    private Long stateId;
+
+    private Float money;
+
     @TableField(exist = false)
     private ShootAddress shootAddress;
 

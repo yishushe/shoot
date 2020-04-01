@@ -92,8 +92,10 @@
                         <!-- 当前这条约拍信息userId -->
                         <input hidden id="focusedId" th:value="${info.shootUser.id}">
                         <!-- 关注功能 -->
+                        <a th:if="${session.user!=null}">
                         <a th:if="${info.shootUser.id!=session.user.id}">
                         <a id="guanzhu" class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:;">关注</a>
+                        </a>
                         </a>
                             <!-- 关注javascript -->
                         <script type="text/javascript">
@@ -217,6 +219,7 @@
 
                         <!-- 收藏 -->
                         <!-- 如果当前约拍不是本用户的 则会显示 收藏 举报 -->
+                        <div th:if="${session.user!=null}">
                         <div th:if="${info.userId!=session.user.id}">
                             <div class="v5_margin" style="text-align:right;">
                                 <a class="btn_follow_wechat" data-to="993743" href="javascript:void(0);">收藏</a>
@@ -224,6 +227,7 @@
                                     <span class="data_meta_info">举报</span>
                                 </a>
                             </div>
+                        </div>
                         </div>
 
                         <!--约拍条数 -->
@@ -235,6 +239,7 @@
                         <div class="v10_margin" style="text-align:center;" th:if="${info.requireRoles==2}">
                             <span class="label label-success label_count">摄会社Club会员可请求</span>
                         </div>
+                        <input hidden id="requireRoles" th:value="${info.requireRoles}">
 
                         <!-- 信誉保证金 -->
                         <div th:if="${info.requireSecurityAccount!='' and info.requireSecurityAccount!=null}">
@@ -242,6 +247,7 @@
                                 <span class="label label-success label_count">要求信用保证金</span>
                             </div>
                         </div>
+                        <input hidden id="requireSecurityAccount" th:value="${info.requireSecurityAccount}">
 
                         <!-- 查看是否已关闭 -->
                             <div id="close_status" class="v15_margin" style="text-align:center;display: none">
@@ -252,11 +258,13 @@
                         <!-- 查看收到的约拍信息 和 恢复 关闭 -->
                         <div class="v15_margin" style="text-align:center;">
                             <!-- 证明你是当前用户可以操作 恢复 或是 关闭 查看收到请求 -->
+                            <a th:if="${session.user!=null}">
                             <a th:if="${info.userId==session.user.id}">
                                 <a role="button" class="btn btn-primary btn-sm form_large_button" th:href="@{/shoot-letter/responseMessage(infoId=${info.id})}">查看收到的请求</a>
                                 <input id="state" th:value="${stateId}" hidden>
                                 <input id="idd" th:value="${info.id}" hidden>
                                 <a id="stateCaozuo" role="button" class="btn btn-danger btn-sm" href="javascript:;" data-id="992425">关闭</a>
+                            </a>
                             </a>
                             <!-- 关闭 恢复 js 操作 -->
                             <script type="text/javascript">
@@ -297,10 +305,17 @@
 
                             <a th:if="${flag==true}">
                             <!-- 发起约拍按钮 -->
+                                <a th:if="${session.user!=null}">
                                 <a th:if="${info.userId!=session.user.id}">
-                            <a id="dorequest_button" role="button" class="btn btn-success btn-sm form_large_button"
+                            <a role="button" class="btn btn-success btn-sm form_large_button dorequest_button"
                                data-login="1" data-id="993743" href="javascript:;">发起请求</a>
                             </a>
+                                </a>
+                                <a th:if="${session.user==null}">
+                                    <a role="button" class="btn btn-success btn-sm form_large_button dorequest_button"
+                                       data-login="1" data-id="993743" href="javascript:;">发起请求</a>
+                                </a>
+                                </a>
                             </a>
                             <a th:if="${flag==false}">
                             <a id="requestdetail_link" class="data_post_title_link" th:href="@{/shoot-letter/aboutMessage(infoId=${info.id})}">你已经提交了请求，查看详情&gt;&gt;</a>
@@ -602,10 +617,52 @@
 <!-- 当前详情约拍信息用户的id -->
 <input hidden id="id" th:value="${info.shootUser.id}">
 
+<tr>
+    <td th:if="${session.user!=null}">
+        <input hidden id="phone" th:value="${session.user.phone}">
+        <input hidden class="requireRoles" th:value="${session.user.member}">
+        <input hidden class="requireSecurityAccount" th:value="${session.user.SecurityMoney}">
+        <input hidden class="user" th:value="${session.user}">
+    </td>
+</tr>
+
 <!-- 提交留言 -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#dorequest_button").click(function () {
+        $(".dorequest_button").click(function () {
+
+            var user = $(".user").val();
+            if(user==null || user==undefined){  //没有登录
+                 var b = confirm("你还没有登录是否去登录?");
+                 if(b){
+                     location.href="/shoot-user/login";
+                     return;
+                 }else {
+                     return;
+                 }
+            }
+
+
+            var phone = $("#phone").val();
+            if(phone=='' || phone==null){
+                alert("请先绑定手机号 点击我的>编辑个人资料>设置手机号");
+                return;
+            }
+            var requireRoles = $("#requireRoles").val();
+            if(requireRoles==2){  //需要会员
+                if($(".requireRoles").val()!=1){  //不是会员
+                     alert("充值会员才可约拍 我的>加入会员");
+                     return;
+                }
+            }
+            var requireSecurityAccount = $("#requireSecurityAccount").val();
+            if(requireSecurityAccount==1){ //需要保证金
+                 if($(".requireSecurityAccount").val()!=200){ //没有保证金
+                     alert("存入保证金才能够约拍 我的>提高信用等级>加入保证金");
+                     return;
+                 }
+            }
+
             var $requestSubmitDialog = $("#request_submit_dialog");
             $requestSubmitDialog.show();
             $requestSubmitDialog.css({"padding-left":200,"padding-top":-200,"z-index":1});
@@ -613,9 +670,9 @@
         $("#request_submit_dialog_confirm_button").click(function () {
             var text = $("#content").val();  //留言
             var id=$("#id").val();           //当前信息用户id
-            var info=$("#infoId").val();      //当前infoId
+            var infoId=$("#infoId").val();      //当前infoId
             //异步添加留言信息
-            $.post("/shoot-letter/addLetter",{"content":text,"putUserId":id,"infoId":info},function (data) {
+            $.post("/shoot-letter/addLetter",{"content":text,"putUserId":id,"infoId":infoId},function (data) {
                    if(data==true){
                        var infoId=$("#infoId").val();
                        //发送留言 成功后再次 重新刷新页面数据

@@ -91,15 +91,15 @@
     <div class="data_posts v10_margin">
         <div class="data_post_cell" style="min-height:50px;">
             <span class="data_meta_info">我的积分：</span>
-            <span class="money_amount">40</span>
+            <span class="money_amount" th:text="${session.user.integral}">40</span>
             <div style="float:right;">
                 <a class="btn btn-sm btn-default" th:href="@{/shoot-role/integral}">获取新的积分</a>
             </div>
         </div>
-        <a class="data_post_cell data_post_cell_link" style="min-height:50px;" href="/u/account">
+        <a class="data_post_cell data_post_cell_link" style="min-height:50px;" th:href="@{/shoot-user/account}">
             <div class="right_select right_select_fixed"></div>
             <span class="data_meta_info">账户余额：</span>
-            <span class="money_amount">0元</span>
+            <span class="money_amount" th:text="${session.user.money!=null and session.user.money>0?session.user.money+'元':'0元'}">0元</span>
         </a>
         <div class="data_post_cell">
             <div style="float:right;">
@@ -109,10 +109,10 @@
         </div>
         <div class="data_post_cell">
             <div style="float:right;">
-                <span class="data_meta_info">当前来自QQ登录</span>
+                <!--<span class="data_meta_info">当前来自QQ登录</span>-->
             </div>
             <form id="logoff-form" class="inline-form" method="post" action="ses">
-                <button id="exit-button" onclick="if(!confirm('您确定要退出吗？')){return false;}window.location.href='http://localhost:8088/shoot-user/login';" class="btn btn-danger btn-sm" type="button">退出当前账号</button>
+                <button id="exit-button" onclick="if(!confirm('您确定要退出吗？')){return false;}window.location.href='/shoot-user/login';" class="btn btn-danger btn-sm" type="button">退出当前账号</button>
             </form><!--,$.session.invalidate()-->
         </div>
     </div>
@@ -121,7 +121,9 @@
     <div class="row btstrap_row_fixed v10_margin">
         <div class="col-xs-6" style="padding-left:0px;padding-right:5px;">
             <div class="data_posts">
+
                 <a class="data_post_cell data_post_cell_link" style="min-height:50px;" th:href="@{/shoot-letter/inform}">
+
                     <div class="right_select right_select_fixed"></div>
                     <span class="data_meta_text">系统通知</span>
                 </a>
@@ -133,7 +135,7 @@
                     <div class="right_select right_select_fixed"></div>
                     <span class="data_meta_text">我发布的信息</span>
                 </a>
-                <a class="data_post_cell data_post_cell_link" style="min-height:50px;" href="/u/galleries/1534940">
+                <a class="data_post_cell data_post_cell_link" style="min-height:50px;" th:href="@{/shoot-images/allimg}">
                     <div class="right_select right_select_fixed"></div>
                     <span class="data_meta_text">我的作品相册</span>
                 </a>
