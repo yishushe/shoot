@@ -83,6 +83,8 @@ public class ShootUserControllers {
         return "houtai/admin-role";
     }
 
+
+
     //修改角色信息
     @RequestMapping("/updateUsers")
     public String updateUsers(Model model,ShootUserRole id){
@@ -92,7 +94,7 @@ public class ShootUserControllers {
         model.addAttribute("users",users);
         return "houtai/admin-role-add";
     }
-    //更新
+    //更新信息
     @RequestMapping("/usersUpdate")
     public  String usersUpdate(ShootUser user,long RoleId ,long userId,long rolesId){
         ShootUserRole role = new ShootUserRole();
