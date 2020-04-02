@@ -130,14 +130,10 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     }
 
     @Override
-<<<<<<< HEAD
     public List<ShootUser> getUsersAll() {
         return shootUserMapper.getUserAll();
     }
 
-
-}
-=======
     public int modifyMember(Long id, LocalDate memberDate) {
         return shootUserMapper.updateMember(id, memberDate);
     }
@@ -174,4 +170,3 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     }
 
 }
->>>>>>> 9f0a8f7ca5499571ffe2b5406b5c678c33f8e892
