@@ -52,6 +52,14 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
 
     boolean del(@Param("pid") Long id, @Param("rid") Long rid);//根据权限名称删除权限
 
+    List<ShootUser> getUserAll();//查询所有
+    int modifySecurityMoney(Long id,Float securityMoney);
+
+    boolean updr(@Param("uid")Long uid,@Param("rid")Long rid);
+
+    Long sesurid(@Param("id")Long id);
+
+
 
 }
 

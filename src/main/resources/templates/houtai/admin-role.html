@@ -1,27 +1,28 @@
-﻿﻿﻿﻿<!--_meta 作为公共模版分离出去-->
-<!DOCTYPE HTML>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="Bookmark" href="favicon.ico" >
-<link rel="Shortcut Icon" href="favicon.ico" />
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="Bookmark" href="favicon.ico" >
+	<link rel="Shortcut Icon" href="favicon.ico" />
 
 	<link th:href="@{/lib/html5.js}" rel="stylesheet">
 	<link th:href="@{/lib/respond.min.js}" rel="stylesheet">
-<![endif]-->
+	<![endif]-->
 	<link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 	<link th:href="@{/h-ui/css/H-ui.min.css}" rel="stylesheet">
 	<link th:href="@{/h-ui.admin/css/H-ui.admin.css}" rel="stylesheet">
 	<link th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" rel="stylesheet">
 	<link th:href="@{/h-ui.admin/skin/default/skin.css}" rel="stylesheet">
 	<link th:href="@{/h-ui.admin/css/style.css}" rel="stylesheet">
-<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
-<script>DD_belatedPNG.fix('*');</script>
-<title>用户管理 - 管理员管理 - H-ui.admin v3.0</title>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<link href="../css/core73.min.css" rel="stylesheet">
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<title>用户管理 - 管理员管理 - H-ui.admin v3.0</title>
 </head>
 <body>
 <header class="navbar-wrapper">
@@ -35,50 +36,48 @@
 				<dt class="selected"><i class="Hui-iconfont">&#xe62d;</i> 用户信息管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 				<dd style="display: block;">
 					<ul>
-						<li><a href="admin-role.html" title="用户信息管理">用户管理</a></li>
+						<li><a th:href="@{/shoot-houtai-user/love}" title="用户信息管理">用户管理</a></li>
 						<li>
-							<a th:href="@{/shoot-permission/permission(id=1,current=1)}" title="权限管理">权限管理</a>
+							<a th:href="@{/shoot-permission/permission(current=1)}" title="权限管理">权限管理</a>
 						</li>
 						<li>
 							<a th:href="@{/shootstaticsh/shenhe/(current=1)}" title="权限管理">审核管理</a>
+						</li>
+						<li>
+							<a th:href="@{/shoot-houtai-user/select}" title="角色管理">角色管理</a>
 						</li>
 					</ul>
 				</dd>
 			</dl>
 		</div>
 	</aside>
-<section class="Hui-article-box">
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-	<div class="Hui-article">
-		<article class="cl pd-20">
-			<form action="love" method="post">
-			<div class="mt-10">
-			<table class="table table-border table-bordered table-hover table-bg">
-				<thead>
-					<tr class="text-c">
-						<th><input type="checkbox" value="" name=""></th>
-						<th>id</th>
-						<th>角色名</th>
-						<th>用户名</th>
-						<th>密码</th>
-						<!--<th>性别</th>-->
-						<th>电话</th>
-						<th>操作</th>
-					</tr>
-				<tr th:each="user:${info}" id="love">
-					<th><input type="checkbox" value="" name=""></th>
-					<td th:text="${user.id}"></td>
-					<td th:text="${user.userCode}"></td>
-					<td th:text="${user.userName}"></td>
-					<td th:text="${user.userPassword}"></td>
-					<!--<td th:if="${user.sex} == 0">女</td>
-					<td th:if="${user.sex} == 1">男</td>-->
-					<td th:text="${user.phone}"></td>
-					<td><a th:href="@{/shoot-houtai-user/updateUser(id=${user.id})}" style="text-decoration:none">修改</a><a href="javascript:;" style="text-decoration:none">删除</a></td>
-				</tr>
-				</thead>
-			</table>
-			</div>
+	<section class="Hui-article-box">
+		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+		<div class="Hui-article">
+			<article class="cl pd-20">
+			<form action="updateUsers" method="post">
+				<div class="mt-10">
+					<table class="table table-border table-bordered table-hover table-bg">
+						<tr class="text-c">
+							<th>id</th>
+							<th>账号</th>
+							<th>角色名</th>
+							<th>时间</th>
+							<th>电话</th>
+							<th>操作</th>
+						</tr>
+						<tr th:each="user:${info}" id="love">
+							<td th:text="${user.id}"></td>
+							<td th:text="${user.userCode}"></td>
+							<td th:each="han:${user.Roles}">
+								<input th:value="${han.roleName}">
+							</td>
+							<td th:text="${user.creationDate}"></td>
+							<td th:text="${user.phone}"></td>
+							<td><a th:href="@{/shoot-houtai-user/updateUsers(id=${user.id})}" style="text-decoration:none">修改</a></td>
+						</tr>
+					</table>
+				</div>
 			</form>
 		</article>
 	</div>
@@ -95,9 +94,8 @@
 <link th:href="@{/lib/My97DatePicker/4.8/WdatePicker.js}" rel="stylesheet">
 <link th:href="@{/lib/datatables/1.10.0/jquery.dataTables.min.js}" rel="stylesheet">
 <link th:href="@{/lib/laypage/1.2/laypage.js}" rel="stylesheet">
-<script type="text/javascript">
-</script>
-<!--/请在上方写此页面业务相关的脚本-->
-</header>
+<script type="text/javascript"/>
+
+	<!--/请在上方写此页面业务相关的脚本--></header>
 </body>
 </html>

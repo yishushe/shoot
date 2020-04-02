@@ -1,5 +1,4 @@
-﻿﻿<!--_meta 作为公共模版分离出去-->
-<!DOCTYPE HTML>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
@@ -21,6 +20,8 @@
 	<link th:href="@{/h-ui.admin/css/style.css}" rel="stylesheet">
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
+	<link href="../css/core73.min.css" rel="stylesheet">
+	<script th:src="@{/js/jquery.min.js}"></script>
 	<title>用户管理 - 管理员管理 - H-ui.admin v3.0</title>
 </head>
 <body>
@@ -37,10 +38,13 @@
 					<ul>
 						<li><a th:href="@{/shoot-houtai-user/love}" title="用户信息管理">用户管理</a></li>
 						<li>
-							<a th:href="@{/shoot-permission/permission(id=1,current=1)}" title="权限管理">权限管理</a>
+							<a th:href="@{/shoot-permission/permission(current=1)}" title="权限管理">权限管理</a>
 						</li>
 						<li>
 							<a th:href="@{/shootstaticsh/shenhe/(current=1)}" title="权限管理">审核管理</a>
+						</li>
+						<li>
+							<a th:href="@{/shoot-houtai-user/select}" title="角色管理">角色管理</a>
 						</li>
 					</ul>
 				</dd>

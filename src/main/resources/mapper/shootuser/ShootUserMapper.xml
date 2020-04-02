@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bdqn.photography.shootuser.mapper.ShootUserMapper">
+    <resultMap id="hu" type="ShootUser">
+        <id property="id" column="s_id"></id>
+        <collection property="roles" ofType="ShootRole" resultMap="rolesh"></collection>
+    </resultMap>
+    <resultMap id="rolesh" type="ShootRole">
+        <id property="id" column="us_id"></id>
+        <result property="roleName" column="roleName"></result>
+    </resultMap>
+    <select id="getUserAll" resultMap="hu">
+      SELECT s.id s_id,us.id us_id,ro.id ro_id, s.userCode,us.roleName,s.creationDate,s.sex,s.phone FROM shoot_user_role ro
+      INNER JOIN shoot_role us ON us.id=ro.roleId
+      INNER JOIN shoot_user s ON s.id=ro.userId
+      ORDER BY s.id
+    </select>
+
+    <select id="sesurid" resultType="Long">
+SELECT id FROM shoot_user_role WHERE userid=#{id}
+    </select>
+
+    <update id="updr">
+    UPDATE shoot.shoot_user_role SET  roleId = #{rid} WHERE userId = #{uid} ;
+    </update>
 
     <insert id="insertUser" parameterType="ShootUser" useGeneratedKeys="true" keyProperty="id">
         insert into shoot_user (userCode,userName,userPassword,sex,creationDate,portyaitl,phone,shootAddressId)
