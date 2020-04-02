@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author jobob
@@ -22,10 +22,10 @@ public interface ShootInfoMapper extends BaseMapper<ShootInfo> {
     int addInfo(ShootInfo info);  //添加约拍信息
 
     //page 分页类必须放到参数第一个
-    IPage<ShootInfo> getInfo(IPage<ShootInfo> page,@Param("stateId") Long stateId,
-                            @Param("city") String city,
-                            @Param("costId") Long costId,
-                            @Param("roleId") Long roleId,
+    IPage<ShootInfo> getInfo(IPage<ShootInfo> page, @Param("stateId") Long stateId,
+                             @Param("city") String city,
+                             @Param("costId") Long costId,
+                             @Param("roleId") Long roleId,
                              @Param("sex") Long sex);  //查询所有通过审核约拍信息
 
     ShootInfo getInfoById(@Param("id") Long id);   //约拍详情页面
@@ -35,11 +35,11 @@ public interface ShootInfoMapper extends BaseMapper<ShootInfo> {
 
     List<ShootInfo> getInfoByUserId(@Param("userId") Long userId);   //根据用户id查询当前用户约拍信息
 
-    Page<ShootInfo> getinfobystateid(IPage<ShootInfo> page,@Param("id") Long id);//根据状态查信息
+    Page<ShootInfo> getinfobystateid(IPage<ShootInfo> page, @Param("id") Long id);//根据状态查信息
 
     List<ShootInfo> getinfobyinfoid(@Param("id") Long id);   //根据infoid查询
 
-    int updateStateIdById(@Param("id") Long id,Long stateId);    //根据id更改状态
+    int updateStateIdById(@Param("id") Long id, Long stateId);    //根据id更改状态
 
-    boolean insertinform(@Param("cause")String cause, @Param("pid")Long pid, @Param("date")LocalDate date);//插入
+    boolean insertinform(@Param("cause") String cause, @Param("pid") Long pid, @Param("date") LocalDate date);//插入
 }

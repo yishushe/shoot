@@ -350,15 +350,15 @@ public class ShootUserController {
     @RequestMapping(value = "/payment")
     public String payment(@RequestParam(value = "price", required = false)
                                   Float price,
-            @RequestParam(value = "subject",required = false)
-            String subject, Model model) {
+                          @RequestParam(value = "subject", required = false)
+                                  String subject, Model model) {
         String qixian;
         if (price == 50) {
             qixian = "月";
         } else {
             qixian = "年";
         }
-        model.addAttribute("subject",subject);  //商品名称
+        model.addAttribute("subject", subject);  //商品名称
         model.addAttribute("price", price);     //商品价格
         model.addAttribute("qixian", qixian);   //月 或 年
         return "personage/payment";
@@ -370,11 +370,11 @@ public class ShootUserController {
     //访问支付宝页面 支付页面
     @RequestMapping(value = "/alipay/toPay")
     @ResponseBody
-    public void alipay(@RequestParam(value = "amount",required = false)
-                                   String amount,@RequestParam(value = "subject",required = false)
-                         String subject,@RequestParam(value = "body",required = false)
-                         String body,HttpSession session,
-                         HttpServletResponse response, HttpServletRequest request) throws Exception {
+    public void alipay(@RequestParam(value = "amount", required = false)
+                               String amount, @RequestParam(value = "subject", required = false)
+                               String subject, @RequestParam(value = "body", required = false)
+                               String body, HttpSession session,
+                       HttpServletResponse response, HttpServletRequest request) throws Exception {
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.app_id, AliPayConfig.merchant_private_key, "json", AliPayConfig.charset, AliPayConfig.alipay_public_key, AliPayConfig.sign_type);
 
@@ -384,21 +384,21 @@ public class ShootUserController {
         alipayRequest.setNotifyUrl(AliPayConfig.notify_url);
 
         //生成订单号类
-        Round round=new Round();
+        Round round = new Round();
         //商户订单号，商户网站订单系统中唯一订单号，必填
         String out_trade_no = round.round();
         //付款金额，必填
-        String total_amount =amount;
+        String total_amount = amount;
 
         //信息存放订单实体类
-        ShootOrder order=new ShootOrder();
+        ShootOrder order = new ShootOrder();
         order.setOutTradeNo(out_trade_no);
         order.setTotalAmount(Float.valueOf(total_amount));
         order.setSubject(subject);
         order.setBody(body);
-        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        ShootUser user = (ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
         order.setUserId(user.getId());
-        session.setAttribute("order",order);
+        session.setAttribute("order", order);
 
         //订单名称，必填
         //String subject ="蒋蒋集团";
@@ -447,32 +447,32 @@ public class ShootUserController {
     @GetMapping("/alipay/return_url")
     public String returnAlipay(HttpSession session) {
         Session session1 = SecurityUtils.getSubject().getSession();
-        ShootOrder order =(ShootOrder) session.getAttribute("order");
+        ShootOrder order = (ShootOrder) session.getAttribute("order");
         order.setCreationDate(LocalDateTime.now());   //存入当前生成订单时间
         boolean save = iShootOrderService.save(order);
         logger.info("----return-----");
-        if(save){   //成功
-            ShootUser user = (ShootUser)session1.getAttribute("user");
-            LocalDate localDate=null;
-            if(order.getTotalAmount()==50){   //办理 月会员
-                if(user.getMember()==1){  //已是会员 续费
+        if (save) {   //成功
+            ShootUser user = (ShootUser) session1.getAttribute("user");
+            LocalDate localDate = null;
+            if (order.getTotalAmount() == 50) {   //办理 月会员
+                if (user.getMember() == 1) {  //已是会员 续费
                     localDate = user.getMemberDate().plusMonths(1);
-                }else {  //不是会员
-                    localDate=LocalDate.now().plusMonths(1);
+                } else {  //不是会员
+                    localDate = LocalDate.now().plusMonths(1);
                 }
-            }else if(order.getTotalAmount()==300){  //办理年会员
-                if(user.getMember()==1){  //已是会员 续费
+            } else if (order.getTotalAmount() == 300) {  //办理年会员
+                if (user.getMember() == 1) {  //已是会员 续费
                     localDate = user.getMemberDate().plusYears(1);
-                }else {  //不是会员
-                    localDate=LocalDate.now().plusYears(1);
+                } else {  //不是会员
+                    localDate = LocalDate.now().plusYears(1);
                 }
             }
-            iShootUserService.modifyMember(order.getUserId(),localDate);
+            iShootUserService.modifyMember(order.getUserId(), localDate);
             session.removeAttribute("order");   //删除订单信息
             List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
-            session1.setAttribute("user",userByUserCode.get(0));   //更改之后重新查询当前user信息
+            session1.setAttribute("user", userByUserCode.get(0));   //更改之后重新查询当前user信息
             return "redirect:/shoot-user/personage";  //重工回到个人主页
-        }else {
+        } else {
             return "personage/joinMember";            //失败则回到充值页
         }
     }
@@ -480,7 +480,7 @@ public class ShootUserController {
 
     //提高信用等级页面
     @RequestMapping(value = "/credit")
-    public String credit(){
+    public String credit() {
         return "personage/credit";
     }
 

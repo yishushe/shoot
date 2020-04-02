@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author jobob
@@ -34,23 +34,23 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
 
     /**
      * 添加会员
+     *
      * @param id
      * @param memberDate
      * @return
      */
     int updateMember(@Param("id") Long id,
-                     @Param("memberDate")LocalDate memberDate);
+                     @Param("memberDate") LocalDate memberDate);
 
-    Page<ShootUser> getpermission(IPage<ShootUser> page,@Param("id")Long id);  //查询权限
+    Page<ShootUser> getpermission(IPage<ShootUser> page, @Param("id") Long id);  //查询权限
 
-    Long seleid(@Param("rid")Long id,@Param("pid")Long pid);  //查询是否有此权限
+    Long seleid(@Param("rid") Long id, @Param("pid") Long pid);  //查询是否有此权限
 
-    boolean updp(@Param("rid")Long id,@Param("pid")Long pid,@Param("qxid")Long qxid); //更改权限
+    boolean updp(@Param("rid") Long id, @Param("pid") Long pid, @Param("qxid") Long qxid); //更改权限
 
-    boolean ins(@Param("rid")Long id,@Param("pid")Long pid);//增加权限
+    boolean ins(@Param("rid") Long id, @Param("pid") Long pid);//增加权限
 
-    boolean del(@Param("pid")Long id,@Param("rid")Long rid);//根据权限名称删除权限
-
+    boolean del(@Param("pid") Long id, @Param("rid") Long rid);//根据权限名称删除权限
 
 
 }

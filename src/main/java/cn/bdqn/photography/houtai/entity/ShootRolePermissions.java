@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jobob
@@ -24,7 +24,7 @@ public class ShootRolePermissions implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id",type = IdType.AUTO)  //设置主键生成策略是id自增
+    @TableId(value = "id", type = IdType.AUTO)  //设置主键生成策略是id自增
     private Long id;
 
     @TableField("roleId")

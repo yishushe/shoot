@@ -1,4 +1,5 @@
 package cn.bdqn.photography.houtai.controller;
+
 import cn.bdqn.photography.houtai.entity.ShootUsers;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
@@ -23,31 +24,33 @@ import java.util.List;
 public class ShootUserControllers {
     @Resource
     private IShootUserService iShootUserService;
+
     @RequestMapping("/love")
-    public String All(HttpServletRequest ht){
+    public String All(HttpServletRequest ht) {
         List<ShootUser> usersList = iShootUserService.list();
-        ht.setAttribute("info",usersList);
+        ht.setAttribute("info", usersList);
         return "houtai/admin-role";
     }
+
     @RequestMapping("/admin-role-add")
-    public String html(){
+    public String html() {
         return "houtai/admin-role-add";
     }
 
 
     @RequestMapping("/updateUser")
-    public String updateUser(ShootUser id,Model model){
+    public String updateUser(ShootUser id, Model model) {
         ShootUser users = iShootUserService.getById(id);
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         return "houtai/admin-role-add";
     }
 
     @RequestMapping("/userUpdate")
-    public  String userUpdate(ShootUser user){
-        boolean shootUser= iShootUserService.updateById(user);
-        if (shootUser==true){
+    public String userUpdate(ShootUser user) {
+        boolean shootUser = iShootUserService.updateById(user);
+        if (shootUser == true) {
             return "redirect:love";
-        }else {
+        } else {
             return "houtai/admin-role-add";
         }
     }
