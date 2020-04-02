@@ -62,8 +62,8 @@
             <input type="text" th:value="${uu.ShootType.TypeName}"/>
             <input type="text" th:value="${uu.ShootCost.CostName}"/>
             <input type="text" th:value="${city}"/><br>
-        <p>
-        <img th:width="100" th:height="90" th:src="${uu.ShootUser.Portyaitl}">
+        <p th:each="imagess:${uu.shootImages}">
+        <img th:width="100" th:height="90" th:src="${imagess.ImagesName}">
     </p>
 
         </p>输入更改的状态:
