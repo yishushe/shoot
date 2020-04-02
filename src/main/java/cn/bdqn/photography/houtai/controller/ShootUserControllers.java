@@ -78,12 +78,10 @@ public class ShootUserControllers {
     //查看用户角色信息
     @RequestMapping("/select")
     public  String selectAll(HttpServletRequest ht){
-        List<ShootUser> usersList = (List<ShootUser>) iShootUserService.getUsersAll();
+        List<ShootUser> usersList = iShootUserService.getUsersAll();
         ht.setAttribute("info",usersList);
         return "houtai/admin-role";
     }
-
-
 
     //修改角色信息
     @RequestMapping("/updateUsers")
