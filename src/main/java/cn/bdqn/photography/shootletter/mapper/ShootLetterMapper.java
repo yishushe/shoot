@@ -86,5 +86,16 @@ public interface ShootLetterMapper extends BaseMapper<ShootLetter> {
     List<ShootLetter> getLetterByPutUserIdPut(@Param("putUserId") Long putUserId);
 
 
+    /**
+     * 查询出 是否支付过 或是我支付别人
+     * @param sendUserId
+     * @param putUserId
+     * @param infoId
+     * @return
+     */
+    Integer getByOrder(@Param("sendUserId") Long sendUserId,
+                   @Param("putUserId") Long putUserId,
+                   @Param("infoId") Long infoId,
+                       @Param("test") String test);
 }
 

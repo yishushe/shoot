@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
 
-    <title>提交成功 - 艺术摄</title>
+    <title>发出请求 - 艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
-    <link href="../css/core73.min.css" rel="stylesheet" />
+    <link href="../css/core73.min.css" rel="stylesheet">
     <script th:src="@{/js/jquery.min.js}"></script>
 
 </head>
@@ -28,7 +27,7 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
                     <span>艺术摄</span>
                 </div>
             </a>
@@ -55,42 +54,51 @@
     </div>
 
 </header>
+
 <div class="fy-docs-nav-distance"></div>
 
 <div class="container bottom_menu_margin_plus xzero_padding">
-    <div class="data_posts">
-        <div class="data_post_cell" style="text-align:center;">
-            <img class="data_avatar_middle" th:src="@{/images/logo.png}"/>
-            <div class="data_meta_text v15_margin">已提交信息，需要进行审核，请关注站内消息获取审核结果</div>
-        </div>
-        <div class="data_post_cell" style="text-align:center;">
-            <a class="btn btn-sm btn-success" th:href="@{/shoot-state/infoMessage}">查看 我已发布的信息</a>
-        </div>
+    <div class="tabs_header">
+
+
+        <ul id="message_tabs" class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="javascript:;" data-tabname="notifications">账单信息</a></li>
+            <li role="presentation" class="active"><a href="javascript:;" data-tabname="sentrequests" th:text="${'总支出:'+expend}"></a></li>
+            <li role="presentation" class="active"><a href="javascript:;" data-tabname="sentrequests" th:text="${'总收入:'+income}"></a></li>
+        </ul>
+
+
     </div>
-    <div class="data_posts v10_margin">
-        <div class="data_post_cell" style="text-align:center;">
-            <div class="data_meta_info">有事请联系客服（微信号：yuepai6）</div>
-            <div class="v15_margin">
-                <img src="/content/custom/yuepai6.jpg" style="width:150px;height:auto;margin-left:0px;" />
-            </div>
-        </div>
+
+    <div class="data_posts tab_panel tabs_header_margin" data-tabname="sentrequests">
+
+    <ul th:if="${orderList==null or orderList.size()<1}">
+        <li>还没有账单</li>
+    </ul>
+        <table th:if="${orderList!=null and orderList.size()>0}" border="1" cellspacing="10" cellpadding="10" style="background: #fff;">
+            <tr>
+                &nbsp;&nbsp;<td>订单号</td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td>金额</td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td>名称</td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td>描述</td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td>时间</td>&nbsp;&nbsp;
+            </tr>
+            <tr th:each="order,index : ${orderList}" th:object="${order}">
+                &nbsp;&nbsp;<td th:text="*{outTradeNo}"></td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td th:text="${order.totalAmount>0?order.totalAmount:0}"></td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td th:text="*{subject}"></td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td th:text="*{body}"></td>&nbsp;&nbsp;
+                &nbsp;&nbsp;<td th:text="*{creationDate}"></td>&nbsp;&nbsp;
+            </tr>
+        </table>
+
     </div>
+
 
     <div class="v20_margin"></div>
 </div>
 
 <script th:src="@{/js/style.js}"></script>
-
-<footer class="fy-docs-footer " role="contentinfo">
-    <div class="container xzero_padding" style="text-align:center;">
-        <a href="https://www.shehuiapp.com">
-            <span class="data_meta_info">
-                © 2014 - 2020 摄会社 摄影师模特摄影约拍演艺通告平台
-            </span>
-        </a>
-    </div>
-</footer>
-
 
 </body>
 </html>

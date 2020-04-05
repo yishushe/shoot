@@ -58,4 +58,9 @@ public class ShootLetterServiceImpl extends ServiceImpl<ShootLetterMapper, Shoot
         return shootLetterMapper.getOrderByStateIdAndUserId(stateId,userId);
     }
 
+    @Override
+    public Integer findOrder(Long sendUserId, Long putUserId, Long infoId,String test) {
+        return shootLetterMapper.getByOrder(sendUserId,putUserId,infoId,test);
+    }
+
 }

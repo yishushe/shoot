@@ -15,12 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -85,7 +87,7 @@ public class ShootSelfieController {
         //根据 关注者id 和 被关注者id 查询是否有数据
         QueryWrapper<ShootAttention> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("attentionId",user.getId());  //关注者 当前用户id
-        queryWrapper.eq("focusedId",byId.getShootUser().getId());  //被关注着 当前信息的id
+        queryWrapper.eq("focusedId",byId.getShootUser().getId());  //被关注者 当前信息的id
         ShootAttention one = iShootAttentionService.getOne(queryWrapper);
         model.addAttribute("attentionId",one);    //传参到页面判断是否本条
 
@@ -93,6 +95,19 @@ public class ShootSelfieController {
         return "selfie/selfieMessage";
     }
 
+
+    //根据userId查询自拍
+    @RequestMapping(value = "/byUserId")
+    @ResponseBody
+    public Object[] byUserId(@RequestParam(value = "userId",required = false)
+                             Long userId){
+        List<ShootSelfie> selfieByUserId = iShootSelfieService.findSelfieByUserId(userId);
+        for (ShootSelfie shootSelfie : selfieByUserId){
+            shootSelfie.setImagesName("/images/"+shootSelfie.getImagesName());
+            shootSelfie.getShootUser().setPortyaitl("/images/"+shootSelfie.getShootUser().getPortyaitl());
+        }
+        return selfieByUserId.toArray();
+    }
 
 }
 

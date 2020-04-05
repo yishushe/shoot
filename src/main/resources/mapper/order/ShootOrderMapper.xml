@@ -32,5 +32,15 @@ WHERE 1=1
         AND DATE_FORMAT( so.creationDate, '%Y%m' ) = DATE_FORMAT(CURDATE( ) , '%Y%m' )
     </select>
 
+    <!-- 总支出 -->
+    <select id="expend" resultType="java.lang.Float">
+        select sum(totalAmount) from shoot.shoot_order where userId=#{userId}
+    </select>
+
+    <!-- 总收入 -->
+    <select id="income" resultType="java.lang.Float">
+        select sum(totalAmount) from shoot.shoot_order where sendUserId=#{sendUserId}
+    </select>
+
 </mapper>
 

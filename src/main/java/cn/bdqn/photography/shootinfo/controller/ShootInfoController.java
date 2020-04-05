@@ -63,7 +63,7 @@ public class ShootInfoController {
         boolean b = iShootInfoService.addInfo(shootInfo, shootImages, session, multipartFiles, request,
                 prow,city,country,styleName);
         if(b==true){  //添加约拍信息成功
-           return "redirect:/shoot-user/personage";  //重定向到个人页
+           return "redirect:/shoot-info/infoScuess";  //重定向到个人页
         }
         return "personage/postMessage";
     }
@@ -110,8 +110,6 @@ public class ShootInfoController {
             infoById.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
         }
 
-        System.out.println("sssssssssssssssssssss:"+infoById.getRequireSecurityAccount());
-
         if(user!=null){
             //根据 关注者id 和 被关注者id 查询是否有数据
             QueryWrapper<ShootAttention> queryWrapper=new QueryWrapper<>();
@@ -142,7 +140,11 @@ public class ShootInfoController {
         }
     }
 
-
+    //到达约拍信息成功页面
+    @RequestMapping(value = "/infoScuess")
+    public String infoScuess(){
+        return "personage/infoScuess";
+    }
 
 }
 

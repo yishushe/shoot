@@ -33,5 +33,10 @@ public class ShootSelfieServiceImpl extends ServiceImpl<ShootSelfieMapper, Shoot
         return shootSelfieMapper.getById(id);
     }
 
+    @Override
+    public List<ShootSelfie> findSelfieByUserId(Long userId) {
+        return shootSelfieMapper.getSelfieByUserId(userId);
+    }
+
 }
 

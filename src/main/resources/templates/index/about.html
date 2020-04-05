@@ -169,9 +169,14 @@
                                 <span th:if="${info.shootCost.id==1 or info.shootCost.id==4}">
                                     <span class="data_meta_text" th:text="${info.shootCost.costName}">希望互免</span>
                                 </span>
-                                <span th:if="${info.shootCost.id==2 or info.shootCost.id==3}">
+                                <span th:if="${info.shootCost.id==3}">
                                     <span class="data_meta_text" th:text="${info.shootCost.costName+' '+info.price+'元'}">希望互免</span>
                                 </span>
+                                <span th:if="${info.shootCost.id==2}">
+                                    <span class="data_meta_text" th:text="${info.shootCost.costName+' '+info.price+'元'}">希望互免</span>
+                                    <input hidden id="price" th:value="${info.price}">
+                                </span>
+
 
                             </div>
 
@@ -623,6 +628,7 @@
         <input hidden class="requireRoles" th:value="${session.user.member}">
         <input hidden class="requireSecurityAccount" th:value="${session.user.SecurityMoney}">
         <input hidden class="user" th:value="${session.user}">
+        <input hidden class="money" th:value="${session.user.money}">
     </td>
 </tr>
 
@@ -642,7 +648,6 @@
                  }
             }
 
-
             var phone = $("#phone").val();
             if(phone=='' || phone==null){
                 alert("请先绑定手机号 点击我的>编辑个人资料>设置手机号");
@@ -661,6 +666,13 @@
                      alert("存入保证金才能够约拍 我的>提高信用等级>加入保证金");
                      return;
                  }
+            }
+            var price = $("#price").val();
+            if(price!=undefined && price>0){  //需要出费
+               if($(".money").val()<price){  //你本人金额不够
+                    alert("本条约拍信息所需费用你本人余额不够,也为了诚信,制度所以你需要达到所需余额才能约拍,请点击>我的>余额>充值 余额可以随时提现");
+                     return;
+               }
             }
 
             var $requestSubmitDialog = $("#request_submit_dialog");

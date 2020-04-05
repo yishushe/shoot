@@ -53,7 +53,7 @@
     </div>
 
 </header>
-
+<input hidden id="money" th:value="${session.user.money}">
 <div class="fy-docs-nav-distance"></div>
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div style="">
@@ -214,7 +214,7 @@
                                                 var letter=data[i];
                                                 var str="<div class=\"data_post_cell\">\n" +
                                                     "\n" +
-                                                    "                <a class=\"data_post_container_link\" href='/shoot-letter/accept/"+letter.shootUser.id+"/"+letter.infoId+"'>\n" +
+                                                    "                <a class=\"data_post_container_link\">\n" +
                                                     "                    <div class=\"user_info_cell_sm v10_margin_bottom\">\n" +
                                                     "                        <div class=\"user_info_cell_avatar\">\n" +
                                                     "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
@@ -279,7 +279,8 @@
                                                     "                    <div class=\"data_post_content_clear\"></div>\n" +
                                                     "                    <div class=\"data_post_message v10_margin\" >"+letter.content+"</div>\n" +
                                                     "                    <div class=\"data_post_message v10_margin\" >"+'   约拍名:'+letter.shootInfo.content+"</div>\n" +
-                                                    "                    <div class=\"data_post_message  v10_margin\" ><button class='complete' val='"+letter.shootInfo.id+"' val1='"+letter.shootInfo.shootType.typeName+"' val2='"+letter.shootInfo.shootCost.costName+"' val3='"+letter.sendUserId+"'>完成</button></div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" style='color: green'>"+letter.shootInfo.shootCost.costName+"<span>"+letter.shootInfo.price+'元'+"</span>&nbsp;&nbsp;<a style='color: green' href='javascript:;' class='judge' val7='"+letter.shootInfo.id+"' val4='"+letter.shootInfo.shootCost.costName+"' val3='"+letter.shootInfo.shootType.typeName+"' val='"+letter.sendUserId+"' val2='"+letter.shootInfo.price+"'>"+letter.describe+"</a></div>\n" +
+                                                    "                    <div class=\"data_post_message  v10_margin\" ><button class='complete' val4='"+letter.shootInfo.shootCost.costName+"' val5='"+letter.shootInfo.costId+"' val6='"+letter.describe+"' val='"+letter.shootInfo.id+"' val1='"+letter.shootInfo.shootType.typeName+"' val2='"+letter.shootInfo.shootCost.costName+"' val3='"+letter.sendUserId+"'>完成</button></div>\n" +
                                                     "                    <div class=\"data_meta_info v10_margin\">\n" +
                                                     "                        <span class=\"data_meta_info\">"+letter.creationDate+"</span>\n" +
                                                     "                    </div>\n" +
@@ -294,19 +295,58 @@
                                     },"json")
                                   }
                     });
+
+                            //去支付别人
+                    $(document).on("click",".judge",function () {
+                        var judge = $(this);
+                        if(confirm("确定已完成约拍然后付款?")){
+                            var putUserId = $(this).attr("val");
+                            var price = $(this).attr("val2");
+                            var money = $("#money").val();
+                            var typeName = $(this).attr("val3");
+                            var costName = $(this).attr("val4");
+                            var infoId=$(this).attr("val7");
+                            if(money!=undefined && money!='' && money>=price){  //钱够
+                                $.post("/shoot-letter/zhifu",{"price":price,"sendUserId":putUserId,
+                                    "typeName":typeName,"costName":costName,"infoId":infoId},function (data) {
+                                    if(data==true || data=="true"){
+                                        judge.text("已付款");
+                                        alert("支付成功");
+                                        var find = $(this).parent().next().find("button");
+                                        find.attr("val6","我已付款");
+                                    }else {
+                                        alert("支付失败");
+                                    }
+                                },"json")
+                            }else {
+                                alert("余额不够支付请去充值");
+                            }
+
+                        }
+                    });
+
                      //完成 约拍 按钮
                      $(document).on("click",".complete",function () {
+                         var complete = $(this);
+                         var costId=$(this).attr("val5");
+                         var describe=$(this).attr("val6");
+                         if(costId==2 || costId==3){  //需要支付或是收钱
+                             if(describe=="去付款" || describe=="对方未付款"){  //还没支付 或是还没收到钱
+                                 alert("还没支付或是还没收到钱,所以还不能够完成约拍!");
+                                 return;
+                             }
+                         }
                          var infoId = $(this).attr("val");
                          var typeName = $(this).attr("val1");
                          var costName = $(this).attr("val2");
                          var sendUserId = $(this).attr("val3");
                          var stateId=4;    //完成本次 约拍状态更改为4
                          if(confirm("确定本次约拍已经完成?")){
-                         $.post("/shoot-letter/complete",{"infoId":infoId,"stateId":stateId,"typeName":typeName,"costName":costName,"sendUserId":sendUserId},function (data) {
-                               if(data==true){
-                                   $(this).text("已完成");
-                               }
-                         },"json");
+                                         $.post("/shoot-letter/complete",{"infoId":infoId,"stateId":stateId,"typeName":typeName,"costName":costName,"sendUserId":sendUserId},function (data) {
+                                             if(data==true || data=="true"){
+                                                 complete.text("已完成");
+                                             }
+                                         },"json");
                          }
                      });
 

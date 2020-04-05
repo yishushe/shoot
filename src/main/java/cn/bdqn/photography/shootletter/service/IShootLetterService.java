@@ -77,5 +77,15 @@ public interface IShootLetterService extends IService<ShootLetter> {
      */
     List<ShootLetter> findOrderByStateIdAndUserId(Long stateId,Long userId);
 
+
+    /**
+     * 查询是否 支付过 或是我支付别人
+     * @param sendUserId
+     * @param putUserId
+     * @param infoId
+     * @return
+     */
+    Integer findOrder(Long sendUserId,Long putUserId,Long infoId,String test);
+
 }
 

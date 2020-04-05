@@ -55,4 +55,12 @@ public interface IShootUserService extends IService<ShootUser> {
      */
     int modifySecurityMoney(Long id,Float securityMoney);
 
+
+    /**
+     * 根据userid 查询个人信息
+     * @param userId
+     * @return
+     */
+    List<ShootUser> findUserId(Long userId);
+
 }

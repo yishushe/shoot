@@ -1,11 +1,10 @@
 package cn.bdqn.photography.shootorder.controller;
 
-import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootorder.entity.ShootOrder;
 import cn.bdqn.photography.shootorder.service.IShootOrderService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.bouncycastle.LICENSE;
-import org.bouncycastle.math.raw.Mod;
+import cn.bdqn.photography.shootuser.entity.ShootUser;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,4 +33,22 @@ public class ShootOrderController {
        m.addAttribute("li",l);
         return "order/showallorder";
     }
+
+
+    //查看我的所有账单
+    @RequestMapping(value = "/orderList")
+    public String orderList(Model model){
+        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        QueryWrapper<ShootOrder> query=new QueryWrapper<>();
+        query.eq("userId",user.getId());
+        query.orderByDesc("creationDate");
+        List<ShootOrder> list = iShootOrderService.list(query);
+        Float expend = iShootOrderService.expend(user.getId());  //总支出
+        Float income = iShootOrderService.income(user.getId());  //总收入
+        model.addAttribute("expend",expend);
+        model.addAttribute("income",income);
+        model.addAttribute("orderList",list);
+        return "personage/orderList";
+    }
+
 }

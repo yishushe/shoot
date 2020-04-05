@@ -58,4 +58,41 @@
        WHERE se.id=#{id}
     </select>
 
+
+    <!-- 查询自己的自拍 -->
+    <resultMap id="selfie3" type="ShootSelfie">
+        <id property="id" column="id"></id>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="u_id"></id>
+            <association property="shootAddress" javaType="ShootAddress">
+                <association property="shootProw" javaType="ShootProw">
+                    <id property="id" column="p_id"></id>
+                </association>
+                <association property="shootCity" javaType="ShootCity">
+                    <id property="id" column="c_id"></id>
+                </association>
+                <association property="shootCountry" javaType="ShootCountry">
+                    <id property="id" column="co_id"></id>
+                </association>
+            </association>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+    </resultMap>
+    <select id="getSelfieByUserId" resultMap="selfie3">
+        SELECT se.*,u.id u_id,u.userName,u.portyaitl,
+       r.id r_id,r.roleName,p.id p_id,p.prow,
+       c.id c_id,c.city,co.id co_id,co.country FROM shoot_selfie se
+       INNER JOIN shoot_user u ON se.userId=u.id
+       INNER JOIN shoot_user_role ur ON u.id=ur.userId
+       INNER JOIN shoot_role r ON r.id=ur.roleId
+       INNER JOIN shoot_address a ON a.id=u.shootAddressId
+       INNER JOIN shoot_prow p ON p.id=a.prow_id
+       INNER JOIN shoot_city c ON c.id=a.city_id
+       INNER JOIN shoot_country co ON co.id=a.country_id
+       where u.id=#{userId}
+       ORDER BY se.creationDate DESC
+    </select>
+
 </mapper>

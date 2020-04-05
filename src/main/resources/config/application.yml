@@ -23,7 +23,7 @@ spring:
   resources:
     static-locations: classpath:/static/,classpath:/view/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
 mybatis-plus:
-  type-aliases-package: cn.bdqn.photography.shootUser.entity,cn.bdqn.photography.common.entity,cn.bdqn.photography.shootattention.entity,cn.bdqn.photography.shootimages.entity,cn.bdqn.photography.shootinfo.entity,cn.bdqn.photography.shootletter.entity,cn.bdqn.photography.shootselfie.entity,cn.bdqn.photography.shoottheme.entity,cn.bdqn.photography.houtai.entity,cn.bdqn.photography.shootorder.entity,cn.bdqn.photography.shootinform.entity
+  type-aliases-package: cn.bdqn.photography.shootUser.entity,cn.bdqn.photography.common.entity,cn.bdqn.photography.shootattention.entity,cn.bdqn.photography.shootimages.entity,cn.bdqn.photography.shootinfo.entity,cn.bdqn.photography.shootletter.entity,cn.bdqn.photography.shootselfie.entity,cn.bdqn.photography.shoottheme.entity,cn.bdqn.photography.houtai.entity,cn.bdqn.photography.shootorder.entity,cn.bdqn.photography.shootinform.entity,cn.bdqn.photography.shootevaluate.entity
   mapper-locations: mapper/*/*.xml
   configuration:
     auto-mapping-behavior: full  #reslutMap列属性的自动映射

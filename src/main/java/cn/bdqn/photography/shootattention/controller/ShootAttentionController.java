@@ -11,6 +11,7 @@ import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,25 +124,40 @@ public class ShootAttentionController {
     @RequestMapping(value = "/personalInfo")
     public String personalInfo(@RequestParam(value = "userId",required = false) Long userId, Model model){
         List<ShootInfo> infoByUserId = iShootInfoService.findInfoByUserId(userId);
-
         //循环设置图片路劲
-        for (ShootInfo info : infoByUserId){
-            Map<String,Object> map=new HashMap<>();
-            map.put("infoId",info.getId());
-            //根据id查找信息
-            Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
-            if(shootImages!=null && shootImages.size()>0){
-                for (ShootImages images: shootImages
-                ) {
-                    //设置info图片路劲
-                    images.setImagesName("/images/"+images.getImagesName());
+        if(infoByUserId.size()>0){
+            for (ShootInfo info : infoByUserId){
+                Map<String,Object> map=new HashMap<>();
+                map.put("infoId",info.getId());
+                //根据id查找信息
+                Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
+                if(shootImages!=null && shootImages.size()>0){
+                    for (ShootImages images: shootImages
+                    ) {
+                        //设置info图片路劲
+                        images.setImagesName("/images/"+images.getImagesName());
+                    }
+                    info.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
                 }
-                info.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
             }
+            model.addAttribute("touxiang","/images/"+infoByUserId.get(0).getShootUser().getPortyaitl());
+            model.addAttribute("info",infoByUserId);
         }
+        if(infoByUserId.size()==0){  //没有查到值
+            List<ShootUser> byId = iShootUserService.findUserId(userId);
+            model.addAttribute("touxiang","/images/"+byId.get(0).getPortyaitl());
+            model.addAttribute("info2",byId);
+        }
+        Session session = SecurityUtils.getSubject().getSession();
+        ShootUser user = (ShootUser)session.getAttribute("user");
 
-        model.addAttribute("touxiang","/images/"+infoByUserId.get(0).getShootUser().getPortyaitl());
-        model.addAttribute("info",infoByUserId);
+        //根据 关注者id 和 被关注者id 查询是否有数据
+        QueryWrapper<ShootAttention> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("attentionId",user.getId());  //关注者 当前用户id
+        queryWrapper.eq("focusedId",userId);  //被关注者 当前信息的id
+        ShootAttention one = iShootAttentionService.getOne(queryWrapper);
+        model.addAttribute("attentionId",one);    //传参到页面判断是否本条
+        model.addAttribute("userId",userId);
         return "attention/personalInfo";
     }
 
@@ -172,6 +188,26 @@ public class ShootAttentionController {
         model.addAttribute("byUser",byUserId);
 
         return "attention/focuson";
+    }
+
+
+    //个人信息页面 关注我的人 和我关注的人
+    @RequestMapping(value = "/focuson2")
+    @ResponseBody
+    public Object[] focuson2(@RequestParam(value = "message",required = false)
+                                  String message,@RequestParam(value = "userId",required = false)
+                           Long userId){
+
+        //我关注的人信息 和 关注我的人
+        List<ShootAttention> byAttentionId = iShootAttentionService.findByAttentionId(userId,message);
+        //设置头像路劲
+        if(byAttentionId!=null && byAttentionId.size()>0){
+            for (ShootAttention attention: byAttentionId
+            ) {
+                attention.getShootUser().setPortyaitl("/images/"+attention.getShootUser().getPortyaitl());
+            }
+        }
+       return byAttentionId.toArray();
     }
 
 }

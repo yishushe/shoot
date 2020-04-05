@@ -11,4 +11,18 @@ public interface IShootOrderService extends IService<ShootOrder> {
     List<ShootOrder> showallorder(String id);
     List<ShootOrder> showorderby();
 
+    /**
+     * 总支出
+     * @param userId
+     * @return
+     */
+    Float expend(Long userId);
+
+    /**
+     * 总收入
+     * @param sendUserId
+     * @return
+     */
+    Float income(Long sendUserId);
+
 }

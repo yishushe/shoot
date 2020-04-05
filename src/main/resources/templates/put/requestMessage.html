@@ -73,20 +73,22 @@
 
     <div class="data_posts tab_panel tabs_header_margin" data-tabname="sentrequests">
 
-        <div th:if="${letter==null}">
-            <h1>还没人给你留言</h1>
+        <div th:if="${letter==null or letter.size()==0}">
+            <h1>你还没有发出请求</h1>
         </div>
         <div th:if="${letter!=null}" th:each="letter,index : ${letter}">
 
             <div class="data_post_cell">
 
-                <a class="data_post_container_link" th:href="@{/shoot-letter/aboutMessage(infoId=${letter.infoId})}">
+                <a class="data_post_container_link">
                     <div class="user_info_cell_sm v10_margin_bottom">
+                        <a th:href="@{/shoot-letter/aboutMessage(infoId=${letter.infoId})}">
                         <div class="user_info_cell_avatar">
                             <i class="data_post_author_title_link" >
                                 <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
                             </i>
                         </div>
+                        </a>
                         <div class="user_info_cell_content">
                             <i class="data_post_author_title_link" data-url="/u/1531674">
                                 <span class="data_post_author_title" th:text="${letter.shootUser.userName}">街头punk</span>
@@ -106,6 +108,61 @@
                     <div class="data_post_message v10_margin" th:text="${'  约拍名:'+letter.shootInfo.content}">
                         周二
                     </div>
+
+                    <!-- 发起约拍请求动态查看 -->
+                    <div class="data_post_message v10_margin" th:if="${letter.shootInfo.stateId==3}">
+                        <div class="data_post_message v10_margin" style="color: green">
+                            对方已接单
+                        </div>
+                        <div class="data_post_message v10_margin" th:if="${letter.shootInfo.shootCost.costName=='愿意付费'}">
+                            <span th:text="${'对方愿意付费 :'+letter.shootInfo.price+'元'}"></span>
+                            <span th:if="${letter.describe!=null and letter.describe!=''}">对方已付费</span>
+                            <span th:if="${letter.describe==null or letter.describe==''}">对方未付费</span>
+                        </div>
+                    <div class="data_post_message v10_margin" th:if="${letter.shootInfo.shootCost.costName=='需要收费'}">
+                            <span th:text="${'对方需要收费 :'+letter.shootInfo.price}+'元'"></span>
+                            <span th:if="${letter.describe!=null and letter.describe!=''}">我已付费</span>
+                            <span th:if="${letter.describe==null or letter.describe==''}">我未付费</span>
+                            <button th:if="${letter.describe==null or letter.describe==''}" th:val5="${letter.shootInfo.id}" th:val4="${letter.shootInfo.shootCost.costName}" th:val3="${letter.shootInfo.shootType.typeName}" th:val="${letter.putUserId}" th:val2="${letter.shootInfo.price}" class="fukuan">付款</button>
+                    </div>
+                        <div class="data_post_message v10_margin" th:if="${letter.shootInfo.shootCost.costName=='希望互免'}">
+                            希望互免
+                    </div>
+                        <div class="data_post_message v10_margin" th:if="${letter.shootInfo.shootCost.costName=='费用协商'}">
+                                费用协商
+                        </div>
+                    </div>
+                    <input hidden id="money" th:value="${session.user.money}">
+                    <!-- 付款操作 -->
+                    <script type="text/javascript">
+
+                            $(".fukuan").unbind('click').click(function () {
+                                    if(confirm("确定已完成约拍然后付款?")){
+                                        var putUserId = $(this).attr("val");
+                                        var price = $(this).attr("val2");
+                                        var money = $("#money").val();
+                                        var typeName = $(this).attr("val3");
+                                        var costName = $(this).attr("val4");
+                                        var infoId=$(this).attr("val5");
+                                            if(money!=undefined && money!='' && money>=price){  //钱够
+                                                $.post("/shoot-letter/zhifu",{"price":price,"sendUserId":putUserId,
+                                                "typeName":typeName,"costName":costName,"infoId":infoId},function (data) {
+                                                    if(data==true){
+                                                        $(this).text("已付款");
+                                                        alert("支付成功");
+                                                    }else {
+                                                        alert("支付失败");
+                                                    }
+                                                },"json")
+                                            }else {
+                                                alert("余额不够支付请去充值");
+                                            }
+
+                                    }
+                            });
+
+                    </script>
+
                     <div class="data_meta_info v10_margin">
                         <span class="data_meta_info" th:text="${letter.creationDate}">2019年12月28日11:20</span>
                     </div>

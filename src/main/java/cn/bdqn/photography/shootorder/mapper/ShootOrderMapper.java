@@ -11,4 +11,21 @@ import java.util.List;
 public interface ShootOrderMapper extends BaseMapper<ShootOrder> {
 List<ShootOrder> showallorder(@Param("uid") String id);
 List<ShootOrder> showorderby();
+
+
+    /**
+     * 总支出
+     * @param userId
+     * @return
+     */
+    public Float expend(@Param("userId") Long userId);
+
+
+    /**
+     * 总收入
+     * @param sendUserId
+     * @return
+     */
+    public Float income(@Param("sendUserId") Long sendUserId);
+
 }

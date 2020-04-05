@@ -20,4 +20,12 @@ public interface IShootSelfieService extends IService<ShootSelfie> {
 
     ShootSelfie findById(Long id);   //查看自拍详情
 
+
+    /**
+     * 查询自己的 自拍
+     * @param userId
+     * @return
+     */
+    List<ShootSelfie> findSelfieByUserId(Long userId);
+
 }

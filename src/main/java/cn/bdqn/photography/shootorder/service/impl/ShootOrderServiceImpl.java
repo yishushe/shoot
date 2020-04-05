@@ -27,4 +27,14 @@ public class ShootOrderServiceImpl extends ServiceImpl<ShootOrderMapper, ShootOr
     public List<ShootOrder> showorderby() {
         return shootOrderMapper.showorderby();
     }
+
+    @Override
+    public Float expend(Long userId) {
+        return shootOrderMapper.expend(userId);
+    }
+
+    @Override
+    public Float income(Long sendUserId) {
+        return shootOrderMapper.income(sendUserId);
+    }
 }

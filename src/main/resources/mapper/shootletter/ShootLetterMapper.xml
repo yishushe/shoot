@@ -114,25 +114,35 @@
         <association property="shootInfo" javaType="ShootInfo">
             <id property="id" column="i_id"></id>
             <result property="content" column="i_content"></result>
+            <association property="shootCost" javaType="ShootCost">
+                <id property="id" column="st_id"></id>
+            </association>
+            <association property="shootType" javaType="ShootType">
+                <id property="id" column="ty_id"></id>
+            </association>
         </association>
     </resultMap>
     <select id="getLetterBySendUserIdSend" resultMap="letter03">
          SELECT le.id le_id,le.creationDate,le.content,le.infoId,
-        u.id u_id,u.portyaitl,u.userName,
+        le.putUserId,u.id u_id,u.portyaitl,u.userName,
         r.id r_id,r.roleName,p.id p_id,p.prow,
         c.id c_id,c.city,co.id co_id,co.country,
-         i.id i_id,i.content i_content FROM shoot_letter le
-        INNER JOIN shoot_user u ON u.id=le.sendUserId
-        INNER JOIN shoot_user_role ur ON ur.userId=u.id
-        INNER JOIN shoot_role r ON r.id=ur.roleId
-        INNER JOIN shoot_address a ON a.id=u.shootAddressId
-        INNER JOIN shoot_prow p ON p.id=a.prow_id
-        INNER JOIN shoot_city c ON c.id=a.city_id
-        INNER JOIN shoot_country co ON co.id=a.country_id
-        inner join shoot_info i on i.userId=u.id
-        WHERE le.sendUserId=#{sendUserId}
-        GROUP BY u.id
-        ORDER BY le.creationDate ASC
+         i.id i_id,i.content i_content,i.stateId,i.costId,i.price,
+         st.id st_id,st.costName,ty.id ty_id,ty.typeName
+          FROM shoot.shoot_letter le
+        INNER JOIN shoot.shoot_user u ON u.id=le.sendUserId
+        INNER JOIN shoot.shoot_user_role ur ON ur.userId=u.id
+        INNER JOIN shoot.shoot_role r ON r.id=ur.roleId
+        INNER JOIN shoot.shoot_address a ON a.id=u.shootAddressId
+        INNER JOIN shoot.shoot_prow p ON p.id=a.prow_id
+        INNER JOIN shoot.shoot_city c ON c.id=a.city_id
+        INNER JOIN shoot.shoot_country co ON co.id=a.country_id
+        inner join shoot.shoot_info i on i.id=le.infoId
+        inner join shoot_cost st on st.id=i.costId
+        inner join shoot_type ty on ty.id=i.typeId
+        WHERE le.sendUserId=#{sendUserId} and (i.stateId=2 or i.stateId=3)
+        GROUP BY i.content
+        ORDER BY le.creationDate desc
     </select>
 
 
@@ -266,7 +276,8 @@
         u.id u_id,u.portyaitl,u.userName,u.phone,
         r.id r_id,r.roleName,p.id p_id,p.prow,
         c.id c_id,c.city,co.id co_id,co.country,
-        i.id i_id,i.content i_content,st.id st_id,st.costName,
+        i.id i_id,i.content i_content,i.price,i.costId
+        ,st.id st_id,st.costName,
         ty.id ty_id,ty.typeName FROM shoot_letter le
         INNER JOIN shoot_user u ON u.id=le.sendUserId
         INNER JOIN shoot_user_role ur ON ur.userId=u.id
@@ -281,7 +292,7 @@
         inner join shoot_type ty on ty.id=i.typeId
         WHERE le.putUserId=#{putUserId}
         and i.stateId=#{stateId}
-        GROUP BY u.id
+        GROUP BY le.infoId
         ORDER BY le.creationDate ASC
     </select>
 
@@ -344,4 +355,25 @@
         ORDER BY le.creationDate ASC
     </select>
 
+
+    <!-- 查询我支付别人 或是别人支付我 -->
+    <select id="getByOrder" resultType="java.lang.Integer">
+        select count(1) from shoot.shoot_letter le
+        <if test="test!='my'">
+            inner join shoot.shoot_order ro on ro.sendUserId=le.putUserId
+            where le.sendUserId=#{sendUserId} and le.putUserId=#{putUserId} and le.infoId=#{infoId}
+            and ro.userId=#{sendUserId} and ro.sendUserId=#{putUserId}
+            and ro.infoId=#{infoId}
+        </if>
+        <if test="test=='my'">
+            inner join shoot.shoot_order ro on ro.userId=le.putUserId
+            where le.sendUserId=#{sendUserId} and le.putUserId=#{putUserId} and le.infoId=#{infoId}
+            and ro.userId=#{putUserId} and ro.sendUserId=#{sendUserId}
+            and ro.infoId=#{infoId}
+        </if>
+        group by ro.sendUserId and le.infoId
+        order by ro.creationDate desc
+    </select>
+
 </mapper>
+

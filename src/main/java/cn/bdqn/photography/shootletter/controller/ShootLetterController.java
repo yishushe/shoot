@@ -9,10 +9,12 @@ import cn.bdqn.photography.shootletter.service.IShootLetterService;
 import cn.bdqn.photography.shootorder.entity.ShootOrder;
 import cn.bdqn.photography.shootorder.service.IShootOrderService;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
+import cn.bdqn.photography.shootuser.service.IShootUserService;
 import cn.bdqn.photography.utils.Round;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.bouncycastle.math.raw.Mod;
@@ -55,6 +57,9 @@ public class ShootLetterController {
 
     @Autowired
     private IShootInformService iShootInformService;
+
+    @Autowired
+    private IShootUserService iShootUserService;
 
     //发起约拍信息 留言添加
     @RequestMapping(value = "/addLetter")
@@ -157,12 +162,24 @@ public class ShootLetterController {
 
         ShootUser user = (ShootUser)SecurityUtils.getSubject().getSession().getAttribute("user");
 
+
         List<ShootLetter> letterByPutUserId = iShootLetterService.findLetterBySendUserIdSend(user.getId());
 
         for (ShootLetter letter: letterByPutUserId
         ) {
+            Integer count=null;
             //设置头像路劲
             letter.getShootUser().setPortyaitl("/images/"+letter.getShootUser().getPortyaitl());
+           if(letter.getShootInfo().getCostId()==2){  //对方需要收费
+               count = iShootLetterService.findOrder(user.getId(), letter.getPutUserId(),letter.getInfoId(),"m");
+           }else if(letter.getShootInfo().getCostId()==3){  //对方需要付费
+               count=iShootLetterService.findOrder(user.getId(), letter.getPutUserId(),letter.getInfoId(),"my");
+           }
+           if(count!=null){  //有钱的时候才 放入letter中
+               letter.setDescribe(count.toString());
+           }else {
+               letter.setDescribe("");
+           }
         }
 
         model.addAttribute("letter",letterByPutUserId);
@@ -193,15 +210,14 @@ public class ShootLetterController {
     @RequestMapping(value = "/incomingrequests")
     public String incomingrequests(Model model){
         ShootUser user = (ShootUser)SecurityUtils.getSubject().getSession().getAttribute("user");
-
         List<ShootLetter> letterByPutUserId = iShootLetterService.findLetterByPutUserId(user.getId(),0l);
-
         for (ShootLetter letter: letterByPutUserId
         ) {
             //设置头像路劲
             letter.getShootUser().setPortyaitl("/images/"+letter.getShootUser().getPortyaitl());
         }
 
+        //model.addAttribute("describe",describe);
         model.addAttribute("size",letterByPutUserId.size());
         model.addAttribute("letter",letterByPutUserId);
         return "put/incomingrequests";
@@ -266,6 +282,27 @@ public class ShootLetterController {
             if(letter.getShootUser().getPhone()=="" || letter.getShootUser().getPhone()==null){
                 letter.getShootUser().setPhone("暂时没有设置");
             }
+            if(letter.getShootInfo().getPrice()==null || letter.getShootInfo().getPrice()<1){  //没钱
+                 letter.getShootInfo().setPrice(0f);
+            }
+            Integer count=null;
+            String describe="";
+            if(letter.getShootInfo().getCostId()==2){  //我需要收费
+                count=iShootLetterService.findOrder(letter.getSendUserId(),user.getId(),letter.getInfoId(),"m");
+                if(count!=null && count>0){
+                    describe="对方已付过款";
+                }else {
+                    describe="对方未付款";
+                }
+            }else if(letter.getShootInfo().getCostId()==3){  //我需要付费
+                count = iShootLetterService.findOrder(letter.getSendUserId(), user.getId(),letter.getInfoId(),"my");
+                if(count!=null && count>0){
+                    describe="我已付款";
+                }else {
+                    describe="去付款";
+                }
+            }
+            letter.setDescribe(describe);
         }
         return letterConste.toArray();
     }
@@ -310,7 +347,6 @@ public class ShootLetterController {
         return orderByStateIdAndUserId.toArray();
     }
 
-
     //通知页面
     @RequestMapping(value = "/inform")
     public String inform(Model model){
@@ -321,5 +357,47 @@ public class ShootLetterController {
         return "put/inform";
     }
 
-}
+    //支付
+    @RequestMapping(value = "/zhifu")
+    @ResponseBody
+    public boolean zhifu(@RequestParam(value = "price",required = false)
+                         Float price,@RequestParam(value = "sendUserId",required = false)
+                         Long sendUserId,@RequestParam(value = "typeName",required = false)
+                         String typeName,@RequestParam(value = "costName",required = false)
+                         String costName,@RequestParam(value = "infoId",required = false)
+                         Long infoId){
+        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        Round round=new Round();
+        ShootOrder order=new ShootOrder();
+        order.setOutTradeNo(round.round());
+        order.setTotalAmount(price);
+        order.setSendUserId(sendUserId);
+        order.setSubject(typeName);
+        order.setBody(costName);
+        order.setInfoId(infoId);
+        order.setCreationDate(LocalDateTime.now());
+        order.setUserId(user.getId());
+        boolean save = iShootOrderService.save(order);  //订单
+        boolean flag=false;
+        if(save){
+            UpdateWrapper<ShootUser> update=new UpdateWrapper<>();
+            update.set("money",user.getMoney()-price);
+            update.eq("id",user.getId());
+            boolean update1 = iShootUserService.update(update);  //减去money
+            QueryWrapper<ShootUser> query=new QueryWrapper<>();
+            query.eq("id",sendUserId);
+            ShootUser one = iShootUserService.getOne(query);  //先查询需要收款人的钱然后再相加
+            UpdateWrapper<ShootUser> updateMoney=new UpdateWrapper<>();
+            updateMoney.set("money",one.getMoney()+price);
+            updateMoney.eq("id",sendUserId);
+            boolean update2 = iShootUserService.update(updateMoney);  //加到相应的钱数
+            List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
+            SecurityUtils.getSubject().getSession().setAttribute("user",userByUserCode.get(0));  //重新获取存放session值
+            if(update1 && update2){
+                flag=true;
+            }
+        }
+        return flag;
+    }
 
+}

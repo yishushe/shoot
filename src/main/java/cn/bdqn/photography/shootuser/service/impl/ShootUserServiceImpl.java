@@ -160,4 +160,9 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
         return shootUserMapper.updateSecurityMoney(id,securityMoney);
     }
 
+    @Override
+    public List<ShootUser> findUserId(Long userId) {
+        return shootUserMapper.getUserId(userId);
+    }
+
 }

@@ -450,9 +450,26 @@
                     <td><input name="prow" id="p" type="text" hidden="hidden"></td>
                     <td><input name="city" id="c" type="text" hidden="hidden"></td>
                     <td><input name="country" id="u" type="text" hidden="hidden"></td>
+                    <td><input hidden id="flag" th:value="${flag}"></td>
                 </tr>
 
             </form>
+
+            <!-- 限制发布约拍次数 只有是会员才能发布多次 -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("form").submit(function () {
+                        var flag = $("#flag").val();
+                        if(flag=="true"){
+                            return true;
+                        }
+                        if(flag=="false"){
+                            alert("不是会员每天只能发布一次约拍");
+                            return false;
+                        }
+                    });
+                });
+            </script>
 
             <div class="v20_margin"></div>
             <br/>

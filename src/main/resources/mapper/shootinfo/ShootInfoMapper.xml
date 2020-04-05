@@ -202,7 +202,7 @@
 		</association>
 	</resultMap>
 	<select id="getInfoByUserId" resultMap="info04">
-		SELECT u.*,i.id i_id,i.content,i.creationDate i_creationDate,ty.id ty_id,
+		SELECT u.*,i.id i_id,i.content,i.creationDate i_creationDate,i.price,ty.id ty_id,
     ty.typeName,p.id p_id,p.prow,c.id c_id,c.city,
     co.id co_id,co.country,st.id st_id,st.costName,
     te.id te_id,te.stateName,r.id r_id,r.roleName FROM shoot_user u

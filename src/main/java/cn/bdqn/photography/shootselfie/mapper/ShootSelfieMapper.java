@@ -20,4 +20,11 @@ public interface ShootSelfieMapper extends BaseMapper<ShootSelfie> {
 
     ShootSelfie getById(@Param("id") Long id); //查看自拍详情
 
+    /**
+     * 查询自己的自拍
+     * @param userId
+     * @return
+     */
+    List<ShootSelfie> getSelfieByUserId(@Param("userId") Long userId);
+
 }

@@ -256,7 +256,20 @@ public class ShootUserController {
             ShootTheme one = iShootThemeService.getOne(queryWrapper);
             model.addAttribute("id", one.getId());
         }
-
+        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        QueryWrapper<ShootInfo> query=new QueryWrapper<>();
+        query.eq("userId",user.getId());
+        query.eq("creationDate",LocalDate.now());
+        List<ShootInfo> list = iShootInfoService.list(query);
+        boolean flag=false;
+        if(list.size()>0 && user.getMember()==null){  //说明今天已发布一次不能再发布
+            flag=false;
+        }else if(list.size()>0 && user.getMember()!=null && user.getMember()==1){  //发布过一次但是有会员可以多次发布
+            flag=true;
+        }else {
+            flag=true;
+        }
+        model.addAttribute("flag",flag);   //限制发布信息次数
         model.addAttribute("themName", themName);
         return "personage/postMessage";
     }
@@ -579,6 +592,9 @@ public class ShootUserController {
     public String topup(){
         return "personage/topup";
     }
+
+
+
 
 }
 

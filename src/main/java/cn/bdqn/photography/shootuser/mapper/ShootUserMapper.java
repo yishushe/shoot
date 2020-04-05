@@ -58,5 +58,14 @@ public interface ShootUserMapper extends BaseMapper<ShootUser> {
      * @return
      */
     int updateSecurityMoney(@Param("id") Long id,@Param("securityMoney") Float securityMoney);
+
+
+    /**
+     * 根据id 查询个人信息
+     * @param userId
+     * @return
+     */
+    List<ShootUser> getUserId(@Param("userId") Long userId);
+
 }
 

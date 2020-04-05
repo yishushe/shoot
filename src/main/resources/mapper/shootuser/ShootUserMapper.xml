@@ -158,5 +158,37 @@
     </insert>
 
 
+
+    <!-- 根据userId查询信息 -->
+    <resultMap id="user6" type="ShootUser">
+        <id property="id" column="id"></id>
+        <association property="shootAddress" javaType="ShootAddress">
+            <association property="shootProw" javaType="ShootProw">
+                <id property="id" column="p_id"></id>
+            </association>
+            <association property="shootCity" javaType="ShootCity">
+                <id property="id" column="c_id"></id>
+            </association>
+            <association property="shootCountry" javaType="ShootCountry">
+                <id property="id" column="co_id"></id>
+            </association>
+        </association>
+        <collection property="roles" ofType="ShootRole">
+            <id property="id" column="r_id"></id>
+        </collection>
+    </resultMap>
+    <select id="getUserId" resultMap="user6">
+        select u.*,r.id r_id,r.roleName,p.id p_id,p.prow,
+        c.id c_id,c.city,co.id co_id,co.country
+        from shoot.shoot_user u
+        inner join shoot.shoot_user_role ur on ur.userId=u.id
+        inner join shoot.shoot_role r on r.id=ur.roleId
+        inner join shoot.shoot_address a on a.id=u.shootAddressId
+        inner join shoot.shoot_prow p on p.id=a.prow_id
+        inner join shoot.shoot_city c on c.id=a.city_id
+        inner join shoot.shoot_country co on co.id=a.country_id
+        where u.id=#{userId}
+    </select>
+
 </mapper>
 
