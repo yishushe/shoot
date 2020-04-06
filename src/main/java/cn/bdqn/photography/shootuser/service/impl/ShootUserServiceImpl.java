@@ -125,6 +125,10 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     }
 
     @Override
+    public List<ShootUser> getUsersAll() {
+        return shootUserMapper.getUserAll();
+    }
+
     public int modifyMember(Long id, LocalDate memberDate) {
         return shootUserMapper.updateMember(id, memberDate);
     }
@@ -157,12 +161,23 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
 
     @Override
     public int modifySecurityMoney(Long id, Float securityMoney) {
-        return shootUserMapper.updateSecurityMoney(id,securityMoney);
+        return shootUserMapper.modifySecurityMoney(id,securityMoney);
+    }
+
+    @Override
+    public boolean updr(Long uid, Long rid) {
+        return shootUserMapper.updr(uid,rid);
     }
 
     @Override
     public List<ShootUser> findUserId(Long userId) {
         return shootUserMapper.getUserId(userId);
     }
+
+    @Override
+    public Long sesurid(Long id) {
+        return shootUserMapper.sesurid(id);
+    }
+
 
 }

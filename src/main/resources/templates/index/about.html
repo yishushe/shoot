@@ -265,7 +265,9 @@
                             <!-- 证明你是当前用户可以操作 恢复 或是 关闭 查看收到请求 -->
                             <a th:if="${session.user!=null}">
                             <a th:if="${info.userId==session.user.id}">
+
                                 <a role="button" class="btn btn-primary btn-sm form_large_button" th:href="@{/shoot-letter/responseMessage(infoId=${info.id})}">查看收到的请求</a>
+
                                 <input id="state" th:value="${stateId}" hidden>
                                 <input id="idd" th:value="${info.id}" hidden>
                                 <a id="stateCaozuo" role="button" class="btn btn-danger btn-sm" href="javascript:;" data-id="992425">关闭</a>
@@ -415,7 +417,6 @@
 
 
         </div>
-
 
 
         <!-- 相关地区约拍 -->

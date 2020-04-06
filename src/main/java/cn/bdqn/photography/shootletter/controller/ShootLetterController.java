@@ -151,6 +151,7 @@ public class ShootLetterController {
         letter.setPutUserId((Long) SecurityUtils.getSubject().getSession().getAttribute("sendUserId"));
         ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
         letter.setSendUserId(user.getId());
+        System.out.println("ddddddddddddddddddddddddddddddddddddd");
         boolean save = iShootLetterService.save(letter);  //存入信息
         return save;
     }
@@ -185,6 +186,7 @@ public class ShootLetterController {
         model.addAttribute("letter",letterByPutUserId);
         return "put/requestMessage";
     }
+
 
 
     //我接收的约拍信息  页面
@@ -399,5 +401,6 @@ public class ShootLetterController {
         }
         return flag;
     }
+
 
 }

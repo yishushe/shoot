@@ -27,8 +27,8 @@ public class ShiroConfig {
 
     //Filter工厂，设置对应的过滤条件和跳转条件 ShiroFilterFactoryBean
     @Bean
-    public ShiroFilterFactoryBean getShirFilterFactoryBean(SecurityManager securityManager){
-        ShiroFilterFactoryBean filterFactoryBean=new ShiroFilterFactoryBean();
+    public ShiroFilterFactoryBean getShirFilterFactoryBean(SecurityManager securityManager) {
+        ShiroFilterFactoryBean filterFactoryBean = new ShiroFilterFactoryBean();
         //设置安全管理器
         filterFactoryBean.setSecurityManager(securityManager);
         //shiro内置过滤器
@@ -39,10 +39,11 @@ public class ShiroConfig {
         perms: 拥有对某个资源的权限才能访问
         roles: 拥有某个角色权限才能访问
          */
-        Map<String, String> filterMap=new LinkedHashMap<>(); //链式map 更好的增加和删除 查询则没有HasMap好数组方式好
+        Map<String, String> filterMap = new LinkedHashMap<>(); //链式map 更好的增加和删除 查询则没有HasMap好数组方式好
         System.out.println("欢迎来到shiro安全世界！");
         //用户有add权限才可以执行的添加功能
         //filterMap.put("/user/addUser","perms[add]");
+
         filterMap.put("/shoot-user/logo","anon");   //登录页
         filterMap.put("/shoot-user/index","anon");  //主页
         filterMap.put("/shoot-user/register","anon");  //注册
@@ -83,8 +84,8 @@ public class ShiroConfig {
 
     //DefaultWebSecurityManager 创建管理对象  并注入userRealm
     @Bean("securityManager")
-    public SecurityManager securityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher){
-        DefaultWebSecurityManager securityManager=new DefaultWebSecurityManager();
+    public SecurityManager securityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //关联记住我
         securityManager.setRememberMeManager(rememberMeManager());
         //关联userRealm
@@ -94,9 +95,10 @@ public class ShiroConfig {
 
     /**
      * cookie对象;
+     *
      * @return
      */
-    public SimpleCookie rememberMeCookie(){
+    public SimpleCookie rememberMeCookie() {
         //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         //cookie生效时间30天,单位秒;
@@ -106,9 +108,10 @@ public class ShiroConfig {
 
     /**
      * cookie管理对象;记住我功能
+     *
      * @return
      */
-    public CookieRememberMeManager rememberMeManager(){
+    public CookieRememberMeManager rememberMeManager() {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
         // cookieRememberMeManager.setCipherKey用来设置加密的Key,参数类型byte[],字节数组长度要求16
@@ -147,7 +150,8 @@ public class ShiroConfig {
 
     /**
      * 配置shiro跟spring的关联  类似切面
-     * @param 
+     *
+     * @param
      * @return
      */
     /*@Bean
@@ -175,7 +179,7 @@ public class ShiroConfig {
 
     //整合shiroDialect 用来整合shiro thymeleaf
     @Bean
-    public ShiroDialect getShiroDialect(){
+    public ShiroDialect getShiroDialect() {
         return new ShiroDialect();
     }
 

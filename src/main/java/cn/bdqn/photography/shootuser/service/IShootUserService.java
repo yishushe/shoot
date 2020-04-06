@@ -35,6 +35,8 @@ public interface IShootUserService extends IService<ShootUser> {
 
     ShootUser findByUserId(Long id);   //查询个人信息
 
+    List<ShootUser> getUsersAll();//查询所有
+
     int modifyMember(Long id,LocalDate memberDate);  //添加会员
 
     Page<ShootUser> getpermission(int current,Long id);  //查询权限
@@ -56,11 +58,18 @@ public interface IShootUserService extends IService<ShootUser> {
     int modifySecurityMoney(Long id,Float securityMoney);
 
 
+
     /**
      * 根据userid 查询个人信息
      * @param userId
      * @return
      */
     List<ShootUser> findUserId(Long userId);
+
+    boolean updr(Long uid,Long rid);
+    Long sesurid(Long id);
+
+
+
 
 }

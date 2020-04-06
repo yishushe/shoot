@@ -34,83 +34,79 @@ public class ShootInfoControllers {
     private IShootLetterService letterService;
 
     @RequestMapping("/shenhe")
-    public String shenhe(@RequestParam(value = "id",required = false)Long id,@RequestParam(value = "current",defaultValue = "0",required = false) int current, Model model){
+
+    public String shenhe(@RequestParam(value = "id", required = false) Long id, @RequestParam(value = "current", defaultValue = "0", required = false) int current, Model model) {
         /*if(current==0){
             current=1;
         }*/
-        IPage<ShootInfo> page=iShootInfoService.getInfoByStateId(current,id);
-        for (ShootInfo info1 : page.getRecords()){
+        IPage<ShootInfo> page = iShootInfoService.getInfoByStateId(current, id);
+        for (ShootInfo info1 : page.getRecords()) {
             //设置用户图片路劲
-            info1.getShootUser().setPortyaitl("/images/"+info1.getShootUser().getPortyaitl());
-            Map<String,Object> map=new HashMap<>();
-            map.put("infoId",info1.getId());
+            info1.getShootUser().setPortyaitl("/images/" + info1.getShootUser().getPortyaitl());
+            Map<String, Object> map = new HashMap<>();
+            map.put("infoId", info1.getId());
             //根据id查找信息
             Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
-            if(shootImages!=null && shootImages.size()>0){
-                for (ShootImages images: shootImages
+            if (shootImages != null && shootImages.size() > 0) {
+                for (ShootImages images : shootImages
                 ) {
                     //设置info图片路劲
-                    images.setImagesName("/images/"+images.getImagesName());
+                    images.setImagesName("/images/" + images.getImagesName());
                 }
                 info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
             }
         }
-        model.addAttribute("info",page.getRecords());     //数据
-        model.addAttribute("idd",id);
-        model.addAttribute("current",page.getCurrent());  //当前页
-        model.addAttribute("pages",page.getPages());      //总页数
-        model.addAttribute("total",page.getTotal());      //总条数
+        model.addAttribute("info", page.getRecords());     //数据
+        model.addAttribute("idd", id);
+        model.addAttribute("current", page.getCurrent());  //当前页
+        model.addAttribute("pages", page.getPages());      //总页数
+        model.addAttribute("total", page.getTotal());      //总条数
         return "houtai/shxx";
     }
+
     @RequestMapping("/upduserstate")
-    public String updateuserstate(Long id,Model model){
-        List<ShootInfo> shootInfo=iShootInfoService.getinfobyinfoid(id);
-        String city=shootInfo.get(0).getShootAddress().getShootProw().getProw()+shootInfo.get(0).getShootAddress().getShootCity().getCity()+shootInfo.get(0).getShootAddress().getShootCountry().getCountry();
-        for (ShootInfo info1 : shootInfo){
+    public String updateuserstate(Long id, Model model) {
+        List<ShootInfo> shootInfo = iShootInfoService.getinfobyinfoid(id);
+        String city = shootInfo.get(0).getShootAddress().getShootProw().getProw() + shootInfo.get(0).getShootAddress().getShootCity().getCity() + shootInfo.get(0).getShootAddress().getShootCountry().getCountry();
+        for (ShootInfo info1 : shootInfo) {
 
             //设置用户图片路劲
-            info1.getShootUser().setPortyaitl("/images/"+info1.getShootUser().getPortyaitl());
+            info1.getShootUser().setPortyaitl("/images/" + info1.getShootUser().getPortyaitl());
 
-            Map<String,Object> map=new HashMap<>();
-            map.put("infoId",info1.getId());
+            Map<String, Object> map = new HashMap<>();
+            map.put("infoId", info1.getId());
             //根据id查找信息
             Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
-            if(shootImages!=null && shootImages.size()>0){
-                for (ShootImages images: shootImages
+            if (shootImages != null && shootImages.size() > 0) {
+                for (ShootImages images : shootImages
                 ) {
                     //设置info图片路劲
-                    images.setImagesName("/images/"+images.getImagesName());
+                    images.setImagesName("/images/" + images.getImagesName());
                 }
                 info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
             }
         }
-        model.addAttribute("im",shootInfo);
-        model.addAttribute("city",city);
+
+        model.addAttribute("im", shootInfo);
+        model.addAttribute("city", city);
         return "houtai/updstate";
     }
+
     @RequestMapping("/wupdatebyinfoid")
-    public String updatebyinfoid(Long aa,String sele,String tj,String cause,Long infoId){
-        System.out.println("原因"+cause+"aa"+aa);
-        boolean b=false;
-        if(tj.equals("发送")){
+    public String updatebyinfoid(Long aa, String sele, String tj, String cause, Long infoId) {
+        System.out.println("原因" + cause + "aa" + aa);
+        boolean b = false;
+        if (tj.equals("发送")) {
             LocalDate now = LocalDate.now();
-        boolean bb= iShootInfoService.insertinform(cause,aa,now,infoId);
-        if(bb==true){
-            return "redirect:shenhe?id=1&current=1";
-        }else{
-            return "houtai/sb";
+            boolean bb = iShootInfoService.insertinform(cause, aa, now, infoId);
+            if (bb == true) {
+                return "redirect:shenhe?id=1&current=1";
+            } else {
+                return "houtai/sb";
+            }
         }
-        }
-        if(tj.equals("提交")){
-            Long stateid=Long.parseLong(sele);
-            ShootInfo s= iShootInfoService.findInfoMessageById(aa);
-            s.setStateId(stateid);
-            b= iShootInfoService.updateById(s);
-        }
-        if(b==true){
-            return "redirect:shenhe?id=1&current=1";
-        }else{
-            return "houtai/sb";
-        }
+
+        return sele;
     }
+
 }

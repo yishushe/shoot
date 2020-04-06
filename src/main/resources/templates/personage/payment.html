@@ -72,10 +72,10 @@
 <div class="container bottom_menu_margin_plus xzero_padding">
     <div class="data_posts">
         <div class="data_post_cell_dotted" style="text-align:center;">
-                <span th:if="${qixian!=''}">
-                    <span class="data_group_title_bold" th:text="'摄会社Club'+${qixian}+'会员'">
+                <span class="data_group_title_bold" th:text="'摄会社Club'+${qixian}+'会员'">
                     摄会社Club月会员
                 </span>
+
                 </span>
                 <span th:if="${qixian==''}">
                      <span class="data_group_title_bold" th:text="${subject}">
@@ -98,6 +98,7 @@
         <!-- 支付宝支付 -->
         <div class="data_post_cell pay_cell">
             <div style="float:right;">
+
                 <a th:if="${qixian!=''}">
                     <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='摄会社Club'+${qixian}+'会员')}">去支付</a>
                 </a>
@@ -107,6 +108,9 @@
                 <a th:if="${qixian=='' and subject=='账户余额'}">
                     <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='账户金额')}">去支付</a>
                 </a>
+
+                <a class="btn btn-success btn_pay" role="button" th:href="@{/shoot-user/alipay/toPay(amount=${price},subject=${subject},body='摄会社Club'+${qixian}+'会员')}">去支付</a>
+
             </div>
             <span class="paymethod_icon alipay_paymethod_icon">支付宝</span>
         </div>

@@ -9,6 +9,7 @@ public class MyBatisPlusConfig {
 
     /**
      * 分页查询插件
+     *
      * @return
      */
     @Bean

@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author jobob
@@ -26,26 +26,29 @@ import java.util.List;
  */
 public interface IShootInfoService extends IService<ShootInfo> {
 
-       boolean addInfo(ShootInfo shootInfo, ShootImages shootImages,
+    boolean addInfo(ShootInfo shootInfo, ShootImages shootImages,
                     HttpSession session, MultipartFile[] multipartFiles,
                     HttpServletRequest request, ShootProw prow,
-                    ShootCity city, ShootCountry country,String styleName);  //添加约拍信息
+                    ShootCity city, ShootCountry country, String styleName);  //添加约拍信息
 
-       IPage<ShootInfo> findInfo(Long stateId, String city, Long costId,
-                                 Long roleIds,Long sex, int current);  //查询通过审核约拍信息
+    IPage<ShootInfo> findInfo(Long stateId, String city, Long costId,
+                              Long roleIds, Long sex, int current);  //查询通过审核约拍信息
 
-       ShootInfo findInfoById(Long id);   //约拍详情页
+    ShootInfo findInfoById(Long id);   //约拍详情页
 
-       ShootInfo findInfoMessageById(Long id);  //发起约拍信息详情页数据
+    ShootInfo findInfoMessageById(Long id);  //发起约拍信息详情页数据
 
-       List<ShootInfo> findInfoByUserId(Long userId);  //查看当前用户约拍信息
+    List<ShootInfo> findInfoByUserId(Long userId);  //查看当前用户约拍信息
 
-       Page<ShootInfo> getInfoByStateId(int current,Long stateid);//根据状态查询数据
-       List<ShootInfo> getinfobyinfoid(Long id);   //根据infoid查询
+    Page<ShootInfo> getInfoByStateId(int current, Long stateid);//根据状态查询数据
 
-       int modifyStateIdById(Long id,Long stateId);   //根据id更改信息状态
+    List<ShootInfo> getinfobyinfoid(Long id);   //根据infoid查询
 
        boolean insertinform(String cause, Long pid,LocalDate date,Long infoId);//插入
+
+    int modifyStateIdById(Long id, Long stateId);   //根据id更改信息状态
+
+    boolean insertinform(String cause, Long pid, LocalDate date);//插入
 
 
 }

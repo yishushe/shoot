@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
@@ -8,53 +9,40 @@
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="Bookmark" href="favicon.ico" >
 <link rel="Shortcut Icon" href="favicon.ico" />
-<!--[if lt IE 9]>
 	<link th:href="@{/lib/html5.js}" rel="stylesheet">
 	<link th:href="@{/lib/respond.min.js}" rel="stylesheet">
-<![endif]-->
 	<link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 	<link th:href="@{/h-ui/css/H-ui.min.css}" rel="stylesheet">
 	<link th:href="@{/h-ui.admin/css/H-ui.admin.css}" rel="stylesheet">
 	<link th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" rel="stylesheet">
 	<link th:href="@{/h-ui.admin/skin/default/skin.css}" rel="stylesheet">
 	<link th:href="@{/h-ui.admin/css/style.css}" rel="stylesheet">
-	<link href="../css/core73.min.css" rel="stylesheet">
-	<script th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<!--/meta 作为公共模版分离出去-->
 
 <title>新建网站角色 - 管理员管理</title>
 </head>
 <body>
 <article class="cl pd-20">
-	<form action="usersUpdate" method="post" class="form form-horizontal" id="form-admin-role-add">
+	<form action="userUpdate" method="post">
 		<input type="hidden" name="id" th:value="${users.id}">
-		<input type="hidden" name="roleId" th:value="${user.roleId}">
-		<input type="hidden" name="userId" th:value="${user.userId}">
-		<input type="hidden" name="RoleId" th:value="${user.id}">
-		<input type="hidden" name="usersid" th:value="${users.id}"/>
 		<br>
 		账号:
 		<input type="text" name="userCode" th:value="${users.userCode}">
 		<br>
-		角色名:
-		<select name="rolesId" id="rolesId">
-			<option value="">请选择:</option>
-			<option value="1" th:selected="${user.roleId}==1">系统管理员</option>
-			<option value="2" th:selected="${user.roleId}==2">摄影师</option>
-			<option value="3" th:selected="${user.roleId}==3">模特</option>
-			<option value="4" th:selected="${user.roleId}==4">网店</option>
-			<option value="5" th:selected="${user.roleId}==5">校园</option>
-			<option value="6" th:selected="${user.roleId}==6">艺术其他</option>
-		</select>
+		姓名:
+		<input type="text" name="userName" th:value="${users.userName}">
 		<br>
-		<!--时间:
-		<input type="text" name="creationDate" th:value="${users.creationDate}">-->
-		<!--<br>-->
+		密码:
+		<input type="text" name="userPassword" th:value="${users.userPassword}">
+		<br>
 		电话:
 		<input type="text" name="phone" th:value="${users.phone}">
 		<br>
 		<button type="submit">确定</button>
-		</div>
 	</form>
+
 </article>
 
 <!--_footer 作为公共模版分离出去-->
