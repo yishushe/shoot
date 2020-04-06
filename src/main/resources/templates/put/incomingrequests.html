@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>我收到的请求 - 摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+</head>
+<body class="body_default">
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img th:src="@{/images/logo.png}" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a th:href="@{/shoot-user/index}">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+<input hidden id="money" th:value="${session.user.money}">
+<div class="fy-docs-nav-distance"></div>
+<div class="container bottom_menu_margin_plus xzero_padding">
+    <div style="">
+        <div class="btn-group v10_margin v10_margin_bottom" role="group" aria-label="...">
+            <a role="button" class="btn btn-primary btn-sm" href="javascript:;">全部</a>
+            <a role="button" class="btn btn-default btn-sm" href="javascript:;">互免请求</a>
+            <a role="button" class="btn btn-default btn-sm" href="javascript:;">待接受</a>
+            <a role="button" class="btn btn-default btn-sm" href="javascript:;">待执行</a>
+            <a role="button" class="btn btn-default btn-sm" href="javascript:;">已完成</a>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                            $(".btn-sm").click(function () {
+                                var text = $(this).text();  //获取标签text 文本
+                                $(".btn-sm").each(function () {
+                                    if($(this).hasClass("btn-primary")){
+                                        $(this).removeClass("btn-primary");
+                                        $(this).addClass("btn-default");
+                                    }
+                                });
+                                $(this).addClass("btn-primary");
+                                var dataLetter = $("#data_letter");  //显示数据div
+                                dataLetter.empty();   //清空div 标签和文本
+
+                                //全部
+                                if(text=="全部"){
+                                    $.post("/shoot-letter/all",function (data) {
+                                        if(data!=null && data.length>0){  //有值
+                                            for (var i=0;i<data.length;i++){
+                                                var letter=data[i];
+                                                var str="<div class=\"data_post_cell\">\n" +
+                                                    "\n" +
+                                                    "                <a class=\"data_post_container_link\">\n" +
+                                                    "                    <div class=\"user_info_cell_sm v10_margin_bottom\">\n" +
+                                                    "                        <div class=\"user_info_cell_avatar\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <img class=\"img-circle data_avatar_small2\" src='"+letter.shootUser.portyaitl+"'/>\n" +
+                                                    "                            </i>\n" +
+                                                    "                        </div>\n" +
+                                                    "                        <div class=\"user_info_cell_content\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <span class=\"data_post_author_title\" >"+letter.shootUser.userName+"</span>\n" +
+                                                    "                            </i>\n" +
+                                                    "                            <i class=\"web_wechat_women\"></i>\n" +
+                                                    "                            <div>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.shootAddress.shootProw.prow+letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.roles[0].roleName+"</span>\n" +
+                                                    "                            </div>\n" +
+                                                    "                        </div>\n" +
+                                                    "                    </div>\n" +
+                                                    "                    <div class=\"data_post_content_clear\"></div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+letter.content+"</div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+'   约拍名:'+letter.shootInfo.content+"</div>\n" +
+                                                    "                    <div class=\"data_meta_info v10_margin\">\n" +
+                                                    "                        <span class=\"data_meta_info\">"+letter.creationDate+"</span>\n" +
+                                                    "                    </div>\n" +
+                                                    "                </a>\n" +
+                                                    "            </div>";
+                                                dataLetter.append(str);  //添加内容
+                                            }
+                                        }else {    //没值
+                                            var str="<h1>还没人给你发起请求</h1>";
+                                            dataLetter.append(str);
+                                        }
+                                    },"json")
+                                }
+
+                                //希望互勉
+                                if(text=="互免请求"){
+                                    $.post("/shoot-letter/all",{"costName":"希望互免"},function (data) {
+                                        if(data!=null && data.length>0){  //有值
+                                            for (var i=0;i<data.length;i++){
+                                                var letter=data[i];
+                                                var str="<div class=\"data_post_cell\">\n" +
+                                                    "\n" +
+                                                    "                <a class=\"data_post_container_link\">\n" +
+                                                    "                    <div class=\"user_info_cell_sm v10_margin_bottom\">\n" +
+                                                    "                        <div class=\"user_info_cell_avatar\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <img class=\"img-circle data_avatar_small2\" src='"+letter.shootUser.portyaitl+"'/>\n" +
+                                                    "                            </i>\n" +
+                                                    "                        </div>\n" +
+                                                    "                        <div class=\"user_info_cell_content\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <span class=\"data_post_author_title\" >"+letter.shootUser.userName+"</span>\n" +
+                                                    "                            </i>\n" +
+                                                    "                            <i class=\"web_wechat_women\"></i>\n" +
+                                                    "                            <div>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.shootAddress.shootProw.prow+letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.roles[0].roleName+"</span>\n" +
+                                                    "                            </div>\n" +
+                                                    "                        </div>\n" +
+                                                    "                    </div>\n" +
+                                                    "                    <div class=\"data_post_content_clear\"></div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+letter.content+"</div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+'   约拍名:'+letter.shootInfo.content+"</div>\n" +
+                                                    "                    <div class=\"data_meta_info v10_margin\">\n" +
+                                                    "                        <span class=\"data_meta_info\">"+letter.creationDate+"</span>\n" +
+                                                    "                    </div>\n" +
+                                                    "                </a>\n" +
+                                                    "            </div>";
+                                                dataLetter.append(str);  //添加内容
+                                            }
+                                        }else {    //没值
+                                            var str="<h1>还没有互勉请求</h1>";
+                                            dataLetter.append(str);
+                                        }
+                                    },"json")
+                                }
+
+                                //待接受
+                                if(text=="待接受"){
+                                    $.post("/shoot-letter/all",function (data) {
+                                        if(data!=null && data.length>0){  //有值
+                                            for (var i=0;i<data.length;i++){
+                                                var letter=data[i];
+                                                var str="<div class=\"data_post_cell\">\n" +
+                                                    "\n" +
+                                                    "                <a class=\"data_post_container_link\" href='/shoot-letter/accept/"+letter.shootUser.id+"/"+letter.infoId+"'>\n" +
+                                                    "                    <div class=\"user_info_cell_sm v10_margin_bottom\">\n" +
+                                                    "                        <div class=\"user_info_cell_avatar\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <img class=\"img-circle data_avatar_small2\" src='"+letter.shootUser.portyaitl+"'/>\n" +
+                                                    "                            </i>\n" +
+                                                    "                        </div>\n" +
+                                                    "                        <div class=\"user_info_cell_content\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <span class=\"data_post_author_title\" >"+letter.shootUser.userName+"</span>\n" +
+                                                    "                            </i>\n" +
+                                                    "                            <i class=\"web_wechat_women\"></i>\n" +
+                                                    "                            <div>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.shootAddress.shootProw.prow+letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.roles[0].roleName+"</span>\n" +
+                                                    "                            </div>\n" +
+                                                    "                        </div>\n" +
+                                                    "                    </div>\n" +
+                                                    "                    <div class=\"data_post_content_clear\"></div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+letter.content+"</div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+'   约拍名:'+letter.shootInfo.content+"</div>\n" +
+                                                    "                    <div class=\"data_meta_info v10_margin\">\n" +
+                                                    "                        <span class=\"data_meta_info\">"+letter.creationDate+"</span>\n" +
+                                                    "                    </div>\n" +
+                                                    "                </a>\n" +
+                                                    "            </div>";
+                                                dataLetter.append(str);  //添加内容
+                                            }
+                                        }else {    //没值
+                                            var str="<h1>还没人给你发起请求</h1>";
+                                            dataLetter.append(str);
+                                        }
+                                    },"json")
+                                }
+
+                                //已完成
+                                if(text=="已完成"){
+                                    $.post("/shoot-letter/stocks",{"stateId":4},function (data) {
+                                        if(data!=null && data.length>0){  //有值
+                                            for (var i=0;i<data.length;i++){
+                                                var letter=data[i];
+                                                var str="<div class=\"data_post_cell\">\n" +
+                                                    "\n" +
+                                                    "                <a class=\"data_post_container_link\">\n" +
+                                                    "                    <div class=\"user_info_cell_sm v10_margin_bottom\">\n" +
+                                                    "                        <div class=\"user_info_cell_avatar\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <img class=\"img-circle data_avatar_small2\" src='"+letter.shootUser.portyaitl+"'/>\n" +
+                                                    "                            </i>\n" +
+                                                    "                        </div>\n" +
+                                                    "                        <div class=\"user_info_cell_content\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <span class=\"data_post_author_title\" >"+letter.shootUser.userName+"</span>\n" +
+                                                    "                            </i>\n" +
+                                                    "                            <i class=\"web_wechat_women\"></i>\n" +
+                                                    "                            <div>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.shootAddress.shootProw.prow+letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.roles[0].roleName+"</span>\n" +
+                                                    "                            </div>\n" +
+                                                    "                        </div>\n" +
+                                                    "                    </div>\n" +
+                                                    "                    <div class=\"data_post_content_clear\"></div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+letter.content+"</div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+'   约拍名:'+letter.shootInfo.content+"</div>\n" +
+                                                    "                    <div class=\"data_meta_info v10_margin\">\n" +
+                                                    "                        <span class=\"data_meta_info\">"+letter.creationDate+"</span>\n" +
+                                                    "                    </div>\n" +
+                                                    "                </a>\n" +
+                                                    "            </div>";
+                                                dataLetter.append(str);  //添加内容
+                                            }
+                                        }else {    //没值
+                                            var str="<h1>还没有已完成约拍</h1>";
+                                            dataLetter.append(str);
+                                        }
+                                    },"json")
+                                }
+
+                                //待执行
+                                if(text=="待执行"){
+                                    $.post("/shoot-letter/execute",{"stateId":3},function (data) {
+                                        if(data!=null && data.length>0){  //有值
+                                            for (var i=0;i<data.length;i++){
+                                                var letter=data[i];
+                                                var str="<div class=\"data_post_cell\">\n" +
+                                                    "\n" +
+                                                    "                <a class=\"data_post_container_link\">\n" +
+                                                    "                    <div class=\"user_info_cell_sm v10_margin_bottom\">\n" +
+                                                    "                        <div class=\"user_info_cell_avatar\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <img class=\"img-circle data_avatar_small2\" src='"+letter.shootUser.portyaitl+"'/>\n" +
+                                                    "                            </i>\n" +
+                                                    "                        </div>\n" +
+                                                    "                        <div class=\"user_info_cell_content\">\n" +
+                                                    "                            <i class=\"data_post_author_title_link\" data-url=\"/u/1531674\">\n" +
+                                                    "                                <span class=\"data_post_author_title\" >"+letter.shootUser.userName+"</span>\n" +
+                                                    "                            </i>\n" +
+                                                    "                            <i class=\"web_wechat_women\"></i>\n" +
+                                                    "                            <div>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.shootAddress.shootProw.prow+letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+letter.shootUser.roles[0].roleName+"</span>\n" +
+                                                    "                                <span class=\"data_meta_info\">"+'  手机号'+letter.shootUser.phone+"</span>\n" +
+                                                    "                            </div>\n" +
+                                                    "                        </div>\n" +
+                                                    "                    </div>\n" +
+                                                    "                    <div class=\"data_post_content_clear\"></div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+letter.content+"</div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" >"+'   约拍名:'+letter.shootInfo.content+"</div>\n" +
+                                                    "                    <div class=\"data_post_message v10_margin\" style='color: green'>"+letter.shootInfo.shootCost.costName+"<span>"+letter.shootInfo.price+'元'+"</span>&nbsp;&nbsp;<a style='color: green' href='javascript:;' class='judge' val7='"+letter.shootInfo.id+"' val4='"+letter.shootInfo.shootCost.costName+"' val3='"+letter.shootInfo.shootType.typeName+"' val='"+letter.sendUserId+"' val2='"+letter.shootInfo.price+"'>"+letter.describe+"</a></div>\n" +
+                                                    "                    <div class=\"data_post_message  v10_margin\" ><button class='complete' val4='"+letter.shootInfo.shootCost.costName+"' val5='"+letter.shootInfo.costId+"' val6='"+letter.describe+"' val='"+letter.shootInfo.id+"' val1='"+letter.shootInfo.shootType.typeName+"' val2='"+letter.shootInfo.shootCost.costName+"' val3='"+letter.sendUserId+"'>完成</button></div>\n" +
+                                                    "                    <div class=\"data_meta_info v10_margin\">\n" +
+                                                    "                        <span class=\"data_meta_info\">"+letter.creationDate+"</span>\n" +
+                                                    "                    </div>\n" +
+                                                    "                </a>\n" +
+                                                    "            </div>";
+                                                dataLetter.append(str);  //添加内容
+                                            }
+                                        }else {    //没值
+                                            var str="<h1>还没有待约拍信息</h1>";
+                                            dataLetter.append(str);
+                                        }
+                                    },"json")
+                                  }
+                    });
+
+                            //去支付别人
+                    $(document).on("click",".judge",function () {
+                        var judge = $(this);
+                        if(confirm("确定已完成约拍然后付款?")){
+                            var putUserId = $(this).attr("val");
+                            var price = $(this).attr("val2");
+                            var money = $("#money").val();
+                            var typeName = $(this).attr("val3");
+                            var costName = $(this).attr("val4");
+                            var infoId=$(this).attr("val7");
+                            if(money!=undefined && money!='' && money>=price){  //钱够
+                                $.post("/shoot-letter/zhifu",{"price":price,"sendUserId":putUserId,
+                                    "typeName":typeName,"costName":costName,"infoId":infoId},function (data) {
+                                    if(data==true || data=="true"){
+                                        judge.text("已付款");
+                                        alert("支付成功");
+                                        var find = $(this).parent().next().find("button");
+                                        find.attr("val6","我已付款");
+                                    }else {
+                                        alert("支付失败");
+                                    }
+                                },"json")
+                            }else {
+                                alert("余额不够支付请去充值");
+                            }
+
+                        }
+                    });
+
+                     //完成 约拍 按钮
+                     $(document).on("click",".complete",function () {
+                         var complete = $(this);
+                         var costId=$(this).attr("val5");
+                         var describe=$(this).attr("val6");
+                         if(costId==2 || costId==3){  //需要支付或是收钱
+                             if(describe=="去付款" || describe=="对方未付款"){  //还没支付 或是还没收到钱
+                                 alert("还没支付或是还没收到钱,所以还不能够完成约拍!");
+                                 return;
+                             }
+                         }
+                         var infoId = $(this).attr("val");
+                         var typeName = $(this).attr("val1");
+                         var costName = $(this).attr("val2");
+                         var sendUserId = $(this).attr("val3");
+                         var stateId=4;    //完成本次 约拍状态更改为4
+                         if(confirm("确定本次约拍已经完成?")){
+                                         $.post("/shoot-letter/complete",{"infoId":infoId,"stateId":stateId,"typeName":typeName,"costName":costName,"sendUserId":sendUserId},function (data) {
+                                             if(data==true || data=="true"){
+                                                 complete.text("已完成");
+                                             }
+                                         },"json");
+                         }
+                     });
+
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- 私信 -->
+    <div class="data_posts" id="data_letter">
+
+        <div th:if="${letter==null or letter.size()==0}">
+            <h1>还没人给你发起请求</h1>
+        </div>
+        <div th:if="${size>0}" th:each="letter,index : ${letter}">
+
+            <div class="data_post_cell">
+
+                <a class="data_post_container_link">
+                    <div class="user_info_cell_sm v10_margin_bottom">
+                        <div class="user_info_cell_avatar">
+                            <i class="data_post_author_title_link" data-url="/u/1531674">
+                                <img class="img-circle data_avatar_small2" th:src="${letter.shootUser.portyaitl}" />
+                            </i>
+                        </div>
+                        <div class="user_info_cell_content">
+                            <i class="data_post_author_title_link" data-url="/u/1531674">
+                                <span class="data_post_author_title" th:text="${letter.shootUser.userName}">街头punk</span>
+                            </i>
+                            <i class="web_wechat_women"></i>
+                            <div>
+                                <span class="data_meta_info" th:text="${letter.shootUser.shootAddress.shootProw.prow+
+                                letter.shootUser.shootAddress.shootCity.city+letter.shootUser.shootAddress.shootCountry.country}">河南郑州</span>
+                                <span class="data_meta_info" th:text="${letter.shootUser.roles.get(0).roleName}">模特</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data_post_content_clear"></div>
+                    <div class="data_post_message v10_margin" th:text="${letter.content}">
+                        周二
+                    </div>
+                    <div class="data_post_message v10_margin" th:text="${'  约拍名:'+letter.shootInfo.content}">
+                        周二
+                    </div>
+                    <div class="data_meta_info v10_margin">
+                        <span class="data_meta_info" th:text="${letter.creationDate}">2019年12月28日11:20</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="weui_dialog_confirm" id="request_reject_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您要拒绝约拍吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="rejectdlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="rejectdlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="request_receive_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">您要接受约拍吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a id="receivedlg_cancel_button" href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a id="receivedlg_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="weui_dialog_confirm" id="requestreply_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog data_posts" style="max-width:500px;">
+        <div class="data_post_cell_dotted">
+            <div id="member_submit_label" class="requestreply_title">请输入回复内容</div>
+            <div class="data_meta_info v10_margin">（注意：您只能每人回复一次）</div>
+            <div class="v10_margin">
+                <textarea id="requestreply_message_text" class="auto_textarea_editor input_gray" placeholder="例如：对不起，感觉不太合适"></textarea>
+            </div>
+        </div>
+        <div class="data_post_cell_dotted">
+            <a id="confirm_requestreply_button" role="button" class="btn btn-success btn-sm form_medium_button">发送</a>
+            <a id="cancel_requestreply_button" role="button" class="btn btn-default btn-sm form_medium_button" href="javascript:void(0);" onclick="$('#requestreply_dialog').hide();">取消</a>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/style.js}"></script>
+</body>
+</html>

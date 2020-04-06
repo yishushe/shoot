@@ -5,9 +5,9 @@
     <insert id="addInfo" useGeneratedKeys="true" keyProperty="id">
          INSERT INTO shoot.shoot_info
 	(content, price, takeTime, takeLocation, takeResult,
-	creationDate, typeId, costId, requireRoles,requireSecurityAccount,shootAddressId,stateId,userId
+	creationDate, typeId, costId, requireRoles,requireSecurityAccount,shootAddressId,stateId,userId,themeId
 	)VALUES (#{content},#{price},#{takeTime},#{takeLocation},#{takeResult},#{creationDate},
-	#{typeId},#{costId},#{requireRoles},#{requireSecurityAccount},#{shootAddressId},1,#{userId})
+	#{typeId},#{costId},#{requireRoles},#{requireSecurityAccount},#{shootAddressId},1,#{userId},#{themeId})
     </insert>
 
 	<!-- 约拍信息首页 -->
@@ -53,7 +53,7 @@
         INNER JOIN shoot_city c ON a.city_id=c.id
         INNER JOIN shoot_country co ON a.country_id=co.id
         <where>
-			i.stateId=1
+			i.stateId=2
 			<if test="city!='' and city!=null">
 				and c.city=#{city}
 			</if>
@@ -108,7 +108,7 @@
 		</association>
 	</resultMap>
 	<select id="getInfoById" resultMap="info02">
-		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,
+		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,u.phone,
 		t.id t_id,t.typeName,st.id st_id,st.costName,r.id r_id,r.roleName,
 		a.id a_id,p.id p_id,p.prow,c.id c_id,c.city,co.id co_id,co.country,
 		sty.id sty_id,yl.id yl_id,yl.styleName,te.id te_id
@@ -172,6 +172,7 @@
 	<!-- 查询个人 约拍发布信息 -->
 	<resultMap id="info04" type="ShootInfo">
 		<id property="id" column="i_id"></id>
+        <result property="creationDate" column="i_creationDate"></result>
 		<association property="shootType" javaType="ShootType">
 			<id property="id" column="ty_id"></id>
 		</association>
@@ -193,13 +194,21 @@
 		<association property="shootState" javaType="ShootState">
 			<id property="id" column="te_id"></id>
 		</association>
+		<association property="shootUser" javaType="ShootUser">
+			<id property="id" column="id"></id>
+			<collection property="roles" ofType="ShootRole">
+				<id property="id" column="r_id"></id>
+			</collection>
+		</association>
 	</resultMap>
 	<select id="getInfoByUserId" resultMap="info04">
-		SELECT i.id i_id,i.content,i.creationDate,ty.id ty_id,
+		SELECT u.*,i.id i_id,i.content,i.creationDate i_creationDate,i.price,ty.id ty_id,
     ty.typeName,p.id p_id,p.prow,c.id c_id,c.city,
     co.id co_id,co.country,st.id st_id,st.costName,
-    te.id te_id,te.stateName FROM shoot_user u
+    te.id te_id,te.stateName,r.id r_id,r.roleName FROM shoot_user u
     INNER JOIN shoot_info i ON i.userId=u.id
+    inner join shoot_user_role ur on ur.userId=u.id
+    inner join shoot_role r on r.id=ur.roleId
     INNER JOIN shoot_address a ON a.id=i.shootAddressId
     INNER JOIN shoot_prow p ON p.id=a.prow_id
     INNER JOIN shoot_city c ON c.id=a.city_id
@@ -208,6 +217,127 @@
     INNER JOIN shoot_state te ON te.id=i.stateId
     INNER JOIN shoot_type ty ON ty.id=i.typeId
     WHERE u.id=#{userId}
+    order by i.creationDate desc
 	</select>
 
+
+	<!-- 根据主题id 数据查询 -->
+
+	<!--000000000000000000000000000000000000000000000000根据staticid查询-->
+
+	<resultMap id="infostat" type="ShootInfo">
+		<id property="id" column="id"></id>
+		<association property="shootUser" javaType="ShootUser">
+			<id property="id" column="u_id"></id>
+			<collection property="roles" ofType="ShootRole">
+				<id property="id" column="r_id"></id>
+			</collection>
+		</association>
+		<association property="shootType" javaType="ShootType">
+			<id property="id" column="t_id"></id>
+		</association>
+		<association property="shootCost" javaType="ShootCost">
+			<id property="id" column="st_id"></id>
+		</association>
+		<association property="shootState" javaType="ShootState">
+			<id property="id" column="stt_id"></id>
+		</association>
+		<association property="shootAddress" javaType="ShootAddress">
+			<id property="id" column="a_id"></id>
+			<association property="shootProw" javaType="ShootProw">
+				<id property="id" column="p_id"></id>
+			</association>
+			<association property="shootCity" javaType="ShootCity">
+				<id property="id" column="c_id"></id>
+			</association>
+			<association property="shootCountry" javaType="ShootCountry">
+				<id property="id" column="co_id"></id>
+			</association>
+		</association>
+
+	</resultMap>
+	<select id="getinfobystateid" resultMap="infostat">
+		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,
+		t.id t_id,t.typeName,st.id st_id,st.costName,r.id r_id,r.roleName,
+		a.id a_id,p.id p_id,p.prow,c.id c_id,c.city,co.id co_id,co.country,
+		stt.id stt_id,stt.stateName,u.userCode,u.*
+		FROM shoot_info i
+		INNER JOIN shoot_user u ON i.userId=u.id
+		INNER JOIN shoot_type t ON i.typeId=t.id
+		INNER JOIN shoot_cost st ON i.costId=st.id
+		INNER JOIN shoot_user_role ur ON ur.userId=u.id
+		INNER JOIN shoot_role r ON r.id=ur.roleId
+		INNER JOIN shoot_address a ON a.id=i.shootAddressId
+		INNER JOIN shoot_prow p ON a.prow_id=p.id
+		INNER JOIN shoot_city c ON a.city_id=c.id
+		INNER JOIN shoot_country co ON a.country_id=co.id
+		INNER JOIN shoot_state stt ON i.stateid=stt.id
+		WHERE 1=1
+		<if test="id!=null and id!=''">
+			and i.stateId=#{id}
+		</if>
+		ORDER BY i.id DESC
+	</select>
+
+	<!--根据约拍信息id查询-->
+	<resultMap id="infoid" type="ShootInfo">
+		<id property="id" column="id"></id>
+		<association property="shootUser" javaType="ShootUser">
+			<id property="id" column="u_id"></id>
+			<collection property="roles" ofType="ShootRole">
+				<id property="id" column="r_id"></id>
+			</collection>
+		</association>
+		<association property="shootType" javaType="ShootType">
+			<id property="id" column="t_id"></id>
+		</association>
+		<association property="shootCost" javaType="ShootCost">
+			<id property="id" column="st_id"></id>
+		</association>
+		<association property="shootState" javaType="ShootState">
+			<id property="id" column="stt_id"></id>
+		</association>
+		<association property="shootAddress" javaType="ShootAddress">
+			<id property="id" column="a_id"></id>
+			<association property="shootProw" javaType="ShootProw">
+				<id property="id" column="p_id"></id>
+			</association>
+			<association property="shootCity" javaType="ShootCity">
+				<id property="id" column="c_id"></id>
+			</association>
+			<association property="shootCountry" javaType="ShootCountry">
+				<id property="id" column="co_id"></id>
+			</association>
+		</association>
+	</resultMap>
+	<select id="getinfobyinfoid" resultMap="infoid">
+		SELECT i.*,u.id u_id,u.member,u.portyaitl,u.securityMoney,u.userName,
+		t.id t_id,t.typeName,st.id st_id,st.costName,r.id r_id,r.roleName,
+		a.id a_id,p.id p_id,p.prow,c.id c_id,c.city,co.id co_id,co.country,
+		stt.id stt_id,stt.stateName,u.userCode,u.*
+		FROM shoot_info i
+		INNER JOIN shoot_user u ON i.userId=u.id
+		INNER JOIN shoot_type t ON i.typeId=t.id
+		INNER JOIN shoot_cost st ON i.costId=st.id
+		INNER JOIN shoot_user_role ur ON ur.userId=u.id
+		INNER JOIN shoot_role r ON r.id=ur.roleId
+		INNER JOIN shoot_address a ON a.id=i.shootAddressId
+		INNER JOIN shoot_prow p ON a.prow_id=p.id
+		INNER JOIN shoot_city c ON a.city_id=c.id
+		INNER JOIN shoot_country co ON a.country_id=co.id
+		INNER JOIN shoot_state stt ON i.stateid=stt.id
+		WHERE i.id=#{id}
+	</select>
+
+	<!-- 根据约拍信息id 更改状态 -->
+	<update id="updateStateIdById">
+         UPDATE shoot_info SET stateId=#{stateId}
+         WHERE id=#{id}
+	</update>
+	<!--0000000000000插入inform表-->
+	<insert id="insertinform">
+		INSERT INTO shoot.shoot_inform (content, putUserId, creationDate,infoId) VALUES (#{cause},#{pid},#{date},#{infoId});
+	</insert>
+
 </mapper>
+

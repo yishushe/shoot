@@ -1,5 +1,6 @@
 package cn.bdqn.photography.shootuser.entity;
 
+import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -8,12 +9,13 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jobob
@@ -26,7 +28,7 @@ public class ShootUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id",type = IdType.AUTO)  //设置主键生成策略是id自增
+    @TableId(value = "id", type = IdType.AUTO)  //设置主键生成策略是id自增
     private Long id;
 
     @TableField("userCode")
@@ -55,16 +57,27 @@ public class ShootUser implements Serializable {
     @TableField("member")
     private Long member;
 
+    @TableField("memberDate")
+    private LocalDate memberDate;
+
     @TableField("securityMoney")
     private Float securityMoney;
 
     @TableField("integral")
     private Long integral;
 
+    @TableField("stateId")
+    private Long stateId;
+
+    private Float money;
+
     @TableField(exist = false)
     private ShootAddress shootAddress;
 
     @TableField(exist = false)  //忽略字段
     private List<ShootRole> roles;
+
+    @TableField(exist = false)
+    private List<ShootInfo> shootInfos;
 
 }

@@ -1,24 +1,40 @@
 package cn.bdqn.photography.shootuser.controller;
 
-
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
+import cn.bdqn.photography.config.AliPayConfig;
+import cn.bdqn.photography.shootorder.entity.ShootOrder;
+import cn.bdqn.photography.shootorder.service.IShootOrderService;
 import cn.bdqn.photography.shootimages.entity.ShootImages;
 import cn.bdqn.photography.shootimages.service.IShootImagesService;
 import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootinfo.service.IShootInfoService;
+import cn.bdqn.photography.shoottheme.entity.ShootTheme;
+import cn.bdqn.photography.shoottheme.service.IShootThemeService;
 import cn.bdqn.photography.shootuser.entity.ShootAddress;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
 import cn.bdqn.photography.shootuser.service.IShootUserService;
 import cn.bdqn.photography.utils.IsPath;
+import cn.bdqn.photography.utils.Round;
 import cn.bdqn.photography.utils.Sex;
+import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zhenzi.sms.ZhenziSmsClient;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -28,11 +44,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * <p>
@@ -53,7 +71,6 @@ public class ShootUserController {
     private IsPath isPath;
 
     @Autowired
-    @Qualifier("shootUserService")
     private IShootUserService iShootUserService;
 
     @Autowired
@@ -62,42 +79,48 @@ public class ShootUserController {
     @Autowired
     private IShootImagesService iShootImagesService;
 
+    @Autowired
+    private IShootThemeService iShootThemeService;
+
+    @Autowired
+    private IShootOrderService iShootOrderService;
+
     //主页
     @RequestMapping(value = {"/index"})
-    public String index(Model model,@RequestParam(value = "current",defaultValue = "0",required = false)
-            int current,@RequestParam(value = "city",required = false) String city
-            ,@RequestParam(value = "costId",required = false) Long costId,
-                        @RequestParam(value = "roleId",required = false) Long roleId,
-                        @RequestParam(value = "sex",required = false) Long sex) {
-        if(city!="" && city!=null){
-            city=city+"市";
+    public String index(Model model, @RequestParam(value = "current", defaultValue = "0", required = false)
+            int current, @RequestParam(value = "city", required = false) String city
+            , @RequestParam(value = "costId", required = false) Long costId,
+                        @RequestParam(value = "roleId", required = false) Long roleId,
+                        @RequestParam(value = "sex", required = false) Long sex) {
+        if (city != "" && city != null) {
+            city = city + "市";
         }
         //约拍信息查询
-        IPage<ShootInfo> page= iShootInfoService.findInfo(1l,city,costId,roleId,sex,current);
+        IPage<ShootInfo> page = iShootInfoService.findInfo(1l, city, costId, roleId, sex, current);
 
-        for (ShootInfo info1 : page.getRecords()){
+        for (ShootInfo info1 : page.getRecords()) {
 
-              //设置用户图片路劲
-              info1.getShootUser().setPortyaitl("/images/"+info1.getShootUser().getPortyaitl());
+            //设置用户图片路劲
+            info1.getShootUser().setPortyaitl("/images/" + info1.getShootUser().getPortyaitl());
 
-              Map<String,Object> map=new HashMap<>();
-              map.put("infoId",info1.getId());
-              //根据id查找信息
-              Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
-              if(shootImages!=null && shootImages.size()>0){
-                  for (ShootImages images: shootImages
-                  ) {
-                      //设置info图片路劲
-                      images.setImagesName("/images/"+images.getImagesName());
-                  }
-                  info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
-              }
+            Map<String, Object> map = new HashMap<>();
+            map.put("infoId", info1.getId());
+            //根据id查找信息
+            Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
+            if (shootImages != null && shootImages.size() > 0) {
+                for (ShootImages images : shootImages
+                ) {
+                    //设置info图片路劲
+                    images.setImagesName("/images/" + images.getImagesName());
+                }
+                info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
+            }
         }
 
-        model.addAttribute("info",page.getRecords());     //数据
-        model.addAttribute("current",page.getCurrent());  //当前页
-        model.addAttribute("pages",page.getPages());      //总页数
-        model.addAttribute("total",page.getTotal());      //总条数
+        model.addAttribute("info", page.getRecords());     //数据
+        model.addAttribute("current", page.getCurrent());  //当前页
+        model.addAttribute("pages", page.getPages());      //总页数
+        model.addAttribute("total", page.getTotal());      //总条数
 
         return "index/index";
     }
@@ -105,21 +128,21 @@ public class ShootUserController {
     //到登录页面
     @RequestMapping(value = {"/login"})
     public String logo(@RequestParam(value = "info", required = false)
-                               String info,@RequestParam(value = "userCode",required = false)
-            String userCode, Model model) {
+                               String info, @RequestParam(value = "userCode", required = false)
+                               String userCode, Model model) {
         model.addAttribute("info", info);   //存放注册成功信息
-        model.addAttribute("userCode",userCode);  //userCode编码
+        model.addAttribute("userCode", userCode);  //userCode编码
         return "login";
     }
 
     //登录
     @RequestMapping(value = {"/sbuLogin"})
     public String login(ShootUser user, @RequestParam(value = "rememberMe", required = false)
-            boolean rememberMe,Model model) {
+            boolean rememberMe, Model model) {
         //传入用户编码 密码 将会去验证和认证授权
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getUserPassword());
         //创建当前用户
-        subject=SecurityUtils.getSubject();
+        subject = SecurityUtils.getSubject();
         subject.logout();   //退出登录
         //主体提交登录请求到SecurityManager
         token.setRememberMe(rememberMe);
@@ -129,11 +152,11 @@ public class ShootUserController {
             System.out.println("token:" + token.getPassword());
         } catch (IncorrectCredentialsException ice) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，密码不正确！");
-            model.addAttribute("info","密码不正确");
+            model.addAttribute("info", "密码不正确");
             ice.printStackTrace();
         } catch (UnknownAccountException uae) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，未知账户！");
-            model.addAttribute("info","未知账户");
+            model.addAttribute("info", "未知账户");
         } catch (LockedAccountException lae) {
             System.out.println("对用户【" + user.getUserCode() + "】进行登录验证，验证未通过，账户锁定！");
             lae.printStackTrace();
@@ -176,7 +199,7 @@ public class ShootUserController {
         if (insert == true) {
             //重定向 可以自动把参数拼接到url地址上
             attributes.addAttribute("info", "注册成功请输入密码登录");
-            attributes.addAttribute("userCode",user.getUserCode());  //传递userCode到登录页
+            attributes.addAttribute("userCode", user.getUserCode());  //传递userCode到登录页
             return "redirect:login";
         } else {
             model.addAttribute("info", insert);
@@ -204,28 +227,396 @@ public class ShootUserController {
     //约拍信息详情
     @RequestMapping(value = {"/about"})
     public String about() {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         return "index/about";
     }
 
     //我的 个人中心 主页
     @RequestMapping(value = "/personage")
-    public String personage(Model model){
-        ShootUser user = (ShootUser)subject.getSession().getAttribute("user");
+    public String personage(Model model) {
+        ShootUser user = (ShootUser) subject.getSession().getAttribute("user");
         ShootUser shootUser = iShootUserService.personageByUserCode(user.getUserCode());
-        model.addAttribute("dizhi",shootUser.getShootAddress().getShootProw().getProw()+
+        model.addAttribute("dizhi", shootUser.getShootAddress().getShootProw().getProw() +
                 shootUser.getShootAddress().getShootCity().getCity());  //地址
-        model.addAttribute("juese",shootUser.getRoles().get(0).getRoleName());  //角色
-        model.addAttribute("member",shootUser.getMember());  //是否有会员
+        model.addAttribute("juese", shootUser.getRoles().get(0).getRoleName());  //角色
+        model.addAttribute("member", shootUser.getMember());  //是否有会员
         return "personage/personage";
     }
 
     //个人中心到发布信息页
     @RequestMapping(value = "/postMessage")
-    public String postMessage(){
+    public String postMessage(@RequestParam(value = "themName", defaultValue = "发布信息")
+                                      String themName, Model model) {
+
+        //有主题就查询主题id传过去
+        if (!themName.equals("发布信息")) {
+            QueryWrapper<ShootTheme> queryWrapper = new QueryWrapper<>();
+            System.out.println("theme:" + themName);
+            queryWrapper.eq("themName", themName);
+            ShootTheme one = iShootThemeService.getOne(queryWrapper);
+            model.addAttribute("id", one.getId());
+        }
+        ShootUser user =(ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        QueryWrapper<ShootInfo> query=new QueryWrapper<>();
+        query.eq("userId",user.getId());
+        query.eq("creationDate",LocalDate.now());
+        List<ShootInfo> list = iShootInfoService.list(query);
+        boolean flag=false;
+        if(list.size()>0 && user.getMember()==null){  //说明今天已发布一次不能再发布
+            flag=false;
+        }else if(list.size()>0 && user.getMember()!=null && user.getMember()==1){  //发布过一次但是有会员可以多次发布
+            flag=true;
+        }else {
+            flag=true;
+        }
+        model.addAttribute("flag",flag);   //限制发布信息次数
+        model.addAttribute("themName", themName);
         return "personage/postMessage";
     }
+
     @RequestMapping("/ses")
-    public void ses(){
+    public void ses() {
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     }
+
+    //绑定手机页
+    @RequestMapping(value = "/personagePhone")
+    public String personagePhone() {
+        return "personage/personagePhone";
+    }
+
+    //短信平台相关参数
+    private String apiUrl = "https://sms_developer.zhenzikj.com";  //平台地址
+    private String appId = "104923";   //id
+    private String appSecret = "d45c2fce-ed04-4ba2-9a7e-670e038374f1";  //实例
+
+    //绑定手机号 获取验证码 成功后 添加到用户中
+    @RequestMapping(value = "/phone")
+    @ResponseBody
+    public Object addPhone(@RequestParam(value = "phone", required = false)
+                                   String phone, HttpSession session) {
+
+        try {
+            JSONObject json = null;
+            //随机生成验证码
+            String code = String.valueOf(new Random().nextInt(999999));
+            //将验证码通过榛子云接口发送至手机
+            ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+            String result = client.send(phone, "您的验证码为:" + code + "，该码有效期为5分钟，该码只能使用一次!");
+            json = JSONObject.parseObject(result);  //装换为object json格式
+            if (json.getIntValue("code") != 0) {//发送短信失败
+                return false;
+            }
+            //将验证码存到session中,同时存入创建时间
+            //以json存放，这里使用的是阿里的fastjson
+            json = new JSONObject();
+            json.put("phone", phone);
+            json.put("code", code);
+            json.put("createTime", System.currentTimeMillis());
+            session.setAttribute("code", json);  //放入session中
+            return json;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //到达手机登录页面
+    @RequestMapping(value = "/registerPhone")
+    public String registerPhone() {
+        return "registerPhone";
+    }
+
+    //更改字段 增加值
+    @RequestMapping(value = "/updatePhone")
+    public String updatePhone(@RequestParam(value = "phone", required = false)
+                                      String phone, Model model) {
+
+        ShootUser user = (ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        user.setPhone(phone);
+        boolean b = iShootUserService.updateById(user);
+        if (b == true) {
+            return "redirect:/shoot-role/personalInfo";
+        } else {
+            model.addAttribute("message", "绑定手机号失败");
+            return "personage/personalInfo";
+        }
+
+    }
+
+
+    //根据手机号码查询数据
+    @RequestMapping(value = "/byPhone")
+    @ResponseBody
+    public ShootUser byPhone(@RequestParam(value = "phone", required = false)
+                                     String phone) {
+        QueryWrapper<ShootUser> query = new QueryWrapper<>();
+        query.eq("phone", phone);
+        ShootUser one = iShootUserService.getOne(query);
+        return one;
+    }
+
+    //加入会员页面
+    @RequestMapping(value = "/joinMember")
+    public String joinMember() {
+        return "personage/joinMember";
+    }
+
+    //选择支付方式页面
+    @RequestMapping(value = "/payment")
+    public String payment(@RequestParam(value = "price", required = false)
+                                  Float price,
+                          @RequestParam(value = "subject", required = false)
+                                  String subject, Model model) {
+        String qixian;
+        if (price == 50) {
+            qixian = "月";
+        } else {
+            qixian = "年";
+        }
+        model.addAttribute("subject", subject);  //商品名称
+        model.addAttribute("price", price);     //商品价格
+        model.addAttribute("qixian", qixian);   //月 或 年
+        return "personage/payment";
+    }
+
+
+    Logger logger = LoggerFactory.getLogger("PayController.class");
+
+    //访问支付宝页面 支付页面
+    @RequestMapping(value = "/alipay/toPay")
+    @ResponseBody
+    public void alipay(@RequestParam(value = "amount", required = false)
+                               String amount, @RequestParam(value = "subject", required = false)
+                               String subject, @RequestParam(value = "body", required = false)
+                               String body, HttpSession session,
+                       HttpServletResponse response, HttpServletRequest request) throws Exception {
+        //获得初始化的AlipayClient
+        AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.app_id, AliPayConfig.merchant_private_key, "json", AliPayConfig.charset, AliPayConfig.alipay_public_key, AliPayConfig.sign_type);
+
+        //设置请求参数
+        AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
+        alipayRequest.setReturnUrl(AliPayConfig.return_url);
+        alipayRequest.setNotifyUrl(AliPayConfig.notify_url);
+
+        //生成订单号类
+        Round round = new Round();
+        //商户订单号，商户网站订单系统中唯一订单号，必填
+        String out_trade_no = round.round();
+        //付款金额，必填
+        String total_amount = amount;
+
+        //信息存放订单实体类
+        ShootOrder order = new ShootOrder();
+        order.setOutTradeNo(out_trade_no);
+        order.setTotalAmount(Float.valueOf(total_amount));
+        order.setSubject(subject);
+        order.setBody(body);
+        ShootUser user = (ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+        order.setUserId(user.getId());
+        session.setAttribute("order", order);
+
+        //订单名称，必填
+        //String subject ="蒋蒋集团";
+        //商品描述，可空
+        //String body ="好吃的好玩的";
+
+        alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
+                + "\"total_amount\":\"" + total_amount + "\","
+                + "\"subject\":\"" + subject + "\","
+                + "\"body\":\"" + body + "\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+
+        //若想给BizContent增加其他可选请求参数，以增加自定义超时时间参数timeout_express来举例说明
+        //alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
+        //		+ "\"total_amount\":\""+ total_amount +"\","
+        //		+ "\"subject\":\""+ subject +"\","
+        //		+ "\"body\":\""+ body +"\","
+        //		+ "\"timeout_express\":\"10m\","
+        //		+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+        //请求参数可查阅【电脑网站支付的API文档-alipay.trade.page.pay-请求参数】章节
+
+        //请求
+        String form = "";
+        try {
+            form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("text/html;charset=" + AliPayConfig.charset);
+        response.getWriter().write(form);//直接将完整的表单html输出到页面
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
+
+
+    //支付宝异步通知
+    @GetMapping("/alipay/notify_url")
+    @ResponseBody
+    public String notifyAlipay() {
+        System.out.println("");
+        logger.info("----notify-----");
+        return " a li pay notify ";
+    }
+
+    //支付成功之后回调函数
+    @GetMapping("/alipay/return_url")
+    public String returnAlipay(HttpSession session) {
+        Session session1 = SecurityUtils.getSubject().getSession();
+        ShootOrder order = (ShootOrder) session.getAttribute("order");
+        order.setCreationDate(LocalDateTime.now());   //存入当前生成订单时间
+        boolean save = iShootOrderService.save(order);
+        logger.info("----return-----");
+        if (save) {   //成功
+            ShootUser user = (ShootUser) session1.getAttribute("user");
+            if (order.getBody() == "账户金额") {
+                if (user.getMoney() != 0 && user.getMoney() > 0) {  //有钱
+                    order.setTotalAmount(order.getTotalAmount() + user.getMoney());  //相加
+                }
+                UpdateWrapper<ShootUser> query = new UpdateWrapper<>();
+                query.set("money", order.getTotalAmount());
+                query.eq("id", user.getId());
+                boolean update = iShootUserService.update(query);  //更改user表信息 添加钱
+            } else if (order.getBody() != "账户金额") {
+                LocalDate localDate = null;
+                if (order.getTotalAmount() == 50) {   //办理 月会员
+                    if (user.getMember() != null && user.getMember() != 0 && user.getMember() == 1) {  //已是会员 续费
+                        localDate = user.getMemberDate().plusMonths(1);
+                    } else {  //不是会员
+                        localDate = LocalDate.now().plusMonths(1);
+                    }
+                } else if (order.getTotalAmount() == 300) {  //办理年会员
+                    if (user.getMember() != null && user.getMember() != 0 && user.getMember() == 1) {  //已是会员 续费
+                        localDate = user.getMemberDate().plusYears(1);
+                    } else {  //不是会员
+                        localDate = LocalDate.now().plusYears(1);
+                    }
+                }
+                if (localDate != null) {   //会员支付操作
+                    iShootUserService.modifyMember(order.getUserId(), localDate);
+                } else {    //保证金支付操作
+                    iShootUserService.modifySecurityMoney(order.getUserId(), order.getTotalAmount());
+                }
+            }
+
+            session.removeAttribute("order");   //删除订单信息
+            List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
+            session1.setAttribute("user", userByUserCode.get(0));   //更改之后重新查询当前user信息
+            return "redirect:/shoot-user/personage";  //重定向回到个人主页
+        } else {
+            if (save) {   //成功
+                ShootUser user = (ShootUser) session1.getAttribute("user");
+                LocalDate localDate = null;
+                if (order.getTotalAmount() == 50) {   //办理 月会员
+                    if (user.getMember() == 1) {  //已是会员 续费
+                        localDate = user.getMemberDate().plusMonths(1);
+                    } else {  //不是会员
+                        localDate = LocalDate.now().plusMonths(1);
+                    }
+                } else if (order.getTotalAmount() == 300) {  //办理年会员
+                    if (user.getMember() == 1) {  //已是会员 续费
+                        localDate = user.getMemberDate().plusYears(1);
+                    } else {  //不是会员
+                        localDate = LocalDate.now().plusYears(1);
+                    }
+                }
+                iShootUserService.modifyMember(order.getUserId(), localDate);
+                session.removeAttribute("order");   //删除订单信息
+                List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
+                session1.setAttribute("user", userByUserCode.get(0));   //更改之后重新查询当前user信息
+                return "redirect:/shoot-user/personage";  //重工回到个人主页
+            } else {
+                return "personage/joinMember";            //失败则回到充值页
+            }
+        }
+    }
+
+
+        //提高信用等级页面
+        @RequestMapping(value = "/credit")
+        public String credit () {
+            return "personage/credit";
+        }
+
+
+        //查询订单 数据 用于提取金额
+        @RequestMapping(value = "/orderByUserIdAndBody")
+        @ResponseBody
+        public ShootOrder orderByUserIdAndBody (@RequestParam(value = "body", required = false)
+                String body){
+            ShootUser user = (ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+            QueryWrapper<ShootOrder> query = new QueryWrapper<>();
+            query.eq("userId", user.getId());
+            query.eq("body", body);
+            query.groupBy("userId");
+            ShootOrder one = iShootOrderService.getOne(query);
+            return one;
+        }
+
+        //提取保证金
+        @RequestMapping(value = "/tiqu")
+        @ResponseBody
+        public void tiQu (@RequestParam(value = "securityMoney", required = false)
+                Float securityMoney, @RequestParam(value = "out_trade_no", required = false)
+                String out_trade_no,
+                HttpServletResponse response, HttpSession session) throws IOException, AlipayApiException {
+
+            response.setContentType("text/html;charset=utf-8");
+            //获得初始化的AlipayClient
+            AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.app_id, AliPayConfig.merchant_private_key,
+                    "json", AliPayConfig.charset, AliPayConfig.alipay_public_key,
+                    AliPayConfig.sign_type);
+
+            //设置请求参数
+            AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
+            //商户订单号，必填
+            //String out_trade_no ="43391678724f8481-aac1-4ff4-95c7-004e374d0d5c";
+            //需要退款的金额，该金额不能大于订单金额，必填
+            String refund_amount = securityMoney.toString();
+            //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
+            String out_request_no = (UUID.randomUUID().toString());
+            System.out.println("oooooooooooooooooo:" + out_trade_no);
+
+            alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
+                    + "\"refund_amount\":\"" + refund_amount + "\","
+                    + "\"out_request_no\":\"" + out_request_no + "\"}");
+            //请求
+            String result = alipayClient.execute(alipayRequest).getBody();
+            System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + result);
+            //输出
+            response.setContentType("text/html;charset=" + AliPayConfig.charset);
+            response.getWriter().write(result);//直接将完整的表单html输出到页面
+            response.getWriter().flush();
+            response.getWriter().close();
+            //提取成功之后操作
+            ShootUser user = (ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
+            UpdateWrapper<ShootUser> query2 = new UpdateWrapper<>();
+            query2.set("securityMoney", null);
+            query2.eq("id", user.getId());
+            boolean update = iShootUserService.update(query2);
+            List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
+            Session session1 = SecurityUtils.getSubject().getSession();
+            session1.removeAttribute("user"); //删除原先user 重新绑定user
+            SecurityUtils.getSubject().getSession().setAttribute("user", userByUserCode.get(0));
+        /*if(update==true && userByUserCode.size()>0){  //退款后的操作成功
+
+        }*/
+        }
+
+
+        //余额界面
+        @RequestMapping(value = "/account")
+        public String account () {
+            return "personage/account";
+        }
+
+        //充值宇额界面
+        @RequestMapping(value = "/topup")
+        public String topup () {
+            return "personage/topup";
+        }
+
+
+
 }
+

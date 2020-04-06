@@ -2,6 +2,7 @@ package cn.bdqn.photography.shootselfie.entity;
 
 import java.time.LocalDateTime;
 
+import cn.bdqn.photography.shootuser.entity.ShootUser;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -37,5 +38,10 @@ public class ShootSelfie implements Serializable {
     @TableField("creationDate")
     private LocalDateTime creationDate;
 
+    @TableField("userId")
+    private Long userId;
+
+    @TableField(exist = false)
+    private ShootUser shootUser;
 
 }

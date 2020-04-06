@@ -7,6 +7,8 @@ import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootinfo.service.IShootInfoService;
 import cn.bdqn.photography.shootletter.entity.ShootLetter;
 import cn.bdqn.photography.shootletter.service.IShootLetterService;
+import cn.bdqn.photography.shootselfie.entity.ShootSelfie;
+import cn.bdqn.photography.shootselfie.service.IShootSelfieService;
 import cn.bdqn.photography.shoottheme.entity.ShootTheme;
 import cn.bdqn.photography.shoottheme.service.IShootThemeService;
 import cn.bdqn.photography.shootuser.entity.ShootRole;
@@ -16,6 +18,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.HashMap;
@@ -50,31 +54,47 @@ public class ShootThemeController {
     @Autowired
     private IShootLetterService iShootLetterService;
 
+    @Autowired
+    private IShootSelfieService iShootSelfieService;
+    
+    //自拍页
     @RequestMapping("/zipai")
-    public String zipai(){
+    public String zipai(Model model)
+    {
+        List<ShootSelfie> selfieLIst = iShootSelfieService.findSelfieLIst();
+        for (ShootSelfie selfie:selfieLIst
+             ) {
+             selfie.setImagesName("/images/"+selfie.getImagesName());
+             selfie.getShootUser().setPortyaitl("/images/"+selfie.getShootUser().getPortyaitl());
+        }
+        model.addAttribute("selfie",selfieLIst);
         return "selfie/zipai";
     }
 
+    //主题页
     @RequestMapping("/top")
     public String topic(){
         return "selfie/topic";
     }
 
+    //关注页
     @RequestMapping("/att")
     public String att(){
         return "selfie/attention";
     }
 
-     //分页查询用户主题
+     //分页查询用户主题 主题页信息查询
     @RequestMapping("/topic2")
     public String topic2(@RequestParam(value = "id",required = false) String id, Model model,
                          @RequestParam(value = "city",required = false)
                          String city,@RequestParam(value = "current",defaultValue = "0",required = false)
                          int current){
-        System.out.println("用户地址city"+city);
         Long idd=Long.parseLong(id);
 
+        //查询主题名称
        ShootTheme st= iShootThemeService.getById(idd);
+
+       model.addAttribute("st",st);
        if(st!=null){
            List<ShootInfo> sif= iShootThemeService.selebythemeid(st);
            model.addAttribute("st",st);
@@ -84,7 +104,7 @@ public class ShootThemeController {
         if(city!="" && city!=null){
             city=city+"市";
         }
-        System.out.println("地区"+city);
+
         //约拍信息查询
         IPage<ShootInfo> page= iShootThemeService.findInfoByThemeId(idd,city,current);
 
@@ -111,8 +131,7 @@ public class ShootThemeController {
         model.addAttribute("current",page.getCurrent());  //当前页
         model.addAttribute("pages",page.getPages());      //总页数
         model.addAttribute("total",page.getTotal());      //总条数
-        //page.getRecords().get(0).getShootUser().getRoles().get(0).getRoleName()
-        //System.out.println("用户身份"+page.getRecords().g);
         return "selfie/topic2";
     }
+
 }

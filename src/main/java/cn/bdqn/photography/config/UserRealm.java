@@ -27,26 +27,25 @@ import java.util.List;
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
-    @Qualifier("shootUserService")
     private IShootUserService iShootUserService;
 
     //先 认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken toke) throws AuthenticationException {
 
-        String userCode = (String)toke.getPrincipal();  //编码
+        String userCode = (String) toke.getPrincipal();  //编码
 
-        List<ShootUser> list=iShootUserService.findUserByUserCode(userCode);
+        List<ShootUser> list = iShootUserService.findUserByUserCode(userCode);
 
-        if(list.size()==0){  //未知账号
+        if (list.size() == 0) {  //未知账号
             return null;
         }
 
         //获得当前用户 Subject当前用户
         Subject subject = SecurityUtils.getSubject();
-        subject.getSession().setAttribute("user",list.get(0));   //登录成功把user放入shiro用户sesssion中
+        subject.getSession().setAttribute("user", list.get(0));   //登录成功把user放入shiro用户sesssion中
 
-        String pwd=list.get(0).getUserPassword();
+        String pwd = list.get(0).getUserPassword();
 
         //对用户编码转换byte数组
         ByteSource salt = ByteSource.Util.bytes(userCode);
@@ -54,10 +53,10 @@ public class UserRealm extends AuthorizingRealm {
         //获取当前类的父类 类名
         String realName = this.getName();
 
-        System.out.println("userPassword:"+pwd);
+        System.out.println("userPassword:" + pwd);
 
         //用户密码shiro会自己进行验证 验证不正确将会出现相应的错误
-        ShootUser user=list.get(0);
+        ShootUser user = list.get(0);
 
         return new SimpleAuthenticationInfo(
                 user,     //用户数据
@@ -79,11 +78,11 @@ public class UserRealm extends AuthorizingRealm {
         // 当前用户信息 从shiro数据源中获得数据 shiro间接的跟mysql数据源有关联 可以看作是mysql数据源
         ShootUser user = (ShootUser) principals.getPrimaryPrincipal();
         //user.setEmail("add");
-        for (ShootRole role : user.getRoles()){
-            System.out.println("roles:"+role.getRoleName());
+        for (ShootRole role : user.getRoles()) {
+            System.out.println("roles:" + role.getRoleName());
             info.addRole(role.getRoleName());  //添加角色
-            for (ShootPermission permission : role.getPermissions()){
-                System.out.println("permission:"+permission.getPermissionName());
+            for (ShootPermission permission : role.getPermissions()) {
+                System.out.println("permission:" + permission.getPermissionName());
                 info.addStringPermission(permission.getPermissionName());  //授权
             }
         }

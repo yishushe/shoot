@@ -3,26 +3,19 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-   <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">-->
     <title>我的信用保证金 -艺术摄</title>
     <meta name="description" />
     <meta name="keywords" />
 
     <link href="../css/core73.min.css" rel="stylesheet" />
     <script th:src="@{/js/jquery.min.js}"></script>
-    <!--<script type="text/javascript">
-        if (document.location.host && null != document.location.host) { var n = document.location.host; n.indexOf("shehuishe.com") < 0 && n.indexOf("shehuiapp.com") < 0 && (window.location.href = "https://www.shehuiapp.com/") }
-    </script>-->
 
 </head>
 <body class="body_default">
 
-
-
 <header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
     <div class="container">
         <div class="navbar-header">
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
@@ -33,44 +26,34 @@
             </button>
             <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
                 <div>
-                    <img src="/content/custom/logo.png" class="fy-navbar-logo" />
-                    <span>摄会社</span>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
                 </div>
             </a>
         </div>
         <nav id="fy-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" id="uul">
                 <li>
-                    <a class="fy-navItem-active" href="#">首页</a>
+                    <a th:href="@{/shoot-user/index}">首页</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/att}">关注</a>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/zipai}">自拍</a>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
                 </li>
                 <li>
-                    <a class="login" th:href="@{/shoot-selfie/top}">主题</a>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
                 </li>
-                <!--   <li>
-                       <a class="" href="#">地点</a>
-                   </li>-->
                 <li shiro:hasPermission="query">
                 <li th:replace="common/my :: my"></li>
                 </li>
-                <li>
-                    <a id="" class="fy-navItem-notification" href="#">通知</a>
-                </li>
-                <li>
-                    <a class="login" href="#">加入会员</a>
-                </li>
-                <!-- <li>
-                     <a class="" href="https://www.shehuiapp.com/download">下载APP</a>
-                 </li>-->
             </ul>
         </nav>
     </div>
+
 </header>
+
 <div class="fy-docs-nav-distance"></div>
 
 <div class="container bottom_menu_margin_plus xzero_padding">
@@ -102,7 +85,7 @@
     <div class="v20_margin"></div>
 </div>
 
-
+<script th:src="@{/js/style.js}"></script>
 
 <script type="text/javascript">var siteRoot = "https://www.shehuiapp.com/";</script>
 

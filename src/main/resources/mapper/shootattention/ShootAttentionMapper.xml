@@ -2,4 +2,95 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bdqn.photography.shootattention.mapper.ShootAttentionMapper">
 
+
+    <!-- 查找当前用户已关注的用户 -->
+    <resultMap id="attention01" type="ShootAttention">
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="id"></id>
+            <association property="shootAddress" javaType="ShootAddress">
+                <association property="shootProw" javaType="ShootProw">
+                    <id property="id" column="p_id"></id>
+                </association>
+                <association property="shootCity" javaType="ShootCity">
+                    <id property="id" column="c_id"></id>
+                </association>
+                <association property="shootCountry" javaType="ShootCountry">
+                    <id property="id" column="co_id"></id>
+                </association>
+            </association>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+    </resultMap>
+    <select id="getByAttentionId" resultMap="attention01">
+        SELECT u.*,r.id r_id,r.roleName,p.id p_id,p.prow,
+        c.id c_id,c.city,co.id co_id,co.country
+        FROM shoot_attention ai
+        <if test="message=='我关注的人'">
+            INNER JOIN shoot_user u ON u.id=ai.focusedId
+            INNER JOIN shoot_address a ON a.id=u.shootAddressId
+            INNER JOIN shoot_prow p ON p.id=a.prow_id
+            INNER JOIN shoot_city c ON c.id=a.city_id
+            INNER JOIN shoot_country co ON co.id=a.country_id
+            INNER JOIN shoot_user_role ur ON ur.userId=u.id
+            INNER JOIN shoot_role r ON r.id=ur.roleId
+            WHERE ai.attentionId=#{attentionId}
+        </if>
+        <if test="message=='关注我的人'">
+            INNER JOIN shoot_user u ON u.id=ai.attentionId
+            INNER JOIN shoot_address a ON a.id=u.shootAddressId
+            INNER JOIN shoot_prow p ON p.id=a.prow_id
+            INNER JOIN shoot_city c ON c.id=a.city_id
+            INNER JOIN shoot_country co ON co.id=a.country_id
+            INNER JOIN shoot_user_role ur ON ur.userId=u.id
+            INNER JOIN shoot_role r ON r.id=ur.roleId
+            where ai.focusedId=#{attentionId}
+        </if>
+    </select>
+
+
+    <!-- 查询当前用户关注的约拍信息 -->
+    <resultMap id="attention02" type="ShootInfo">
+        <id property="id" column="i_id"></id>
+        <association property="shootType" javaType="ShootType">
+            <id property="id" column="ty_id"></id>
+        </association>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="id"></id>
+            <association property="shootAddress" javaType="ShootAddress">
+                <association property="shootProw" javaType="ShootProw">
+                    <id property="id" column="p_id"></id>
+                </association>
+                <association property="shootCity" javaType="ShootCity">
+                    <id property="id" column="c_id"></id>
+                </association>
+                <association property="shootCountry" javaType="ShootCountry">
+                    <id property="id" column="co_id"></id>
+                </association>
+            </association>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+    </resultMap>
+    <select id="getByAttentionIdInfo" resultMap="attention02">
+        SELECT i.id i_id,i.content,i.creationDate,u.*,r.id r_id,r.roleName,ty.id ty_id,ty.typeName,
+       p.id p_id,p.prow,c.id c_id,c.city,co.id co_id,co.country,
+       ai.id FROM shoot_info i
+       INNER JOIN shoot_user u ON u.id=i.userId
+       INNER JOIN shoot_user_role ur ON ur.userId=u.id
+       INNER JOIN shoot_role r ON r.id=ur.roleId
+       INNER JOIN shoot_type ty ON ty.id=i.typeId
+       INNER JOIN shoot_address a ON a.id=u.shootAddressId
+       INNER JOIN shoot_prow p ON p.id=a.prow_id
+       INNER JOIN shoot_city c ON c.id=a.city_id
+       INNER JOIN shoot_country co ON co.id=p.id
+       INNER JOIN shoot_attention ai ON ai.focusedId=u.id
+       WHERE ai.attentionId=#{attentionId}
+       ORDER BY i.creationDate DESC
+    </select>
+
+
 </mapper>
+

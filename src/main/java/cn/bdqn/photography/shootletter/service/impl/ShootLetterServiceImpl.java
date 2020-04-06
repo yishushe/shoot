@@ -24,8 +24,8 @@ public class ShootLetterServiceImpl extends ServiceImpl<ShootLetterMapper, Shoot
     private ShootLetterMapper shootLetterMapper;
 
     @Override
-    public List<ShootLetter> findLetterByPutUserId(Long putUserId) {
-        return shootLetterMapper.getLetterByPutUserId(putUserId);
+    public List<ShootLetter> findLetterByPutUserId(Long putUserId,Long infoId) {
+        return shootLetterMapper.getLetterByPutUserId(putUserId,infoId);
     }
 
     @Override
@@ -39,8 +39,28 @@ public class ShootLetterServiceImpl extends ServiceImpl<ShootLetterMapper, Shoot
     }
 
     @Override
-    public List<ShootLetter> findLetterByPutUserIdPut(Long putUserId) {
-        return shootLetterMapper.getLetterByPutUserIdPut(putUserId);
+    public List<ShootLetter> findLetterByPutUserIdPut(Long putUserId,String costName) {
+        return shootLetterMapper.getLetterByPutUserIdPut(putUserId,costName);
+    }
+
+    @Override
+    public ShootLetter findLetterBySendUserIdAndPutUserId2(Long sendUserId, Long putUserId,Long infoId) {
+        return shootLetterMapper.getLetterBySendUserIdAndPutUserId2(sendUserId,putUserId,infoId);
+    }
+
+    @Override
+    public List<ShootLetter> findLetterConste(Long putUserId, Long stateId) {
+        return shootLetterMapper.getLetterConset(putUserId,stateId);
+    }
+
+    @Override
+    public List<ShootLetter> findOrderByStateIdAndUserId(Long stateId, Long userId) {
+        return shootLetterMapper.getOrderByStateIdAndUserId(stateId,userId);
+    }
+
+    @Override
+    public Integer findOrder(Long sendUserId, Long putUserId, Long infoId,String test) {
+        return shootLetterMapper.getByOrder(sendUserId,putUserId,infoId,test);
     }
 
 }

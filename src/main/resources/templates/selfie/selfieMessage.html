@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+
+    <title>超人学长的自拍 - 摄会社</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <link href="../css/core73.min.css" rel="stylesheet" />
+    <script th:src="@{/js/jquery.min.js}"></script>
+
+    <style type="text/css">
+        .guanzhu{
+            background: #5e5e5e;
+        }
+    </style>
+
+</head>
+<body class="body_default">
+
+
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="摄会社 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a th:href="@{/shoot-user/index}">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
+                </li>
+                <li>
+                    <a class="login fy-navItem-active" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding">
+    <div class="row" style="margin-left:0px;margin-right:0px;">
+        <div class="col-sm-9 xzero_padding">
+
+            <!-- 信息展示 -->
+            <div class="data_posts newcard_container_wrapper newcard_container_fix ">
+                <div class="data_post_cell">
+                    <div class="user_info_cell_sm v10_margin_bottom">
+                        <div class="user_info_cell_avatar">
+
+                            <!-- 头像展示 -->
+                            <a class="data_post_author_title_link" th:href="@{/shoot-attention/personalInfo(userId=${selfie.shootUser.id})}">
+                                <img class="img-circle data_avatar_small2" th:src="${selfie.shootUser.portyaitl}" />
+                            </a>
+
+                        </div>
+
+                        <!-- 关注功能 -->
+                        <div style="float:right;">
+                            <!-- 是否已关注数据 -->
+                            <input hidden id="attentionId" th:value="${attentionId}">
+                            <!-- 当前这条约拍信息userId -->
+                            <input hidden id="focusedId" th:value="${selfie.shootUser.id}">
+                            <!-- 关注功能 -->
+                            <a th:if="${selfie.shootUser.id!=session.user.id}">
+                                <a id="guanzhu" class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="822903" href="javascript:;">关注</a>
+                            </a>
+                       <!--<a class="btn btn-sm btn_follow btn_follow_user btn-success" data-login="1" data-to="61996" href="javascript:;">关注</a>-->
+                            <!-- 关注javascript -->
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+
+                                    <!-- 判断是否已关注 -->
+                                    var attentionId = $("#attentionId").val();
+                                    if(attentionId!=null && attentionId!=undefined && attentionId!=""){
+                                        $("#guanzhu").text("已关注");
+                                        $("#guanzhu").addClass("guanzhu");
+                                    }
+
+                                    <!-- 异步做关注和取消关注操作 -->
+                                    $("#guanzhu").click(function () {
+                                        var text = $(this).text();
+                                        var focusedId=$("#focusedId").val();
+                                        if(text=="关注"){
+                                            $.post("/shoot-attention/addAttention",{"focusedId":focusedId},function (data) {
+                                                if(data==true){
+                                                    $("#guanzhu").text("已关注");
+                                                    $("#guanzhu").addClass("guanzhu");
+                                                }
+                                            },"json");
+                                        }
+                                        if(text!="关注"){
+                                            $.post("/shoot-attention/deleteAttention",{"focusedId":focusedId},function (data) {
+                                                if(data==true){
+                                                    $("#guanzhu").text("关注");
+                                                    $("#guanzhu").removeClass("guanzhu");
+                                                }
+                                            },"json");
+                                        }
+                                    });
+
+                                });
+                            </script>
+                        </div>
+
+                        <!-- 自拍信息展示 -->
+                        <div class="user_info_cell_content">
+                            <a class="data_post_author_title_link" href="/u/61996">
+                                <span class="data_post_author_title" th:text="${selfie.shootUser.userName}">超人学长</span>
+                            </a>
+                            <i class="web_wechat_men"></i>
+                            <div>
+                                <span class="data_meta_info_xs" th:text="${selfie.shootUser.roles.get(0).roleName}">摄影师</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="lightGallery" class="v10_margin">
+                        <div class="v10_margin gallery-item-container" style="text-align:center;" data-src="http://image.shehuiapp.com/u/61996/61996_036753040_1584521747439.jpg/f">
+                            <img style="width:auto;max-width:100%;height:auto;" th:src="${selfie.imagesName}"  />
+                        </div>
+                    </div>
+                    <div class="data_meta_info v10_margin" th:text="${selfie.content}">
+                        来来来
+                    </div>
+                    <div class="data_meta_info v10_margin">
+                        <span class="data_meta_info" th:text="${selfie.creationDate}">2020年3月18日16:56</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 右侧导航栏 -->
+        <div class="col-sm-3 fy-rside-panel">
+            <div class="data_posts">
+                <a class="data_post_cell data_post_cell_link form_header_righticon" href="/pai">
+                    <span class="data_meta_text">自拍大厅</span>
+                    <div class="right_select"></div>
+                </a>
+                <a class="data_post_cell data_post_cell_link form_header_righticon" href="/pai/list?userID=61996">
+                    <span class="data_meta_text">查看TA的全部自拍</span>
+                    <div class="right_select"></div>
+                </a>
+                <a class="data_post_cell data_post_cell_link form_header_righticon" href="/u/61996?report=1">
+                    <span class="data_meta_text">举报此用户</span>
+                    <div class="right_select"></div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="v10_margin"></div>
+</div>
+
+
+<div id="toast_message" class="toast_message_fixed" style="display: none;">
+    <div class="weui_toast weui_toast_fixed">
+        <p id="toast_message_text" class="weui_toast_content weui_toast_content_fixed">
+        </p>
+    </div>
+</div>
+
+
+<!-- 举报框 -->
+<div class="modal" id="report_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="data_group_title">向平台举报</div>
+            </div>
+            <div class="modal-body">
+                <textarea id="report_text" class="auto_textarea_editor" rows="3" style="font-size:13px;" placeholder="输入内容"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button id="report_dialog_submit_button" class="btn btn-primary btn-sm" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

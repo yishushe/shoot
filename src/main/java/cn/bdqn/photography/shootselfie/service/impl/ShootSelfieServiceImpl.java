@@ -4,7 +4,10 @@ import cn.bdqn.photography.shootselfie.entity.ShootSelfie;
 import cn.bdqn.photography.shootselfie.mapper.ShootSelfieMapper;
 import cn.bdqn.photography.shootselfie.service.IShootSelfieService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShootSelfieServiceImpl extends ServiceImpl<ShootSelfieMapper, ShootSelfie> implements IShootSelfieService {
 
+    @Autowired
+    private ShootSelfieMapper shootSelfieMapper;
+
+    @Override
+    public List<ShootSelfie> findSelfieLIst() {
+        return shootSelfieMapper.getSelfieList();
+    }
+
+    @Override
+    public ShootSelfie findById(Long id) {
+        return shootSelfieMapper.getById(id);
+    }
+
+    @Override
+    public List<ShootSelfie> findSelfieByUserId(Long userId) {
+        return shootSelfieMapper.getSelfieByUserId(userId);
+    }
+
 }
+

@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>Desert - 艺术摄</title>
+    <meta name="description" />
+    <meta name="keywords" />
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <link href="../css/core73.min.css" rel="stylesheet" />
+
+</head>
+<body class="body_default">
+
+<style type="text/css">
+    .report_tip {
+        background-color: #fcf8e3;
+    }
+    .guanzhu{
+        background: #5e5e5e;
+    }
+</style>
+
+<!-- 导航条 -->
+<header class="navbar navbar-fixed-top fy-docs-nav" id="top" role="banner">
+
+    <!-- 导航条 -->
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#fy-navbar" aria-controls="fy-navbar" aria-expanded="false">
+                <span class="sr-only">导航切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand fy-navbar-brand" href="/" title="艺术摄 - 摄影师模特摄影约拍演艺通告平台">
+                <div>
+                    <img src="../images/logo.png" class="fy-navbar-logo" />
+                    <span>艺术摄</span>
+                </div>
+            </a>
+        </div>
+        <nav id="fy-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="uul">
+                <li>
+                    <a th:href="@{/shoot-user/index}">首页</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-attention/attention}">关注</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/zipai}">自拍</a>
+                </li>
+                <li>
+                    <a class="login" th:href="@{/shoot-theme/top}">主题</a>
+                </li>
+                <li shiro:hasPermission="query">
+                <li th:replace="common/my :: my"></li>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="fy-docs-nav-distance"></div>
+
+<div class="container bottom_menu_margin_plus xzero_padding">
+
+    <div class="data_posts">
+        <div class="data_post_cell_dotted user_info_cell">
+
+            <!-- 头像 -->
+            <div class="user_info_cell_avatar">
+                <img class="img-circle data_avatar_small2" th:src="${touxiang}"/>
+            </div>
+
+            <div th:if="${info!=null and info!=''}">
+                <!-- 用户信息 -->
+                <div class="user_info_cell_content">
+                    <span class="data_post_author_title" th:text="${info.get(0).shootUser.userName}">Desert</span>
+                    <i class="web_wechat_men"></i>
+                    <div>
+                    <span class="data_meta_info_xs" th:text="${info.get(0).shootAddress.shootProw.prow+
+                    info.get(0).shootAddress.shootCity.city+info.get(0).shootAddress.shootCountry.country}">上海</span>
+                        <span class="data_meta_info_xs" th:text="${info.get(0).shootUser.roles.get(0).roleName}">摄影师</span>
+                        <!--<span class="review_score_label">10.0</span>-->
+                    </div>
+                </div>
+
+                <!-- 手机验证 -->
+                <div class="v10_margin" th:if="${info.get(0).shootUser.phone!='' and info.get(0).shootUser.phone!=null}">
+                    <span class="label label-warning">手机验证</span>
+                </div>
+
+            </div>
+
+            <div th:if="${info2!=null and info2!=''}">
+                <!-- 用户信息 -->
+                <div class="user_info_cell_content">
+                    <span class="data_post_author_title" th:text="${info2.get(0).userName}">Desert</span>
+                    <i class="web_wechat_men"></i>
+                    <div>
+                    <span class="data_meta_info_xs" th:text="${info2.get(0).shootAddress.shootProw.prow+
+                    info2.get(0).shootAddress.shootCity.city+info2.get(0).shootAddress.shootCountry.country}">上海</span>
+                        <span class="data_meta_info_xs" th:text="${info2.get(0).roles.get(0).roleName}">摄影师</span>
+                        <!--<span class="review_score_label">10.0</span>-->
+                    </div>
+                </div>
+
+                <!-- 手机验证 -->
+                <div class="v10_margin" th:if="${info2.get(0).phone!='' and info2.get(0).phone!=null}">
+                    <span class="label label-warning">手机验证</span>
+                </div>
+            </div>
+
+            <!-- 跟他互动的一些按钮 -->
+            <div class="v15_margin">
+                <!-- 是否已关注数据 -->
+                <input hidden id="attentionId" th:value="${attentionId}">
+                <!-- 当前这条约拍信息userId -->
+                <input hidden id="focusedId" th:value="${userId}">
+                <a th:if="${userId!=session.user.id}">
+                    <a id="guanzhu" class="btn btn-sm btn_follow btn_follow_user btn-default" data-login="1" data-to="5537061" href="javascript:;">关注</a>
+                    <a class="btn btn-default btn-sm" id="evaluate" href="javascript:;">写评价</a>
+                </a>
+                <!-- 关注javascript -->
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        <!-- 判断是否已关注 -->
+                        var attentionId = $("#attentionId").val();
+                        if(attentionId!=null && attentionId!=undefined && attentionId!=""){
+                            $("#guanzhu").text("已关注");
+                            $("#guanzhu").addClass("guanzhu");
+                        }
+
+                        <!-- 异步做关注和取消关注操作 -->
+                        $("#guanzhu").click(function () {
+                            var text = $(this).text();
+                            var focusedId=$("#focusedId").val();
+                            if(text=="关注"){
+                                $.post("/shoot-attention/addAttention",{"focusedId":focusedId},function (data) {
+                                    if(data==true){
+                                        $("#guanzhu").text("已关注");
+                                        $("#guanzhu").addClass("guanzhu");
+                                        location.href="/shoot-attention/personalInfo?userId="+focusedId;
+                                    }
+                                },"json");
+                            }
+                            if(text!="关注"){
+                                $.post("/shoot-attention/deleteAttention",{"focusedId":focusedId},function (data) {
+                                    if(data==true){
+                                        $("#guanzhu").text("关注");
+                                        $("#guanzhu").removeClass("guanzhu");
+                                        location.href="/shoot-attention/personalInfo?userId="+focusedId;
+                                    }
+                                },"json");
+                            }
+                        });
+
+                    });
+                </script>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 那个页面 -->
+    <ul id="user_tabs" class="nav nav-tabs v10_margin">
+        <li role="presentation" class="active btn-sm"><a href="javascript:;" data-tabname="items">动态</a></li>
+        <li role="presentation" class="btn-sm"><a  href="javascript:;" data-tabname="galleries">自拍</a></li>
+        <li role="presentation" class="btn-sm"><a  href="javascript:;" data-tabname="reviews">评价</a></li>
+        <li role="presentation" class="btn-sm"><a  href="javascript:;" data-tabname="followings">关注</a></li>
+        <li role="presentation" class="btn-sm"><a  href="javascript:;" data-tabname="followers">粉丝</a></li>
+    </ul>
+    <input hidden id="userId" th:value="${userId}">
+    <script type="text/javascript">
+
+
+        $("#evaluate").click(function () {
+            var evaluate = window.prompt("请在下框输入你的评价:","");
+            var userId = $("#userId").val();
+            $.post("/shoot-evaluate/addEvaluate",{"evaluate":evaluate,"putUserId":userId},function (data) {
+                if(data==true){
+                    alert("评价成功");
+                    location.href="/shoot-attention/personalInfo?userId="+userId;
+                }
+            },"json");
+        });
+
+          $(document).ready(function () {
+              $(".btn-sm").click(function () {
+                  var text = $(this).text();  //获取标签text 文本
+                  $(".btn-sm").each(function () {
+                      if($(this).hasClass("active")){
+                          $(this).removeClass("active");
+                          //$(this).addClass("active");
+                      }
+                  });
+                  $(this).addClass("active");
+                  var dataLetter = $("#data_letter");  //显示数据div
+                  dataLetter.empty();   //清空div 标签和文本
+
+                  if($(this).text()=="动态"){  //约拍信息
+                      var userId = $("#userId").val();
+                      location.href="/shoot-attention/personalInfo?userId="+userId;
+                  }
+                  if($(this).text()=="评价"){
+                      var userId = $("#userId").val();
+                        $.post("/shoot-evaluate/evaluateList",{"putUserId":userId},function (data) {
+                            if(data!=null && data.length>0){ //有评价
+                                  for (var i=0;i<data.length;i++){
+                                     var evaluate=data[i];
+                                      var str="<div class=\"data_post_cell\" data-id=\"2944\">\n" +
+                                          "    <div class=\"data_post_author\">\n" +
+                                          "        <a class=\"data_post_author_title_link\" href='"+'/shoot-attention/personalInfo?userId='+evaluate.shootUser.id+"'>\n" +
+                                          "                <img class=\"img-circle data_avatar_small\" src='"+evaluate.shootUser.portyaitl+"' alt=\"Lily\" />\n" +
+                                          "                <span class=\"data_post_author_title span_v2_margin_left\">"+evaluate.shootUser.userName+"</span>\n" +
+                                          "        </a>\n" +
+                                          "        <i class=\"web_wechat_women\"></i>\n" +
+                                          "            <span class=\"label label-info data_post_user_role\">"+evaluate.shootUser.roles[0].roleName+"</span>\n" +
+                                          "    </div>\n" +
+                                          "        <div class=\"v10_margin\">\n" +
+                                          "            <span class=\"data_meta_text\">"+evaluate.evaluate+"</span>\n" +
+                                          "        </div>\n" +
+                                          "    <div class=\"v10_margin\">\n" +
+                                          "        <span class=\"data_meta_info\">"+evaluate.creationDate+"</span>\n" +
+                                          "    </div>\n" +
+                                          "</div>\n" +
+                                          "        </div>"
+                                      dataLetter.append(str);
+                                  }
+                            }else {  //没评价
+                                var str="<div class=\"data_posts tab_panel\" data-tabname=\"reviews\">\n" +
+                                    "                <div class=\"data_post_cell\">\n" +
+                                    "                    <span class=\"data_meta_info\">他还没有人评价</span>\n" +
+                                    "                </div>\n" +
+                                    "        </div>"
+                            dataLetter.append(str);
+                            }
+                        },"json");
+                  }
+
+                  if($(this).text()=="关注"){
+                      var userId = $("#userId").val();
+                      $.post("/shoot-attention/focuson2",{"userId":userId,"message":"我关注的人"},function (data) {
+                          if(data!=null && data.length>0){  //有人
+                              for (var i=0;i<data.length;i++){
+                              var focuson=data[i];
+                              var str="<a class=\"data_post_cell_dotted data_post_cell_link user_info_cell\" href='"+'/shoot-attention/personalInfo?userId='+focuson.shootUser.id+"' target=\"_blank\">\n" +
+                                  "                <div class=\"right_select\" style=\"float:right;vertical-align:top;margin-top:10px;\"></div>\n" +
+                                  "                <div class=\"user_info_cell_avatar\">\n" +
+                                  "                    <img class=\"img-circle data_avatar_small2\" src='"+focuson.shootUser.portyaitl+"' />\n" +
+                                  "                </div>\n" +
+                                  "                <div class=\"user_info_cell_content\">\n" +
+                                  "                    <span class=\"data_post_author_title\">"+focuson.shootUser.userName+"</span>\n" +
+                                  "                    <i class=\"web_wechat_women\"></i>\n" +
+                                  "                    <div>\n" +
+                                  "                        <span class=\"data_meta_info_xs\">"+focuson.shootUser.shootAddress.shootProw.prow+focuson.shootUser.shootAddress.shootCity.city+focuson.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                  "                        <span class=\"data_meta_info_xs\">"+focuson.shootUser.roles[0].roleName+"</span>\n" +
+                                  "                    </div>\n" +
+                                  "                </div>\n" +
+                                  "            </a>";
+                              dataLetter.append(str);
+                              }
+                          }else {
+                              var str="<div class=\"data_posts tab_panel\" data-tabname=\"reviews\">\n" +
+                                  "                <div class=\"data_post_cell\">\n" +
+                                  "                    <span class=\"data_meta_info\">你还没关注人</span>\n" +
+                                  "                </div>\n" +
+                                  "        </div>"
+                              dataLetter.append(str);
+                          }
+                      },"json");
+                  }
+
+                  if($(this).text()=="粉丝"){
+                      var userId = $("#userId").val();
+                      $.post("/shoot-attention/focuson2",{"userId":userId,"message":"关注我的人"},function (data) {
+                          if(data!=null && data.length>0){  //有人
+                              for (var i=0;i<data.length;i++){
+                                  var focuson=data[i];
+                                  var str="<a class=\"data_post_cell_dotted data_post_cell_link user_info_cell\" href='"+'/shoot-attention/personalInfo?userId='+focuson.shootUser.id+"' target=\"_blank\">\n" +
+                                      "                <div class=\"right_select\" style=\"float:right;vertical-align:top;margin-top:10px;\"></div>\n" +
+                                      "                <div class=\"user_info_cell_avatar\">\n" +
+                                      "                    <img class=\"img-circle data_avatar_small2\" src='"+focuson.shootUser.portyaitl+"' />\n" +
+                                      "                </div>\n" +
+                                      "                <div class=\"user_info_cell_content\">\n" +
+                                      "                    <span class=\"data_post_author_title\">"+focuson.shootUser.userName+"</span>\n" +
+                                      "                    <i class=\"web_wechat_women\"></i>\n" +
+                                      "                    <div>\n" +
+                                      "                        <span class=\"data_meta_info_xs\">"+focuson.shootUser.shootAddress.shootProw.prow+focuson.shootUser.shootAddress.shootCity.city+focuson.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                      "                        <span class=\"data_meta_info_xs\">"+focuson.shootUser.roles[0].roleName+"</span>\n" +
+                                      "                    </div>\n" +
+                                      "                </div>\n" +
+                                      "            </a>";
+                                  dataLetter.append(str);
+                              }
+                          }else {
+                              var str="<div class=\"data_posts tab_panel\" data-tabname=\"reviews\">\n" +
+                                  "                <div class=\"data_post_cell\">\n" +
+                                  "                    <span class=\"data_meta_info\">还没人关注你</span>\n" +
+                                  "                </div>\n" +
+                                  "        </div>"
+                              dataLetter.append(str);
+                          }
+                      },"json");
+                  }
+
+                  if($(this).text()=="自拍"){
+                      var userId = $("#userId").val();
+                      $.post("/shoot-selfie/byUserId",{"userId":userId},function (data) {
+                          if(data!=null && data.length>0){
+                              for (var i=0;i<data.length;i++){
+                                  var selfie=data[i];
+                                  var str="<div class=\"col-xs-6 col-sm-3 col-md-3 newcard_cell\">\n" +
+                                      "            <div class=\"newcard\">\n" +
+                                      "                <a class=\"data_post_container_link\" href='"+'/shoot-selfie/selfieMessage?id='+selfie.id+"'>\n" +
+                                      "                    <img style=\"width:100%;height:auto;\" src='"+selfie.imagesName+"' />\n" +
+                                      "                    <div class=\"newcard_content\">\n" +
+                                      "                        <div class=\"card_userline\">\n" +
+                                      "                            <img class=\"img-circle data_avatar_xs\" src='"+selfie.shootUser.portyaitl+"' />\n" +
+                                      "                            <span class=\"data_meta_info span_v2_margin_left\">"+selfie.shootUser.userName+"</span>\n" +
+                                      "                            <span class=\"data_meta_info span_v2_margin_left\">"+selfie.shootUser.shootAddress.shootProw.prow+selfie.shootUser.shootAddress.shootCity.city+selfie.shootUser.shootAddress.shootCountry.country+"</span>\n" +
+                                      "                            <span class=\"data_meta_info span_v2_margin_left\">"+selfie.shootUser.roles[0].roleName+"</span>\n" +
+                                      "                        </div>\n" +
+                                      "                        <div class=\"card_oneline v5_margin\">\n" +
+                                      "                            <span class=\"data_meta_info\">"+selfie.creationDate+'  '+selfie.content+"</span>\n" +
+                                      "                        </div>\n" +
+                                      "                    </div>\n" +
+                                      "                </a>\n" +
+                                      "            </div>\n" +
+                                      "        </div>";
+                                  dataLetter.append(str);
+                              }
+                          }else {
+                              var str="<div class=\"data_posts tab_panel\" data-tabname=\"reviews\">\n" +
+                                  "                <div class=\"data_post_cell\">\n" +
+                                  "                    <span class=\"data_meta_info\">他还没有自拍</span>\n" +
+                                  "                </div>\n" +
+                                  "        </div>"
+                              dataLetter.append(str);
+                          }
+                      },"json")
+                  }
+
+              });
+          });
+    </script>
+
+    <!-- 本人的约拍信息 -->
+    <div id="data_letter">
+        <div th:if="${info!=null and info!=''}">
+            <div class="data_posts tab_panel" data-tabname="items" th:each="info,index : ${info}" style="margin-top: 10px">
+
+                <div class="data_post_cell">
+                    <a class="data_post_container_link" th:href="@{/shoot-info/about(id=${info.id})}">
+                        <div class="data_post_fee_info">
+                            <span class="data_meta_info" th:text="${info.shootType.typeName}">约拍</span>
+                            <span class="data_meta_info span_v2_margin_left" th:text="${info.shootAddress.shootProw.prow+
+                    info.shootAddress.shootCity.city+info.shootAddress.shootCountry.country}">上海</span>
+                            <span class="span_v2_margin_left" th:text="${info.shootCost.costName}">需要收费</span>
+                            <span class="money_amount span_v2_margin_left" th:if="${info.price!=0 and info.price>0}" th:text="${info.price}+'元'">300元</span>
+                            <!--<span class="data_post_guarantee_label span_v2_margin_left">担保拍摄</span>-->
+                        </div>
+
+                        <div class="data_post_message v8_margin" th:text="${info.content}">
+                            精修30张&#xA;底片全送
+                            <!--<span class="data_meta_info">（9张）</span>-->
+                        </div>
+
+                        <!-- 图片 -->
+                        <div class="row data_post_image_row">
+                            <div th:if="${info.shootImages!=null}" th:each="images,count : ${info.shootImages}">
+                                <div class="col-xs-4 col-md-2 data_post_image_cell">
+                                    <img th:src="${images.imagesName}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 约拍发布日期 -->
+                        <div class="data_meta_info v10_margin">
+                            <span class="data_meta_info" th:text="${info.creationDate}">昨天13:57</span>
+                        </div>
+
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div th:if="${info==null or info==''}">
+            <p>他还没有发布约拍信息</p>
+        </div>
+    </div>
+
+    <div class="v20_margin"></div>
+</div>
+
+<div id="toast_message" class="toast_message_fixed" style="display: none;">
+    <div class="weui_toast weui_toast_fixed">
+        <p id="toast_message_text" class="weui_toast_content weui_toast_content_fixed">
+        </p>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="join_vip_dialog" style="display:none;">
+    <div class="weui_mask" onclick="$(this).parent().hide();"></div>
+    <div class="weui_dialog data_posts" style="max-width:500px;">
+        <div class="data_post_cell_dotted">
+            <div class="field_attached_comment">摄会社Club会员可发私信</div>
+        </div>
+        <div class="data_post_cell_dotted">
+            <a id="confirm_join_button" role="button" class="btn btn-success btn-sm form_medium_button" href="/vip?returnUrl=%2Fu%2F5537061">加入摄会社Club会员</a>
+            <a id="cancel_join_button" role="button" class="btn btn-default btn-sm form_medium_button" href="javascript:void(0);" onclick="$('#join_vip_dialog').hide();">取消</a>
+        </div>
+    </div>
+</div>
+<div class="modal" id="report_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="data_group_title">向平台举报</div>
+            </div>
+            <div class="modal-body">
+                <textarea id="report_text" class="auto_textarea_editor" rows="3" style="font-size:13px;" placeholder="输入内容"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button id="report_dialog_submit_button" class="btn btn-primary btn-sm" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="user_review_dialog" style="display:none;">
+    <div class="weui_mask" onclick="$(this).parent().hide();"></div>
+    <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
+        <div class="data_post_cell_dotted">
+            <span class="data_group_title_bold">写个评价</span>
+            <div style="float:right;">
+                <a role="button" class="btn btn-default btn-xs" href="javascript:void(0);" onclick="$('#user_review_dialog').hide();">取消</a>
+            </div>
+        </div>
+        <div class="data_post_cell_dotted">
+            <span id="user_review_score_label" class="data_meta_info">请进行打分</span>
+            <div class="v10_margin">
+                <input id="user_review_score" name="user_review_score" type="hidden" value="0" />
+                <span class="review_star review_star_gray" data-score="1"></span>
+                <span class="review_star review_star_gray" data-score="2"></span>
+                <span class="review_star review_star_gray" data-score="3"></span>
+                <span class="review_star review_star_gray" data-score="4"></span>
+                <span class="review_star review_star_gray" data-score="5"></span>
+                <span id="user_review_score_text" class="data_meta_info span_v5_margin_left"></span>
+            </div>
+        </div>
+        <div class="data_post_cell_dotted">
+            <textarea class="auto_textarea_editor input_gray" id="user_review_comment" name="user_review_comment" placeholder="写几句评语吧..." style="height: 100px; resize: none;"></textarea>
+        </div>
+        <div class="data_post_cell_dotted" style="text-align:center;">
+            <a id="user_review_submit_button" class="btn btn-sm btn-primary form_large_button" href="javascript:void(0);">提交</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="user_review_delete_dialog" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">确定删除吗？</strong></div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:void(0);" onclick="$('#user_review_delete_dialog').hide();" class="weui_btn_dialog default">取消</a>
+            <a id="user_review_delete_confirm_button" href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+
+<div class="weui_dialog_confirm" id="user_review_reply_dialog" style="display:none;">
+    <div class="weui_mask" onclick="$(this).parent().hide();"></div>
+    <div class="weui_dialog data_posts popup_dialog" style="text-align:left;">
+        <div class="data_post_cell_dotted">
+            <span class="data_group_title_bold">回复一下</span>
+            <div style="float:right;">
+                <a role="button" class="btn btn-default btn-xs" href="javascript:void(0);" onclick="$('#user_review_reply_dialog').hide();">取消</a>
+            </div>
+        </div>
+        <div class="data_post_cell_dotted">
+            <textarea class="auto_textarea_editor input_gray" id="user_review_reply_comment" name="user_review_reply" placeholder="回复内容..." style="height: 100px; resize: none;"></textarea>
+        </div>
+        <div class="data_post_cell_dotted" style="text-align:center;">
+            <a id="user_review_reply_button" class="btn btn-sm btn-primary form_large_button" href="javascript:void(0);">提交</a>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/style.js}"></script>
+
+</body>
+</html>

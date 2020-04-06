@@ -49,12 +49,10 @@ public class ShootRoleController {
         model.addAttribute("tuxiang","/images/"+user.getPortyaitl());
         List<ShootUser> list=iShootUserService.findUserByUserCode(all().getUserCode());
         Subject sub = SecurityUtils.getSubject();
-        sub.getSession().setAttribute("user",list.get(0));   //登录成功把user放入shiro用户sesssion中
+        sub.getSession().setAttribute("user",list.get(0));   //更新完我的信息后 把session中的值更改掉
         ShootUser subb = (ShootUser)subject.getSession().getAttribute("user");
-//        model.addAttribute("sf",user.getRoles().get(0).getId());
        List<ShootUserRole> s= iShootUserRoleService.selebyuid(subb);
         ShootRole ss=iShootRoleService.getById(s.get(0).getRoleId());
-        System.out.println("用户登录时身份"+s.get(0).getRoleId());
         return "personage/personalInfo";
     }
 
@@ -68,21 +66,36 @@ public class ShootRoleController {
     //积分签到页面
     @RequestMapping(value = "/integral")
     public String integral(HttpServletRequest h){
+        System.out.println("签到的状态id"+all().getStateId());
         ShootUser uid= iShootUserService.getById(all().getId());
         h.setAttribute("integra",uid.getIntegral());
-        h.setAttribute("yqd","您还未签到");
+        h.setAttribute("zt",uid.getStateId());
+        if(uid!=null){
+            if(uid.getStateId()==8){
+                h.setAttribute("yqd","您还未签到");
+            }else{
+                h.setAttribute("yqd","您已签到");
+            }
+        }
         return "personage/integral";
     }
-
+    //积分签到更改数值
     @RequestMapping("/updintegral")
     public String updateintegral(HttpServletRequest h){
         all().setIntegral(all().getIntegral()+5);
+        all().setStateId(Long.parseLong("9"));
         h.setAttribute("integra",all().getIntegral());
-        h.setAttribute("yqd","您已签到");
+        h.setAttribute("zt",all().getStateId());
         boolean b= iShootUserService.updateById(all());
-        return "personage/integral";
+        if(b==true){
+            return "redirect:integral";
+        }else{
+            return "houtai/sb";
+        }
+
     }
 
+    //更新个人信息
     @RequestMapping("/updateuser")
     public String updatebyuser(ShootUser shootUser,String label_select){
 
@@ -101,6 +114,19 @@ public class ShootRoleController {
         }else {
             return "personage/personalInfo";
         }
+    }
+
+    @RequestMapping("/abou")
+    public String abo(){
+        return "abouts/about";
+    }
+    @RequestMapping("/zhin")
+    public String zhinan(){
+        return "abouts/zhinan";
+    }
+    @RequestMapping("/kef")
+    public String kefu(){
+        return "abouts/kefu";
     }
 
 }

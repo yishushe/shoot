@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jobob
@@ -25,7 +25,7 @@ public class ShootRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id",type = IdType.AUTO)  //设置主键生成策略是id自增
+    @TableId(value = "id", type = IdType.AUTO)  //设置主键生成策略是id自增
     private Long id;
 
     @TableField("roleName")
@@ -33,4 +33,6 @@ public class ShootRole implements Serializable {
 
     @TableField(exist = false)  //忽略字段
     private List<ShootPermission> permissions;
+
 }
+

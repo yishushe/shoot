@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.photography.shootevaluate.mapper.ShootEvalateMapper">
+
+
+    <!-- 查询别人对自己的评价 -->
+    <resultMap id="evaluate" type="ShootEvaluate">
+        <id property="id" column="id"></id>
+        <association property="shootUser" javaType="ShootUser">
+            <id property="id" column="u_id"></id>
+            <collection property="roles" ofType="ShootRole">
+                <id property="id" column="r_id"></id>
+            </collection>
+        </association>
+    </resultMap>
+    <select id="orderListByPutUserId" resultMap="evaluate">
+        select ev.*,u.id u_id,u.userName,u.portyaitl,
+        r.id r_id,r.roleName from shoot.shoot_evaluate ev
+        inner join shoot.shoot_user u on ev.sendUserId=u.id
+        inner join shoot.shoot_user_role ur on ur.userId=u.id
+        inner join shoot.shoot_role r on r.id=ur.roleId
+        where ev.putUserId=#{putUserId}
+    </select>
+
+</mapper>

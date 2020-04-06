@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author jobob
@@ -37,27 +37,27 @@ public class ShootStateController {
 
     //到我发布信息页面 并做查询我的约拍信息操作
     @RequestMapping(value = "/infoMessage")
-    public String infoMessage(Model model){
-        ShootUser user = (ShootUser)SecurityUtils.getSubject().getSession().getAttribute("user");
+    public String infoMessage(Model model) {
+        ShootUser user = (ShootUser) SecurityUtils.getSubject().getSession().getAttribute("user");
         List<ShootInfo> infoByUserId = iShootInfoService.findInfoByUserId(user.getId());
 
-        for (ShootInfo info : infoByUserId){
-            Map<String,Object> map=new HashMap<>();
-            map.put("infoId",info.getId());
+        for (ShootInfo info : infoByUserId) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("infoId", info.getId());
             //根据id查找信息
             Collection<ShootImages> shootImages = iShootImagesService.listByMap(map);
-            if(shootImages!=null && shootImages.size()>0){
-                for (ShootImages images: shootImages
+            if (shootImages != null && shootImages.size() > 0) {
+                for (ShootImages images : shootImages
                 ) {
                     //设置info图片路劲
-                    images.setImagesName("/images/"+images.getImagesName());
+                    images.setImagesName("/images/" + images.getImagesName());
                 }
                 info.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
             }
         }
 
 
-        model.addAttribute("info",infoByUserId);
+        model.addAttribute("info", infoByUserId);
         return "personage/infoMessage";
     }
 

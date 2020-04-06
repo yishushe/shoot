@@ -3,9 +3,10 @@ package cn.bdqn.photography.houtai.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author jobob

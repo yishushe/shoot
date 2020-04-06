@@ -6,6 +6,7 @@ import cn.bdqn.photography.common.entity.ShootProw;
 import cn.bdqn.photography.common.mapper.ShootCityMapper;
 import cn.bdqn.photography.common.mapper.ShootCountryMapper;
 import cn.bdqn.photography.common.mapper.ShootProwMapper;
+import cn.bdqn.photography.shootinfo.entity.ShootInfo;
 import cn.bdqn.photography.shootuser.entity.ShootAddress;
 import cn.bdqn.photography.shootuser.entity.ShootUser;
 import cn.bdqn.photography.shootuser.entity.ShootUserRole;
@@ -16,6 +17,8 @@ import cn.bdqn.photography.shootuser.service.IShootUserService;
 import cn.bdqn.photography.utils.AddressUtls;
 import cn.bdqn.photography.utils.Round;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,24 +41,20 @@ import java.util.List;
  * @author jobob
  * @since 2020-01-15
  */
-@Service("shootUserService")
+@Service
 @Transactional
 public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser> implements IShootUserService {
 
     @Autowired
-    @Qualifier("shootUserMapper")
     private ShootUserMapper shootUserMapper;
 
     @Autowired
-    @Qualifier("shootProwMapper")
     private ShootProwMapper shootProwMapper;
 
     @Autowired
-    @Qualifier("shootCityMapper")
     private ShootCityMapper shootCityMapper;
 
     @Autowired
-    @Qualifier("shootCountryMapper")
     private ShootCountryMapper shootCountryMapper;
 
     @Autowired
@@ -66,7 +66,6 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     private Round round;
 
     @Autowired
-    @Qualifier("shootUserRoleMapper")
     private ShootUserRoleMapper shootUserRoleMapper;
 
     @Autowired
@@ -119,5 +118,66 @@ public class ShootUserServiceImpl extends ServiceImpl<ShootUserMapper, ShootUser
     public ShootUser personageByUserCode(String userCode) {
         return shootUserMapper.personageByUserCode(userCode);
     }
+
+    @Override
+    public ShootUser findByUserId(Long id) {
+        return shootUserMapper.getByUserId(id);
+    }
+
+    @Override
+    public List<ShootUser> getUsersAll() {
+        return shootUserMapper.getUserAll();
+    }
+
+    public int modifyMember(Long id, LocalDate memberDate) {
+        return shootUserMapper.updateMember(id, memberDate);
+    }
+
+    public Page<ShootUser> getpermission(int current,Long id) {
+        IPage<ShootUser> iPage=new Page<>(current,5);
+        Page<ShootUser> s= shootUserMapper.getpermission(iPage,id);
+        return s;
+    }
+
+    @Override
+    public Long seleid(Long id, Long pid) {
+        return shootUserMapper.seleid(id,pid);
+    }
+
+    @Override
+    public boolean updp(Long id, Long pid,Long qxid) {
+        return shootUserMapper.updp(id,pid,qxid);
+    }
+
+    @Override
+    public boolean ins(Long id, Long pid) {
+        return shootUserMapper.ins(id,pid);
+    }
+
+    @Override
+    public boolean del(Long id,Long rid) {
+        return shootUserMapper.del(id,rid);
+    }
+
+    @Override
+    public int modifySecurityMoney(Long id, Float securityMoney) {
+        return shootUserMapper.modifySecurityMoney(id,securityMoney);
+    }
+
+    @Override
+    public boolean updr(Long uid, Long rid) {
+        return shootUserMapper.updr(uid,rid);
+    }
+
+    @Override
+    public List<ShootUser> findUserId(Long userId) {
+        return shootUserMapper.getUserId(userId);
+    }
+
+    @Override
+    public Long sesurid(Long id) {
+        return shootUserMapper.sesurid(id);
+    }
+
 
 }
