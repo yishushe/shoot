@@ -33,7 +33,7 @@ public class ShootUserControllers {
     public String All(HttpServletRequest ht) {
         List<ShootUser> usersList = iShootUserService.list();
         ht.setAttribute("info", usersList);
-        return "houtai/admin-role";
+        return "houtai/admin-user";
     }
 
     @RequestMapping("/admin-role-add")
@@ -42,11 +42,12 @@ public class ShootUserControllers {
     }
 
 
+    //根据id获取
     @RequestMapping("/updateUser")
-    public String updateUser(ShootUser id, Model model) {
+    public String updateUser(ShootUser id,Model model){
         ShootUser users = iShootUserService.getById(id);
-        model.addAttribute("users", users);
-        return "houtai/admin-role-add";
+        model.addAttribute("users",users);
+        return "houtai/admin-user-add";
     }
 
     @RequestMapping("/userUpdate")
@@ -55,7 +56,7 @@ public class ShootUserControllers {
         if (shootUser == true) {
             return "redirect:love";
         } else {
-            return "houtai/admin-role-add";
+            return "houtai/admin-user-add";
         }
     }
 

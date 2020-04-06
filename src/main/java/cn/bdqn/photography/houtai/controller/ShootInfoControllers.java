@@ -85,7 +85,8 @@ public class ShootInfoControllers {
                 info1.setShootImages((List<ShootImages>) shootImages);  //放入info字段中
             }
         }
-        model.addAttribute("im", shootInfo.get(0).getShootImages().get(0).getImagesName());
+
+        model.addAttribute("im", shootInfo);
         model.addAttribute("city", city);
         return "houtai/updstate";
     }

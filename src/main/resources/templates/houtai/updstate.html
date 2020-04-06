@@ -67,7 +67,9 @@
             <input type="text" th:value="${uu.ShootCost.CostName}"/>
             <input type="text" th:value="${city}"/><br>
         <p>
-        <img th:width="100" th:height="90" th:src="${uu.ShootUser.Portyaitl}">
+        <p th:if="${get(0).shootImages.size()>0}" style="display: inline-block" th:each="aa : ${get(0).shootImages}">
+        <img th:width="100" th:height="90" th:src="${aa.ImagesName}">
+    </p>
     </p>
 
         </p>输入更改的状态:
@@ -90,7 +92,7 @@
     </form>
 <script>
     var sf=$("#sf").val();
-    $("#sss").get(0).selectedIndex = sf;
+    $("#sss").get(0).selectedIndex = sf+1;
     function ooo() {
         var str=document.getElementById("ca").value.replace(/(^[\s\t\xa0\u3000]+)|([\u3000\xa0\s\t]+$)/g, "");//顺便去除空格
         if(str=="") {

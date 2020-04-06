@@ -75,7 +75,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<form action="shenhe?current=1" method="post">
+				<form action="/shootstaticsh/shenhe?current=1" method="post">
 					<select name="id" class="sss">
 						<option class="sh" value="1">审核</option>
 						<option class="sh" value="2">发布</option>
@@ -126,14 +126,14 @@
 						var idd=$("#idd").val();
 						$("#prev").click(function () {
 							var current = Number($("#current").val())-1;
-							location.href = "/shootstaticsh/shenhe?id="+idd+"&current=" + current;
+							location.href = "/shootstaticsh/shenhe?current=" + current;
 						});
 						$("#next").click(function () {
 							var current = Number($("#current").val())+1;
 							if(current>=Number($("#pages").val())){
 								current=Number($("#pages").val());
 							}
-							location.href = "/shootstaticsh/shenhe?id="+idd+"&current=" + current;
+							location.href = "/shootstaticsh/shenhe?current=" + current;
 						})
 					})
 				</script>
