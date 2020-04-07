@@ -169,7 +169,11 @@ public class ShootUserController {
         }
         if (subject.isAuthenticated()) {
             System.out.println("登陆成功！！！");
-            return "redirect:index";
+            if(subject.isPermitted("delete")){  //管理员
+                return "redirect:/shoot-houtai-user/love";
+            }else {  //普通用户
+                return "redirect:index";
+            }
         } else {
             System.out.println("登录失败！！！");
             token.clear();

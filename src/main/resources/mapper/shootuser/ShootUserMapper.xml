@@ -149,6 +149,7 @@ SELECT id FROM shoot_user_role WHERE userid=#{id}
         <if test="id!='' and id!=null">
             and ur.userid=#{id}
         </if>
+        and u.id!=1
     </select>
     <!--000000000000000000000000000000000000000根据id查询权限-->
 <select id="seleid" resultType="Long">
