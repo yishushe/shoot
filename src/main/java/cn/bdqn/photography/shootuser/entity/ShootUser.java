@@ -69,6 +69,7 @@ public class ShootUser implements Serializable {
     @TableField("stateId")
     private Long stateId;
 
+    @TableField("money")
     private Float money;
 
     @TableField(exist = false)

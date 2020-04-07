@@ -17,24 +17,6 @@ import java.util.List;
 public class ShootOrderController {
     @Autowired
     private IShootOrderService iShootOrderService;
-
-    @RequestMapping("/allorder")
-    public String showorder(String code, Model m,String xfje){
-        String dyjl="";
-        List<ShootOrder> l=null;
-        if(xfje!=null && xfje.equals("当月消费金额查询")){
-            l=iShootOrderService.showorderby();
-            m.addAttribute("li",l);
-            return "order/showallorder";
-        }
-
-        l= iShootOrderService.showallorder(code);
-       System.out.println("大小:"+l.size());
-       m.addAttribute("li",l);
-        return "order/showallorder";
-    }
-
-
     //查看我的所有账单
     @RequestMapping(value = "/orderList")
     public String orderList(Model model){

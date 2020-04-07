@@ -61,37 +61,79 @@
 		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 		<div class="Hui-article">
 			<article class="cl pd-20">
-			<div><a class="btn btn-primary radius" th:href="insterUser"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span></div>
 			<form action="love" method="post">
-			<div class="mt-10">
-			<table class="table table-border table-bordered table-hover table-bg">
-				<thead>
-					<tr class="text-c">
-						<th><input type="checkbox" value="" name=""></th>
-						<th>id</th>
-						<th>账号</th>
-						<th>用户名</th>
-						<th>密码</th>
-						<!--<th>性别</th>-->
-						<th>电话</th>
-						<th>操作</th>
-					</tr>
-				<tr th:each="user:${info}" id="love">
-					<th><input type="checkbox" value="" name=""></th>
-					<td th:text="${user.id}"></td>
-					<td th:text="${user.userCode}"></td>
-					<td th:text="${user.userName}"></td>
-					<td th:text="${user.userPassword}"></td>
-					<!--<td th:if="${user.sex} == 0">女</td>
-					<td th:if="${user.sex} == 1">男</td>-->
-					<td th:text="${user.phone}"></td>
-					<td><a th:href="@{/shoot-houtai-user/updateUser(id=${user.id})}" style="text-decoration:none">修改</a>&nbsp;&nbsp;&nbsp;<a href="javascript:;" style="text-decoration:none">删除</a></td>
-				</tr>
-				</thead>
-			</table>
-			</div>
+				<div class="mt-10">
+					<table class="table table-border table-bordered table-hover table-bg">
+						<thead>
+						<tr class="text-c">
+							<th>私信</th>
+							<th>发送者</th>
+							<th>接收者</th>
+							<th>时间</th>
+						</tr>
+						<tr th:each="users:${info}" id="like">
+							<td th:text="${users.content}"></td>
+							<!--<td th:text="${users.sendUserId}"></td>
+							<td th:text="${users.putUserId}"></td>-->
+							<td th:text="${users.getShootUser().getUserCode()}"></td>
+							<td th:text="${users.getShootUsers().getUserCode()}"></td>
+							<td th:text="${users.creationDate}"></td>
+						</thead>
+					</table>
+				</div>
 			</form>
-			</article>
+			<!-- 分页 数据 当前页 总页数 -->
+			<!-- 分页 数据 当前页 总页数 -->
+			<tr>
+				<td hidden>
+					<input hidden type="text" th:value="${current}" id="current">
+					<input hidden type="text" th:value="${pages}" id="pages">
+				</td>
+			</tr>
+			<!-- 翻页按钮 -->
+			<div class="container pager_container">
+				<nav>
+					<ul class="pager">
+						<li>
+							<a href="javascript:;" id="prev" aria-label="Previous">
+								<span>上一页</span>
+							</a>
+						</li>
+						<li>
+							<a>
+								<span th:text="'当前页'+${current}+'/'+${pages}"></span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" id="next" aria-label="Next">
+								<span>下一页</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+
+			<!-- 分页js -->
+			<script type="text/javascript">
+				$(document).ready(function () {
+					$("#prev").click(function () {
+						var current = Number($("#current").val())-1;
+						location.href = "/ShootLetter/like?current=" + current;
+
+					});
+					$("#next").click(function () {
+						var current = Number($("#current").val())+1;
+						if(current>=Number($("#pages").val())){
+							current=Number($("#pages").val());
+						}
+						location.href = "/ShootLetter/like?current=" + current;
+					})
+				})
+			</script>
+					</thead>
+				</table>
+			</form>
+		</article>
 	</div>
 </section>
 
@@ -100,15 +142,9 @@
 <link th:href="@{/lib/layer/2.4/layer.js}" rel="stylesheet">
 <link th:href="@{/h-ui/js/H-ui.js}" rel="stylesheet">
 <link th:href="@{/h-ui.admin/js/H-ui.admin.page.js}" rel="stylesheet">
-<!--/_footer /作为公共模版分离出去-->
-
-<!--请在下方写此页面业务相关的脚本-->
-<link th:href="@{/lib/My97DatePicker/4.8/WdatePicker.js}" rel="stylesheet">
+	<link th:href="@{/lib/My97DatePicker/4.8/WdatePicker.js}" rel="stylesheet">
 <link th:href="@{/lib/datatables/1.10.0/jquery.dataTables.min.js}" rel="stylesheet">
 <link th:href="@{/lib/laypage/1.2/laypage.js}" rel="stylesheet">
-<script type="text/javascript">
-</script>
-	<!--/请在上方写此页面业务相关的脚本-->
 </header>
 </body>
 </html>
