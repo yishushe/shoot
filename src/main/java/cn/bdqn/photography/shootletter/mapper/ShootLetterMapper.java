@@ -2,6 +2,8 @@ package cn.bdqn.photography.shootletter.mapper;
 
 import cn.bdqn.photography.shootletter.entity.ShootLetter;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -97,5 +99,20 @@ public interface ShootLetterMapper extends BaseMapper<ShootLetter> {
                    @Param("putUserId") Long putUserId,
                    @Param("infoId") Long infoId,
                        @Param("test") String test);
+
+    /**
+     *
+     * 分页
+     * @param shootLetterIPage
+     * @return
+     */
+    Page<ShootLetter> getLetterById(IPage<ShootLetter> shootLetterIPage, int current);
+    /**
+     *
+     * 分页
+     *
+     */
+    Page<ShootLetter> getLetterById(IPage<ShootLetter> shootLetterIPage);
+    /*,@Param("id") Long id*/
 }
 

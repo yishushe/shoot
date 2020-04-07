@@ -49,6 +49,9 @@ public class ShootLetter implements Serializable {
     private ShootUser shootUser;
 
     @TableField(exist = false)
+    private ShootUser shootUsers;
+
+    @TableField(exist = false)
     private ShootInfo shootInfo;
 
     @TableField(exist = false)

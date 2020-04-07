@@ -61,63 +61,34 @@
         <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
         <div class="Hui-article">
             <article class="cl pd-20">
-    <form action="wupdatebyinfoid" method="post" onsubmit="return ooo()">
-
-        <p th:each="uu,index: ${im}">
-            <input type="text" th:value="${uu.Content}"/>
-            <input type="text" th:value="${uu.Price}"/>
-            <input type="text" th:value="${uu.TakeTime}"/>
-            <input type="text" th:value="${uu.TakeLocation}"/>
-            <input type="text" th:value="${uu.TakeResult}"/>
-            <input type="text" th:value="${uu.CreationDate}"/>
-            <input type="text" th:value="${uu.ShootType.TypeName}"/>
-            <input type="text" th:value="${uu.ShootCost.CostName}"/>
-            <input type="text" th:value="${city}"/><br>
-
-        <p style="display: inline" th:if="${im.get(0).shootImages!=null}" th:each="ima,count : ${im.get(0).shootImages}">
-            <img th:width="100" th:height="90" th:src="${ima.imagesName}">
-        </p>
-
-        <p>
-
-    </p>
-
-        </p>输入更改的状态:
-        <select name="sele" id="sss">
-            <option value="1">审核</option>
-            <option value="2">发布</option>
-            <option value="3">接单</option>
-            <option value="4">完成</option>
-            <option value="5">举报</option>
-            <option value="6">未守约</option>
-            <option value="7">关闭</option>
-        </select>
-        <input id="sf" style="display:none" th:value="${im.get(0).getShootState().getId()}"/>
-        <input style="display: none" name="aa" th:value="${im.get(0).getId()}">
-        <input hidden name="infoId" th:value="${im.get(0).getId()}">
-        <input type="submit" name="tj" value="提交"/>
-        <input type="button" class="btn"  value="返回" onclick="javascript:history.go(-1);"/><br>
-        输入审核不通过的原因:<br>
-        <textarea id="ca" name="cause" style="width:200px;height:80px;"></textarea>
-        <input onclick="ooo()" id="fs" name="tj" type="submit" value="发送"/>
-    </form>
-<script>
-    var sf=$("#sf").val();
-
-    $("#sss").get(0).selectedIndex = sf-1;
-
-
-    function ooo() {
-        var str=document.getElementById("ca").value.replace(/(^[\s\t\xa0\u3000]+)|([\u3000\xa0\s\t]+$)/g, "");//顺便去除空格
-        if(str=="") {
-            alert("必须输入审核不通过的原因！")
-            return false;
-        }
-        /*if (str.length<0) {
-            alert("必须输入审核不通过的原因！")
-        }*/
-    }
-</script>
-            </article></div></section></header>
+<form action="allorder" method="post">
+    <input type="text" id="code" name="code"/><input type="submit" value="查询用户名"/>
+    <input type="submit" value="查询全部"/>
+    <input name="xfje" type="submit" value="当月消费金额查询"/>
+    <table border="1px">
+        <thead>
+        <tr>
+            <th width="80">用户名</th>
+            <th width="430">订单编号</th>
+            <th width="80">消费金额</th>
+            <th width="120">当月消费金额</th>
+            <th width="80">买的东西</th>
+            <th width="180">东西介绍</th>
+            <th width="160">日期</th>
+        </tr>
+        </thead>
+        <tbody th:each="lil,index :${li}">
+        <tr>
+            <td th:text="${lil.ShootUser.UserCode}"></td>
+            <td th:text="${lil.OutTradeNo}"></td>
+            <td th:text="${lil.TotalAmount}"></td>
+            <td th:text="${lil.Toalyue}"></td>
+            <td th:text="${lil.Subject}"></td>
+            <td th:text="${lil.Body}"></td>
+            <td th:text="${lil.creationDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+</form></article></div></section></header>
 </body>
 </html>
