@@ -9,7 +9,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.bdqn</groupId>
-    <packaging>war</packaging>
     <artifactId>photography</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>photography</name>
@@ -17,7 +16,6 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <start-class>cn.bdqn.photography.PhotographyApplication</start-class>
     </properties>
 
     <dependencies>
@@ -103,6 +101,12 @@
             <version>4.9.79.ALL</version>
         </dependency>
 
+        <!-- webSocket 双向通信 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -123,7 +127,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <!--需添加下面插件，否则java -jar命令启动报没有主清单错误-->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
@@ -133,7 +137,7 @@
                         </manifest>
                     </archive>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

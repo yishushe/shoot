@@ -1,5 +1,6 @@
 package cn.bdqn.photography.shootuser.controller;
 
+import cn.bdqn.photography.WebSocketServer;
 import cn.bdqn.photography.common.entity.ShootCity;
 import cn.bdqn.photography.common.entity.ShootCountry;
 import cn.bdqn.photography.common.entity.ShootProw;
@@ -47,7 +48,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -84,6 +84,19 @@ public class ShootUserController {
 
     @Autowired
     private IShootOrderService iShootOrderService;
+
+    @RequestMapping(value="/pushVideoListToWeb",method= RequestMethod.POST,consumes = "application/json")
+    @ResponseBody
+    public Map<String,Object> pushVideoListToWeb(@RequestBody Map<String,Object> param) {
+        Map<String,Object> result =new HashMap<String,Object>();
+        try {
+            WebSocketServer.sendInfo("有新客户呼入");
+            result.put("operationResult", true);
+        }catch (IOException e) {
+            result.put("operationResult", true);
+        }
+        return result;
+    }
 
     //主页
     @RequestMapping(value = {"/index"})
@@ -130,9 +143,10 @@ public class ShootUserController {
     public String logo(@RequestParam(value = "info", required = false)
                                String info, @RequestParam(value = "userCode", required = false)
                                String userCode, Model model) {
+        System.out.println("loginloginloginloginloginlogin");
         model.addAttribute("info", info);   //存放注册成功信息
         model.addAttribute("userCode", userCode);  //userCode编码
-        return "login";
+        return "Login";
     }
 
     //登录

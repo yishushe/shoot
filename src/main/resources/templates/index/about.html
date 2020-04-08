@@ -668,13 +668,15 @@
                      return;
                  }
             }
-            var price = $("#price").val();
+
+            //金额判断
+            /*var price = $("#price").val();
             if(price!=undefined && price>0){  //需要出费
                if($(".money").val()<price){  //你本人金额不够
                     alert("本条约拍信息所需费用你本人余额不够,也为了诚信,制度所以你需要达到所需余额才能约拍,请点击>我的>余额>充值 余额可以随时提现");
                      return;
                }
-            }
+            }*/
 
             var $requestSubmitDialog = $("#request_submit_dialog");
             $requestSubmitDialog.show();

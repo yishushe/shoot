@@ -137,7 +137,35 @@
                     <!-- 付款操作 -->
                     <script type="text/javascript">
 
+
+                        //webSocket消息推送
+                        var socket;
+                        if(typeof(WebSocket) == undefined) {
+                            console.log("您的浏览器不支持WebSocket");
+                        }else {
+                            console.log("您的浏览器支持WebSocket");
+                            //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+                            socket = new WebSocket('ws://localhost:8088/webSocket');
+                            //打开事件
+                            socket.onopen = function () {
+                                console.log("Socket 已打开");
+                            }
+                            //获得消息事件
+                            socket.onmessage = function(msg) {
+                                console.log("获得消息事件");
+                            };
+                            /*//关闭事件
+                            socket.onclose = function() {
+                                console.log("Socket已关闭");
+                            };*/
+                            //发生了错误事件
+                            socket.onerror = function() {
+                                alert("Socket发生了错误");
+                            }
+                        }
+
                             $(".fukuan").unbind('click').click(function () {
+                                     var s=$(this);
                                     if(confirm("确定已完成约拍然后付款?")){
                                         var putUserId = $(this).attr("val");
                                         var price = $(this).attr("val2");
@@ -146,15 +174,19 @@
                                         var costName = $(this).attr("val4");
                                         var infoId=$(this).attr("val5");
                                             if(money!=undefined && money!='' && money>=price){  //钱够
+                                                alert(price);
                                                 $.post("/shoot-letter/zhifu",{"price":price,"sendUserId":putUserId,
                                                 "typeName":typeName,"costName":costName,"infoId":infoId},function (data) {
-                                                    if(data==true){
-                                                        $(this).text("已付款");
+                                                    if(data==true || data.toString()=="true"){
+                                                        s.text("已付款");
                                                         alert("支付成功");
+                                                        //推送消息
+                                                        socket.send("对方已付款");
+                                                        alert("对方");
                                                     }else {
                                                         alert("支付失败");
                                                     }
-                                                },"json")
+                                                },"json");
                                             }else {
                                                 alert("余额不够支付请去充值");
                                             }

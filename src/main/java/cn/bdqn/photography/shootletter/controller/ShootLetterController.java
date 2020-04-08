@@ -390,12 +390,16 @@ public class ShootLetterController {
             query.eq("id",sendUserId);
             ShootUser one = iShootUserService.getOne(query);  //先查询需要收款人的钱然后再相加
             UpdateWrapper<ShootUser> updateMoney=new UpdateWrapper<>();
-            updateMoney.set("money",one.getMoney()+price);
+            if(one.getMoney()!=null && one.getMoney()>0){  //有钱相加
+                updateMoney.set("money",one.getMoney()+price);
+            }else {   //没钱给price
+                updateMoney.set("money",price);
+            }
             updateMoney.eq("id",sendUserId);
             boolean update2 = iShootUserService.update(updateMoney);  //加到相应的钱数
             List<ShootUser> userByUserCode = iShootUserService.findUserByUserCode(user.getUserCode());
             SecurityUtils.getSubject().getSession().setAttribute("user",userByUserCode.get(0));  //重新获取存放session值
-            if(update1 && update2){
+            if(update2==true){
                 flag=true;
             }
         }

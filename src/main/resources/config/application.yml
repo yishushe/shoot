@@ -1,6 +1,8 @@
 server:
   port: 8088
 spring:
+  application:
+    name: webSocket
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shoot?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
@@ -13,17 +15,13 @@ spring:
       force-response: true
       force: true
       enabled: true
-  mvc:
-    view:
-      prefix: classpath:/templates
-      suffix: .html
   thymeleaf:
     cache: false
     mode: HTML5
   resources:
     static-locations: classpath:/static/,classpath:/view/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
 mybatis-plus:
-  type-aliases-package: cn.bdqn.photography.shootUser.entity,cn.bdqn.photography.common.entity,cn.bdqn.photography.shootattention.entity,cn.bdqn.photography.shootimages.entity,cn.bdqn.photography.shootinfo.entity,cn.bdqn.photography.shootletter.entity,cn.bdqn.photography.shootselfie.entity,cn.bdqn.photography.shoottheme.entity,cn.bdqn.photography.houtai.entity,cn.bdqn.photography.shootorder.entity,cn.bdqn.photography.shootinform.entity,cn.bdqn.photography.shootevaluate.entity
+  type-aliases-package: cn.bdqn.photography.shootuser.entity,cn.bdqn.photography.common.entity,cn.bdqn.photography.shootattention.entity,cn.bdqn.photography.shootimages.entity,cn.bdqn.photography.shootinfo.entity,cn.bdqn.photography.shootletter.entity,cn.bdqn.photography.shootselfie.entity,cn.bdqn.photography.shoottheme.entity,cn.bdqn.photography.houtai.entity,cn.bdqn.photography.shootorder.entity,cn.bdqn.photography.shootinform.entity,cn.bdqn.photography.shootevaluate.entity
   mapper-locations: mapper/*/*.xml
   configuration:
     auto-mapping-behavior: full  #reslutMap列属性的自动映射

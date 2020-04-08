@@ -61,7 +61,7 @@
         <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
         <div class="Hui-article">
             <article class="cl pd-20">
-    <form action="wupdatebyinfoid" method="post" onsubmit="return ooo()">
+    <form action="wupdatebyinfoid" method="post">
 
         <p th:each="uu,index: ${im}">
             <input type="text" th:value="${uu.Content}"/>
@@ -95,11 +95,11 @@
         <input id="sf" style="display:none" th:value="${im.get(0).getShootState().getId()}"/>
         <input style="display: none" name="aa" th:value="${im.get(0).getId()}">
         <input hidden name="infoId" th:value="${im.get(0).getId()}">
-        <input type="submit" name="tj" value="提交"/>
+        <input type="submit" name="tj" class="tt" value="提交"/>
         <input type="button" class="btn"  value="返回" onclick="javascript:history.go(-1);"/><br>
         输入审核不通过的原因:<br>
         <textarea id="ca" name="cause" style="width:200px;height:80px;"></textarea>
-        <input onclick="ooo()" id="fs" name="tj" type="submit" value="发送"/>
+        <input val="fansong" id="fs" class="tt"  name="tj" type="submit" value="发送"/>
     </form>
 <script>
     var sf=$("#sf").val();
@@ -107,12 +107,17 @@
     $("#sss").get(0).selectedIndex = sf-1;
 
 
-    function ooo() {
+    $(".tt").click(function () {
         var str=document.getElementById("ca").value.replace(/(^[\s\t\xa0\u3000]+)|([\u3000\xa0\s\t]+$)/g, "");//顺便去除空格
-        if(str=="") {
+        var attr=$(this).attr("val")
+        if(str=="" && attr!=undefined && attr!="" && attr=="fansong") {
             alert("必须输入审核不通过的原因！")
-            return false;
+            return;
         }
+    });
+
+    function ooo() {
+
         /*if (str.length<0) {
             alert("必须输入审核不通过的原因！")
         }*/

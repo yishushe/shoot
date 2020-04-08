@@ -93,9 +93,9 @@ public class ShootInfoControllers {
     }
 
     @RequestMapping("/wupdatebyinfoid")
-    public String updatebyinfoid(Long aa, String sele, String tj, String cause, Long infoId) {
+    public String updatebyinfoid(Long aa, Long sele, String tj, String cause, Long infoId) {
         System.out.println("原因" + cause + "aa" + aa);
-        boolean b = false;
+
         if (tj.equals("发送")) {
             LocalDate now = LocalDate.now();
             boolean bb = iShootInfoService.insertinform(cause, aa, now, infoId);
@@ -104,9 +104,16 @@ public class ShootInfoControllers {
             } else {
                 return "houtai/sb";
             }
+        }else{
+            int i = iShootInfoService.modifyStateIdById(infoId, sele);
+            if(i>0){  //更改状态成功
+                return "redirect:shenhe?id=1&current=1";
+            } else {
+                return "houtai/sb";
+            }
         }
 
-        return sele;
+
     }
 
 }
