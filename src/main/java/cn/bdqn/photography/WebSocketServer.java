@@ -40,11 +40,8 @@ public class WebSocketServer {
      */
     @OnClose
     public void onClose() {
-        System.out.println("对不起 不能关闭");
-        if(1==2){  //不可能关闭
-            webSocketSet.remove(this);  //从set中删除
-            subOnlineCount();           //在线数减1
-        }
+        webSocketSet.remove(this);  //从set中删除
+        subOnlineCount();           //在线数减1
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
     }
 

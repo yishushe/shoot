@@ -143,7 +143,6 @@ public class ShootUserController {
     public String logo(@RequestParam(value = "info", required = false)
                                String info, @RequestParam(value = "userCode", required = false)
                                String userCode, Model model) {
-        System.out.println("loginloginloginloginloginlogin");
         model.addAttribute("info", info);   //存放注册成功信息
         model.addAttribute("userCode", userCode);  //userCode编码
         return "Login";
